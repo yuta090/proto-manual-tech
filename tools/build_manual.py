@@ -285,6 +285,10 @@ class MarkdownConverter:
                 slug = self.slugify(heading_text)
                 self.headings.append({"level": level, "text": heading_text, "slug": slug})
 
+                # Skip outputting h1 to content (it will be in the header)
+                if level == 1:
+                    continue
+
                 # Apply magazine-quality typography to headings (h2, h3, h4)
                 formatted_heading = format_inlines(heading_text)
                 if level in (2, 3, 4):
