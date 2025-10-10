@@ -494,7 +494,7 @@ body {
 
 /* 目次のリスト - シンプルで洗練されたデザイン */
 .manual-content h2#目次 + hr + ul {
-  list-style: none;
+  list-style: none !important;
   padding-left: 0;
   margin: 0 0 3rem;
   counter-reset: toc-counter;
@@ -504,6 +504,11 @@ body {
   counter-increment: toc-counter;
   margin-bottom: 0;
   border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  list-style: none !important;
+}
+
+.manual-content h2#目次 + hr + ul > li::before {
+  display: none !important;
 }
 
 .manual-content h2#目次 + hr + ul > li:last-child {
@@ -528,11 +533,12 @@ body {
   content: counter(toc-counter, decimal-leading-zero);
   position: absolute;
   left: 1rem;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1.15rem;
+  font-weight: 900;
   color: var(--accent);
-  font-family: "SFMono-Regular", "Roboto Mono", monospace;
-  opacity: 0.7;
+  font-family: "SF Mono", "Monaco", "Consolas", "Roboto Mono", "Ubuntu Mono", monospace;
+  opacity: 0.75;
+  letter-spacing: -0.02em;
 }
 
 .manual-content h2#目次 + hr + ul > li > a:hover {
