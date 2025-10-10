@@ -505,6 +505,7 @@ body {
   margin-bottom: 0;
   border-bottom: 1px solid rgba(148, 163, 184, 0.12);
   list-style: none !important;
+  position: relative;
 }
 
 .manual-content h2#目次 + hr + ul > li::before {
@@ -516,9 +517,8 @@ body {
 }
 
 .manual-content h2#目次 + hr + ul > li > a {
-  display: flex;
-  align-items: center;
-  padding: 1rem 1.25rem 1rem 0;
+  display: block;
+  padding: 1rem 1.25rem 1rem 3.5rem;
   color: #334155;
   text-decoration: none;
   font-weight: 500;
@@ -526,19 +526,23 @@ body {
   transition: all 0.2s ease;
   position: relative;
   border-left: 3px solid transparent;
-  padding-left: 3.5rem;
+  cursor: pointer;
+  z-index: 2;
 }
 
-.manual-content h2#目次 + hr + ul > li > a::before {
+.manual-content h2#目次 + hr + ul > li::after {
   content: counter(toc-counter, decimal-leading-zero);
   position: absolute;
   left: 1rem;
+  top: 1rem;
   font-size: 1.15rem;
   font-weight: 900;
   color: var(--accent);
   font-family: "SF Mono", "Monaco", "Consolas", "Roboto Mono", "Ubuntu Mono", monospace;
   opacity: 0.75;
   letter-spacing: -0.02em;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .manual-content h2#目次 + hr + ul > li > a:hover {
@@ -548,7 +552,7 @@ body {
   padding-left: 3.75rem;
 }
 
-.manual-content h2#目次 + hr + ul > li > a:hover::before {
+.manual-content h2#目次 + hr + ul > li:hover::after {
   opacity: 1;
 }
 
