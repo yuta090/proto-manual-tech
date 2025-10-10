@@ -284,8 +284,14 @@ class MarkdownConverter:
                     self.title = heading_text
                 slug = self.slugify(heading_text)
                 self.headings.append({"level": level, "text": heading_text, "slug": slug})
+
+                # Apply magazine-quality typography to headings (h2, h3, h4)
+                formatted_heading = format_inlines(heading_text)
+                if level in (2, 3, 4):
+                    formatted_heading = beautify_japanese_title(formatted_heading)
+
                 html_parts.append(
-                    f"<h{level} id=\"{slug}\">{format_inlines(heading_text)}</h{level}>"
+                    f"<h{level} id=\"{slug}\">{formatted_heading}</h{level}>"
                 )
                 continue
 
@@ -413,14 +419,19 @@ def build_toc(headings: List[Dict[str, str]]) -> str:
     for section in sections:
         heading = section["heading"]  # type: ignore[assignment]
         children = section["children"]  # type: ignore[assignment]
+
+        # Apply magazine-quality typography to TOC headings
+        heading_formatted = beautify_japanese_title(format_inlines(heading['text']))
+
         parts.append(
-            f"<li><a href=\"#{heading['slug']}\">{format_inlines(heading['text'])}</a>"
+            f"<li><a href=\"#{heading['slug']}\">{heading_formatted}</a>"
         )
         if children:
             parts.append("<ol>")
             for child in children:  # type: ignore[assignment]
+                child_formatted = beautify_japanese_title(format_inlines(child['text']))
                 parts.append(
-                    f"<li><a href=\"#{child['slug']}\">{format_inlines(child['text'])}</a></li>"
+                    f"<li><a href=\"#{child['slug']}\">{child_formatted}</a></li>"
                 )
             parts.append("</ol>")
         parts.append("</li>")
@@ -484,16 +495,17 @@ def beautify_japanese_title(title: str) -> str:
 
     Typography rules:
     1. Break after colons (：) for natural reading rhythm
-    2. Break at semantic boundaries (20-30 chars per line)
-    3. Avoid breaking after particles (の、と、による)
-    4. Keep compound terms together
+    2. Break at semantic boundaries (18-25 chars per line for readability)
+    3. Avoid breaking after particles (の、と)
+    4. Break after による、として、について for natural flow
+    5. Keep compound terms together
     """
     # Already has HTML breaks
     if '<br>' in title or '<br/>' in title or '<br />' in title:
         return title
 
     # Short titles don't need breaks
-    if len(title) <= 25:
+    if len(title) <= 22:
         return title
 
     # Rule 1: Break after colon for natural segmentation
@@ -503,34 +515,62 @@ def beautify_japanese_title(title: str) -> str:
             prefix = parts[0]
             suffix = parts[1]
 
-            # If suffix is still long (>28 chars), add another break
-            if len(suffix) > 28:
-                # Look for natural break points: による、として、について、での
-                break_patterns = ['による', 'として', 'について', 'での', 'による']
-                for pattern in break_patterns:
-                    if pattern in suffix:
+            # If suffix is still long (>22 chars), add another break
+            if len(suffix) > 22:
+                # Look for natural break points in order of preference
+                break_patterns = [
+                    ('による', 3),  # (pattern, chars to include after pattern)
+                    ('について', 4),
+                    ('として', 3),
+                    ('での', 2),
+                    ('における', 4),
+                    ('に関する', 4),
+                    ('と', 1),  # Added for broader coverage
+                ]
+
+                for pattern, offset in break_patterns:
+                    idx = suffix.find(pattern)
+                    # More flexible range: allow breaks from 10-30 chars into the suffix
+                    if idx != -1 and 10 < idx + len(pattern) < min(len(suffix) - 6, 30):
                         # Break after the pattern
-                        suffix = suffix.replace(pattern, pattern + '<br>', 1)
+                        break_point = idx + len(pattern)
+                        suffix = suffix[:break_point] + '<br>' + suffix[break_point:]
                         break
 
             return f"{prefix}：<br>{suffix}"
 
     # Rule 2: For long titles without colons, find semantic break
-    if len(title) > 30:
-        mid_point = len(title) // 2
-        # Search for good break points near the middle
-        break_chars = ['、', '。', '・']
-        for i in range(mid_point - 8, mid_point + 8):
-            if 0 <= i < len(title) and title[i] in break_chars:
-                return title[:i+1] + '<br>' + title[i+1:]
+    if len(title) > 28:
+        # Target line length: 18-25 chars
+        target_length = 20
 
-        # If no punctuation, look for particles (but avoid breaking immediately after them)
-        particles = ['との', 'への', 'による', 'として']
-        for particle in particles:
-            if particle in title:
-                idx = title.find(particle)
-                if abs(idx - mid_point) < 10:  # Within 10 chars of midpoint
-                    return title[:idx + len(particle)] + '<br>' + title[idx + len(particle):]
+        # Look for natural break points
+        break_patterns = [
+            ('による', 3),
+            ('について', 4),
+            ('として', 3),
+            ('における', 4),
+            ('に関する', 4),
+            ('、', 1),
+            ('。', 1),
+        ]
+
+        for pattern, offset in break_patterns:
+            idx = title.find(pattern)
+            if idx != -1:
+                break_point = idx + len(pattern)
+                # Check if this creates reasonable line lengths
+                if target_length - 8 < break_point < target_length + 8:
+                    return title[:break_point] + '<br>' + title[break_point:]
+
+        # Fallback: break near middle at any particle
+        mid_point = len(title) // 2
+        fallback_particles = ['と', 'の', 'を', 'に', 'で', 'が', 'は']
+        for i in range(mid_point - 6, mid_point + 6):
+            if 0 <= i < len(title) and title[i] in fallback_particles:
+                # Don't break right after the particle, find the next character
+                if i + 1 < len(title):
+                    return title[:i+1] + '<br>' + title[i+1:]
 
     return title
 
@@ -665,10 +705,13 @@ def main(argv: Optional[List[str]] = None) -> int:
 
         source_display = source["source_display"]  # type: ignore[assignment]
 
+        # Apply magazine-quality typography to title
+        beautified_title = beautify_japanese_title(html.escape(title))
+
         page_html = apply_template(
             template,
             {
-                "title": html.escape(title),
+                "title": beautified_title,
                 "subtitle_block": subtitle_block,
                 "generated_on": now.strftime("%Y-%m-%d %H:%M"),
                 "source_path": html.escape(source_display),
@@ -680,9 +723,12 @@ def main(argv: Optional[List[str]] = None) -> int:
 
         (manual_dir / "index.html").write_text(page_html, encoding="utf-8")
 
+        # Apply magazine-quality typography to index title as well
+        index_title = beautify_japanese_title(html.escape(title))
+
         manuals_index.append(
             {
-                "title": html.escape(title),
+                "title": index_title,
                 "href": f"{slug}/",
                 "summary": html.escape(summarize_manual(converter)),
                 "sections": str(len([h for h in converter.headings if h["level"] == 2])),
