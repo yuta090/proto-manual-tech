@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>プロジェクト構造ドキュメント</title>
+  <link rel="stylesheet" href="../assets/manual.css" />
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // すべてのpreタグにコピーボタンを追加
+      document.querySelectorAll('.manual-content pre').forEach(function(pre) {
+        const button = document.createElement('button');
+        button.className = 'code-copy-btn';
+        button.textContent = 'コピー';
+
+        button.addEventListener('click', function() {
+          const code = pre.querySelector('code');
+          const text = code ? code.textContent : pre.textContent;
+
+          navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'コピー完了！';
+            button.classList.add('copied');
+
+            setTimeout(function() {
+              button.textContent = 'コピー';
+              button.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('コピー失敗:', err);
+            button.textContent = 'エラー';
+          });
+        });
+
+        pre.appendChild(button);
+      });
+
+      // ナビゲーショントグル機能
+      const navToggle = document.getElementById('navToggle');
+      const manualLayout = document.getElementById('manualLayout');
+      const manualNav = document.getElementById('manualNav');
+
+      if (navToggle && manualLayout && manualNav) {
+        navToggle.addEventListener('click', function() {
+          manualLayout.classList.toggle('nav-collapsed');
+          navToggle.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <header class="manual-header">
+    <div class="header-text">
+      <h1>プロジェクト構造ドキュメント</h1>
+      
+      <dl class="manual-meta">
+        <div>
+          <dt>最終更新</dt>
+          <dd>2025-10-10 15:22</dd>
+        </div>
+      </dl>
+    </div>
+  </header>
+  <button class="nav-toggle" id="navToggle" aria-label="目次を開閉">☰</button>
+  <div class="manual-layout" id="manualLayout">
+    <aside class="manual-nav" id="manualNav">
+      <nav class="toc" aria-label="目次"><h2>Quick Links</h2><ol class="toc-list"><li><a href="#目次">目次</a></li><li><a href="#アーキテクチャ概要">アーキテクチャ概要</a><ol><li><a href="#設計原則">設計原則</a></li><li><a href="#システム構成図">システム構成図</a></li></ol></li><li><a href="#ディレクトリ構造">ディレクトリ構造</a><ol><li><a href="#docs---ソースドキュメント"><code>/docs/</code> - ソースドキュメント</a></li><li><a href="#templates---htmlテンプレート"><code>/templates/</code> - HTMLテンプレート</a></li><li><a href="#assets---スタイルとアセット"><code>/assets/</code> - スタイルとアセット</a></li><li><a href="#tools---ビルドツール"><code>/tools/</code> - ビルドツール</a></li><li><a href="#site---生成出力自動生成"><code>/site/</code> - 生成出力（自動生成）</a></li></ol></li><li><a href="#コンポーネント詳細">コンポーネント詳細</a><ol><li><a href="#1-markdownconverter">1. MarkdownConverter</a></li><li><a href="#2-フローチャート変換">2. フローチャート変換</a></li><li><a href="#3-目次生成">3. 目次生成</a></li><li><a href="#4-日本語組版処理">4. 日本語組版処理</a></li><li><a href="#5-テンプレートシステム">5. テンプレートシステム</a></li></ol></li><li><a href="#データフロー">データフロー</a><ol><li><a href="#ビルドプロセス全体">ビルドプロセス全体</a></li><li><a href="#変換パイプライン詳細">変換パイプライン詳細</a></li></ol></li><li><a href="#拡張ガイド">拡張ガイド</a><ol><li><a href="#新しいmarkdown構文の追加">新しいMarkdown構文の追加</a></li><li><a href="#新しいテーマセクションの追加">新しいテーマセクションの追加</a></li><li><a href="#新しいマニュアルの追加">新しいマニュアルの追加</a></li><li><a href="#カスタムテンプレート変数の追加">カスタムテンプレート変数の追加</a></li></ol></li><li><a href="#ベストプラクティス">ベストプラクティス</a><ol><li><a href="#パフォーマンス">パフォーマンス</a></li><li><a href="#保守性">保守性</a></li><li><a href="#品質">品質</a></li></ol></li><li><a href="#トラブルシューティング">トラブルシューティング</a><ol><li><a href="#よくある問題">よくある問題</a></li></ol></li></ol></nav>
+    </aside>
+    <main class="manual-content">
+      <p>このドキュメントは、proto-manual-techプロジェクトの詳細な構造とコンポーネント間の関係を説明します。</p>
+<h2 id="目次">目次</h2>
+<ol>
+<li>
+<a href="#アーキテクチャ概要">アーキテクチャ概要</a>
+</li>
+<li>
+<a href="#ディレクトリ構造">ディレクトリ構造</a>
+</li>
+<li>
+<a href="#コンポーネント詳細">コンポーネント詳細</a>
+</li>
+<li>
+<a href="#データフロー">データフロー</a>
+</li>
+<li>
+<a href="#拡張ガイド">拡張ガイド</a>
+</li>
+</ol>
+<h2 id="アーキテクチャ概要">アーキテクチャ概要</h2>
+<h3 id="設計原則">設計原則</h3>
+<p>proto-manual-techは以下の設計原則に基づいています：</p>
+<ol>
+<li>
+<strong>ソースと出力の完全分離</strong>
+<ul>
+<li>
+<code>docs/</code> = ソース真実（Source of Truth）
+</li>
+<li>
+<code>site/</code> = 完全自動生成（手動編集禁止）
+</li>
+</ul>
+</li>
+<li>
+<strong>シンプルなビルドパイプライン</strong>
+<ul>
+<li>
+依存関係なし（Python標準ライブラリのみ）
+</li>
+<li>
+単一スクリプトで完結
+</li>
+<li>
+明確なエラーハンドリング
+</li>
+</ul>
+</li>
+<li>
+<strong>拡張可能な設計</strong>
+<ul>
+<li>
+カスタムMarkdown構文のサポート
+</li>
+<li>
+プラグイン的な機能追加が容易
+</li>
+<li>
+テンプレートベースの柔軟性
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="システム構成図">システム構成図</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                     Input Layer                              │
+│  docs/ai-prep-manual/*.md (Markdownソースファイル)            │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────────┐
+│              Processing Layer                                │
+│  tools/build_manual.py (MarkdownConverter)                  │
+│  ├─ ファイル発見 (discover_manual_sources)                   │
+│  ├─ Markdown → HTML変換 (MarkdownConverter.convert)         │
+│  ├─ 目次生成 (build_toc)                                     │
+│  ├─ テンプレート適用 (apply_template)                        │
+│  └─ 日本語組版 (beautify_japanese_title)                    │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────────┐
+│                Template Layer                                │
+│  templates/manual_template.html (ページテンプレート)          │
+│  templates/index_template.html (インデックステンプレート)     │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 Style Layer                                  │
+│  assets/manual.css (デザインシステム)                         │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  Output Layer                                │
+│  site/ (生成されたHTML + CSS)                                 │
+│  ├─ index.html (マニュアル一覧)                               │
+│  ├─ assets/manual.css (コピーされたCSS)                      │
+│  └─ ai/index.html (個別マニュアル)                            │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="ディレクトリ構造">ディレクトリ構造</h2>
+<h3 id="docs---ソースドキュメント"><code>/docs/</code> - ソースドキュメント</h3>
+<pre><code>docs/
+├── ai-prep-manual/          # AI開発準備マニュアル
+│   ├── 00-sdd.md            # 仕様駆動開発について
+│   ├── 01-section.md        # セクション概要
+│   ├── 02-0-30ai.md         # AI準備（30分）
+│   ├── 03-1-ai.md           # Claude Code基礎
+│   ├── 04-2-ai.md           # Super Claudeの導入
+│   ├── 05-3-ai.md           # コマンド実践
+│   ├── 06-4-ai.md           # セットアップ手順
+│   ├── 07-5-mcpmodel-context-protocol.md  # MCPの理解
+│   ├── 08-6-aiweb.md        # Webアプリ開発
+│   ├── 09-7-github.md       # GitHub連携
+│   ├── 10-8.md              # バージョン管理
+│   ├── 11-9.md              # 実践プロジェクト
+│   ├── 12-10-sdd.md         # SDD組織変革
+│   └── 13-11.md             # まとめ
+└── PROJECT_STRUCTURE.md     # このファイル
+</code></pre>
+<p><strong>命名規則</strong>:</p>
+<ul>
+<li>
+<code>NN-slug.md</code> 形式（NNは表示順序）
+</li>
+<li>
+先頭2桁の数字で章の順序を制御
+</li>
+<li>
+スラッグは英数字とハイフン
+</li>
+</ul>
+<h3 id="templates---htmlテンプレート"><code>/templates/</code> - HTMLテンプレート</h3>
+<pre><code>templates/
+├── manual_template.html     # 個別マニュアルページのテンプレート
+└── index_template.html      # マニュアル一覧ページのテンプレート
+</code></pre>
+<p><strong>テンプレート変数</strong>:</p>
+<ul>
+<li>
+<code>{{ title }}</code> - ドキュメントタイトル（H1から抽出）
+</li>
+<li>
+<code>{{ subtitle_block }}</code> - サブタイトルブロック（現在未使用）
+</li>
+<li>
+<code>{{ content }}</code> - 変換されたHTMLコンテンツ
+</li>
+<li>
+<code>{{ toc }}</code> - 自動生成される目次
+</li>
+<li>
+<code>{{ assets_href }}</code> - アセットへの相対パス
+</li>
+<li>
+<code>{{ generated_on }}</code> - 生成日時
+</li>
+<li>
+<code>{{ source_path }}</code> - ソースファイルパス
+</li>
+</ul>
+<h3 id="assets---スタイルとアセット"><code>/assets/</code> - スタイルとアセット</h3>
+<pre><code>assets/
+└── manual.css               # メインスタイルシート
+</code></pre>
+<p><strong>CSSアーキテクチャ</strong>:</p>
+<ol>
+<li>
+<strong>CSS変数</strong> (<code>:root</code>): デザイントークン定義
+</li>
+<li>
+<strong>基本スタイル</strong>: リセット、タイポグラフィ
+</li>
+<li>
+<strong>レイアウト</strong>: フレックスボックスベースのレスポンシブ設計
+</li>
+<li>
+<strong>コンポーネント</strong>: 目次、テーブル、コードブロック
+</li>
+<li>
+<strong>特殊機能</strong>: フローチャート、カラーテーマセクション
+</li>
+</ol>
+<h3 id="tools---ビルドツール"><code>/tools/</code> - ビルドツール</h3>
+<pre><code>tools/
+└── build_manual.py          # メインビルドスクリプト（~800行）
+</code></pre>
+<p><strong>主要クラス・関数</strong>:</p>
+<ul>
+<li>
+<code>MarkdownConverter</code>: カスタムMarkdownパーサー
+</li>
+<li>
+<code>format_inlines()</code>: インライン要素の変換
+</li>
+<li>
+<code>build_toc()</code>: 目次HTML生成
+</li>
+<li>
+<code>beautify_japanese_title()</code>: 日本語タイトル改行処理
+</li>
+<li>
+<code>discover_manual_sources()</code>: ソースファイル発見
+</li>
+<li>
+<code>apply_template()</code>: テンプレート変数置換
+</li>
+<li>
+<code>main()</code>: ビルドプロセス実行
+</li>
+</ul>
+<h3 id="site---生成出力自動生成"><code>/site/</code> - 生成出力（自動生成）</h3>
+<pre><code>site/
+├── index.html               # マニュアル一覧ページ
+├── assets/
+│   └── manual.css           # コピーされたスタイルシート
+└── ai/
+    └── index.html           # AI開発マニュアル
+</code></pre>
+<p>⚠️ <strong>重要</strong>: このディレクトリのファイルは自動生成されます。直接編集しないでください。</p>
+<h2 id="コンポーネント詳細">コンポーネント詳細</h2>
+<h3 id="1-markdownconverter">1. MarkdownConverter</h3>
+<p><strong>場所</strong>: <code>tools/build_manual.py</code> (Line 101-447)</p>
+<p><strong>責務</strong>:</p>
+<ul>
+<li>
+Markdownテキストを構造化されたHTMLに変換
+</li>
+<li>
+見出しからスラッグ生成とID付与
+</li>
+<li>
+目次用の見出しリスト作成
+<p><strong>サポートされる構文</strong>:</p>
+</li>
+</ul>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>Markdown</th>
+<th>HTML</th>
+<th>備考</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code># 見出し</code></td>
+<td><code>&lt;h1 id=&quot;slug&quot;&gt;</code></td>
+<td>自動ID生成</td>
+</tr>
+<tr>
+<td><code>---</code></td>
+<td><code>&lt;hr /&gt;</code></td>
+<td>水平線</td>
+</tr>
+<tr>
+<td><code>- リスト</code></td>
+<td><code>&lt;ul&gt;&lt;li&gt;</code></td>
+<td>ネスト対応</td>
+</tr>
+<tr>
+<td><code>1. リスト</code></td>
+<td><code>&lt;ol&gt;&lt;li&gt;</code></td>
+<td>ネスト対応</td>
+</tr>
+<tr>
+<td><code> </code>`<code>python </code></td>
+<td><code>&lt;pre&gt;&lt;code&gt;</code></td>
+<td>言語クラス付与</td>
+</tr>
+<tr>
+<td><code>[text](url)</code></td>
+<td><code>&lt;a&gt;</code></td>
+<td>外部リンクは別タブ</td>
+</tr>
+<tr>
+<td><code>![alt](url)</code></td>
+<td><code>&lt;img&gt;</code></td>
+<td>lazy loading</td>
+</tr>
+<tr>
+<td><code>**太字**</code></td>
+<td><code>&lt;strong&gt;</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>*斜体*</code></td>
+<td><code>&lt;em&gt;</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td>`<code> </code>code<code> </code>`</td>
+<td><code>&lt;code&gt;</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td>テーブル</td>
+<td><code>&lt;table&gt;</code></td>
+<td>レスポンシブラッパー</td>
+</tr>
+<tr>
+<td>フローチャート</td>
+<td>カスタムHTML</td>
+<td>視覚的表現</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>主要メソッド</strong>:</p>
+<pre><code class="language-python">def convert(self, text: str) -&gt; str:
+    &quot;&quot;&quot;Markdownテキストを行単位で解析してHTMLに変換&quot;&quot;&quot;
+
+def slugify(self, text: str) -&gt; str:
+    &quot;&quot;&quot;見出しテキストからURLフレンドリーなスラッグを生成&quot;&quot;&quot;
+
+@staticmethod
+def parse_flowchart(content: str) -&gt; str:
+    &quot;&quot;&quot;フローチャート記法を視覚的HTMLに変換&quot;&quot;&quot;
+</code></pre>
+<h3 id="2-フローチャート変換">2. フローチャート変換</h3>
+<p><strong>入力形式</strong>:</p>
+<pre><code class="language-markdown">**コマンドフローチャートの位置づけ:** 新規開発 → **アイデアがある** → `/sc:brainstorm`
+</code></pre>
+<p><strong>出力HTML</strong>:</p>
+<pre><code class="language-html">&lt;div class=&quot;flowchart-container&quot;&gt;
+  &lt;div class=&quot;flowchart-step&quot;&gt;新規開発&lt;/div&gt;
+  &lt;div class=&quot;flowchart-arrow&quot;&gt;→&lt;/div&gt;
+  &lt;div class=&quot;flowchart-step flowchart-highlight&quot;&gt;アイデアがある&lt;/div&gt;
+  &lt;div class=&quot;flowchart-arrow&quot;&gt;→&lt;/div&gt;
+  &lt;div class=&quot;flowchart-step flowchart-command&quot;&gt;/sc:brainstorm&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>スタイリング</strong>: <code>assets/manual.css</code> (Line 1393-1468)</p>
+<ul>
+<li>
+<code>.flowchart-container</code>: フレックスボックスレイアウト
+</li>
+<li>
+<code>.flowchart-step</code>: 各ステップのボックス
+</li>
+<li>
+<code>.flowchart-highlight</code>: 強調ステップ（青グラデーション）
+</li>
+<li>
+<code>.flowchart-command</code>: コマンドステップ（ダークコードスタイル）
+</li>
+<li>
+<code>.flowchart-arrow</code>: 矢印（モバイルで90度回転）
+</li>
+</ul>
+<h3 id="3-目次生成">3. 目次生成</h3>
+<p><strong>ロジック</strong> (<code>build_toc()</code> 関数):</p>
+<ol>
+<li>
+<strong>見出しの収集</strong>: H2-H4見出しを使用
+</li>
+<li>
+<strong>階層構造の構築</strong>:
+<ul>
+<li>
+H2 → セクション（トップレベル）
+</li>
+<li>
+H3-H4 → サブセクション（ネスト）
+</li>
+</ul>
+</li>
+<li>
+<strong>HTML生成</strong>: <code>&lt;ol&gt;</code> による階層的なリスト
+</li>
+<li>
+<strong>日本語組版</strong>: タイトルに改行処理を適用
+<p><strong>HTML構造</strong>:</p>
+<pre><code class="language-html">&lt;nav class=&quot;toc&quot;&gt;
+  &lt;h2&gt;Quick Links&lt;/h2&gt;
+  &lt;ol class=&quot;toc-list&quot;&gt;
+    &lt;li&gt;&lt;a href=&quot;#section-1&quot;&gt;セクション1&lt;/a&gt;
+      &lt;ol&gt;
+        &lt;li&gt;&lt;a href=&quot;#subsection-1-1&quot;&gt;サブセクション1.1&lt;/a&gt;&lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;
+</code></pre>
+</li>
+</ol>
+<h3 id="4-日本語組版処理">4. 日本語組版処理</h3>
+<p><strong>関数</strong>: <code>beautify_japanese_title(title: str) -&gt; str</code></p>
+<p><strong>ルール</strong>:</p>
+<ol>
+<li>
+<strong>コロン後の改行</strong>: <code>：</code> の後で自然に改行
+</li>
+<li>
+<strong>意味境界での改行</strong>: 18-25文字で可読性向上
+</li>
+<li>
+<strong>助詞での改行回避</strong>: <code>の</code>、<code>と</code> の後では改行しない
+</li>
+<li>
+<strong>機能語での改行</strong>: <code>による</code>、<code>として</code>、<code>について</code> の後で改行
+</li>
+<li>
+<strong>複合語の保持</strong>: 一体性のある用語をまとめる
+<p><strong>例</strong>:</p>
+<pre><code>入力: &quot;MCPサーバー活用によるAI開発環境構築：仕様駆動開発とバイブコーディングによる次世代開発戦略&quot;
+
+出力: &quot;MCPサーバー活用によるAI開発環境構築：&lt;br&gt;仕様駆動開発とバイブコーディングによる&lt;br&gt;次世代開発戦略&quot;
+</code></pre>
+</li>
+</ol>
+<h3 id="5-テンプレートシステム">5. テンプレートシステム</h3>
+<p><strong>処理</strong>: <code>apply_template(template: str, context: Dict[str, str]) -&gt; str</code></p>
+<p><strong>変数置換メカニズム</strong>:</p>
+<pre><code class="language-python"># テンプレート内の {{ variable }} を context[variable] で置換
+result = template.replace(&quot;{{ title }}&quot;, context[&quot;title&quot;])
+</code></pre>
+<p><strong>使用例</strong>:</p>
+<pre><code class="language-python">context = {
+    &quot;title&quot;: &quot;AI開発ツール完全活用マニュアル&quot;,
+    &quot;content&quot;: &quot;&lt;h2&gt;はじめに&lt;/h2&gt;&lt;p&gt;...&lt;/p&gt;&quot;,
+    &quot;toc&quot;: &quot;&lt;nav&gt;...&lt;/nav&gt;&quot;,
+    &quot;assets_href&quot;: &quot;../assets&quot;
+}
+page_html = apply_template(template, context)
+</code></pre>
+<h2 id="データフロー">データフロー</h2>
+<h3 id="ビルドプロセス全体">ビルドプロセス全体</h3>
+<pre><code>1. ファイル発見
+   ├─ docs/ ディレクトリをスキャン
+   ├─ *.md ファイルを収集
+   └─ NN-slug.md 形式で並び替え
+
+2. Markdown → HTML変換
+   ├─ 各.mdファイルを読み込み
+   ├─ MarkdownConverter.convert() で変換
+   ├─ 見出しリストの抽出（目次用）
+   └─ タイトルの抽出（H1）
+
+3. 目次生成
+   ├─ 見出しリストから階層構造を構築
+   ├─ HTML &lt;ol&gt; リストを生成
+   └─ 日本語組版処理を適用
+
+4. テンプレート適用
+   ├─ manual_template.html を読み込み
+   ├─ 変数（title, content, toc等）を置換
+   └─ 最終HTMLを生成
+
+5. アセットコピー
+   ├─ assets/ を site/assets/ にコピー
+   └─ 相対パスの調整
+
+6. インデックス生成
+   ├─ 全マニュアルのメタデータを収集
+   ├─ index_template.html を読み込み
+   └─ site/index.html を生成
+</code></pre>
+<h3 id="変換パイプライン詳細">変換パイプライン詳細</h3>
+<pre><code>Raw Markdown
+    │
+    ├─ 行単位で読み込み
+    │
+    ▼
+構文解析
+    │
+    ├─ 見出しパターンマッチ → H1-H6 + スラッグ生成
+    ├─ リストパターンマッチ → UL/OL + ネスト処理
+    ├─ テーブルパターンマッチ → TABLE + レスポンシブラッパー
+    ├─ コードブロック検出 → PRE + CODE + 言語クラス
+    ├─ フローチャート検出 → カスタムHTML
+    └─ インライン要素処理 → format_inlines()
+    │
+    ▼
+HTML生成
+    │
+    ├─ パラグラフバッファの flush
+    ├─ リストスタックの管理
+    ├─ テーブルバッファの flush
+    └─ 最終HTML文字列の結合
+    │
+    ▼
+後処理
+    │
+    ├─ 日本語組版（タイトル改行）
+    ├─ テンプレート適用
+    └─ ファイル出力
+</code></pre>
+<h2 id="拡張ガイド">拡張ガイド</h2>
+<h3 id="新しいmarkdown構文の追加">新しいMarkdown構文の追加</h3>
+<p><strong>手順</strong>:</p>
+<ol>
+<li>
+<strong>パターン定義</strong>: <code>MarkdownConverter</code> クラス内で正規表現パターンを定義
+<pre><code class="language-python">   custom_pattern = re.compile(r&quot;^@@([A-Z]+):\s+(.+)$&quot;)
+</code></pre>
+</li>
+<li>
+<strong>パース処理追加</strong>: <code>convert()</code> メソッド内でパターンマッチを追加
+<pre><code class="language-python">   custom_match = self.custom_pattern.match(stripped)
+   if custom_match:
+       type_name = custom_match.group(1)
+       content = custom_match.group(2)
+       html_parts.append(self.parse_custom(type_name, content))
+       continue
+</code></pre>
+</li>
+<li>
+<strong>変換関数実装</strong>: 静的メソッドまたはインスタンスメソッドで変換ロジックを実装
+<pre><code class="language-python">   @staticmethod
+   def parse_custom(type_name: str, content: str) -&gt; str:
+       &quot;&quot;&quot;カスタム構文を変換&quot;&quot;&quot;
+       return f&#x27;&lt;div class=&quot;custom-{type_name.lower()}&quot;&gt;{content}&lt;/div&gt;&#x27;
+</code></pre>
+</li>
+<li>
+<strong>CSS追加</strong>: <code>assets/manual.css</code> でスタイルを定義
+<pre><code class="language-css">   .custom-note {
+       background: #FEF3C7;
+       border-left: 4px solid #F59E0B;
+       padding: 1rem;
+   }
+</code></pre>
+</li>
+</ol>
+<h3 id="新しいテーマセクションの追加">新しいテーマセクションの追加</h3>
+<p><strong>例</strong>: MCPサーバー系コマンドのテーマセクション</p>
+<ol>
+<li>
+<strong>CSS変数定義</strong>:
+<pre><code class="language-css">   :root {
+       --color-mcp-primary: #8B5CF6;
+       --color-mcp-secondary: #A78BFA;
+   }
+</code></pre>
+</li>
+<li>
+<strong>セクションスタイル</strong>:
+<pre><code class="language-css">   .mcp-section {
+       background: linear-gradient(135deg, var(--color-mcp-primary), var(--color-mcp-secondary));
+       color: white;
+       padding: 2rem;
+       border-radius: 1rem;
+   }
+</code></pre>
+</li>
+<li>
+<strong>ラッパー関数追加</strong> (<code>build_manual.py</code>):
+<pre><code class="language-python">   html_body = wrap_section_by_heading(
+       html_body,
+       &#x27;MCPサーバーの設定&#x27;,
+       &#x27;mcp-section&#x27;
+   )
+</code></pre>
+</li>
+</ol>
+<h3 id="新しいマニュアルの追加">新しいマニュアルの追加</h3>
+<p><strong>手順</strong>:</p>
+<ol>
+<li>
+<strong>ディレクトリ作成</strong>: <code>docs/new-manual/</code> を作成
+</li>
+<li>
+<strong>Markdownファイル作成</strong>: チャプター別に <code>NN-slug.md</code> ファイルを作成
+<pre><code>   docs/new-manual/
+   ├── 00-introduction.md
+   ├── 01-getting-started.md
+   └── 02-advanced.md
+</code></pre>
+</li>
+<li>
+<strong>ビルド実行</strong>: <code>python tools/build_manual.py</code>
+</li>
+<li>
+<strong>確認</strong>: <code>site/index.html</code> に新しいマニュアルが表示される
+<p><strong>自動処理</strong>:</p>
+</li>
+</ol>
+<ul>
+<li>
+<code>discover_manual_sources()</code> が自動的にディレクトリを検出
+</li>
+<li>
+スラッグは自動生成（ディレクトリ名から）
+</li>
+<li>
+インデックスページに自動追加
+</li>
+</ul>
+<h3 id="カスタムテンプレート変数の追加">カスタムテンプレート変数の追加</h3>
+<p><strong>手順</strong>:</p>
+<ol>
+<li>
+<strong>テンプレートに変数追加</strong> (<code>templates/manual_template.html</code>):
+<pre><code class="language-html">   &lt;meta name=&quot;author&quot; content=&quot;{{ author }}&quot;&gt;
+</code></pre>
+</li>
+<li>
+<strong>ビルドスクリプトで値を設定</strong> (<code>build_manual.py</code>):
+<pre><code class="language-python">   context = {
+       &quot;title&quot;: title,
+       &quot;author&quot;: &quot;Development Team&quot;,  # 新規追加
+       # ... 他の変数
+   }
+</code></pre>
+</li>
+<li>
+<strong>apply_template()</strong> が自動的に置換を実行
+</li>
+</ol>
+<h2 id="ベストプラクティス">ベストプラクティス</h2>
+<h3 id="パフォーマンス">パフォーマンス</h3>
+<ol>
+<li>
+<strong>正規表現のコンパイル</strong>: パターンはクラス変数として事前コンパイル
+</li>
+<li>
+<strong>バッファリング</strong>: パラグラフやテーブルのバッファリングで効率的に処理
+</li>
+<li>
+<strong>遅延評価</strong>: 必要になるまでHTMLを生成しない
+</li>
+</ol>
+<h3 id="保守性">保守性</h3>
+<ol>
+<li>
+<strong>関数分割</strong>: 各機能を独立した関数に分割
+</li>
+<li>
+<strong>型ヒント</strong>: すべての関数に型アノテーションを付ける
+</li>
+<li>
+<strong>ドキュメント</strong>: docstringで各関数の動作を説明
+</li>
+</ol>
+<h3 id="品質">品質</h3>
+<ol>
+<li>
+<strong>既存テスト</strong>: 変更後は既存マニュアルのビルドを確認
+</li>
+<li>
+<strong>ブラウザテスト</strong>: 複数ブラウザで表示確認
+</li>
+<li>
+<strong>レスポンシブ確認</strong>: モバイル、タブレット、デスクトップで確認
+</li>
+</ol>
+<h2 id="トラブルシューティング">トラブルシューティング</h2>
+<h3 id="よくある問題">よくある問題</h3>
+<p><strong>問題</strong>: 見出しIDが重複する</p>
+<ul>
+<li>
+<strong>原因</strong>: 同じテキストの見出しが複数存在
+</li>
+<li>
+<strong>解決</strong>: <code>slugify()</code> が自動的に番号サフィックスを追加（<code>slug-2</code>, <code>slug-3</code>）
+<p><strong>問題</strong>: テーブルが表示されない</p>
+</li>
+<li>
+<strong>原因</strong>: Markdownテーブル構文が不正
+</li>
+<li>
+<strong>解決</strong>: パイプ <code>|</code> の位置とヘッダー区切り行 <code>|---|---|</code> を確認
+<p><strong>問題</strong>: フローチャートが変換されない</p>
+</li>
+<li>
+<strong>原因</strong>: パターンマッチの失敗
+</li>
+<li>
+<strong>解決</strong>: <code>**コマンドフローチャートの位置づけ:**</code> という完全一致が必要
+<p><strong>問題</strong>: CSSが反映されない</p>
+</li>
+<li>
+<strong>原因</strong>: ブラウザキャッシュ
+</li>
+<li>
+<strong>解決</strong>: ハードリロード（Cmd+Shift+R / Ctrl+Shift+R）
+</li>
+</ul>
+<hr />
+<p><strong>最終更新</strong>: 2025-10-10 <strong>ドキュメント作成</strong>: Claude Code</p>
+    </main>
+  </div>
+  <footer class="manual-footer">
+    <p>このドキュメントは自動生成されました。元ファイルを更新した際は <code>python tools/build_manual.py</code> を再実行してください。</p>
+  </footer>
+</body>
+</html>
