@@ -64,9 +64,16 @@ def format_inlines(text: str) -> str:
         href_raw = match.group(2)
         label = format_inlines(label_raw)
         href = html.escape(href_raw, quote=True)
-        return new_placeholder(
-            f'<a href="{href}" target="_blank" rel="noopener noreferrer">{label}</a>'
-        )
+
+        # ページ内リンク（#で始まる）の場合はtarget="_blank"を付けない
+        if href_raw.startswith('#'):
+            return new_placeholder(
+                f'<a href="{href}">{label}</a>'
+            )
+        else:
+            return new_placeholder(
+                f'<a href="{href}" target="_blank" rel="noopener noreferrer">{label}</a>'
+            )
 
     text = re.sub(r"\[([^\]]+?)\]\(([^)]+?)\)", link_repl, text)
 
