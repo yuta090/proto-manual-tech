@@ -1389,3 +1389,80 @@ body {
     white-space: normal;
   }
 }
+
+/* ============================================
+   FLOWCHART INFOGRAPHICS
+   ============================================ */
+
+/* Flowchart Container - Horizontal Layout */
+.manual-content .flowchart-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+  border-radius: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Flowchart Step - Base Box */
+.manual-content .flowchart-step {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid rgba(148, 163, 184, 0.3);
+  border-radius: 0.5rem;
+  background: white;
+  font-weight: 500;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+  transition: all 0.3s ease;
+}
+
+.manual-content .flowchart-step:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+/* Flowchart Highlight - Emphasized Step */
+.manual-content .flowchart-highlight {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border-color: #1d4ed8;
+  font-weight: 600;
+}
+
+/* Flowchart Command - Code Step */
+.manual-content .flowchart-command {
+  background: #0f172a;
+  color: #10b981;
+  border-color: #334155;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-weight: 600;
+}
+
+/* Flowchart Arrow */
+.manual-content .flowchart-arrow {
+  font-size: 1.5rem;
+  color: #64748b;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .manual-content .flowchart-container {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .manual-content .flowchart-arrow {
+    transform: rotate(90deg);
+  }
+
+  .manual-content .flowchart-step {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -108,6 +108,7 @@ class MarkdownConverter:
     table_row_pattern = re.compile(r"^\s*\|(.+)\|\s*$")
     table_sep_pattern = re.compile(r"^\s*\|[\s:|-]+\|\s*$")
     blockquote_pattern = re.compile(r"^>\s+(.*)")
+    flowchart_pattern = re.compile(r"^\*\*コマンドフローチャートの位置づけ:\*\*\s+(.+)$")
 
     def __init__(self) -> None:
         self.headings: List[Dict[str, str]] = []
@@ -126,6 +127,44 @@ class MarkdownConverter:
         # Split by pipe and strip whitespace from each cell
         cells = [cell.strip() for cell in line.split('|')]
         return cells
+
+    @staticmethod
+    def parse_flowchart(content: str) -> str:
+        """Parse flowchart content and convert to visual HTML infographic."""
+        # Split by arrow
+        steps = [s.strip() for s in content.split('→')]
+
+        html_parts = ['<div class="flowchart-container">']
+
+        for i, step in enumerate(steps):
+            # Check if step is bold (highlighted)
+            is_highlighted = step.startswith('**') and step.endswith('**')
+            # Check if step is code
+            is_command = step.startswith('`') and step.endswith('`')
+
+            # Remove formatting markers
+            clean_step = step
+            css_class = 'flowchart-step'
+
+            if is_highlighted:
+                clean_step = step[2:-2]  # Remove **
+                css_class = 'flowchart-step flowchart-highlight'
+            elif is_command:
+                clean_step = step[1:-1]  # Remove `
+                css_class = 'flowchart-step flowchart-command'
+
+            # Escape HTML
+            clean_step = html.escape(clean_step)
+
+            # Add step
+            html_parts.append(f'<div class="{css_class}">{clean_step}</div>')
+
+            # Add arrow if not last step
+            if i < len(steps) - 1:
+                html_parts.append('<div class="flowchart-arrow">→</div>')
+
+        html_parts.append('</div>')
+        return ''.join(html_parts)
 
     def slugify(self, text: str) -> str:
         normalized = unicodedata.normalize("NFKC", text).strip().lower()
@@ -358,6 +397,16 @@ class MarkdownConverter:
             # If we were in blockquote mode but current line is not blockquote, flush it
             if blockquote_buffer:
                 flush_blockquote()
+
+            # Check for flowchart pattern
+            flowchart_match = self.flowchart_pattern.match(stripped)
+            if flowchart_match:
+                flush_paragraph()
+                close_all_lists()
+                flowchart_content = flowchart_match.group(1)
+                flowchart_html = self.parse_flowchart(flowchart_content)
+                html_parts.append(flowchart_html)
+                continue
 
             ul_match = self.ul_pattern.match(line)
             if ul_match:
