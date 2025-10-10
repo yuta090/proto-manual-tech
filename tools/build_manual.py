@@ -467,11 +467,12 @@ def render_index(output_dir: Path, manuals: List[Dict[str, str]]) -> None:
     template = INDEX_TEMPLATE_PATH.read_text(encoding="utf-8")
     cards: List[str] = []
     for manual in manuals:
+        summary_html = f"<p>{manual['summary']}</p>" if manual['summary'] else ""
         cards.append(
             (
                 '<article class="manual-card">'
                 f"<h2><a href=\"{manual['href']}\">{manual['title']}</a></h2>"
-                f"<p>{manual['summary']}</p>"
+                f"{summary_html}"
                 f"<dl><div><dt>更新</dt><dd>{manual['generated_on']}</dd></div>"
                 f"<div><dt>セクション</dt><dd>{manual['sections']}</dd></div></dl>"
                 "</article>"
@@ -487,10 +488,8 @@ def render_index(output_dir: Path, manuals: List[Dict[str, str]]) -> None:
 
 
 def summarize_manual(converter: MarkdownConverter) -> str:
-    first_paragraph = next((h for h in converter.headings if h["level"] == 2), None)
-    if first_paragraph:
-        return first_paragraph["text"]
-    return "Markdown converted manual"
+    # No summary
+    return ""
 
 
 def beautify_japanese_title(title: str) -> str:
@@ -691,12 +690,8 @@ def main(argv: Optional[List[str]] = None) -> int:
         html_body = wrap_section_by_heading(html_body, '✅ 認証設定', 'auth-setup-section')
 
         title = converter.title or str(source["label"])
-        subtitle_heading = next((h for h in converter.headings if h["level"] == 2), None)
-        subtitle_block = (
-            f"<p class=\"manual-subtitle\">{format_inlines(subtitle_heading['text'])}</p>"
-            if subtitle_heading
-            else ""
-        )
+        # No subtitle block
+        subtitle_block = ""
         toc_html = build_toc(converter.headings)
         slug_hint = str(source["slug_hint"])
         slug = make_output_slug(title or slug_hint, used_slugs)
