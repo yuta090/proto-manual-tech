@@ -656,13 +656,20 @@ install_super_claude() {
 
     # MCP 設定
     if [[ "$(get_state super_claude mcp_configured)" != "True" ]]; then
-        print_info "Super Claude MCP サーバーをインストール中..."
-        # 非対話モードで全MCPをインストール
-        echo "all" | SuperClaude install --force --yes &> /dev/null || true
-        print_success "MCP サーバー設定完了"
+        print_info "Super Claude フレームワークをインストール中..."
+
+        # 公式オプションを使用して非対話モードでインストール
+        # --quick: 推奨設定で高速インストール
+        # --yes: 全ての確認を自動承認
+        SuperClaude install --quick --yes &> /dev/null || true
+
+        print_success "Super Claude フレームワーク設定完了"
+        print_success "  ✓ Core framework"
+        print_success "  ✓ MCP servers (Context7, Sequential, Magic, Playwright)"
+        print_success "  ✓ Slash commands"
         update_state super_claude mcp_configured True
     else
-        print_success "MCP サーバーは既に設定済みです (スキップ)"
+        print_success "Super Claude フレームワークは既に設定済みです (スキップ)"
     fi
 }
 
