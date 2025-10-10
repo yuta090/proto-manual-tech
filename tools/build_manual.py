@@ -189,6 +189,8 @@ class MarkdownConverter:
             if not table_buffer:
                 return
 
+            # Wrap table in responsive container
+            html_parts.append('<div class="table-wrapper">')
             html_parts.append("<table>")
 
             # Add header
@@ -209,6 +211,7 @@ class MarkdownConverter:
                 html_parts.append("</tbody>")
 
             html_parts.append("</table>")
+            html_parts.append("</div>")
             table_buffer = None
 
         def flush_blockquote() -> None:

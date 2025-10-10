@@ -56,7 +56,7 @@
       <dl class="manual-meta">
         <div>
           <dt>最終更新</dt>
-          <dd>2025-10-10 13:22</dd>
+          <dd>2025-10-10 13:29</dd>
         </div>
       </dl>
     </div>
@@ -567,6 +567,7 @@ cd my-claude-project
 </ul>
 <h4 id="悪いプロンプトの例と良いプロンプトの例">悪いプロンプトの例と良いプロンプトの例</h4>
 <h3 id="32-super-claudeにおけるプロンプトの設計">3.2 Super Claudeにおけるプロンプトの設計</h3>
+<div class="table-wrapper">
 <table>
 <thead><tr>
 <th>悪い例</th>
@@ -583,6 +584,7 @@ cd my-claude-project
 </tr>
 </tbody>
 </table>
+</div>
 <p>Super Claudeでは、これらの原則をCLIコマンドと組み合わせることで、ブレのない、より効率的なプロンプト設計が可能です。</p>
 <ul>
 <li>
@@ -617,6 +619,7 @@ cd my-claude-project
 <p>Super Claudeは、Claude Codeをさらに強力にするための拡張機能です。Super Claudeを導入することで、より高度な開発支援機能を利用できるようになります。</p>
 <h4 id="-super-claudeのインストール">✅ Super Claudeのインストール</h4>
 <p>Super Claudeは、以下のいずれかの方法でインストールできます。ご自身の環境や好みに合わせて選択してください。<strong>pipx</strong>を使用したインストールが最も推奨されています。</p>
+<div class="table-wrapper">
 <table>
 <thead><tr>
 <th>Method</th>
@@ -641,6 +644,7 @@ cd my-claude-project
 </tr>
 </tbody>
 </table>
+</div>
 <p><strong>💡 トラブルシューティング: PEP 668 エラー</strong></p>
 <p><code>pip</code>でインストールする際に <code>externally-managed-environment</code> というエラーが出ることがあります。これは、OSのパッケージマネージャーと<code>pip</code>が競合しないようにするための保護機能によるものです。その場合は、以下のいずれかの方法で対処してください。</p>
 <pre><code class="language-shell"># Option 1: pipx を使用する (推奨)
@@ -665,6 +669,7 @@ pip install --break-system-packages SuperClaude
 </code></pre>
 <p><strong>基本的に、全てのMCPサーバーをインストールすることが推奨されます。</strong> これにより、Super Claudeはあらゆる開発タスクにおいて、より高い精度と文脈理解能力を発揮します。キーボードの矢印キーで選択し、スペースキーでチェックを入れ、Enterキーでインストールを確定します。（<code>7. Skip MCP Server installation</code>以外を選択してください）または　all と入力してエンターを押してください。de</p>
 <p>各MCPサーバーの役割は以下の通りです。</p>
+<div class="table-wrapper">
 <table>
 <thead><tr>
 <th>番号</th>
@@ -711,6 +716,7 @@ pip install --break-system-packages SuperClaude
 </tr>
 </tbody>
 </table>
+</div>
 <p>これらのMCPサーバーをインストールすることで、Super Claudeは単なるコード生成ツールから、プロジェクト全体を理解する真の「AI開発パートナー」へと進化します。</p>
 <h3 id="43-cursor-ideの導入とclaude-code連携">4.3 Cursor IDEの<br>導入とClaude Code連携</h3>
 <p>Cursor IDEは、AIファーストのコードエディタであり、Claude Codeとの連携により、開発体験をさらに向上させます。</p>
@@ -807,7 +813,7 @@ pip install --break-system-packages SuperClaude
 </ul>
 <h3 id="54-mcpを活用した開発ワークフロー">5.4 MCPを活用した開発ワークフロー</h3>
 <p>MCPを最大限に活用することで、Super Claudeの各コマンドがより強力になり、以下のような開発ワークフローを実現できます。</p>
-<p>&lt;div class="mcp-workflow-table"&gt;</p>
+<div class="table-wrapper">
 <table>
 <thead><tr>
 <th>フェーズ</th>
@@ -847,7 +853,7 @@ pip install --break-system-packages SuperClaude
 </tr>
 </tbody>
 </table>
-<p>&lt;/div&gt;</p>
+</div>
 <p>&lt;p style="text-align: center; margin-top: 2rem; font-style: italic; color: #4b5563;"&gt;各コマンドをMCPと連携させることで、AIは単なるコード生成ツールではなく、プロジェクトの深い理解に基づいた真の共同開発者となります。&lt;/p&gt;</p>
 <hr />
 <hr />
@@ -1232,6 +1238,7 @@ sc deploy --target aws-ecs
 <h3 id="102-super-claudeコマンドフローチャートを活用したチーム開発プロセス">10.2 Super Claudeコマンドフローチャートを活用したチーム開発プロセス</h3>
 <p>Super Claudeのコマンドフローチャートを、チームの共通言語として開発プロセスに組み込みます。これにより、どのフェーズでどのコマンドを使うべきかが明確になり、チームメンバー間のコミュニケーションが円滑になります。以下に、一般的な開発プロセスにおけるコマンドの活用例を示します。</p>
 <p>&lt;div class="sdd-workflow-table"&gt;</p>
+<div class="table-wrapper">
 <table>
 <thead><tr>
 <th>開発フェーズ</th>
@@ -1281,6 +1288,7 @@ sc deploy --target aws-ecs
 </tr>
 </tbody>
 </table>
+</div>
 <p>&lt;/div&gt;</p>
 <h3 id="103-導入のステップと成功の鍵">10.3 導入のステップと成功の鍵</h3>
 <p><strong>Step 1: スモールスタートと成功体験の創出</strong></p>

@@ -1293,36 +1293,65 @@ body {
   border-color: rgba(59, 130, 246, 0.3);
 }
 
-/* MCP Workflow Table - Custom Column Widths */
-.mcp-workflow-table table {
-  table-layout: fixed;
+/* Table Wrapper - Responsive Container */
+.manual-content .table-wrapper {
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  -webkit-overflow-scrolling: touch;
 }
 
-.mcp-workflow-table table th:nth-child(1),
-.mcp-workflow-table table td:nth-child(1) {
+.manual-content .table-wrapper table {
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  width: 100%;
+  min-width: 600px;
+}
+
+/* MCP Workflow Table - Custom Column Widths */
+.manual-content h3[id*="mcp"] + p + .table-wrapper table,
+.manual-content h3[id*="ワークフロー"] + p + .table-wrapper table {
+  table-layout: fixed;
+  min-width: 800px;
+}
+
+.manual-content h3[id*="mcp"] + p + .table-wrapper table th:nth-child(1),
+.manual-content h3[id*="mcp"] + p + .table-wrapper table td:nth-child(1),
+.manual-content h3[id*="ワークフロー"] + p + .table-wrapper table th:nth-child(1),
+.manual-content h3[id*="ワークフロー"] + p + .table-wrapper table td:nth-child(1) {
   width: 15%;
   min-width: 100px;
 }
 
-.mcp-workflow-table table th:nth-child(2),
-.mcp-workflow-table table td:nth-child(2) {
+.manual-content h3[id*="mcp"] + p + .table-wrapper table th:nth-child(2),
+.manual-content h3[id*="mcp"] + p + .table-wrapper table td:nth-child(2),
+.manual-content h3[id*="ワークフロー"] + p + .table-wrapper table th:nth-child(2),
+.manual-content h3[id*="ワークフロー"] + p + .table-wrapper table td:nth-child(2) {
   width: 25%;
   min-width: 180px;
   white-space: nowrap;
 }
 
-.mcp-workflow-table table th:nth-child(3),
-.mcp-workflow-table table td:nth-child(3) {
+.manual-content h3[id*="mcp"] + p + .table-wrapper table th:nth-child(3),
+.manual-content h3[id*="mcp"] + p + .table-wrapper table td:nth-child(3),
+.manual-content h3[id*="ワークフロー"] + p + .table-wrapper table th:nth-child(3),
+.manual-content h3[id*="ワークフロー"] + p + .table-wrapper table td:nth-child(3) {
   width: 60%;
 }
 
 @media (max-width: 768px) {
-  .mcp-workflow-table table {
+  .manual-content h3[id*="mcp"] + p + .table-wrapper table,
+  .manual-content h3[id*="ワークフロー"] + p + .table-wrapper table {
     table-layout: auto;
   }
 
-  .mcp-workflow-table table th:nth-child(2),
-  .mcp-workflow-table table td:nth-child(2) {
+  .manual-content h3[id*="mcp"] + p + .table-wrapper table th:nth-child(2),
+  .manual-content h3[id*="mcp"] + p + .table-wrapper table td:nth-child(2),
+  .manual-content h3[id*="ワークフロー"] + p + .table-wrapper table th:nth-child(2),
+  .manual-content h3[id*="ワークフロー"] + p + .table-wrapper table td:nth-child(2) {
     white-space: normal;
   }
 }
