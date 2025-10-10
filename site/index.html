@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI開発サポートマニュアル集</title>
+  <link rel="stylesheet" href="assets/manual.css" />
+  <script>
+    // マニュアルが1つだけの場合、自動的にそのマニュアルにリダイレクト
+    document.addEventListener('DOMContentLoaded', function() {
+      const manualCards = document.querySelectorAll('.manual-card');
+      if (manualCards.length === 1) {
+        const link = manualCards[0].querySelector('h2 a');
+        if (link) {
+          window.location.href = link.getAttribute('href');
+        }
+      }
+    });
+  </script>
+</head>
+<body class="site-index">
+  <header class="index-header">
+    <div>
+      <p class="manual-label">Manual Library</p>
+      <h1>AI開発準備マニュアル集</h1>
+      <p class="manual-subtitle">docs配下のMarkdownをHTMLに自動変換したライブラリです。</p>
+      <p class="index-updated">最終更新: 2025-10-10 11:57</p>
+    </div>
+  </header>
+  <main class="index-main">
+    <section class="manual-grid">
+      <article class="manual-card"><h2><a href="ai/">AI開発ツール完全活用マニュアル：仕様駆動開発とバイブコーディングによる次世代開発戦略</a></h2><p>仕様駆動開発（SDD）に則ったバイブコーディングの活用戦略</p><dl><div><dt>更新</dt><dd>2025-10-10</dd></div><div><dt>セクション</dt><dd>14</dd></div></dl></article>
+    </section>
+  </main>
+  <footer class="manual-footer">
+    <p>新しいMarkdownを追加したら <code>python tools/build_manual.py</code> を実行してください。</p>
+  </footer>
+</body>
+</html>

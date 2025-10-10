@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI開発サポートマニュアル集</title>
+  <link rel="stylesheet" href="{{ assets_href }}/manual.css" />
+  <script>
+    // マニュアルが1つだけの場合、自動的にそのマニュアルにリダイレクト
+    document.addEventListener('DOMContentLoaded', function() {
+      const manualCards = document.querySelectorAll('.manual-card');
+      if (manualCards.length === 1) {
+        const link = manualCards[0].querySelector('h2 a');
+        if (link) {
+          window.location.href = link.getAttribute('href');
+        }
+      }
+    });
+  </script>
+</head>
+<body class="site-index">
+  <header class="index-header">
+    <div>
+      <p class="manual-label">Manual Library</p>
+      <h1>AI開発準備マニュアル集</h1>
+      <p class="manual-subtitle">docs配下のMarkdownをHTMLに自動変換したライブラリです。</p>
+      <p class="index-updated">最終更新: {{ generated_on }}</p>
+    </div>
+  </header>
+  <main class="index-main">
+    <section class="manual-grid">
+      {{ cards }}
+    </section>
+  </main>
+  <footer class="manual-footer">
+    <p>新しいMarkdownを追加したら <code>python tools/build_manual.py</code> を実行してください。</p>
+  </footer>
+</body>
+</html>
