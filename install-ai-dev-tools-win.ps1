@@ -598,30 +598,39 @@ function Install-ClaudeCode {
         Write-Host ""
         Write-Warning-Custom "$LOCK Claude Code の認証が必要です"
         Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Cyan
-        Write-ColorOutput "以下の手順で認証してください:" White
+        Write-Host "⚠️  注意: これから対話型セットアップが始まります" -ForegroundColor White
         Write-Host ""
-        Write-Host "  1. 新しいターミナル（PowerShell または コマンドプロンプト）を開く" -ForegroundColor Yellow
-        Write-Host "  2. 以下のコマンドを実行:" -ForegroundColor Yellow
-        Write-Host "     claude-code" -ForegroundColor Green
-        Write-Host "  3. ブラウザが開くので Claude Pro アカウントでログイン" -ForegroundColor Yellow
-        Write-Host "  4. 認証完了後、このターミナルに戻る" -ForegroundColor Yellow
+        Write-Host "  • 質問が表示されたら答えてください" -ForegroundColor Yellow
+        Write-Host "  • ブラウザが開いたら Claude Pro でログインしてください" -ForegroundColor Yellow
+        Write-Host "  • 認証完了後、自動で次のステップに進みます" -ForegroundColor Yellow
         Write-Host ""
         Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Cyan
 
-        # 認証待機
-        while ($true) {
+        $response = Read-Host "`n認証を開始しますか? (y/N)"
+
+        if ($response -match '^[Yy]$') {
             Write-Host ""
-            $response = Read-Host "認証が完了したら Enter を押してください"
+            Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Cyan
+            Write-Host "Claude Code セットアップ開始" -ForegroundColor White
+            Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Cyan
+            Write-Host ""
+
+            # claude-code を直接実行（対話型）
+            & claude-code
+
+            Write-Host ""
+            Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Cyan
 
             # 認証確認
             $testResult = & claude-code --version 2>&1
             if ($LASTEXITCODE -eq 0) {
                 Write-Success "認証成功！"
                 Update-State "claude_code" "authenticated" $true
-                break
             } else {
-                Write-Error-Custom "認証が確認できませんでした。もう一度お試しください。"
+                Write-Warning-Custom "認証をスキップしました。後で 'claude-code' コマンドを実行して認証してください"
             }
+        } else {
+            Write-Info "後で 'claude-code' コマンドを実行して認証してください"
         }
     } else {
         Write-Success "Claude Code は既に認証済みです"

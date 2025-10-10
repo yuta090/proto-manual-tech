@@ -583,28 +583,37 @@ install_claude_code() {
         echo ""
         print_warning "${LOCK} Claude Code の認証が必要です"
         echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-        echo -e "${WHITE}以下の手順で認証してください:${RESET}\n"
-        echo -e "  ${YELLOW}1.${RESET} 新しいターミナルを開く"
-        echo -e "  ${YELLOW}2.${RESET} 以下のコマンドを実行:"
-        echo -e "     ${GREEN}claude-code${RESET}"
-        echo -e "  ${YELLOW}3.${RESET} ブラウザが開くので Claude Pro アカウントでログイン"
-        echo -e "  ${YELLOW}4.${RESET} 認証完了後、このターミナルに戻る\n"
+        echo -e "${WHITE}${BOLD}⚠️  注意: これから対話型セットアップが始まります${RESET}\n"
+        echo -e "  ${YELLOW}•${RESET} 質問が表示されたら答えてください"
+        echo -e "  ${YELLOW}•${RESET} ブラウザが開いたら Claude Pro でログインしてください"
+        echo -e "  ${YELLOW}•${RESET} 認証完了後、自動で次のステップに進みます\n"
         echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 
-        # 認証待機
-        while true; do
-            echo -ne "\n${CYAN}認証が完了したら Enter を押してください...${RESET}"
-            read
+        echo -ne "\n${CYAN}${BOLD}認証を開始しますか? (y/N): ${RESET}"
+        read -r response
 
-            # 認証確認（claude-code --versionが正常に動作するかチェック）
+        if [[ "$response" =~ ^[Yy]$ ]]; then
+            echo ""
+            echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+            echo -e "${WHITE}${BOLD}Claude Code セットアップ開始${RESET}"
+            echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
+
+            # claude-code を直接実行（対話型）
+            claude-code
+
+            echo ""
+            echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+
+            # 認証確認
             if claude-code --version &> /dev/null; then
                 print_success "認証成功！"
                 update_state claude_code authenticated True
-                break
             else
-                print_error "認証が確認できませんでした。もう一度お試しください。"
+                print_warning "認証をスキップしました。後で 'claude-code' コマンドを実行して認証してください"
             fi
-        done
+        else
+            print_info "後で 'claude-code' コマンドを実行して認証してください"
+        fi
     else
         print_success "Claude Code は既に認証済みです"
     fi
