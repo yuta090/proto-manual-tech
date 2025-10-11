@@ -468,7 +468,61 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
   </div>
 </details>
 
-<h4 id="例2-営業日報アプリ" style="color: #7c3aed; margin: 32px 0 16px 0;">📝 例2: 営業日報アプリ</h4>
+<h4 id="例2-ブラウザ自動化" style="color: #7c3aed; margin: 32px 0 16px 0;">🤖 例2: ブラウザ操作でできること無限大！Chromeを自動化しよう</h4>
+
+<pre style="background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: 12px; overflow-x: auto; margin: 20px 0;"><code>「渋谷 カフェ おしゃれ」でGoogle検索して、検索結果の1〜2ページ目のタイトル、URL、説明文を取得。CSVファイルに日時と一緒に保存するアプリを作って。</code><button class="code-copy-btn">コピー</button></pre>
+
+<p style="margin: 16px 0; color: #6b7280; font-size: 0.95em;">Playwright（ブラウザ自動操作ツール）を使って、検索結果を自動収集し、SEO順位チェックや競合調査を効率化できる実務的なツールが完成します。企業の業務効率化で実際に使われている技術を学べます。</p>
+
+<details style="margin: 24px 0; border: 2px solid #e0e7ff; border-radius: 12px; padding: 0; background: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+  <summary style="padding: 20px; cursor: pointer; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; font-weight: 600; font-size: 1.05em; transition: all 0.3s ease; user-select: none;">
+    ✨ 追加アレンジ例：ブラウザ自動化をさらにパワーアップ！
+  </summary>
+  <div style="padding: 24px; background: linear-gradient(180deg, #faf5ff 0%, #ffffff 100%);">
+    <p style="margin: 0 0 20px 0; color: #4b5563; line-height: 1.8; font-size: 0.95em;">
+      基本的な検索結果取得ができたら、以下のような機能を追加して、実務で使える業務自動化ツールに進化させましょう！
+    </p>
+
+    <div style="border-left: 4px solid #10b981; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #065f46; margin: 0 0 8px 0;">📸 検索結果のスクリーンショットを自動保存</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>各検索結果のトップページをスクリーンショットで保存して。日付ごとにフォルダ分けして管理して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #047857; font-size: 0.95em;">→ screenshots/2025-06-11/ フォルダに各サイトのスクショを自動保存！競合サイトのデザイン変更履歴を視覚的に追跡できます。</p>
+    </div>
+
+    <div style="border-left: 4px solid #3b82f6; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #1e40af; margin: 0 0 8px 0;">📄 ページ全体のテキスト内容を取得・保存</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>各サイトのページ全体のテキスト内容を取得して、テキストファイルに保存して。HTMLタグは除いて、読みやすいプレーンテキストにして。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #1e3a8a; font-size: 0.95em;">→ contents/site1.txt のようにテキスト保存！後から検索したり、内容を分析するのに便利です。</p>
+    </div>
+
+    <div style="border-left: 4px solid #f59e0b; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #92400e; margin: 0 0 8px 0;">🔄 前回との差分を表示（変化検知）</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>前回保存したテキストファイルと今回のテキストを比較して、追加・削除された部分を表示して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #78350f; font-size: 0.95em;">→ 入札案件サイトの新着情報や、競合サイトのコンテンツ更新を自動検知！緑色で追加部分、赤色で削除部分が一目でわかります。</p>
+    </div>
+
+    <div style="border-left: 4px solid #ec4899; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #831843; margin: 0 0 8px 0;">🏢 特定企業サイトの変化を監視</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>監視対象URLをconfig.jsonに保存して。そのURLのページ内容を定期的に取得・保存して、変化があったら通知して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #9f1239; font-size: 0.95em;">→ ライバル企業のニュースページや採用情報を自動監視！価格変更や新商品リリースを見逃しません。</p>
+    </div>
+
+    <div style="border-left: 4px solid #8b5cf6; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #5b21b6; margin: 0 0 8px 0;">🔐 自動ログイン機能（社内システムへのアクセス）</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>config.jsonにログイン情報を保存して。
+ログインURL、ユーザー名の入力欄セレクタ、パスワードの入力欄セレクタ、
+ログインボタンのセレクタを指定して、自動ログイン後のダッシュボードをスクショ保存して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #6b21a8; font-size: 0.95em;">→ 社内管理画面や業務システムに自動アクセス！毎朝のルーティン作業を自動化できます。セレクタの指定方法（input[name="username"]など）も学べます。</p>
+    </div>
+
+    <div style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(79, 70, 229, 0.05) 100%); border-left: 4px solid #9333ea; padding: 16px; margin: 20px 0; border-radius: 8px;">
+      <p style="margin: 0; color: #581c87; font-weight: 600; line-height: 1.8; font-size: 0.95em;">
+        💡 <strong>ポイント：</strong> これらは全て「追加して」という指示だけで実装できるシンプルな機能です。しかし、Playwrightによるブラウザ自動化は、RPA（業務自動化）の基本スキルであり、企業で実際に使われている技術です。完成したツールは「業務効率化ができる人材」としての強力なアピールポイントになります！
+      </p>
+    </div>
+  </div>
+</details>
+<h4 id="例3-営業日報アプリ" style="color: #7c3aed; margin: 32px 0 16px 0;">📝 例3: 営業日報アプリ</h4>
 
 <pre style="background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: 12px; overflow-x: auto; margin: 20px 0;"><code>営業日報を簡単に作成・管理できるアプリを作って</code><button class="code-copy-btn">コピー</button></pre>
 
@@ -534,60 +588,6 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
     <div style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(79, 70, 229, 0.05) 100%); border-left: 4px solid #9333ea; padding: 16px; margin: 20px 0; border-radius: 8px;">
       <p style="margin: 0; color: #581c87; font-weight: 600; line-height: 1.8; font-size: 0.95em;">
         💡 <strong>ポイント：</strong> 最初は基本機能だけで完成させ、実際に使いながら「こんな機能があったら便利だな」と思ったものを追加していくのがおすすめです。AIと対話しながら、あなたの業務に最適化された営業日報アプリに育てていきましょう！
-      </p>
-    </div>
-  </div>
-</details>
-<h4 id="例3-ローカルseoトラッカー" style="color: #7c3aed; margin: 32px 0 16px 0;">🔍 例3: ローカルSEOトラッカー（Playwright自動化）</h4>
-
-<pre style="background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: 12px; overflow-x: auto; margin: 20px 0;"><code>「渋谷 カフェ おしゃれ」でGoogle検索して、検索結果の1〜2ページ目のタイトル、URL、説明文を取得。CSVファイルに日時と一緒に保存するアプリを作って。</code><button class="code-copy-btn">コピー</button></pre>
-
-<p style="margin: 16px 0; color: #6b7280; font-size: 0.95em;">Playwright（ブラウザ自動操作ツール）を使って、検索結果を自動収集し、SEO順位チェックや競合調査を効率化できる実務的なツールが完成します。企業の業務効率化で実際に使われている技術を学べます。</p>
-
-<details style="margin: 24px 0; border: 2px solid #e0e7ff; border-radius: 12px; padding: 0; background: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
-  <summary style="padding: 20px; cursor: pointer; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; font-weight: 600; font-size: 1.05em; transition: all 0.3s ease; user-select: none;">
-    ✨ 追加アレンジ例：検索結果トラッカーをさらにパワーアップ！
-  </summary>
-  <div style="padding: 24px; background: linear-gradient(180deg, #faf5ff 0%, #ffffff 100%);">
-    <p style="margin: 0 0 20px 0; color: #4b5563; line-height: 1.8; font-size: 0.95em;">
-      基本的な検索結果取得ができたら、以下のような機能を追加して、実務で使える業務自動化ツールに進化させましょう！
-    </p>
-
-    <div style="border-left: 4px solid #10b981; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #065f46; margin: 0 0 8px 0;">📸 検索結果のスクリーンショットを自動保存</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>各検索結果のトップページをスクリーンショットで保存して。日付ごとにフォルダ分けして管理して。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #047857; font-size: 0.95em;">→ screenshots/2025-06-11/ フォルダに各サイトのスクショを自動保存！競合サイトのデザイン変更履歴を視覚的に追跡できます。</p>
-    </div>
-
-    <div style="border-left: 4px solid #3b82f6; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #1e40af; margin: 0 0 8px 0;">📄 ページ全体のテキスト内容を取得・保存</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>各サイトのページ全体のテキスト内容を取得して、テキストファイルに保存して。HTMLタグは除いて、読みやすいプレーンテキストにして。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #1e3a8a; font-size: 0.95em;">→ contents/site1.txt のようにテキスト保存！後から検索したり、内容を分析するのに便利です。</p>
-    </div>
-
-    <div style="border-left: 4px solid #f59e0b; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #92400e; margin: 0 0 8px 0;">🔄 前回との差分を表示（変化検知）</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>前回保存したテキストファイルと今回のテキストを比較して、追加・削除された部分を表示して。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #78350f; font-size: 0.95em;">→ 入札案件サイトの新着情報や、競合サイトのコンテンツ更新を自動検知！緑色で追加部分、赤色で削除部分が一目でわかります。</p>
-    </div>
-
-    <div style="border-left: 4px solid #ec4899; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #831843; margin: 0 0 8px 0;">🏢 特定企業サイトの変化を監視</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>監視対象URLをconfig.jsonに保存して。そのURLのページ内容を定期的に取得・保存して、変化があったら通知して。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #9f1239; font-size: 0.95em;">→ ライバル企業のニュースページや採用情報を自動監視！価格変更や新商品リリースを見逃しません。</p>
-    </div>
-
-    <div style="border-left: 4px solid #8b5cf6; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #5b21b6; margin: 0 0 8px 0;">🔐 自動ログイン機能（社内システムへのアクセス）</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>config.jsonにログイン情報を保存して。
-ログインURL、ユーザー名の入力欄セレクタ、パスワードの入力欄セレクタ、
-ログインボタンのセレクタを指定して、自動ログイン後のダッシュボードをスクショ保存して。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #6b21a8; font-size: 0.95em;">→ 社内管理画面や業務システムに自動アクセス！毎朝のルーティン作業を自動化できます。セレクタの指定方法（input[name="username"]など）も学べます。</p>
-    </div>
-
-    <div style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(79, 70, 229, 0.05) 100%); border-left: 4px solid #9333ea; padding: 16px; margin: 20px 0; border-radius: 8px;">
-      <p style="margin: 0; color: #581c87; font-weight: 600; line-height: 1.8; font-size: 0.95em;">
-        💡 <strong>ポイント：</strong> これらは全て「追加して」という指示だけで実装できるシンプルな機能です。しかし、Playwrightによるブラウザ自動化は、RPA（業務自動化）の基本スキルであり、企業で実際に使われている技術です。完成したツールは「業務効率化ができる人材」としての強力なアピールポイントになります！
       </p>
     </div>
   </div>
