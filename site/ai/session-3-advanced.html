@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI開発ツール完全活用マニュアル</title>
+  <link rel="stylesheet" href="../assets/manual.css" />
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // すべてのpreタグにコピーボタンを追加
+      document.querySelectorAll('.manual-content pre').forEach(function(pre) {
+        const button = document.createElement('button');
+        button.className = 'code-copy-btn';
+        button.textContent = 'コピー';
+
+        button.addEventListener('click', function() {
+          const code = pre.querySelector('code');
+          const text = code ? code.textContent : pre.textContent;
+
+          navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'コピー完了！';
+            button.classList.add('copied');
+
+            setTimeout(function() {
+              button.textContent = 'コピー';
+              button.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('コピー失敗:', err);
+            button.textContent = 'エラー';
+          });
+        });
+
+        pre.appendChild(button);
+      });
+
+      // ナビゲーショントグル機能
+      const navToggle = document.getElementById('navToggle');
+      const manualLayout = document.getElementById('manualLayout');
+      const manualNav = document.getElementById('manualNav');
+
+      if (navToggle && manualLayout && manualNav) {
+        navToggle.addEventListener('click', function() {
+          manualLayout.classList.toggle('nav-collapsed');
+          navToggle.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <header class="manual-header">
+    <div class="header-text">
+      <h1>AI開発ツール完全活用マニュアル</h1>
+      <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+      <h3 style="font-size: 1.2rem; font-weight: 400; margin-bottom: 1rem; color: #1f2937;">仕様駆動開発とバイブコーディングによる次世代開発戦略</h3>
+      <p style="font-size: 1rem; margin-bottom: 0.5rem; color: rgba(255, 255, 255, 0.8);">Claude Code、Super Claude、そして各種AI開発ツールを最大限に活用し、あなたのアイデアを最速で形にする実践的ガイド。</p>
+
+      <dl class="manual-meta" style="margin-top: 1.5rem;">
+        <div>
+          <dt>最終更新</dt>
+          <dd>2025-10-10 15:26</dd>
+        </div>
+      </dl>
+    </div>
+  </header>
+  <button class="nav-toggle" id="navToggle" aria-label="目次を開閉">☰</button>
+  <div class="manual-layout" id="manualLayout">
+    <aside class="manual-nav" id="manualNav">
+      <nav class="toc" aria-label="目次"><h2>Quick Links</h2><ol class="toc-list"><li><a href="#%E7%9B%AE%E6%AC%A1"><strong>目次</strong></a></li><li><a href="#0-%E6%9C%80%E5%88%9D%E3%81%AE30%E5%88%86%E3%81%A7%E4%BD%93%E9%A8%93%E3%81%99%E3%82%8Bai%E9%96%8B%E7%99%BA%E3%81%AE%E9%AD%94%E6%B3%95"><strong>0. 最初の30分で<br>体験する「AI開発の魔法」</strong></a><ol><li><a href="#%E7%9B%AE%E7%9A%84">目的</a></li><li><a href="#%E5%BF%85%E8%A6%81%E3%81%AA%E3%82%82%E3%81%AE">必要なもの</a></li><li><a href="#-%E8%87%AA%E5%8B%95%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%A7%E4%B8%80%E6%B0%97%E3%81%AB%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%8E%A8%E5%A5%A8">🚀 自動セットアップスクリプトで一気にインストール（推奨）</a></li><li><a href="#%E6%89%8B%E9%A0%86">手順</a></li><li><a href="#%E4%BE%8B1-%E3%83%9A%E3%83%83%E3%83%88%E7%B4%B9%E4%BB%8Bhtml%E3%83%9A%E3%83%BC%E3%82%B8%E7%94%BB%E5%83%8F%E4%BB%98%E3%81%8D">例1: ペット紹介HTMLページ（画像付き）</a></li><li><a href="#%E4%BE%8B2-%E7%B0%A1%E5%8D%98%E3%81%AA%E3%82%B2%E3%83%BC%E3%83%A0%E3%81%AE%E4%BD%9C%E6%88%90%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%82%B2%E3%83%BC%E3%83%A0%E3%81%A7ai%E3%81%A8%E3%81%AE%E5%AF%BE%E8%A9%B1%E3%82%92%E4%BD%93%E9%A8%93">例2: 簡単なゲームの作成：<br>クリックゲームでAIとの対話を体験！</a></li><li><a href="#%E4%BE%8B3-%E3%83%AC%E3%82%B7%E3%83%94%E7%B4%B9%E4%BB%8B%E3%83%9A%E3%83%BC%E3%82%B8">例3: レシピ紹介ページ</a></li><li><a href="#%E7%94%9F%E6%88%90%E3%81%95%E3%82%8C%E3%81%9F%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E3%81%95%E3%82%89%E3%81%AB%E5%A4%89%E6%9B%B4%E6%94%B9%E5%96%84%E3%81%99%E3%82%8B">生成されたコードをさらに変更・改善する</a></li><li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li></ol></li><li><a href="#1-ai%E9%96%8B%E7%99%BA%E3%81%8C%E3%81%A7%E3%81%8D%E3%82%8B%E3%81%A8%E6%9C%AA%E6%9D%A5%E3%81%AF%E3%81%93%E3%81%86%E5%A4%89%E3%82%8F%E3%82%8B"><strong>1. AI開発ができると、<br>未来はこう変わる</strong></a><ol><li><a href="#11-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9E%E3%83%BC%E3%81%AE%E6%96%B0%E3%81%9F%E3%81%AA%E5%BD%B9%E5%89%B2%E3%81%A8%E3%82%AD%E3%83%A3%E3%83%AA%E3%82%A2%E3%83%91%E3%82%B9">1.1 プログラマーの新たな役割とキャリアパス</a></li><li><a href="#12-%E4%BB%95%E6%A7%98%E9%A7%86%E5%8B%95%E9%96%8B%E7%99%BAsdd%E3%81%A8%E3%83%90%E3%82%A4%E3%83%96%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AE%E8%9E%8D%E5%90%88">1.2 仕様駆動開発（SDD）とバイブコーディングの融合</a></li></ol></li><li><a href="#2-ai%E9%96%8B%E7%99%BA%E3%83%AD%E3%83%BC%E3%83%89%E3%83%9E%E3%83%83%E3%83%97%E3%81%82%E3%81%AA%E3%81%9F%E3%81%AE%E3%82%AD%E3%83%A3%E3%83%AA%E3%82%A2%E3%82%92%E5%8A%A0%E9%80%9F%E3%81%99%E3%82%8B"><strong>2. AI開発ロードマップ：<br>あなたのキャリアを加速する</strong></a><ol><li><a href="#21-ai%E6%99%82%E4%BB%A3%E3%81%AE%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9E%E3%83%BC%E3%81%AB%E6%B1%82%E3%82%81%E3%82%89%E3%82%8C%E3%82%8B%E3%82%B9%E3%82%AD%E3%83%AB%E3%82%BB%E3%83%83%E3%83%88">2.1 AI時代のプログラマーに求められるスキルセット</a></li><li><a href="#22-%E6%9C%AC%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A2%E3%83%AB%E3%81%A7%E7%BF%92%E5%BE%97%E3%81%A7%E3%81%8D%E3%82%8B%E3%81%93%E3%81%A8">2.2 本マニュアルで習得できること</a></li></ol></li><li><a href="#3-ai%E3%81%AB%E3%81%86%E3%81%BE%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%99%E3%82%8B%E3%82%B3%E3%83%84-%E8%A8%88%E7%94%BB%E7%9A%84%E3%81%AA%E9%80%B2%E3%82%81%E6%96%B9"><strong>3. AIに"うまく"お願いするコツ ～計画的な進め方～</strong></a><ol><li><a href="#31-%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E3%83%AA%E3%83%B3%E3%82%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%89%87">3.1 プロンプトエンジニアリングの基本原則</a></li><li><a href="#%E6%82%AA%E3%81%84%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E3%81%AE%E4%BE%8B%E3%81%A8%E8%89%AF%E3%81%84%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E3%81%AE%E4%BE%8B">悪いプロンプトの例と良いプロンプトの例</a></li><li><a href="#32-super-claude%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E3%81%AE%E8%A8%AD%E8%A8%88">3.2 Super Claudeにおけるプロンプトの設計</a></li><li><a href="#33-%E4%BB%95%E6%A7%98%E9%A7%86%E5%8B%95%E9%96%8B%E7%99%BAsdd%E3%81%A8%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E3%81%AE%E9%80%A3%E6%90%BA">3.3 仕様駆動開発（SDD）とプロンプトの連携</a></li></ol></li><li><a href="#4-%E6%9C%80%E4%BD%8E%E9%99%90%E3%81%AE%E6%BA%96%E5%82%99ai%E9%96%8B%E7%99%BA%E3%81%AE%E7%9B%B8%E6%A3%92%E3%82%92%E8%BF%8E%E3%81%88%E3%82%88%E3%81%86"><strong>4. 最低限の準備：<br>AI開発の相棒を迎えよう</strong></a><ol><li><a href="#44-openai-codex-cli%E3%81%AE%E5%B0%8E%E5%85%A5%E3%81%A8%E5%88%A9%E7%94%A8">4.4 OpenAI Codex CLIの基本的な利用方法（オプション）</a></li></ol></li><li><a href="#5-mcpmodel-context-protocol%E5%AE%8C%E5%85%A8%E6%B4%BB%E7%94%A8%E3%82%AC%E3%82%A4%E3%83%89"><strong>5. MCP（Model Context Protocol）完全活用ガイド</strong></a><ol><li><a href="#51-mcp%E3%81%A8%E3%81%AF">5.1 MCPとは？</a></li><li><a href="#52-mcp%E3%81%AE%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%A8%E9%87%8D%E8%A6%81%E6%80%A7">5.2 MCPの仕組みと重要性</a></li><li><a href="#53-super-claude%E3%81%A8mcp%E3%81%AE%E9%80%A3%E6%90%BA">5.3 Super ClaudeとMCPの連携</a></li><li><a href="#-mcp%E3%81%AE%E6%9C%89%E5%8A%B9%E5%8C%96%E3%81%A8%E8%A8%AD%E5%AE%9A">✅ MCPの有効化と設定</a></li><li><a href="#54-mcp%E3%82%92%E6%B4%BB%E7%94%A8%E3%81%97%E3%81%9F%E9%96%8B%E7%99%BA%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC">5.4 MCPを活用した開発ワークフロー</a></li></ol></li><li><a href="#5-mcpmodel-context-protocol%E5%AE%8C%E5%85%A8%E6%B4%BB%E7%94%A8%E3%82%AC%E3%82%A4%E3%83%89-2"><strong>5. MCP（Model Context Protocol）完全活用ガイド</strong></a><ol><li><a href="#51-mcp%E3%81%A8%E3%81%AF-2">5.1 MCPとは？</a></li><li><a href="#52-mcp%E3%81%AE%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%A8%E9%87%8D%E8%A6%81%E6%80%A7-2">5.2 MCPの仕組みと重要性</a></li><li><a href="#53-super-claude%E3%81%A8mcp%E3%81%AE%E9%80%A3%E6%90%BA-2">5.3 Super ClaudeとMCPの連携</a></li><li><a href="#-mcp%E3%81%AE%E6%9C%89%E5%8A%B9%E5%8C%96%E3%81%A8%E8%A8%AD%E5%AE%9A-2">✅ MCPの有効化と設定</a></li><li><a href="#54-mcp%E3%82%92%E6%B4%BB%E7%94%A8%E3%81%97%E3%81%9F%E9%96%8B%E7%99%BA%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC-2">5.4 MCPを活用した開発ワークフロー</a></li></ol></li><li><a href="#6-ai%E3%81%A8%E4%BD%9C%E3%82%8D%E3%81%86%E3%81%82%E3%81%AA%E3%81%9F%E3%81%A0%E3%81%91%E3%81%AE%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%8A%E3%83%ABweb%E3%82%A2%E3%83%97%E3%83%AA%E9%96%8B%E7%99%BA"><strong>6. AIと作ろう！"あなただけ"の<br>オリジナルWebアプリ開発</strong></a><ol><li><a href="#61-%E3%83%8F%E3%83%B3%E3%82%BA%E3%82%AA%E3%83%B3%E3%81%AE%E6%BA%96%E5%82%99%E6%97%85%E3%81%AE%E5%A7%8B%E3%81%BE%E3%82%8A">6.1 ハンズオンの準備：旅の始まり</a></li><li><a href="#62-step-2-%E3%82%A2%E3%82%A4%E3%83%87%E3%82%A2%E3%81%AE%E5%A3%81%E6%89%93%E3%81%A1---brainstorm%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%A7%E8%A6%81%E4%BB%B6%E5%AE%9A%E7%BE%A9">6.2 Step 2: アイデアの壁打ち - <code>brainstorm</code>コマンドで要件定義</a></li><li><a href="#63-step-3-%E8%A8%AD%E8%A8%88%E5%9B%B3%E3%81%AE%E4%BD%9C%E6%88%90---design%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%A7%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3%E3%81%A8uiux%E3%82%92%E5%85%B7%E4%BD%93%E5%8C%96">6.3 Step 3: 設計図の作成 - <code>design</code>コマンドでアーキテクチャとUI/UXを具体化</a></li><li><a href="#64-step-4-%E5%AE%9F%E8%A3%85%E8%A8%88%E7%94%BB---workflow%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%A7%E3%82%BF%E3%82%B9%E3%82%AF%E3%82%92%E6%98%8E%E7%A2%BA%E5%8C%96">6.4 Step 4: 実装計画 - <code>workflow</code>コマンドでタスクを明確化</a></li><li><a href="#65-step-5-%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E9%96%8B%E5%A7%8B---implement%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%A7%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E7%94%9F%E6%88%90">6.5 Step 5: コーディング開始 - <code>implement</code>コマンドでコードを生成</a></li><li><a href="#66-step-6-%E5%95%8F%E9%A1%8C%E8%A7%A3%E6%B1%BA%E3%81%A8%E6%94%B9%E5%96%84---troubleshoot-analyze-improve%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">6.6 Step 6: 問題解決と改善 - <code>troubleshoot</code>, <code>analyze</code>, <code>improve</code>コマンド</a></li><li><a href="#67-%E5%AE%9F%E8%B7%B5%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%82%BF%E3%82%B9%E3%82%AF%E7%AE%A1%E7%90%86%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E9%96%8B%E7%99%BA%E3%81%97%E3%82%88%E3%81%86">6.7 実践プロジェクト：<br>タスク管理アプリケーションを開発しよう！</a></li><li><a href="#%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%A6%82%E8%A6%81">プロジェクト概要</a></li><li><a href="#step-1-%E3%82%A2%E3%82%A4%E3%83%87%E3%82%A2%E3%81%AE%E5%A3%81%E6%89%93%E3%81%A1%E3%81%A8%E8%A6%81%E4%BB%B6%E5%AE%9A%E7%BE%A9-brainstorm">Step 1: アイデアの壁打ちと要件定義 (<code>brainstorm</code>)</a></li><li><a href="#step-2-%E8%A8%AD%E8%A8%88%E5%9B%B3%E3%81%AE%E4%BD%9C%E6%88%90-design">Step 2: 設計図の作成 (<code>design</code>)</a></li><li><a href="#step-3-%E5%AE%9F%E8%A3%85%E8%A8%88%E7%94%BB%E3%81%AE%E7%AD%96%E5%AE%9A-workflow">Step 3: 実装計画の策定 (<code>workflow</code>)</a></li><li><a href="#step-4-%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E9%96%8B%E5%A7%8B-implement">Step 4: コーディング開始 (<code>implement</code>)</a></li><li><a href="#step-5-%E5%95%8F%E9%A1%8C%E8%A7%A3%E6%B1%BA%E3%81%A8%E6%94%B9%E5%96%84-troubleshoot-analyze-improve">Step 5: 問題解決と改善 (<code>troubleshoot</code>, <code>analyze</code>, <code>improve</code>)</a></li><li><a href="#%E3%81%BE%E3%81%A8%E3%82%81-2">まとめ</a></li></ol></li><li><a href="#7-github%E9%80%A3%E6%90%BA"><strong>7. GitHub連携</strong></a><ol><li><a href="#71-git%E3%81%A8github%E3%81%AE%E5%9F%BA%E6%9C%AC">7.1 GitとGitHubの基本</a></li><li><a href="#72-%E3%81%AA%E3%81%9Cgithub%E3%81%8C%E5%BF%85%E8%A6%81%E3%81%8B---ai%E3%83%90%E3%82%A4%E3%83%96%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AE%E5%AE%89%E5%85%A8%E7%B6%B2">7.2 なぜGitHubが<br>必要か？ - AIバイブコーディングの安全網</a></li><li><a href="#73-%E9%96%8B%E7%99%BA%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB%E5%88%A5%E3%81%AEgithub%E6%B4%BB%E7%94%A8%E6%B3%95">7.3 開発スタイル別のGitHub活用法</a></li><li><a href="#%E3%82%B1%E3%83%BC%E3%82%B91-%E5%AE%8C%E5%85%A8%E3%81%AA%E5%80%8B%E4%BA%BA%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E8%B6%A3%E5%91%B3%E5%AD%A6%E7%BF%92%E7%94%A8">ケース1: 完全な個人プロジェクト（趣味・学習用）</a></li><li><a href="#%E3%82%B1%E3%83%BC%E3%82%B92-%E4%B8%80%E4%BA%BA%E3%81%A7%E4%BC%81%E6%A5%AD%E3%81%AE%E9%96%8B%E7%99%BA%E3%82%92%E6%8B%85%E5%BD%93pm%E4%B8%8A%E5%8F%B8%E3%81%B8%E3%81%AE%E5%A0%B1%E5%91%8A%E3%81%8C%E5%BF%85%E8%A6%81">ケース2: 一人で企業の<br>開発を担当（PM・上司への報告が必要）</a></li><li><a href="#%E3%82%B1%E3%83%BC%E3%82%B93-%E3%83%81%E3%83%BC%E3%83%A0%E9%96%8B%E7%99%BA%E8%A4%87%E6%95%B0%E4%BA%BA%E3%81%A7%E3%81%AE%E5%85%B1%E5%90%8C%E9%96%8B%E7%99%BA">ケース3: チーム開発（複数人での共同開発）</a></li><li><a href="#74-%E3%83%81%E3%83%BC%E3%83%A0%E9%96%8B%E7%99%BA%E3%81%AE%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98---%E3%83%96%E3%83%A9%E3%83%B3%E3%83%81issue%E3%83%97%E3%83%AB%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88">7.4 チーム開発の基礎知識 - ブランチ・issue・プルリクエスト</a></li><li><a href="#741-%E3%83%96%E3%83%A9%E3%83%B3%E3%83%81branch%E3%81%A8%E3%81%AF">7.4.1 ブランチ（Branch）とは？</a></li><li><a href="#742-issue%E3%82%A4%E3%82%B7%E3%83%A5%E3%83%BC%E3%81%A8%E3%81%AF">7.4.2 issue（イシュー）とは？</a></li><li><a href="#743-%E3%83%97%E3%83%AB%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88pull-request--pr%E3%81%A8%E3%81%AF">7.4.3 プルリクエスト（Pull Request / PR）とは？</a></li><li><a href="#744-%E3%83%81%E3%83%BC%E3%83%A0%E9%96%8B%E7%99%BA%E3%81%A7ai%E3%81%A8%E4%B8%80%E7%B7%92%E3%81%AB%E4%BD%9C%E6%A5%AD%E3%81%99%E3%82%8B%E9%9A%9B%E3%81%AE%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC">7.4.4 チーム開発で<br>AIと一緒に作業する際のワークフロー</a></li><li><a href="#75-super-claude%E3%81%A8github%E3%81%AE%E9%80%A3%E6%90%BA">7.5 Super ClaudeとGitHubの連携</a></li><li><a href="#-github%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E5%88%9D%E6%9C%9F%E5%8C%96%E3%81%A8%E9%80%A3%E6%90%BA">✅ GitHubリポジトリの初期化と連携</a></li><li><a href="#-ai%E3%81%AB%E3%82%88%E3%82%8B%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E3%81%A8%E3%83%97%E3%83%AB%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%81%AE%E4%BD%9C%E6%88%90">✅ AIによるコミットとプルリクエストの作成</a></li><li><a href="#76-cicd%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3%E3%81%AE%E6%A7%8B%E7%AF%89">7.6 CI/CDパイプラインの構築</a></li><li><a href="#-ai%E3%81%AB%E3%82%88%E3%82%8Bcicd%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E7%94%9F%E6%88%90">✅ AIによるCI/CD設定ファイルの生成</a></li><li><a href="#-ai%E3%81%AB%E3%82%88%E3%82%8B%E3%83%86%E3%82%B9%E3%83%88%E3%81%A8%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%81%AE%E8%87%AA%E5%8B%95%E5%8C%96">✅ AIによるテストとデプロイの自動化</a></li></ol></li><li><a href="#8-%E3%83%A2%E3%83%80%E3%83%B3%E6%8A%80%E8%A1%93%E3%82%B9%E3%82%BF%E3%83%83%E3%82%AF%E3%81%AE%E6%A7%8B%E7%AF%89"><strong>8. モダン技術スタックの<br>構築</strong></a><ol><li><a href="#81-%E3%83%95%E3%83%AD%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%83%89%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF%E3%81%AE%E9%81%B8%E5%AE%9A%E3%81%A8%E5%B0%8E%E5%85%A5">8.1 フロントエンドフレームワークの選定と導入</a></li><li><a href="#-%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF%E3%81%AE%E9%81%B8%E5%AE%9A%E3%81%A8%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%88%9D%E6%9C%9F%E5%8C%96">✅ フレームワークの選定とプロジェクト初期化</a></li><li><a href="#82-%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF%E3%81%AE%E9%81%B8%E5%AE%9A%E3%81%A8%E5%B0%8E%E5%85%A5">8.2 バックエンドフレームワークの選定と導入</a></li><li><a href="#-%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89api%E3%81%AE%E8%A8%AD%E8%A8%88%E3%81%A8%E5%AE%9F%E8%A3%85">✅ バックエンドAPIの設計と実装</a></li><li><a href="#83-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%81%AE%E9%81%B8%E5%AE%9A%E3%81%A8%E3%82%B9%E3%82%AD%E3%83%BC%E3%83%9E%E8%A8%AD%E8%A8%88">8.3 データベースの選定とスキーマ設計</a></li><li><a href="#-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%82%B9%E3%82%AD%E3%83%BC%E3%83%9E%E3%81%AE%E7%94%9F%E6%88%90">✅ データベーススキーマの生成</a></li><li><a href="#84-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E3%81%AE%E6%B4%BB%E7%94%A8%E3%81%A8%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4">8.4 クラウドインフラの活用とデプロイ</a></li><li><a href="#-%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E7%94%9F%E6%88%90%E3%81%A8%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4">✅ インフラ設定ファイルの生成とデプロイ</a></li></ol></li><li><a href="#9-%E3%81%82%E3%81%AA%E3%81%9F%E3%81%AE%E3%82%A2%E3%83%97%E3%83%AA%E3%82%92%E9%80%B2%E5%8C%96%E3%81%95%E3%81%9B%E3%82%88%E3%81%86%E6%A9%9F%E8%83%BD%E8%BF%BD%E5%8A%A0%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88"><strong>9. あなたのアプリを<br>進化させよう！機能追加プロジェクト</strong></a><ol><li><a href="#91-%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E8%AA%8D%E8%A8%BC%E6%A9%9F%E8%83%BD%E3%81%AE%E8%BF%BD%E5%8A%A0supabase%E9%80%A3%E6%90%BA">9.1 ユーザー認証機能の追加（Supabase連携）</a></li><li><a href="#%E7%9B%AE%E7%9A%84-2">目的</a></li><li><a href="#%E6%89%8B%E9%A0%86-2">手順</a></li><li><a href="#92-%E3%83%A1%E3%83%BC%E3%83%AB%E9%80%9A%E7%9F%A5%E6%A9%9F%E8%83%BD%E3%81%AE%E8%BF%BD%E5%8A%A0resend%E9%80%A3%E6%90%BA">9.2 メール通知機能の追加（Resend連携）</a></li><li><a href="#%E7%9B%AE%E7%9A%84-3">目的</a></li><li><a href="#%E6%89%8B%E9%A0%86-3">手順</a></li><li><a href="#93-%E3%82%B3%E3%83%BC%E3%83%89%E5%93%81%E8%B3%AA%E3%81%AE%E5%90%91%E4%B8%8A%E3%81%A8%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%BF%BD%E5%8A%A0">9.3 コード品質の向上とテストの追加</a></li><li><a href="#%E6%89%8B%E9%A0%86-4">手順</a></li><li><a href="#%E3%81%BE%E3%81%A8%E3%82%81-3">まとめ</a></li></ol></li><li><a href="#10-%E4%BC%81%E6%A5%AD%E5%B0%8E%E5%85%A5%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AEsdd%E7%B5%84%E7%B9%94%E5%A4%89%E9%9D%A9%E3%82%AC%E3%82%A4%E3%83%89"><strong>10. 企業導入の<br>ためのSDD組織変革ガイド</strong></a><ol><li><a href="#101-%E3%81%AA%E3%81%9C%E7%B5%84%E7%B9%94%E7%9A%84%E3%81%AA%E5%B0%8E%E5%85%A5%E3%81%8C%E5%BF%85%E8%A6%81%E3%81%8B">10.1 なぜ組織的な導入が必要か？</a></li><li><a href="#102-super-claude%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%95%E3%83%AD%E3%83%BC%E3%83%81%E3%83%A3%E3%83%BC%E3%83%88%E3%82%92%E6%B4%BB%E7%94%A8%E3%81%97%E3%81%9F%E3%83%81%E3%83%BC%E3%83%A0%E9%96%8B%E7%99%BA%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9">10.2 Super Claudeコマンドフローチャートを活用したチーム開発プロセス</a></li><li><a href="#103-%E5%B0%8E%E5%85%A5%E3%81%AE%E3%82%B9%E3%83%86%E3%83%83%E3%83%97%E3%81%A8%E6%88%90%E5%8A%9F%E3%81%AE%E9%8D%B5">10.3 導入のステップと成功の鍵</a></li><li><a href="#104-%E6%96%87%E5%8C%96%E3%81%AE%E5%A4%89%E9%9D%A9ai%E3%81%A8%E3%81%AE%E5%8D%94%E8%AA%BF%E3%81%A8%E6%88%90%E9%95%B7%E3%81%AE%E3%83%9E%E3%82%A4%E3%83%B3%E3%83%89%E3%82%BB%E3%83%83%E3%83%88">10.4 文化の変革：<br>AIとの協調と成長のマインドセット</a></li></ol></li><li><a href="#11-%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0"><strong>11. トラブルシューティング</strong></a><ol><li><a href="#111-%E4%B8%80%E8%88%AC%E7%9A%84%E3%81%AA%E5%95%8F%E9%A1%8C%E3%81%A8%E8%A7%A3%E6%B1%BA%E7%AD%96">11.1 一般的な問題と解決策</a></li><li><a href="#-claude-codesuper-claude%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%AA%E3%81%84">✅ Claude Code/Super Claudeが起動しない</a></li><li><a href="#-ai%E3%81%AE%E5%87%BA%E5%8A%9B%E3%81%8C%E6%9C%9F%E5%BE%85%E9%80%9A%E3%82%8A%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84">✅ AIの出力が期待通りではない</a></li><li><a href="#-%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E3%81%8C%E9%81%85%E3%81%84">✅ パフォーマンスが遅い</a></li><li><a href="#112-%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%A8%E3%82%B3%E3%83%9F%E3%83%A5%E3%83%8B%E3%83%86%E3%82%A3">11.2 サポートとコミュニティ</a></li><li><a href="#%E3%81%BE%E3%81%A8%E3%82%81-4">まとめ</a></li></ol></li></ol></nav>
+    </aside>
+    <main class="manual-content">
+      <h2 id="目次"><strong>目次</strong></h2>
+<hr>
+<h3>📚 Phase 1: 体験と基礎（0-3章）</h3>
+<ul>
+<li>
+<a href="#0-%E6%9C%80%E5%88%9D%E3%81%AE30%E5%88%86%E3%81%A7%E4%BD%93%E9%A8%93%E3%81%99%E3%82%8Bai%E9%96%8B%E7%99%BA%E3%81%AE%E9%AD%94%E6%B3%95"><strong>0. 最初の30分で体験する「AI開発の魔法」</strong></a><br>
+<span style="font-size: 0.9em; color: #666;">まずは手を動かして、AI開発の驚きを体験しよう</span>
+</li>
+<li>
+<a href="#1-aiでできることあなたができるようになること"><strong>1. AIでできること・あなたができるようになること</strong></a><br>
+<span style="font-size: 0.9em; color: #666;">マクロ経験者のあなたが、AI開発で実現できる未来</span>
+</li>
+<li>
+<a href="#2-ai開発ロードマップ学習の進め方"><strong>2. AI開発ロードマップ：学習の進め方</strong></a><br>
+<span style="font-size: 0.9em; color: #666;">あなたに合った学習ルートと挫折しないコツ</span>
+</li>
+<li>
+<a href="#3-aiにうまくお願いするコツ-計画的な進め方"><strong>3. AIにうまくお願いするコツ</strong></a><br>
+<span style="font-size: 0.9em; color: #666;">プロンプトエンジニアリングの基本と実践テクニック</span>
+</li>
+</ul>
+<hr>
+<h3>🚀 Phase 2: 実践プロジェクト（4-5章）</h3>
+<ul>
+<li>
+<a href="#4-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>4. AIと作ろう！オリジナルWebアプリ開発</strong></a><br>
+<span style="font-size: 0.9em; color: #666;">あなたの最初の実用的なWebアプリケーションを作成</span>
+</li>
+<h2 id="11-トラブルシューティング"><strong>11. トラブルシューティング</strong></h2>
+<hr>
+<h3 id="111-一般的な問題と解決策">11.1 一般的な問題と解決策</h3>
+<h4 id="-claude-codesuper-claudeが起動しない">✅ Claude Code/Super Claudeが起動しない</h4>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ul>
+<li>
+<strong>Node.jsのバージョン確認</strong>: <code>node -v</code>でNode.jsのバージョンが18以上であることを確認してください。古い場合はアップデートが必要です。
+</li>
+<li>
+<strong>npmパッケージの再インストール</strong>: <code>npm uninstall -g claude-code &amp;&amp; npm install -g claude-code</code>で再インストールを試してください。
+</li>
+<li>
+<strong>APIキーの確認</strong>: <code>ANTHROPIC_API_KEY</code>が正しく設定されているか確認してください。
+</li>
+</ul>
+</div>
+<h4 id="-aiの出力が期待通りではない">✅ AIの出力が期待通りではない</h4>
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ul>
+<li>
+<strong>プロンプトの改善</strong>: より明確で具体的なプロンプトを試してください。役割の指定、例示、制約条件などを活用しましょう。
+</li>
+<li>
+<strong>対話の継続</strong>: 一度で完璧な出力を求めず、AIとの対話を繰り返して要件を絞り込みましょう。
+</li>
+<li>
+<strong>モデルの変更</strong>: Super Claudeの設定で、より高性能なモデル（例: <code>gpt-4o</code>）を使用しているか確認してください。
+</li>
+</ul>
+</div>
+<h4 id="-パフォーマンスが遅い">✅ パフォーマンスが遅い</h4>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ul>
+<li>
+<strong>ネットワーク接続の確認</strong>: 安定したインターネット接続があるか確認してください。
+</li>
+<li>
+<strong>APIレートリミット</strong>: 短時間に大量のリクエストを送信していないか確認してください。APIプロバイダーのレートリミットに達している可能性があります。
+</li>
+<li>
+<strong>MCP設定の最適化</strong>: <code>.mcp</code>ファイルで<code>include</code>や<code>exclude</code>を適切に設定し、AIに提供するコンテキストの量を最適化してください。
+</li>
+</ul>
+</div>
+<h3 id="112-サポートとコミュニティ">11.2 サポートとコミュニティ</h3>
+<p>上記で解決しない問題や、さらに詳しい情報が必要な場合は、以下のリソースを参照してください。</p>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ul>
+<li>
+<strong>Super Claude公式GitHubリポジトリ</strong>: <a href="https://github.com/SuperClaude-Org/SuperClaude_Framework" target="_blank" rel="noopener noreferrer">https://github.com/SuperClaude-Org/SuperClaude_Framework</a>
+</li>
+<li>
+<strong>Claude Code公式ドキュメント</strong>: <a href="https://docs.claude.com/ja/docs/claude-code/setup" target="_blank" rel="noopener noreferrer">https://docs.claude.com/ja/docs/claude-code/setup</a>
+</li>
+<li>
+<strong>OpenAIコミュニティ</strong>: <a href="https://community.openai.com/" target="_blank" rel="noopener noreferrer">https://community.openai.com/</a>
+<p>これらのリソースを活用し、AI開発の旅をさらに深めていきましょう。</p>
+</li>
+</ul>
+</div>
+<h3 id="まとめ-4">まとめ</h3>
+<p>たったこれだけのステップで、あなたのアイデアが具体的な形になりました。プログラミングの知識がなくても、AIにうまくお願いするだけで、Webページやアプリケーションを作ることができたのです。</p>
+<p>このマニュアルでは、この「魔法」をさらに強力にし、もっと複雑で面白いアプリを自由に作れるようになるための方法を、ステップバイステップで学んでいきます。最初の感動を忘れずに、次の章へ進みましょう！</p>
+<hr>
+</main>
+  </div>
+  <footer class="manual-footer">
+    <p>このドキュメントは自動生成されました。元ファイルを更新した際は <code>python tools/build_manual.py</code> を再実行してください。</p>
+  </footer>
+
+
+</body></html><hr>
+<h2 id="12-データダッシュボードを作る"><strong>12. データダッシュボードを作る</strong></h2>
+<hr>
+
+<p>⏱️ <strong>所要時間</strong>: 実践60分</p>
+
+<h3 id="📋-この章の目標">📋 この章の目標</h3>
+
+<ul>
+<li>これまでの全スキルを統合して使える</li>
+<li>高度なアプリケーションを構築できる</li>
+<li>データ可視化の実装ができる</li>
+</ul>
+
+<hr>
+
+<h3 id="🎯-今回作るもの">🎯 今回作るもの</h3>
+
+<p><strong>データダッシュボード</strong> - 経費精算データを可視化・分析するアプリ</p>
+
+<h4>主な機能</h4>
+<ul>
+<li>📊 月次・カテゴリ別グラフ表示</li>
+<li>📈 トレンド分析</li>
+<li>🎨 インタラクティブチャート</li>
+<li>📱 レスポンシブデザイン</li>
+<li>💾 データインポート/エクスポート</li>
+</ul>
+
+<h4>使用技術</h4>
+<ul>
+<li>Chart.js（グラフライブラリ）</li>
+<li>Bootstrap 5（UIフレームワーク）</li>
+<li>localStorage（データ永続化）</li>
+</ul>
+
+<h4>使用する全スキル</h4>
+<ul>
+<li>✅ 基本操作（2章）</li>
+<li>✅ 仕様駆動開発（3-4章）</li>
+<li>✅ プロンプト設計（5章）</li>
+<li>✅ 実践開発（6章）</li>
+<li>✅ コードレビュー（7-8章）</li>
+<li>✅ テスト自動生成（9-10章）</li>
+<li>✅ リファクタリング（11章）</li>
+</ul>
+
+<hr>
+
+<h3 id="🚀-ハンズオン（60分）">🚀 ハンズオン（60分）</h3>
+
+<h4>ステップ1: 仕様書作成（10分）</h4>
+
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<pre><code class="language-bash">mkdir expense-dashboard
+cd expense-dashboard
+claude</code></pre>
+</div>
+
+<p>まず、今回も仕様駆動で進めます：</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「経費精算データダッシュボードの仕様書を作成してください。</p>
+
+<p><strong># 経費精算データダッシュボード</strong></p>
+
+<p><strong>## 概要</strong><br>
+経費精算データを可視化・分析するダッシュボードアプリケーション。<br>
+月次推移、カテゴリ別分析、統計情報をグラフで表示。</p>
+
+<p><strong>## 機能一覧</strong></p>
+<ol>
+<li>データインポート
+<ul>
+<li>CSV/JSONファイルのインポート</li>
+<li>6章の経費精算アプリからのデータ移行</li>
+</ul>
+</li>
+<li>ダッシュボード表示
+<ul>
+<li>月次推移グラフ（折れ線グラフ）</li>
+<li>カテゴリ別円グラフ</li>
+<li>統計サマリー（合計、平均、最大・最小）</li>
+</ul>
+</li>
+<li>フィルタリング
+<ul>
+<li>期間指定（開始日〜終了日）</li>
+<li>カテゴリ選択</li>
+<li>金額範囲指定</li>
+</ul>
+</li>
+<li>データエクスポート
+<ul>
+<li>グラフ画像のダウンロード</li>
+<li>フィルタ済みデータのCSV出力</li>
+</ul>
+</li>
+</ol>
+
+<p><strong>## 画面構成</strong></p>
+<ul>
+<li>ヘッダー: タイトル、期間選択</li>
+<li>サイドバー: フィルタ設定</li>
+<li>メインエリア: グラフ表示エリア</li>
+<li>フッター: 統計サマリー</li>
+</ul>
+
+<p><strong>## 技術要件</strong></p>
+<ul>
+<li>フロントエンド: HTML, CSS, JavaScript</li>
+<li>グラフ: Chart.js</li>
+<li>UI: Bootstrap 5</li>
+<li>データ保存: localStorage</li>
+</ul>
+
+<p><strong>## 非機能要件</strong></p>
+<ul>
+<li>レスポンシブ対応（スマホ・タブレット）</li>
+<li>グラフのアニメーション</li>
+<li>データ更新の即時反映</li>
+<li>最大1000件のデータを快適に表示</li>
+</ul>
+
+<p>spec.mdとして保存してください。」</p>
+</div>
+
+<h4>ステップ2: プロジェクト構築（15分）</h4>
+
+<p>仕様書をもとに実装を依頼：</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「spec.mdの仕様に基づいて、経費精算データダッシュボードを実装してください。</p>
+
+<p><strong>実装の制約:</strong></p>
+<ol>
+<li>1ファイル構成（index.html）</li>
+<li>Chart.jsはCDN経由で読み込み</li>
+<li>Bootstrap 5はCDN経由で読み込み</li>
+<li>サンプルデータを10件程度含める</li>
+</ol>
+
+<p><strong>実装の優先順位:</strong></p>
+<ul>
+<li>Phase 1: 基本構造とサンプルデータ表示</li>
+<li>Phase 2: グラフ表示（月次推移・カテゴリ別）</li>
+<li>Phase 3: フィルタリング機能</li>
+<li>Phase 4: インポート/エクスポート機能</li>
+</ul>
+
+<p>まずPhase 1から実装してください。」</p>
+</div>
+
+<p><strong>確認</strong>:</p>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<pre><code class="language-bash">open index.html</code></pre>
+</div>
+
+<h4>ステップ3: コードレビューと改善（10分）</h4>
+
+<p><strong>セキュリティ・パフォーマンスチェック</strong>:</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「実装したコードをレビューしてください。</p>
+
+<p><strong>チェック項目:</strong></p>
+<ol>
+<li>セキュリティ
+<ul>
+<li>XSS対策（ユーザー入力のエスケープ）</li>
+<li>CSVインジェクション対策</li>
+</ul>
+</li>
+<li>パフォーマンス
+<ul>
+<li>大量データ（1000件）の処理速度</li>
+<li>グラフ描画の最適化</li>
+</ul>
+</li>
+<li>エラーハンドリング
+<ul>
+<li>ファイル読み込み失敗時</li>
+<li>不正なデータ形式時</li>
+<li>localStorage容量超過時</li>
+</ul>
+</li>
+<li>アクセシビリティ
+<ul>
+<li>キーボード操作対応</li>
+<li>スクリーンリーダー対応</li>
+<li>カラーコントラスト</li>
+</ul>
+</li>
+</ol>
+
+<p>各項目について改善点を指摘し、修正案を提示してください。」</p>
+</div>
+
+<p><strong>レビュー結果に基づいて改善</strong>:</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「指摘された問題点をすべて修正してください。<br>
+特にパフォーマンスとアクセシビリティを重点的に。」</p>
+</div>
+
+<h4>ステップ4: テスト追加（15分）</h4>
+
+<p><strong>ユニットテストと統合テスト</strong>:</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「ダッシュボードアプリのテストを作成してください。</p>
+
+<p><strong>テスト環境:</strong></p>
+<ul>
+<li>Jest + jsdom</li>
+</ul>
+
+<p><strong>テストファイル構成:</strong></p>
+<ol>
+<li>dataProcessing.test.js
+<ul>
+<li>月次集計関数のテスト</li>
+<li>カテゴリ集計関数のテスト</li>
+<li>フィルタリング関数のテスト</li>
+</ul>
+</li>
+<li>chartRendering.test.js
+<ul>
+<li>グラフデータ生成のテスト</li>
+<li>オプション設定のテスト</li>
+</ul>
+</li>
+<li>dataImportExport.test.js
+<ul>
+<li>CSVパースのテスト</li>
+<li>JSONパースのテスト</li>
+<li>データバリデーションのテスト</li>
+</ul>
+</li>
+<li>integration.test.js
+<ul>
+<li>データインポート → 表示のフロー</li>
+<li>フィルタ適用 → グラフ更新のフロー</li>
+<li>エクスポート機能のフロー</li>
+</ul>
+</li>
+</ol>
+
+<p>各テストで正常系・異常系・境界値をカバーしてください。」</p>
+</div>
+
+<p><strong>テスト実行</strong>:</p>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<pre><code class="language-bash">npm test
+npm test -- --coverage</code></pre>
+</div>
+
+<p><strong>カバレッジ目標</strong>: 80%以上</p>
+
+<h4>ステップ5: リファクタリング（10分）</h4>
+
+<p><strong>コード品質向上</strong>:</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「実装したコードをリファクタリングしてください。</p>
+
+<p><strong>改善ポイント:</strong></p>
+<ol>
+<li>関数の分割
+<ul>
+<li>100行を超える関数を小さく分割</li>
+<li>単一責任の原則に従う</li>
+</ul>
+</li>
+<li>重複コードの削除
+<ul>
+<li>共通処理を関数化</li>
+<li>ユーティリティ関数の作成</li>
+</ul>
+</li>
+<li>命名の改善
+<ul>
+<li>変数名を説明的に</li>
+<li>関数名を動詞で開始</li>
+</ul>
+</li>
+<li>ES6+記法の適用
+<ul>
+<li>アロー関数</li>
+<li>分割代入</li>
+<li>テンプレート文字列</li>
+<li>オプショナルチェイニング</li>
+</ul>
+</li>
+<li>定数の整理
+<ul>
+<li>マジックナンバーを定数化</li>
+<li>設定値を一箇所に集約</li>
+</ul>
+</li>
+</ol>
+
+<p>すべての改善後、テストが通ることを確認してください。」</p>
+</div>
+
+<p><strong>リファクタリング後のテスト</strong>:</p>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<pre><code class="language-bash">npm test</code></pre>
+</div>
+
+<hr>
+
+<h3 id="✅-この章のまとめ">✅ この章のまとめ</h3>
+
+<ul>
+<li><strong>全スキル統合</strong>: 2-11章の全スキルを実践適用</li>
+<li><strong>高度な実装</strong>: データ可視化・分析アプリの構築</li>
+<li><strong>品質保証</strong>: レビュー・テスト・リファクタリングの完遂</li>
+<li><strong>実務レベル</strong>: 副業・転職で使えるポートフォリオ完成</li>
+</ul>
+
+<hr>
+
+<h3 id="🎉-完了チェック">🎉 完了チェック</h3>
+
+<p>この章を終えたら、以下を確認してください：</p>
+
+<ul>
+<li>仕様書からアプリを完成させられた</li>
+<li>Chart.jsでグラフを実装できた</li>
+<li>コードレビュー・テスト・リファクタリングを実施できた</li>
+<li>これまでの全スキルを統合して使えた</li>
+</ul>
+
+<p><strong>すべてチェックできたら、次は13章で総合実践です！</strong></p>
+
+<hr>
+<h2 id="13-総合実践ガイド"><strong>13. 総合実践ガイド</strong></h2>
+<hr>
+
+<p>⏱️ <strong>所要時間</strong>: 実践60分</p>
+
+<h3 id="📋-この章の目標-13">📋 この章の目標</h3>
+
+<ul>
+<li>実務を想定した開発フローを体験する</li>
+<li>プロジェクト全体のライフサイクルを理解する</li>
+<li>自立してAI開発ができる状態になる</li>
+</ul>
+
+<hr>
+
+<h3 id="🎯-この章でやること">🎯 この章でやること</h3>
+
+<p>これまで学んだすべてのスキルを使って、<strong>実務レベルのプロジェクト</strong>を一から完成させます。</p>
+
+<h4>開発フロー全体</h4>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<pre><code>企画 → 仕様作成 → 実装 → レビュー → テスト → リファクタリング → デプロイ → 保守</code></pre>
+</div>
+
+<h4>今回作るもの</h4>
+<p><strong>タスク管理＋経費精算の統合アプリ</strong> - 実務でよくある「既存システムの拡張」を体験</p>
+
+<hr>
+
+<h3 id="🚀-実践プロジェクト（60分）-13">🚀 実践プロジェクト（60分）</h3>
+
+<h4>Phase 1: プロジェクト企画（10分）</h4>
+
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p><strong>状況設定</strong>:</p>
+<p>あなたは小規模チームのエンジニア。<br>
+現在、タスク管理アプリと経費精算アプリが別々に存在。<br>
+これらを統合して、生産性向上ツールとして一本化する依頼を受けた。</p>
+</div>
+
+<p><strong>要件定義</strong>: AIに以下のプロンプトを送信</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「以下の要件から、統合アプリの仕様書を作成してください。</p>
+<p><strong>背景</strong>: タスク管理アプリと経費精算アプリが別々に存在し、管理が非効率</p>
+<p><strong>目的</strong>: タスクと経費を統合管理し、プロジェクトごとの工数・コストを可視化</p>
+<p><strong>主要機能</strong>:</p>
+<ol>
+<li>プロジェクト管理（作成・編集・削除、ステータス管理）</li>
+<li>タスク管理の拡張（プロジェクト紐付け、工数入力）</li>
+<li>経費管理の拡張（プロジェクト紐付け、承認ワークフロー）</li>
+<li>ダッシュボード（工数・コスト集計、予算vs実績）</li>
+<li>レポート出力（PDF/CSV、月次レポート）</li>
+</ol>
+<p><strong>技術要件</strong>: SPA、Bootstrap 5 + Chart.js、localStorage</p>
+<p><strong>制約</strong>: 開発期間1週間、既存データの移行パス提供、段階的リリース</p>
+<p>spec.mdとして詳細な仕様書を作成してください。」</p>
+</div>
+
+<h4>Phase 2: MVP実装（15分）</h4>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「MVPスコープに基づいて実装してください。</p>
+<p><strong>実装順序</strong>:</p>
+<ol>
+<li>プロジェクト管理機能</li>
+<li>タスク管理との統合</li>
+<li>経費管理との統合</li>
+<li>基本ダッシュボード</li>
+</ol>
+<p>各ステップ完了後、動作確認してから次に進んでください。<br>
+1ファイル構成（index.html）で実装してください。」</p>
+</div>
+
+<h4>Phase 3: コードレビュー（10分）</h4>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「実装したコードを総合レビューしてください。</p>
+<p><strong>レビュー観点</strong>:</p>
+<ol>
+<li>🔒 セキュリティ（XSS対策、データバリデーション）</li>
+<li>⚡ パフォーマンス（DOM操作、データ構造）</li>
+<li>📖 可読性（コード構造、命名規則）</li>
+<li>🧪 テスタビリティ（関数の独立性）</li>
+<li>♿ アクセシビリティ（キーボード操作、ARIA）</li>
+<li>🏗️ 保守性（拡張性、依存関係）</li>
+</ol>
+<p>各観点で問題があれば、優先度をつけて指摘してください。」</p>
+</div>
+
+<h4>Phase 4: テスト実装（15分）</h4>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「統合アプリのテスト戦略を策定してください。</p>
+<p><strong>テストレベル</strong>:</p>
+<ul>
+<li>ユニットテスト（70%）: データ操作関数、集計・計算ロジック</li>
+<li>統合テスト（20%）: プロジェクト作成→タスク追加フロー</li>
+<li>E2Eテスト（10%）: 主要なユーザーシナリオ</li>
+</ul>
+<p>カバレッジ目標: 80%以上</p>
+</div>
+
+<h4>Phase 5: リファクタリング（10分）</h4>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「実装したコードをリファクタリングしてください。</p>
+<p><strong>改善ポイント</strong>:</p>
+<ol>
+<li>関数の責任分離（100行以上の関数を分割）</li>
+<li>データ構造の最適化</li>
+<li>共通処理の集約</li>
+<li>エラーハンドリングの統一</li>
+<li>ES6+記法の適用</li>
+</ol>
+<p>リファクタリング後、全テストが通ることを確認してください。」</p>
+</div>
+
+<hr>
+
+<h3 id="✅-この章のまとめ-13">✅ この章のまとめ</h3>
+
+<ul>
+<li><strong>実務フロー</strong>: 企画から保守までの全工程を体験</li>
+<li><strong>品質保証</strong>: レビュー・テスト・リファクタリングの重要性</li>
+<li><strong>自立力</strong>: 一人で完結できる開発スキルの獲得</li>
+<li><strong>応用力</strong>: 様々な案件・プロジェクトに対応可能</li>
+</ul>
+
+<hr>
+
+<h3 id="🎉-完了チェック-13">🎉 完了チェック</h3>
+
+<p>この章を終えたら、以下を確認してください：</p>
+
+<ul>
+<li>要件定義から実装まで一貫して行えた</li>
+<li>レビュー・テスト・リファクタリングを完遂できた</li>
+<li>実務レベルのプロジェクトを完成させられた</li>
+<li>自立してAI開発ができる自信がついた</li>
+</ul>
+
+<p><strong>すべてチェックできたら、セッション3完了です！</strong></p>
+
+<p><strong>次は14章で、これまで使ってきた技術の裏側を理解します。</strong></p>
+
+<hr>
+<h2 id="14-裏側の技術-mcp"><strong>14. 裏側の技術 - MCP</strong></h2>
+<hr>
+
+<p>⏱️ <strong>所要時間</strong>: 理論15分</p>
+
+<h3 id="📋-この章の目標-14">📋 この章の目標</h3>
+
+<ul>
+<li>MCPの基本概念を理解する</li>
+<li>Claude Codeの仕組みを知る</li>
+<li>バイブコーディングの技術的背景を把握する</li>
+</ul>
+
+<hr>
+
+<h3 id="🎯-mcpとは何か">🎯 MCPとは何か</h3>
+
+<p><strong>MCP（Model Context Protocol）</strong> = AIモデルとツールをつなぐ共通プロトコル</p>
+
+<h4>簡単に言うと</h4>
+
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<pre><code>あなた（ユーザー）
+    ↓ プロンプト
+Claude Code
+    ↓ MCP経由
+各種ツール（ファイル操作、Git、テスト実行など）
+    ↓ 結果
+Claude Code
+    ↓ 回答
+あなた
+</code></pre>
+</div>
+
+<p>MCPは、この「Claude Code → ツール」の通信方法を標準化したものです。</p>
+
+<hr>
+
+<h3 id="🏗️-mcpの3つの要素">🏗️ MCPの3つの要素</h3>
+
+<h4>1. Client（クライアント）</h4>
+
+<p><strong>Claude Code</strong> がクライアントとして動作：</p>
+<ul>
+<li>ユーザーのプロンプトを理解</li>
+<li>必要なツールを選択</li>
+<li>ツールに命令を送信</li>
+<li>結果を統合して回答</li>
+</ul>
+
+<h4>2. Server（サーバー）</h4>
+
+<p>各ツールが <strong>MCPサーバー</strong> として動作：</p>
+
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p><strong>例: ファイル操作サーバー</strong></p>
+<ul>
+<li>read_file: ファイル読み込み</li>
+<li>write_file: ファイル書き込み</li>
+<li>list_directory: ディレクトリ一覧</li>
+</ul>
+
+<p><strong>例: Gitサーバー</strong></p>
+<ul>
+<li>git_status: 状態確認</li>
+<li>git_commit: コミット</li>
+<li>git_push: プッシュ</li>
+</ul>
+
+<p><strong>例: テストサーバー</strong></p>
+<ul>
+<li>run_tests: テスト実行</li>
+<li>get_coverage: カバレッジ取得</li>
+</ul>
+</div>
+
+<h4>3. Protocol（プロトコル）</h4>
+
+<p><strong>標準化された通信方法</strong>：</p>
+<ul>
+<li>JSON形式でやり取り</li>
+<li>リクエスト/レスポンスの定義</li>
+<li>エラーハンドリングの仕様</li>
+</ul>
+
+<hr>
+
+<h3 id="🧩-mcpのメリット">🧩 MCPのメリット</h3>
+
+<h4>1. 拡張性</h4>
+
+<p>新しいツールを簡単に追加できる：</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p><strong>既存:</strong></p>
+<ul>
+<li>ファイル操作</li>
+<li>Git</li>
+<li>テスト</li>
+</ul>
+
+<p><strong>追加したい:</strong></p>
+<ul>
+<li>データベース操作</li>
+<li>クラウドデプロイ</li>
+<li>API連携</li>
+</ul>
+
+<p>→ MCPサーバーを作るだけで追加可能</p>
+</div>
+
+<h4>2. 互換性</h4>
+
+<p>どのAIモデルでも同じツールが使える：</p>
+
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ul>
+<li>Claude Code + MCP</li>
+<li>GPT-based tool + MCP</li>
+<li>Gemini-based tool + MCP</li>
+</ul>
+<p>→ すべて同じツールセットを利用可能</p>
+</div>
+
+<h4>3. セキュリティ</h4>
+
+<p>ツールごとに権限を管理：</p>
+
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ul>
+<li>ファイル操作: プロジェクトディレクトリのみ</li>
+<li>Git操作: 読み取り専用 or 書き込み可</li>
+<li>外部API: APIキーで制限</li>
+</ul>
+</div>
+
+<hr>
+
+<h3 id="✅-この章のまとめ-14">✅ この章のまとめ</h3>
+
+<ul>
+<li><strong>MCP</strong>: AIとツールをつなぐ標準プロトコル</li>
+<li><strong>メリット</strong>: 拡張性、互換性、セキュリティ</li>
+<li><strong>エコシステム</strong>: 公式・コミュニティ・自作</li>
+<li><strong>未来</strong>: より多くのツール統合と高度な自動化</li>
+</ul>
+
+<hr>
+
+<h3 id="🎉-完了チェック-14">🎉 完了チェック</h3>
+
+<p>この章を終えたら、以下を確認してください：</p>
+
+<ul>
+<li>MCPの基本概念を理解できた</li>
+<li>Claude Codeの仕組みを把握できた</li>
+<li>バイブコーディングの技術的背景を理解できた</li>
+</ul>
+
+<p><strong>全14章完了おめでとうございます！🎉</strong></p>
+
+<hr>
+
+<h3 id="🚀-卒業後のロードマップ">🚀 卒業後のロードマップ</h3>
+
+<h4>短期（1ヶ月）</h4>
+<ul>
+<li>学んだスキルを使って3つのプロジェクトを完成</li>
+<li>ポートフォリオをGitHubに公開</li>
+<li>副業プラットフォームでプロフィール作成</li>
+</ul>
+
+<h4>中期（3ヶ月）</h4>
+<ul>
+<li>副業案件を5件受注・完遂</li>
+<li>TypeScript・React等の学習</li>
+<li>自社プロダクトのプロトタイプ作成</li>
+</ul>
+
+<h4>長期（6ヶ月〜）</h4>
+<ul>
+<li>月収+10万円達成</li>
+<li>企業内での評価・昇進</li>
+<li>フルタイムフリーランス or 転職成功</li>
+</ul>
+
+<hr>
+
+<h3 id="🙏-終わりに">🙏 終わりに</h3>
+
+<p>このマニュアルで学んだスキルは、あなたの <strong>生涯のスキル</strong> です。</p>
+
+<p>AI技術は進化し続けますが、基本となる考え方は変わりません：</p>
+<ul>
+<li><strong>仕様を明確にする</strong></li>
+<li><strong>段階的に進める</strong></li>
+<li><strong>品質を保証する</strong></li>
+<li><strong>改善し続ける</strong></li>
+</ul>
+
+<p>これらの原則を守れば、どんな技術にも対応できます。</p>
+
+<p><strong>さあ、バイブコーディングの世界へ飛び込みましょう！</strong> 🚀</p>
+
+<hr>
+</main>
+  </div>
+  <footer class="manual-footer">
+    <p>このドキュメントは自動生成されました。元ファイルを更新した際は <code>python tools/build_manual.py</code> を再実行してください。</p>
+  </footer>
+
+
+</body></html>
