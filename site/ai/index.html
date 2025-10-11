@@ -836,6 +836,7 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 <p>MCP (Model Context Protocol) は、AIモデルがコードベース全体のコンテキストを理解し、より正確で関連性の高い提案やコード生成を行うためのプロトコルです。これにより、AIは単一のファイルだけでなく、プロジェクト全体の構造、依存関係、コーディング規約などを考慮した上で、開発支援を行うことができます。</p>
 <h3 id="52-mcpの仕組みと重要性">5.2 MCPの仕組みと重要性</h3>
 <p>MCPは、プロジェクトのメタデータ、ファイル構造、既存のコードスニペット、ドキュメントなどをAIモデルに提供します。これにより、AIは以下のような高度な開発支援が可能になります。</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>コード補完の精度向上</strong>: プロジェクト全体のコンテキストに基づいた、より適切なコード補完。
@@ -850,6 +851,7 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 <strong>リファクタリングの支援</strong>: プロジェクトの品質基準に合わせたリファクタリング提案。
 </li>
 </ul>
+</div>
 <h3 id="53-super-claudeとmcpの連携">5.3 Super ClaudeとMCPの連携</h3>
 <p>Super Claudeは、MCPをネイティブにサポートしており、プロジェクトのコンテキストを自動的にAIモデルに提供します。これにより、Super Claudeの各コマンド（<code>implement</code>, <code>improve</code>, <code>test</code>など）は、より賢く、よりプロジェクトに即した結果を生成します。</p>
 <h4 id="-mcpの有効化と設定">✅ MCPの有効化と設定</h4>
@@ -871,6 +873,7 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
   }
 }
 </code><button class="code-copy-btn">コピー</button></pre>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <code>include</code>: AIにコンテキストとして含めるファイルのパターン。
@@ -882,6 +885,7 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 <code>priority</code>: 特定のファイルのコンテキストの重要度を設定します。値が大きいほど優先されます。
 </li>
 </ul>
+</div>
 <h3 id="54-mcpを活用した開発ワークフロー">5.4 MCPを活用した開発ワークフロー</h3>
 <p>MCPを最大限に活用することで、Super Claudeの各コマンドがより強力になり、以下のような開発ワークフローを実現できます。</p>
 <div class="table-wrapper">
@@ -1009,6 +1013,7 @@ cd my-first-app
 <p><strong>使い方のコツ:</strong></p>
 </li>
 </ol>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 タスクが完了したら、<code>[ ]</code> を <code>[x]</code> のようにチェックを入れていきます（AIが自動でやってくれることもあります）
@@ -1023,6 +1028,7 @@ cd my-first-app
 ファイルは通常のテキストファイルなので、エディタで自由に編集できます
 </li>
 </ul>
+</div>
 <h3 id="65-step-5-コーディング開始---implementコマンドでコードを生成">6.5 Step 5: コーディング開始 - <code>implement</code>コマンドでコードを生成</h3>
 <p><strong>目的:</strong> <code>workflow</code>で作成したタスクリストに従って、AIに実際のコードを書いてもらいます。<code>implement</code>コマンドは、あなたの指示に基づいて、必要なコードスニペットやファイルを生成し、開発を加速させます。</p>
 <div class="flowchart-container"><div class="flowchart-step">新規開発</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-highlight">実装する</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-command">/sc:implement</div></div>
@@ -1041,6 +1047,7 @@ cd my-first-app
 <p>まずは、あなた自身の目で動作を確認します。生成された<code>index.html</code>ファイルをブラウザで開いて、以下のポイントをチェックしましょう：</p>
 </li>
 </ol>
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>見た目の確認:</strong> ボタンやフォームが正しく表示されているか？デザインは崩れていないか？
@@ -1056,6 +1063,7 @@ cd my-first-app
 <p><strong>E2Eテストとは？</strong> "E2E"は"End-to-End"（最初から最後まで）の略です。実際のユーザーが操作する流れを、AIが自動的にシミュレーション（再現）してテストしてくれます。例えば：</p>
 </li>
 </ul>
+</div>
 <ol>
 <li>
 AIがブラウザを自動で開く
@@ -1120,6 +1128,7 @@ AIがブラウザを自動で開く
 </ul>
 <h3 id="66-step-6-問題解決と改善---troubleshoot-analyze-improveコマンド">6.6 Step 6: 問題解決と改善 - <code>troubleshoot</code>, <code>analyze</code>, <code>improve</code>コマンド</h3>
 <p>開発中にエラーが出たり、コードを改善したくなったりすることは避けられません。そんな時もSuper Claudeが強力な助っ人となります。</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>エラーが出た場合 - </strong><strong><code>troubleshoot</code></strong><strong>:</strong> アプリケーションの実行中にエラーが発生した場合、エラーメッセージを<code>troubleshoot</code>コマンドに貼り付けて実行します。AIが原因を特定し、解決策を提案してくれます。
@@ -1131,9 +1140,11 @@ AIがブラウザを自動で開く
 <strong>パフォーマンスを分析したい場合 - </strong><strong><code>analyze</code></strong><strong>:</strong> アプリの動作が遅いと感じた場合や、特定の処理のボトルネックを特定したい場合は、<code>analyze</code>コマンドを使用します。<code>--focus performance</code>オプションでパフォーマンス分析に特化させることができます。
 </li>
 </ul>
+</div>
 <h3 id="67-実践プロジェクトタスク管理アプリケーションを開発しよう">6.7 実践プロジェクト：<br>タスク管理アプリケーションを開発しよう！</h3>
 <p>このセクションでは、Super Claudeの全コマンドを連携させ、より実践的なWebアプリケーション開発を体験します。目標は、ユーザーがタスクを作成、管理、完了できるシンプルな<strong>タスク管理アプリケーション</strong>を開発することです。</p>
 <h4 id="プロジェクト概要">プロジェクト概要</h4>
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>アプリケーション名</strong>: Simple Task Manager
@@ -1145,11 +1156,13 @@ AIがブラウザを自動で開く
 <strong>技術スタック</strong>: フロントエンド（HTML/CSS/JavaScript）、バックエンド（Node.js + Express）、データベース（SQLite）
 </li>
 </ul>
+</div>
 <h4 id="step-1-アイデアの壁打ちと要件定義-brainstorm">Step 1: アイデアの壁打ちと要件定義 (<code>brainstorm</code>)</h4>
 <p>まずは、タスク管理アプリの基本的な要件をAIと一緒に洗い出します。プロジェクトフォルダでSuper Claudeを起動し、以下のコマンドを実行してください。</p>
 <pre><code class="language-bash">sc brainstorm --focus "タスク管理アプリケーション"
 </code><button class="code-copy-btn">コピー</button></pre>
 <p>AIとの対話を通じて、以下のような要件を明確にしていきます。</p>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 タスクには「タイトル」「説明」「期日」「完了ステータス」が必要。
@@ -1161,11 +1174,13 @@ AIがブラウザを自動で開く
 既存のタスクを完了済みにしたり、削除したりできる。
 </li>
 </ul>
+</div>
 <h4 id="step-2-設計図の作成-design">Step 2: 設計図の作成 (<code>design</code>)</h4>
 <p>要件が固まったら、次にアプリケーションの設計を行います。データベースのスキーマ、APIエンドポイント、基本的なUI構成などをAIに提案させましょう。</p>
 <pre><code class="language-bash">sc design --focus "タスク管理アプリケーションの設計"
 </code><button class="code-copy-btn">コピー</button></pre>
 <p>AIは、例えば以下のような設計を提案するでしょう。</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>データベーススキーマ</strong>: <code>tasks</code>テーブル（<code>id</code>, <code>title</code>, <code>description</code>, <code>due_date</code>, <code>completed</code>）
@@ -1177,6 +1192,7 @@ AIがブラウザを自動で開く
 <strong>UI構成</strong>: タスク一覧表示、タスク追加フォーム、各タスクの完了/削除ボタン
 </li>
 </ul>
+</div>
 <h4 id="step-3-実装計画の策定-workflow">Step 3: 実装計画の策定 (<code>workflow</code>)</h4>
 <p>設計に基づいて、具体的な実装タスクを洗い出し、効率的な開発順序を計画します。</p>
 <pre><code class="language-bash">sc workflow --focus "タスク管理アプリケーションの実装計画"
@@ -1226,6 +1242,7 @@ sc implement --focus "JavaScriptでタスクの完了マークと削除ボタン
 <p>各<code>implement</code>コマンドの実行後には、生成されたコードを確認し、必要に応じて手動で調整したり、AIにさらに改善を依頼したりしてください。この反復的なプロセスが、AI開発の醍醐味です。</p>
 <h4 id="step-5-問題解決と改善-troubleshoot-analyze-improve">Step 5: 問題解決と改善 (<code>troubleshoot</code>, <code>analyze</code>, <code>improve</code>)</h4>
 <p>開発中にエラーが発生したり、機能の改善が必要になったりした場合は、以下のコマンドを活用します。</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>エラーが発生した場合</strong>: <code>sc troubleshoot "[エラーメッセージ]"</code>
@@ -1237,6 +1254,7 @@ sc implement --focus "JavaScriptでタスクの完了マークと削除ボタン
 <strong>パフォーマンスを分析したい場合</strong>: <code>sc analyze --focus performance --focus "[ファイル名または機能]"</code>
 </li>
 </ul>
+</div>
 <h3 id="まとめ-2">まとめ</h3>
 <p>おめでとうございます！ あなたは今、AIを相棒にして、自分だけのオリジナルアプリ開発の第一歩を踏み出しました。この章で体験したように、<code>brainstorm</code>で夢を語り、<code>design</code>で形にし、<code>workflow</code>で計画を立て、<code>implement</code>で実現する、というサイクルを回すことで、どんなアイデアもプログラムにすることができます。この楽しさを忘れずに、次の章でさらなるステップアップを目指しましょう！</p>
 <hr>
@@ -1255,6 +1273,7 @@ sc implement --focus "JavaScriptでタスクの完了マークと削除ボタン
 <h3 id="72-なぜgithubが必要か---aiバイブコーディングの安全網">7.2 なぜGitHubが<br>必要か？ - AIバイブコーディングの安全網</h3>
 <p>AIとのバイブコーディングは強力ですが、<strong>AIが誤って全てのファイルを上書きしてしまう</strong>という事例も数多く報告されています。例えば、AIに「リファクタリングして」と頼んだら、重要なファイルが予期せず削除されたり、動いていたコードが壊れたりすることがあります。</p>
 <p><strong>GitHubは、ゲームの「セーブデータ」のような役割を果たします。</strong></p>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 💾 <strong>定期的にコミット</strong>: 作業の区切りでコードをGitHubに保存（コミット＆プッシュ）
@@ -1267,6 +1286,7 @@ sc implement --focus "JavaScriptでタスクの完了マークと削除ボタン
 <p><strong>おすすめの習慣</strong>:</p>
 </li>
 </ul>
+</div>
 <ol>
 <li>
 機能の区切りごとにコミット（「ログイン機能完成」「デザイン調整」など）
@@ -1283,6 +1303,7 @@ AIに大きな変更を依頼する前に必ずコミット
 <p>AIを使った開発において、<strong>開発スタイル</strong>によって<strong>GitHubの使い方が大きく異なります</strong>。自分の状況に合った方法を選びましょう。</p>
 <h4 id="ケース1-完全な個人プロジェクト趣味学習用">ケース1: 完全な個人プロジェクト（趣味・学習用）</h4>
 <p>6章で学んだように、誰にも報告する必要がない個人プロジェクトでは、以下の方法が効率的です：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>タスク管理</strong>: ローカルの <code>tasks.md</code> や <code>TODO.md</code> ファイルでタスクリストを管理
@@ -1308,9 +1329,11 @@ AIに大きな変更を依頼する前に必ずコミット
 <p>これは<strong>一人で全てをコントロールできる</strong>ため、シンプルで素早く開発できます。</p>
 </li>
 </ul>
+</div>
 <h4 id="ケース2-一人で企業の開発を担当pm上司への報告が必要">ケース2: 一人で企業の<br>開発を担当（PM・上司への報告が必要）</h4>
 <p><strong>一人で開発していても、PMや上司が進捗を確認する必要がある場合</strong>は、issueを使うことが推奨されます。</p>
 <p>✅ <strong>issueを使うメリット</strong>:</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>進捗の可視化</strong>: PMや上司がGitHub上で作業状況を確認できる
@@ -1353,9 +1376,11 @@ AIとのやり取りをissueのコメントに記録（後で振り返れる）
 週次ミーティング前にissueを整理（報告がスムーズ）
 </li>
 </ul>
+</div>
 <h4 id="ケース3-チーム開発複数人での共同開発">ケース3: チーム開発（複数人での共同開発）</h4>
 <p><strong>複数人で開発する場合</strong>、個人開発の方法では問題が起こります：</p>
 <p>❌ <strong>個人開発の方法だと起こる問題</strong>:</p>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 誰かが <code>main</code> ブランチで作業中、別の人も同じブランチで変更すると衝突
@@ -1378,6 +1403,7 @@ AIが生成したコードを直接 <code>main</code> にプッシュすると�
 <p><strong>まとめ表</strong>:</p>
 </li>
 </ul>
+</div>
 <div class="table-wrapper">
 <table>
 <thead><tr>
@@ -1429,6 +1455,7 @@ git checkout -b feature/login-form
 # 作業完了後、mainに統合（マージ）
 </code><button class="code-copy-btn">コピー</button></pre>
 <p><strong>チーム開発での使い方</strong>:</p>
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 各メンバーが<strong>自分専用のブランチ</strong>で作業
@@ -1447,10 +1474,12 @@ git checkout -b ai/refactor-auth
 </code><button class="code-copy-btn">コピー</button></pre>
 </li>
 </ul>
+</div>
 <h4 id="742-issueイシューとは">7.4.2 issue（イシュー）とは？</h4>
 <p><strong>issue = チーム全員が見られるタスク・バグ管理</strong></p>
 <p>個人開発の <code>tasks.md</code> をGitHub上に移動し、チーム全員で共有できるようにしたものです。</p>
 <p><strong>何ができるか</strong>:</p>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 タスクの作成・割り当て（「田中さん、このバグ修正お願い」）
@@ -1487,6 +1516,7 @@ AIが生成したコード問題の報告
 </code><button class="code-copy-btn">コピー</button></pre>
 </li>
 </ul>
+</div>
 <h4 id="743-プルリクエストpull-request--prとは">7.4.3 プルリクエスト（Pull Request / PR）とは？</h4>
 <p><strong>プルリクエスト = 「このコード、mainに統合していい？」とチームに確認する仕組み</strong></p>
 <p>AIが生成したコードを、いきなり <code>main</code> ブランチに入れるのは危険です。プルリクエストを使えば、<strong>チームでレビュー</strong>してから統合できます。</p>
@@ -1528,6 +1558,7 @@ AIが生成したコード問題の報告
 🤖 Generated with Claude Code
 </code><button class="code-copy-btn">コピー</button></pre>
 <p><strong>AIとプルリクエストを組み合わせる</strong>:</p>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 AIに生成させたコードをPRでチームレビュー
@@ -1539,6 +1570,7 @@ AIの提案に問題があれば、PRのコメントで指摘
 修正後、再度AIに調整を依頼
 </li>
 </ul>
+</div>
 <h4 id="744-チーム開発でaiと一緒に作業する際のワークフロー">7.4.4 チーム開発で<br>AIと一緒に作業する際のワークフロー</h4>
 <p><strong>推奨フロー</strong>:</p>
 <pre><code>ステップ1: issueを確認
@@ -1640,6 +1672,7 @@ AIの変更を小さな単位で保存
 sc implement "新しい機能を追加" --commit --pr
 </code><button class="code-copy-btn">コピー</button></pre>
 <p><strong>チーム開発での活用</strong>:</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 AIにコード生成を依頼 → 自動でブランチ作成 → 自動でPR作成
@@ -1651,6 +1684,7 @@ PRにはAIが生成した変更内容の説明が自動で記載される
 チームメンバーはPRをレビューして承認・マージ
 </li>
 </ul>
+</div>
 <h3 id="76-cicdパイプラインの構築">7.6 CI/CDパイプラインの構築</h3>
 <p>CI/CD (継続的インテグレーション/継続的デリバリー) は、コードの変更を頻繁に統合し、自動的にテスト・デプロイするプラクティスです。Super Claudeは、CI/CDパイプラインの構築と最適化を支援します。</p>
 <h4 id="-aiによるcicd設定ファイルの生成">✅ AIによるCI/CD設定ファイルの生成</h4>
@@ -1780,6 +1814,7 @@ sc deploy --target aws-ecs
 <p>この章では、個人としてのスキルアップだけでなく、チームや組織全体で「仕様駆動開発に則ったバイブコーディング」を導入し、開発文化を変革していくための戦略的なアプローチを解説します。Super Claudeのコマンドフローチャートは、個人の開発効率を上げるだけでなく、チーム全体の開発プロセスを標準化し、品質を向上させるための共通言語としても機能します。</p>
 <h3 id="101-なぜ組織的な導入が必要か">10.1 なぜ組織的な導入が必要か？</h3>
 <p>個々の開発者がAIツールをバラバラに使用するだけでは、その効果は限定的です。組織として統一された開発プロセス（ワークフロー）を定義し、チーム全体でAIを活用することで、以下のような相乗効果が生まれます。</p>
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>開発プロセスの標準化:</strong> 誰が担当しても一定の品質が保たれる。
@@ -1797,6 +1832,7 @@ sc deploy --target aws-ecs
 <strong>生産性の飛躍的向上:</strong> 定型作業をAIに任せることで、開発者はより創造的なタスクに集中できる。
 </li>
 </ul>
+</div>
 <h3 id="102-super-claudeコマンドフローチャートを活用したチーム開発プロセス">10.2 Super Claudeコマンドフローチャートを活用したチーム開発プロセス</h3>
 <p>Super Claudeのコマンドフローチャートを、チームの共通言語として開発プロセスに組み込みます。これにより、どのフェーズでどのコマンドを使うべきかが明確になり、チームメンバー間のコミュニケーションが円滑になります。以下に、一般的な開発プロセスにおけるコマンドの活用例を示します。</p>
 <h3 id="103-導入のステップと成功の鍵">10.3 導入のステップと成功の鍵</h3>
@@ -1852,6 +1888,7 @@ sc deploy --target aws-ecs
 </table>
 </div>
 <p><strong>Step 1: スモールスタートと成功体験の創出</strong></p>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 まずは、AIツールに前向きな意欲を持つ2〜3人の小規模なパイロットチームを選定します。
@@ -1887,8 +1924,10 @@ AI導入の効果を定量的に測定するための評価指標（KPI）を設
 これにより、組織全体でAIに関する専門知識とノウハウが蓄積され、より戦略的なAI活用が可能になります。
 </li>
 </ul>
+</div>
 <h3 id="104-文化の変革aiとの協調と成長のマインドセット">10.4 文化の変革：<br>AIとの協調と成長のマインドセット</h3>
 <p>AI開発ツールの導入は、単なるツール変更以上の「文化変革」です。AIが生成したコードが常に完璧であるとは限りません。重要なのは、AIを「完璧な答えをくれる魔法の箱」ではなく、「優秀なアシスタント」と捉え、AIとの対話を通じてより良い成果物を創り上げていくという<strong>協調と成長のマインドセット</strong>をチーム全体で共有することです。</p>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>AIを信頼し、活用する</strong>: AIの提案を積極的に試し、その結果から学びましょう。AIは開発者の思考を加速させ、新たな視点を提供してくれます。
@@ -1901,11 +1940,13 @@ AI導入の効果を定量的に測定するための評価指標（KPI）を設
 <p>このような文化を醸成することが、組織的な成功の最大の鍵となります。AIは、開発者の創造性を解き放ち、チームの可能性を無限に広げる強力なパートナーとなるでしょう。</p>
 </li>
 </ul>
+</div>
 <hr>
 <h2 id="11-トラブルシューティング"><strong>11. トラブルシューティング</strong></h2>
 <hr>
 <h3 id="111-一般的な問題と解決策">11.1 一般的な問題と解決策</h3>
 <h4 id="-claude-codesuper-claudeが起動しない">✅ Claude Code/Super Claudeが起動しない</h4>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>Node.jsのバージョン確認</strong>: <code>node -v</code>でNode.jsのバージョンが18以上であることを確認してください。古い場合はアップデートが必要です。
@@ -1917,7 +1958,9 @@ AI導入の効果を定量的に測定するための評価指標（KPI）を設
 <strong>APIキーの確認</strong>: <code>ANTHROPIC_API_KEY</code>が正しく設定されているか確認してください。
 </li>
 </ul>
+</div>
 <h4 id="-aiの出力が期待通りではない">✅ AIの出力が期待通りではない</h4>
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>プロンプトの改善</strong>: より明確で具体的なプロンプトを試してください。役割の指定、例示、制約条件などを活用しましょう。
@@ -1929,7 +1972,9 @@ AI導入の効果を定量的に測定するための評価指標（KPI）を設
 <strong>モデルの変更</strong>: Super Claudeの設定で、より高性能なモデル（例: <code>gpt-4o</code>）を使用しているか確認してください。
 </li>
 </ul>
+</div>
 <h4 id="-パフォーマンスが遅い">✅ パフォーマンスが遅い</h4>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>ネットワーク接続の確認</strong>: 安定したインターネット接続があるか確認してください。
@@ -1941,8 +1986,10 @@ AI導入の効果を定量的に測定するための評価指標（KPI）を設
 <strong>MCP設定の最適化</strong>: <code>.mcp</code>ファイルで<code>include</code>や<code>exclude</code>を適切に設定し、AIに提供するコンテキストの量を最適化してください。
 </li>
 </ul>
+</div>
 <h3 id="112-サポートとコミュニティ">11.2 サポートとコミュニティ</h3>
 <p>上記で解決しない問題や、さらに詳しい情報が必要な場合は、以下のリソースを参照してください。</p>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
 <strong>Super Claude公式GitHubリポジトリ</strong>: <a href="https://github.com/SuperClaude-Org/SuperClaude_Framework" target="_blank" rel="noopener noreferrer">https://github.com/SuperClaude-Org/SuperClaude_Framework</a>
@@ -1955,6 +2002,7 @@ AI導入の効果を定量的に測定するための評価指標（KPI）を設
 <p>これらのリソースを活用し、AI開発の旅をさらに深めていきましょう。</p>
 </li>
 </ul>
+</div>
 <h3 id="まとめ-4">まとめ</h3>
 <p>たったこれだけのステップで、あなたのアイデアが具体的な形になりました。プログラミングの知識がなくても、AIにうまくお願いするだけで、Webページを作ることができたのです。</p>
 <p>このマニュアルでは、この「魔法」をさらに強力にし、もっと複雑で面白いアプリを自由に作れるようになるための方法を、ステップバイステップで学んでいきます。最初の感動を忘れずに、次の章へ進みましょう！</p>
