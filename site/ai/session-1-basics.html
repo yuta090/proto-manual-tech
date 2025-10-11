@@ -70,13 +70,11 @@
       <nav class="toc" aria-label="目次"><h2>Quick Links</h2>
 <ol class="toc-list">
 <li><a href="#目次"><strong>目次</strong></a></li>
-<li><a href="#0-最初の30分で体験するai開発の魔法"><strong>0. 最初の30分で体験する「AI開発の魔法」</strong></a></li>
-<li><a href="#1-ai開発ができると未来はこう変わる"><strong>1. AI開発ができると、未来はこう変わる</strong></a></li>
-<li><a href="#2-ai開発ロードマップあなたのキャリアを加速する"><strong>2. AI開発ロードマップ：あなたのキャリアを加速する</strong></a></li>
+<li><a href="#1-aiでできることあなたができるようになること"><strong>1. AIでできること・あなたができるようになること</strong></a></li>
+<li><a href="#2-ai開発ロードマップ学習の進め方"><strong>2. AI開発ロードマップ：学習の進め方</strong></a></li>
 <li><a href="#3-aiにうまくお願いするコツ-計画的な進め方"><strong>3. AIに"うまく"お願いするコツ ～計画的な進め方～</strong></a></li>
 <li><a href="#4-最低限の準備ai開発の相棒を迎えよう"><strong>4. 最低限の準備：AI開発の相棒を迎えよう</strong></a></li>
-<li><a href="#5-mcpmodel-context-protocol完全活用ガイド"><strong>5. MCP（Model Context Protocol）完全活用ガイド</strong></a></li>
-<li><a href="#6-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>6. AIと作ろう！"あなただけ"のオリジナルWebアプリ開発</strong></a></li>
+<li><a href="#5-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>5. AIと作ろう！"あなただけ"のオリジナルWebアプリ開発</strong></a></li>
 </ol></nav>
     </aside>
     <main class="manual-content">
@@ -117,15 +115,15 @@
 <h3>🌟 Phase 3: 機能拡張と深化（6-8章）</h3>
 <ul>
 <li>
-<a href="#6-モダン技術スタックの構築"><strong>6. モダン技術スタックの構築</strong></a><br>
+<a href="#5-モダン技術スタックの構築"><strong>5. モダン技術スタックの構築</strong></a><br>
 <span style="font-size: 0.9em; color: #666;">最新技術を活用したプロダクション環境の構築</span>
 </li>
 <li>
-<a href="#7-あなたのアプリを進化させよう機能追加プロジェクト"><strong>7. あなたのアプリを進化させよう</strong></a><br>
+<a href="#5-あなたのアプリを進化させよう機能追加プロジェクト"><strong>5. あなたのアプリを進化させよう</strong></a><br>
 <span style="font-size: 0.9em; color: #666;">ユーザー認証、メール通知などエンタープライズ機能を追加</span>
 </li>
 <li>
-<a href="#8-企業導入のためのsdd組織変革ガイド"><strong>8. 企業導入のためのSDD組織変革ガイド</strong></a><br>
+<a href="#5-企業導入のためのsdd組織変革ガイド"><strong>5. 企業導入のためのSDD組織変革ガイド</strong></a><br>
 <span style="font-size: 0.9em; color: #666;">チームでAI開発を導入する戦略と実践</span>
 </li>
 </ul>
@@ -133,11 +131,11 @@
 <h3>🧠 Phase 4: 深い理解（9-10章）</h3>
 <ul>
 <li>
-<a href="#9-裏側の技術mcpとは何だったのか"><strong>9. 裏側の技術：MCPとは何だったのか</strong></a><br>
+<a href="#5-裏側の技術mcpとは何だったのか"><strong>5. 裏側の技術：MCPとは何だったのか</strong></a><br>
 <span style="font-size: 0.9em; color: #666;">あなたが体験してきた"魔法"の正体を明かす</span>
 </li>
 <li>
-<a href="#10-トラブルシューティング"><strong>10. トラブルシューティング</strong></a><br>
+<a href="#5-トラブルシューティング"><strong>5. トラブルシューティング</strong></a><br>
 <span style="font-size: 0.9em; color: #666;">よくある問題とその解決策</span>
 </li>
 </ul>
@@ -1445,107 +1443,7 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 </li>
 </ul>
 <hr>
-<h2 id="5-mcpmodel-context-protocol完全活用ガイド"><strong>5. MCP（Model Context Protocol）完全活用ガイド</strong></h2>
-<hr>
-<h3 id="51-mcpとは">5.1 MCPとは？</h3>
-<p>MCP (Model Context Protocol) は、AIモデルがコードベース全体のコンテキストを理解し、より正確で関連性の高い提案やコード生成を行うためのプロトコルです。これにより、AIは単一のファイルだけでなく、プロジェクト全体の構造、依存関係、コーディング規約などを考慮した上で、開発支援を行うことができます。</p>
-<h3 id="52-mcpの仕組みと重要性">5.2 MCPの仕組みと重要性</h3>
-<p>MCPは、プロジェクトのメタデータ、ファイル構造、既存のコードスニペット、ドキュメントなどをAIモデルに提供します。これにより、AIは以下のような高度な開発支援が可能になります。</p>
-<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<ul>
-<li>
-<strong>コード補完の精度向上</strong>: プロジェクト全体のコンテキストに基づいた、より適切なコード補完。
-</li>
-<li>
-<strong>バグ修正の効率化</strong>: 関連するファイルやロジックを考慮したバグの特定と修正提案。
-</li>
-<li>
-<strong>新機能開発の加速</strong>: 既存のコードベースに適合する形で、新しい機能を効率的に実装するためのコード生成。
-</li>
-<li>
-<strong>リファクタリングの支援</strong>: プロジェクトの品質基準に合わせたリファクタリング提案。
-</li>
-</ul>
-</div>
-<h3 id="53-super-claudeとmcpの連携">5.3 Super ClaudeとMCPの連携</h3>
-<p>Super Claudeは、MCPをネイティブにサポートしており、プロジェクトのコンテキストを自動的にAIモデルに提供します。これにより、Super Claudeの各コマンド（<code>implement</code>, <code>improve</code>, <code>test</code>など）は、より賢く、よりプロジェクトに即した結果を生成します。</p>
-<h4 id="-mcpの有効化と設定">✅ MCPの有効化と設定</h4>
-<p>Super Claudeでは、通常MCPはデフォルトで有効になっています。プロジェクトルートに<code>.mcp</code>ファイルを作成し、AIに提供するコンテキストの範囲や優先順位を定義することで、さらに詳細な制御が可能です。</p>
-<pre><code class="language-json">// .mcpファイル例
-{
-  "include": [
-    "src/**/*.js",
-    "src/**/*.ts",
-    "docs/**/*.md"
-  ],
-  "exclude": [
-    "node_modules/**",
-    "dist/**"
-  ],
-  "priority": {
-    "src/core/**/*.js": 10,
-    "src/utils/**/*.js": 5
-  }
-}
-</code><button class="code-copy-btn">コピー</button></pre>
-<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<ul>
-<li>
-<code>include</code>: AIにコンテキストとして含めるファイルのパターン。
-</li>
-<li>
-<code>exclude</code>: AIにコンテキストとして含めないファイルのパターン。
-</li>
-<li>
-<code>priority</code>: 特定のファイルのコンテキストの重要度を設定します。値が大きいほど優先されます。
-</li>
-</ul>
-</div>
-<h3 id="54-mcpを活用した開発ワークフロー">5.4 MCPを活用した開発ワークフロー</h3>
-<p>MCPを最大限に活用することで、Super Claudeの各コマンドがより強力になり、以下のような開発ワークフローを実現できます。</p>
-<div class="table-wrapper">
-<table>
-<thead><tr>
-<th>フェーズ</th>
-<th>Super Claudeコマンド</th>
-<th>MCPによる恩恵と実践的なヒント</th>
-</tr></thead>
-<tbody>
-<tr>
-<td><strong>プロジェクト初期化</strong></td>
-<td><code>sc init</code></td>
-<td>プロジェクトの初期化時に<code>.mcp</code>ファイルを自動生成し、AIがコードベース全体を理解するための土台を築きます。これにより、以降のコマンドがプロジェクトの構造や既存ファイルに即した提案を行えるようになります。</td>
-</tr>
-<tr>
-<td><strong>要件定義</strong></td>
-<td><code>sc brainstorm</code></td>
-<td>既存のプロジェクトファイルやドキュメントをMCPがAIに提供することで、<code>brainstorm</code>はより現実的で、プロジェクトの文脈に合ったアイデアや要件を提案します。例えば、既存のAPI定義を考慮した機能追加のアイデア出しが可能です。</td>
-</tr>
-<tr>
-<td><strong>設計</strong></td>
-<td><code>sc design</code></td>
-<td><code>design</code>コマンドは、MCPが提供する既存のアーキテクチャやデザインパターンを参照し、一貫性のある設計案を生成します。これにより、プロジェクトのスタイルガイドに沿ったUIコンポーネントの設計や、既存のデータベース構造に適合するスキーマ設計が容易になります。</td>
-</tr>
-<tr>
-<td><strong>実装</strong></td>
-<td><code>sc implement</code></td>
-<td><code>implement</code>コマンドは、MCPが提供するコードベースのコンテキスト（コーディング規約、既存の関数、クラスなど）に基づいて、より正確で統合性の高いコードを生成します。例えば、既存のユーティリティ関数を自動的に利用したコードスニペットの生成が可能です。</td>
-</tr>
-<tr>
-<td><strong>レビューと改善</strong></td>
-<td><code>sc improve</code></td>
-<td><code>improve</code>コマンドは、MCPを通じてプロジェクト全体の品質基準やパフォーマンス要件を理解し、コードの改善提案を行います。例えば、特定のモジュールのリファクタリングや、プロジェクト全体で一貫したエラーハンドリングの導入などが提案されます。</td>
-</tr>
-<tr>
-<td><strong>テスト</strong></td>
-<td><code>sc test</code></td>
-<td><code>test</code>コマンドは、MCPが提供する既存のテストフレームワークやテストパターンを考慮し、効果的なテストコードを生成します。これにより、プロジェクトのテストカバレッジを向上させ、バグの早期発見に貢献します。</td>
-</tr>
-</tbody>
-</table>
-</div>
-<hr>
-<h2 id="6-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>6. AIと作ろう！"あなただけ"の<br>オリジナルWebアプリ開発</strong></h2>
+<h2 id="5-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>5. AIと作ろう！"あなただけ"の<br>オリジナルWebアプリ開発</strong></h2>
 <hr>
 <h3 id="61-ハンズオンの準備旅の始まり">6.1 ハンズオンの準備：旅の始まり</h3>
 <p>この章では、Super Claudeを最大限に活用し、<strong>あなた自身のアイデア</strong>を基にしたオリジナルWebアプリケーションをゼロから開発するハンズオンを行います。難しい知識は一旦置いておき、「AIと一緒にものを作る楽しさ」を体験することに焦点を当てます。Super Claudeのコマンドフローチャートを「自分のアイデアを形にする旅の地図」として活用し、ステップバイステップで進めましょう。</p>
@@ -1882,18 +1780,18 @@ sc implement --focus "JavaScriptでタスクの完了マークと削除ボタン
     <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
       <div style="background: rgba(59, 130, 246, 0.2); padding: 16px; border-radius: 12px; flex: 1; min-width: 250px; max-width: 350px;">
         <strong>📘 Session 1: 基礎編（現在のページ）</strong><br>
-        <small>0-6章 | 所要時間: 3時間</small>
+        <small>1-5章 | 所要時間: 3時間</small>
       </div>
       <a href="session-2-quality.html" style="text-decoration: none; flex: 1; min-width: 250px; max-width: 350px;">
         <div style="background: rgba(16, 185, 129, 0.1); padding: 16px; border-radius: 12px; border: 2px solid rgba(16, 185, 129, 0.3); transition: all 0.3s; cursor: pointer;">
           <strong style="color: #10B981;">📗 Session 2: 品質・テスト編 →</strong><br>
-          <small style="color: #10B981;">7-10章 | 所要時間: 2時間</small>
+          <small style="color: #10B981;">6-9章 | 所要時間: 2時間</small>
         </div>
       </a>
       <a href="session-3-advanced.html" style="text-decoration: none; flex: 1; min-width: 250px; max-width: 350px;">
         <div style="background: rgba(168, 85, 247, 0.1); padding: 16px; border-radius: 12px; border: 2px solid rgba(168, 85, 247, 0.3); transition: all 0.3s; cursor: pointer;">
           <strong style="color: #A855F7;">📕 Session 3: 応用・統合編 →</strong><br>
-          <small style="color: #A855F7;">11-14章 | 所要時間: 2.5時間</small>
+          <small style="color: #A855F7;">10-13章 | 所要時間: 2.5時間</small>
         </div>
       </a>
     </div>
