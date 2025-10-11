@@ -753,7 +753,14 @@ def main(argv: Optional[List[str]] = None) -> int:
         subtitle_block = ""
         toc_html = build_toc(converter.headings)
         slug_hint = str(source["slug_hint"])
-        slug = make_output_slug(title or slug_hint, used_slugs)
+
+        # Use directory name for ai-prep-manual to ensure consistent URL
+        if slug_hint == "ai-prep-manual":
+            slug = "ai"
+            used_slugs.add(slug)
+        else:
+            slug = make_output_slug(title or slug_hint, used_slugs)
+
         manual_dir = output_path / slug
         if manual_dir.exists():
             shutil.rmtree(manual_dir)
