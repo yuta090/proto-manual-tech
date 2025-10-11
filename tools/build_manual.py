@@ -39,6 +39,21 @@ def format_inlines(text: str) -> str:
         counter += 1
         return key
 
+    # Raw HTML blocks (for glassmorphism design)
+    # Match HTML comment markers and div blocks with inline styles
+    def raw_html_repl(match: re.Match[str]) -> str:
+        raw_html = match.group(0)
+        return new_placeholder(raw_html)
+
+    # Protect HTML comments (<!-- ... -->)
+    text = re.sub(r'<!--.*?-->', raw_html_repl, text, flags=re.DOTALL)
+
+    # Protect div blocks with style attributes
+    text = re.sub(r'<div\s+style="[^"]*"[^>]*>.*?</div>', raw_html_repl, text, flags=re.DOTALL | re.IGNORECASE)
+
+    # Protect other common HTML tags with attributes
+    text = re.sub(r'<(h[1-6]|p|span)\s+[^>]*>.*?</\1>', raw_html_repl, text, flags=re.DOTALL | re.IGNORECASE)
+
     # Code spans
     def code_repl(match: re.Match[str]) -> str:
         code = match.group(1)
@@ -195,6 +210,7 @@ class MarkdownConverter:
         list_stack: List[Dict[str, object]] = []
         table_buffer: Optional[Dict[str, object]] = None
         blockquote_buffer: List[str] = []
+        raw_html_block: Optional[Dict[str, object]] = None
 
         def flush_paragraph() -> None:
             nonlocal paragraph_buffer
@@ -301,6 +317,31 @@ class MarkdownConverter:
 
         for line in lines:
             stripped = line.strip()
+
+            # Handle raw HTML blocks (for glassmorphism design)
+            if raw_html_block is not None:
+                # Check if this line closes the HTML block
+                if stripped.startswith("</div>"):
+                    raw_html_block["lines"].append(line)
+                    # Flush the complete HTML block directly without escaping
+                    html_parts.append("\n".join(raw_html_block["lines"]))
+                    raw_html_block = None
+                else:
+                    raw_html_block["lines"].append(line)
+                continue
+
+            # Detect start of raw HTML block
+            if stripped.startswith("<!--") or stripped.startswith("<div style="):
+                flush_paragraph()
+                close_all_lists()
+                raw_html_block = {"lines": [line]}
+                continue
+
+            # Handle orphaned closing tags as raw HTML
+            if stripped == "</div>" or stripped.startswith("</div>"):
+                flush_paragraph()
+                html_parts.append(line.strip())
+                continue
 
             if code_block is not None:
                 if stripped.startswith("```"):
@@ -432,6 +473,11 @@ class MarkdownConverter:
             paragraph_buffer.append(line)
 
         flush_paragraph()
+
+        # Flush unclosed raw HTML block at end of file
+        if raw_html_block is not None:
+            html_parts.append("\n".join(raw_html_block["lines"]))
+            raw_html_block = None
 
         if code_block is not None:
             code_html = html.escape("\n".join(code_block["lines"]))
@@ -713,6 +759,16 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     used_slugs: set[str] = set()
 
+    # ===== HTML直接編集モード: Markdownからの変換を無効化 =====
+    # HTMLファイルに独自デザイン要素が含まれているため、
+    # Markdownからのビルドは行わない（2025-10-11 方針変更）
+    #
+    # 以下のコードをコメントアウトして、既存HTMLを保持
+    print("[!] HTML直接編集モード: Markdownからの変換はスキップされます")
+    print("[!] site/ai/index.html を直接編集してください")
+    return 0  # ビルド処理を中断
+
+    # ----- 以下、従来のビルドロジック（無効化） -----
     for source in manual_sources:
         converter = MarkdownConverter()
         markdown_segments: List[str] = []
