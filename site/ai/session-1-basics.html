@@ -1542,6 +1542,64 @@ cd my-first-app
 </li>
 </ul>
 </div>
+<h4 id="コラムmcpで開発を加速公式ドキュメント参照とタスク管理の自動化">💡 コラム：MCPで開発を加速！公式ドキュメント参照とタスク管理の自動化</h4>
+<div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1)); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p><strong>MCP（Model Context Protocol）</strong>とは、AIツールが外部サービスと連携するための仕組みです。Super Claudeには様々なMCPサーバーが組み込まれており、開発効率を大幅に向上させることができます。ここでは、実践で役立つ2つのMCP活用例を紹介します。</p>
+
+<h5 style="color: #10b981; margin-top: 24px;">📚 Context7 MCP - 公式ドキュメントを即座に参照</h5>
+<p><strong>こんな時に便利：</strong></p>
+<ul>
+<li>Reactの最新フックの使い方を確認したい</li>
+<li>Next.jsのApp Routerの正しい実装方法を知りたい</li>
+<li>TypeScriptの型定義ベストプラクティスを調べたい</li>
+</ul>
+
+<p><strong>使用例：</strong></p>
+<pre><code>/sc:implement Reactのカスタムフックを使って、フォーム入力を管理する機能を実装してください。
+公式のuseStateとuseEffectのベストプラクティスに従ってください。
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p><strong>Super Claudeの動作：</strong></p>
+<p>Context7 MCPが自動的にReact公式ドキュメントを参照し、最新のベストプラクティスに基づいたコードを生成します。古い情報や非推奨の書き方を避け、常に公式の推奨方法でコーディングできます。</p>
+
+<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
+<p style="margin: 0;"><strong>💡 ポイント：</strong> 「公式ドキュメントに従って」というフレーズを追加すると、Context7 MCPが確実に動作します。フレームワークやライブラリの正確な使い方を学びながら開発できるため、学習効果も高まります。</p>
+</div>
+
+<h5 style="color: #3b82f6; margin-top: 32px;">📝 Notion MCP - タスク管理を自動化</h5>
+<p><strong>こんな時に便利：</strong></p>
+<ul>
+<li>開発タスクをNotionのデータベースで一元管理したい</li>
+<li>タスクの進捗状況をチームメンバーと共有したい</li>
+<li>コード生成とタスク更新を自動で連携させたい</li>
+</ul>
+
+<p><strong>使用例：</strong></p>
+<pre><code>/sc:workflow タスク管理アプリの開発計画を作成し、
+生成したタスクリストをNotionデータベースに保存してください。
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p><strong>Super Claudeの動作：</strong></p>
+<ol>
+<li>ワークフロー分析に基づいてタスクリストを生成</li>
+<li>各タスクの優先度、見積もり時間、依存関係を整理</li>
+<li>Notion MCPを通じて、指定したNotionデータベースに自動でタスクを追加</li>
+<li>実装が完了したタスクは、Super Claudeがステータスを自動更新</li>
+</ol>
+
+<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-top: 16px;">
+<p style="margin: 0;"><strong>💡 ポイント：</strong> Notion MCPを使うには、事前にNotion APIキーの設定が必要です（13章で詳細解説）。設定後は、タスクリストファイル（tasks.md）の代わりに、Notionで直接タスクを管理でき、チーム開発でも活用できます。</p>
+</div>
+
+<h5 style="color: #8b5cf6; margin-top: 32px;">🔗 他にも便利なMCPサーバー</h5>
+<ul>
+<li><strong>Playwright MCP</strong>: E2Eテストの自動実行（次のStep 5で活用）</li>
+<li><strong>GitHub MCP</strong>: Issueやプルリクエストの自動作成・管理</li>
+<li><strong>Supabase MCP</strong>: データベース操作の簡略化</li>
+</ul>
+<p>これらのMCPの詳細な使い方は、<strong>13章「裏側の技術 - MCP」</strong>で紹介します。まずはContext7とNotionの2つを使いこなすことから始めましょう！</p>
+</div>
+
 <h3 id="65-step-5-コーディング開始---implementコマンドでコードを生成">6.5 Step 5: コーディング開始 - <code>implement</code>コマンドでコードを生成</h3>
 <p><strong>目的:</strong> <code>workflow</code>で作成したタスクリストに従って、AIに実際のコードを書いてもらいます。<code>implement</code>コマンドは、あなたの指示に基づいて、必要なコードスニペットやファイルを生成し、開発を加速させます。</p>
 <div class="flowchart-container"><div class="flowchart-step">新規開発</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-highlight">実装する</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-command">/sc:implement</div></div>
