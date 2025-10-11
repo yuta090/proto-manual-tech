@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI開発ツール完全活用マニュアル</title>
+  <link rel="stylesheet" href="../assets/manual.css" />
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // すべてのpreタグにコピーボタンを追加
+      document.querySelectorAll('.manual-content pre').forEach(function(pre) {
+        const button = document.createElement('button');
+        button.className = 'code-copy-btn';
+        button.textContent = 'コピー';
+
+        button.addEventListener('click', function() {
+          const code = pre.querySelector('code');
+          const text = code ? code.textContent : pre.textContent;
+
+          navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'コピー完了！';
+            button.classList.add('copied');
+
+            setTimeout(function() {
+              button.textContent = 'コピー';
+              button.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('コピー失敗:', err);
+            button.textContent = 'エラー';
+          });
+        });
+
+        pre.appendChild(button);
+      });
+
+      // ナビゲーショントグル機能
+      const navToggle = document.getElementById('navToggle');
+      const manualLayout = document.getElementById('manualLayout');
+      const manualNav = document.getElementById('manualNav');
+
+      if (navToggle && manualLayout && manualNav) {
+        navToggle.addEventListener('click', function() {
+          manualLayout.classList.toggle('nav-collapsed');
+          navToggle.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <header class="manual-header">
+    <div class="header-text">
+      <h1>AI開発ツール完全活用マニュアル</h1>
+      
+      <dl class="manual-meta">
+        <div>
+          <dt>最終更新</dt>
+          <dd>2025-10-10 15:26</dd>
+        </div>
+      </dl>
+    </div>
+  </header>
+  <button class="nav-toggle" id="navToggle" aria-label="目次を開閉">☰</button>
+  <div class="manual-layout" id="manualLayout">
+    <aside class="manual-nav" id="manualNav">
+      <nav class="toc" aria-label="目次"><h2>Quick Links</h2><ol class="toc-list"><li><a href="#目次"><strong>目次</strong></a></li><li><a href="#0-最初の30分で体験するai開発の魔法"><strong>0. 最初の30分で<br>体験する「AI開発の魔法」</strong></a><ol><li><a href="#目的">目的</a></li><li><a href="#必要なもの">必要なもの</a></li><li><a href="#-git-for-windowsのインストール手順">✅ Git for Windowsのインストール手順</a></li><li><a href="#-gitの初期設定">✅ Gitの初期設定</a></li><li><a href="#手順">手順</a></li><li><a href="#-claude-codeのインストール">✅ Claude Codeのインストール</a></li><li><a href="#-認証設定">✅ 認証設定</a></li><li><a href="#例1-ペット紹介htmlページ画像付き">例1: ペット紹介HTMLページ（画像付き）</a></li><li><a href="#例2-簡単なゲームの作成クリックゲームでaiとの対話を体験">例2: 簡単なゲームの作成：<br>クリックゲームでAIとの対話を体験！</a></li><li><a href="#例3-レシピ紹介ページ">例3: レシピ紹介ページ</a></li><li><a href="#生成されたコードをさらに変更改善する">生成されたコードをさらに変更・改善する</a></li><li><a href="#まとめ">まとめ</a></li></ol></li><li><a href="#1-ai開発ができると未来はこう変わる"><strong>1. AI開発ができると、<br>未来はこう変わる</strong></a><ol><li><a href="#11-プログラマーの新たな役割とキャリアパス">1.1 プログラマーの新たな役割とキャリアパス</a></li><li><a href="#12-仕様駆動開発sddとバイブコーディングの融合">1.2 仕様駆動開発（SDD）とバイブコーディングの融合</a></li></ol></li><li><a href="#2-ai開発ロードマップあなたのキャリアを加速する"><strong>2. AI開発ロードマップ：<br>あなたのキャリアを加速する</strong></a><ol><li><a href="#21-ai時代のプログラマーに求められるスキルセット">2.1 AI時代のプログラマーに求められるスキルセット</a></li><li><a href="#22-本マニュアルで習得できること">2.2 本マニュアルで習得できること</a></li></ol></li><li><a href="#3-aiにうまくお願いするコツ-計画的な進め方"><strong>3. AIに"うまく"お願いするコツ ～計画的な進め方～</strong></a><ol><li><a href="#31-プロンプトエンジニアリングの基本原則">3.1 プロンプトエンジニアリングの基本原則</a></li><li><a href="#悪いプロンプトの例と良いプロンプトの例">悪いプロンプトの例と良いプロンプトの例</a></li><li><a href="#32-super-claudeにおけるプロンプトの設計">3.2 Super Claudeにおけるプロンプトの設計</a></li><li><a href="#33-仕様駆動開発sddとプロンプトの連携">3.3 仕様駆動開発（SDD）とプロンプトの連携</a></li></ol></li><li><a href="#4-最低限の準備ai開発の相棒を迎えよう"><strong>4. 最低限の準備：<br>AI開発の相棒を迎えよう</strong></a><ol><li><a href="#42-super-claudeの導入と設定">4.2 Super Claudeの導入と設定</a></li><li><a href="#-super-claudeのインストール">✅ Super Claudeのインストール</a></li><li><a href="#-super-claudeの初期設定mcpサーバーの選択">✅ Super Claudeの初期設定：<br>MCPサーバーの選択</a></li><li><a href="#43-cursor-ideの導入とclaude-code連携">4.3 Cursor IDEの<br>導入とClaude Code連携</a></li><li><a href="#-cursor-ideのインストール">✅ Cursor IDEのインストール</a></li><li><a href="#-claude-codeとの連携設定">✅ Claude Codeとの連携設定</a></li><li><a href="#44-openai-codex-cliの導入と利用">4.4 OpenAI Codex CLIの導入と利用</a></li><li><a href="#-codex-cliのインストール">✅ Codex CLIのインストール</a></li><li><a href="#-認証設定-2">✅ 認証設定</a></li><li><a href="#-codex-cliの基本的な利用方法">✅ Codex CLIの基本的な利用方法</a></li></ol></li><li><a href="#5-mcpmodel-context-protocol完全活用ガイド"><strong>5. MCP（Model Context Protocol）完全活用ガイド</strong></a><ol><li><a href="#51-mcpとは">5.1 MCPとは？</a></li><li><a href="#52-mcpの仕組みと重要性">5.2 MCPの仕組みと重要性</a></li><li><a href="#53-super-claudeとmcpの連携">5.3 Super ClaudeとMCPの連携</a></li><li><a href="#-mcpの有効化と設定">✅ MCPの有効化と設定</a></li><li><a href="#54-mcpを活用した開発ワークフロー">5.4 MCPを活用した開発ワークフロー</a></li></ol></li><li><a href="#5-mcpmodel-context-protocol完全活用ガイド-2"><strong>5. MCP（Model Context Protocol）完全活用ガイド</strong></a><ol><li><a href="#51-mcpとは-2">5.1 MCPとは？</a></li><li><a href="#52-mcpの仕組みと重要性-2">5.2 MCPの仕組みと重要性</a></li><li><a href="#53-super-claudeとmcpの連携-2">5.3 Super ClaudeとMCPの連携</a></li><li><a href="#-mcpの有効化と設定-2">✅ MCPの有効化と設定</a></li><li><a href="#54-mcpを活用した開発ワークフロー-2">5.4 MCPを活用した開発ワークフロー</a></li></ol></li><li><a href="#6-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>6. AIと作ろう！"あなただけ"の<br>オリジナルWebアプリ開発</strong></a><ol><li><a href="#61-ハンズオンの準備旅の始まり">6.1 ハンズオンの準備：旅の始まり</a></li><li><a href="#62-step-2-アイデアの壁打ち---brainstormコマンドで要件定義">6.2 Step 2: アイデアの壁打ち - <code>brainstorm</code>コマンドで要件定義</a></li><li><a href="#63-step-3-設計図の作成---designコマンドでアーキテクチャとuiuxを具体化">6.3 Step 3: 設計図の作成 - <code>design</code>コマンドでアーキテクチャとUI/UXを具体化</a></li><li><a href="#64-step-4-実装計画---workflowコマンドでタスクを明確化">6.4 Step 4: 実装計画 - <code>workflow</code>コマンドでタスクを明確化</a></li><li><a href="#65-step-5-コーディング開始---implementコマンドでコードを生成">6.5 Step 5: コーディング開始 - <code>implement</code>コマンドでコードを生成</a></li><li><a href="#66-step-6-問題解決と改善---troubleshoot-analyze-improveコマンド">6.6 Step 6: 問題解決と改善 - <code>troubleshoot</code>, <code>analyze</code>, <code>improve</code>コマンド</a></li><li><a href="#67-実践プロジェクトタスク管理アプリケーションを開発しよう">6.7 実践プロジェクト：<br>タスク管理アプリケーションを開発しよう！</a></li><li><a href="#プロジェクト概要">プロジェクト概要</a></li><li><a href="#step-1-アイデアの壁打ちと要件定義-brainstorm">Step 1: アイデアの壁打ちと要件定義 (<code>brainstorm</code>)</a></li><li><a href="#step-2-設計図の作成-design">Step 2: 設計図の作成 (<code>design</code>)</a></li><li><a href="#step-3-実装計画の策定-workflow">Step 3: 実装計画の策定 (<code>workflow</code>)</a></li><li><a href="#step-4-コーディング開始-implement">Step 4: コーディング開始 (<code>implement</code>)</a></li><li><a href="#step-5-問題解決と改善-troubleshoot-analyze-improve">Step 5: 問題解決と改善 (<code>troubleshoot</code>, <code>analyze</code>, <code>improve</code>)</a></li><li><a href="#まとめ-2">まとめ</a></li></ol></li><li><a href="#7-github連携"><strong>7. GitHub連携</strong></a><ol><li><a href="#71-gitとgithubの基本">7.1 GitとGitHubの基本</a></li><li><a href="#72-なぜgithubが必要か---aiバイブコーディングの安全網">7.2 なぜGitHubが<br>必要か？ - AIバイブコーディングの安全網</a></li><li><a href="#73-開発スタイル別のgithub活用法">7.3 開発スタイル別のGitHub活用法</a></li><li><a href="#ケース1-完全な個人プロジェクト趣味学習用">ケース1: 完全な個人プロジェクト（趣味・学習用）</a></li><li><a href="#ケース2-一人で企業の開発を担当pm上司への報告が必要">ケース2: 一人で企業の<br>開発を担当（PM・上司への報告が必要）</a></li><li><a href="#ケース3-チーム開発複数人での共同開発">ケース3: チーム開発（複数人での共同開発）</a></li><li><a href="#74-チーム開発の基礎知識---ブランチissueプルリクエスト">7.4 チーム開発の基礎知識 - ブランチ・issue・プルリクエスト</a></li><li><a href="#741-ブランチbranchとは">7.4.1 ブランチ（Branch）とは？</a></li><li><a href="#742-issueイシューとは">7.4.2 issue（イシュー）とは？</a></li><li><a href="#743-プルリクエストpull-request--prとは">7.4.3 プルリクエスト（Pull Request / PR）とは？</a></li><li><a href="#744-チーム開発でaiと一緒に作業する際のワークフロー">7.4.4 チーム開発で<br>AIと一緒に作業する際のワークフロー</a></li><li><a href="#75-super-claudeとgithubの連携">7.5 Super ClaudeとGitHubの連携</a></li><li><a href="#-githubリポジトリの初期化と連携">✅ GitHubリポジトリの初期化と連携</a></li><li><a href="#-aiによるコミットとプルリクエストの作成">✅ AIによるコミットとプルリクエストの作成</a></li><li><a href="#76-cicdパイプラインの構築">7.6 CI/CDパイプラインの構築</a></li><li><a href="#-aiによるcicd設定ファイルの生成">✅ AIによるCI/CD設定ファイルの生成</a></li><li><a href="#-aiによるテストとデプロイの自動化">✅ AIによるテストとデプロイの自動化</a></li></ol></li><li><a href="#8-モダン技術スタックの構築"><strong>8. モダン技術スタックの<br>構築</strong></a><ol><li><a href="#81-フロントエンドフレームワークの選定と導入">8.1 フロントエンドフレームワークの選定と導入</a></li><li><a href="#-フレームワークの選定とプロジェクト初期化">✅ フレームワークの選定とプロジェクト初期化</a></li><li><a href="#82-バックエンドフレームワークの選定と導入">8.2 バックエンドフレームワークの選定と導入</a></li><li><a href="#-バックエンドapiの設計と実装">✅ バックエンドAPIの設計と実装</a></li><li><a href="#83-データベースの選定とスキーマ設計">8.3 データベースの選定とスキーマ設計</a></li><li><a href="#-データベーススキーマの生成">✅ データベーススキーマの生成</a></li><li><a href="#84-クラウドインフラの活用とデプロイ">8.4 クラウドインフラの活用とデプロイ</a></li><li><a href="#-インフラ設定ファイルの生成とデプロイ">✅ インフラ設定ファイルの生成とデプロイ</a></li></ol></li><li><a href="#9-あなたのアプリを進化させよう機能追加プロジェクト"><strong>9. あなたのアプリを<br>進化させよう！機能追加プロジェクト</strong></a><ol><li><a href="#91-ユーザー認証機能の追加supabase連携">9.1 ユーザー認証機能の追加（Supabase連携）</a></li><li><a href="#目的-2">目的</a></li><li><a href="#手順-2">手順</a></li><li><a href="#92-メール通知機能の追加resend連携">9.2 メール通知機能の追加（Resend連携）</a></li><li><a href="#目的-3">目的</a></li><li><a href="#手順-3">手順</a></li><li><a href="#93-コード品質の向上とテストの追加">9.3 コード品質の向上とテストの追加</a></li><li><a href="#手順-4">手順</a></li><li><a href="#まとめ-3">まとめ</a></li></ol></li><li><a href="#10-企業導入のためのsdd組織変革ガイド"><strong>10. 企業導入の<br>ためのSDD組織変革ガイド</strong></a><ol><li><a href="#101-なぜ組織的な導入が必要か">10.1 なぜ組織的な導入が必要か？</a></li><li><a href="#102-super-claudeコマンドフローチャートを活用したチーム開発プロセス">10.2 Super Claudeコマンドフローチャートを活用したチーム開発プロセス</a></li><li><a href="#103-導入のステップと成功の鍵">10.3 導入のステップと成功の鍵</a></li><li><a href="#104-文化の変革aiとの協調と成長のマインドセット">10.4 文化の変革：<br>AIとの協調と成長のマインドセット</a></li></ol></li><li><a href="#11-トラブルシューティング"><strong>11. トラブルシューティング</strong></a><ol><li><a href="#111-一般的な問題と解決策">11.1 一般的な問題と解決策</a></li><li><a href="#-claude-codesuper-claudeが起動しない">✅ Claude Code/Super Claudeが起動しない</a></li><li><a href="#-aiの出力が期待通りではない">✅ AIの出力が期待通りではない</a></li><li><a href="#-パフォーマンスが遅い">✅ パフォーマンスが遅い</a></li><li><a href="#112-サポートとコミュニティ">11.2 サポートとコミュニティ</a></li><li><a href="#まとめ-4">まとめ</a></li></ol></li></ol></nav>
+    </aside>
+    <main class="manual-content">
+      <h2 id="目次"><strong>目次</strong></h2>
+<hr />
+<ul>
+<li>
+<a href="#0-最初の30分で体験するai開発の魔法">0. 最初の30分で体験する「AI開発の魔法」</a>
+</li>
+<li>
+<a href="#1-ai開発ができると未来はこう変わる">1. AI開発ができると、未来はこう変わる</a>
+</li>
+<li>
+<a href="#2-ai開発ロードマップあなたのキャリアを加速する">2. AI開発ロードマップ：あなたのキャリアを加速する</a>
+</li>
+<li>
+<a href="#3-aiにうまくお願いするコツ-計画的な進め方">3. AIに"うまく"お願いするコツ ～計画的な進め方～</a>
+</li>
+<li>
+<a href="#4-最低限の準備ai開発の相棒を迎えよう">4. 最低限の準備：AI開発の相棒を迎えよう</a>
+</li>
+<li>
+<a href="#5-mcpmodel-context-protocol完全活用ガイド">5. MCP（Model Context Protocol）完全活用ガイド</a>
+</li>
+<li>
+<a href="#6-aiと作ろうあなただけのオリジナルwebアプリ開発">6. AIと作ろう！"あなただけ"のオリジナルWebアプリ開発</a>
+</li>
+<li>
+<a href="#7-github連携">7. GitHub連携</a>
+</li>
+<li>
+<a href="#8-モダン技術スタックの構築">8. モダン技術スタックの構築</a>
+</li>
+<li>
+<a href="#9-あなたのアプリを進化させよう機能追加プロジェクト">9. あなたのアプリを進化させよう！機能追加プロジェクト</a>
+</li>
+<li>
+<a href="#10-企業導入のためのsdd組織変革ガイド">10. 企業導入のためのSDD組織変革ガイド</a>
+</li>
+<li>
+<a href="#11-トラブルシューティング">11. トラブルシューティング</a>
+</li>
+</ul>
+<hr />
+<hr />
+<h2 id="0-最初の30分で体験するai開発の魔法"><strong>0. 最初の30分で<br>体験する「AI開発の魔法」</strong></h2>
+<hr />
+<h3 id="目的">目的</h3>
+<p>この章の目的は、難しいツールや専門知識を一切使わずに、「AIにお願いすれば、自分のアイデアが形になる」という感動的な体験を最初に味わっていただくことです。必要なのは「Claude Pro」の契約だけ。さあ、30分で魔法を体験しましょう！</p>
+<h3 id="必要なもの">必要なもの</h3>
+<p>Claude Codeをインストールする前に、以下のソフトウェアがインストールされていることを確認してください。</p>
+<ul>
+<li>
+<strong>Claude Proプランに契約済みのアカウント</strong>
+</li>
+<li>
+<strong>Node.js 18+</strong> がインストールされた環境
+<ul>
+<li>
+<a href="https://nodejs.org/ja/download/" target="_blank" rel="noopener noreferrer">Node.js公式サイト</a>からLTS版をダウンロードし、インストールしてください。
+</li>
+</ul>
+</li>
+<li>
+<strong>Git</strong> がインストールされた環境
+<ul>
+<li>
+Windowsの場合、<a href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer">Git for Windows</a>をインストールすることを強く推奨します。これにより、<strong>Git Bash</strong>というUnixライクなシェルも同時にインストールされ、Claude Codeの操作に非常に便利です。
+</li>
+</ul>
+</li>
+</ul>
+<div class="git-install-section"><h4 id="-git-for-windowsのインストール手順">✅ Git for Windowsのインストール手順</h4>
+<p>Gitのインストールは、以下の手順で進めます。多くのオプションがありますが、基本的にはデフォルト設定で問題ありません。</p>
+<ol>
+<li>
+<strong>インストーラのダウンロード</strong>: <a href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer">Git公式サイト</a>にアクセスし、「Download」ボタンをクリックしてインストーラをダウンロードします。
+</li>
+<li>
+<strong>インストーラの実行</strong>: ダウンロードしたインストーラ（例: <code>Git-2.37.1-64-bit.exe</code>）を実行します。
+</li>
+<li>
+<strong>インストールオプションの選択</strong>: 画面の指示に従って「Next」をクリックしていきます。途中でいくつかのオプション選択画面が表示されますが、特別な理由がない限りデフォルト設定のままで問題ありません。
+</li>
+</ol>
+<ul>
+<li>
+<strong>Information</strong>: 「Next」をクリックします。
+</li>
+<li>
+<strong>Select Destination Location</strong>: インストール先を選択します。
+<p>→ デフォルトのままで「Next」をクリックします。</p>
+</li>
+<li>
+<strong>Select Components</strong>: インストールするコンポーネントを選択します。
+<p>→ デフォルトのままで「Next」をクリックします。</p>
+</li>
+<li>
+<strong>Select Start Menu Folder</strong>: スタートメニューのフォルダを選択します。
+<p>→ デフォルトのままで「Next」をクリックします。</p>
+</li>
+<li>
+<strong>Choose the default editor used by Git</strong>: Gitのデフォルトエディタを選択します。
+<p>→ Visual Studio Codeを使用している場合は「Use Visual Studio Code as Git's default editor」を選択し、「Next」をクリックします。</p>
+<p><img src="https://private-us-east-1.manuscdn.com/sessionFile/SJ3lkjrh8QoOQ3IeDH20m6/sandbox/NZLhaNoNCaSIqlvgyHkecV-images_1760030264715_na1fn_L2hvbWUvdWJ1bnR1L2dpdF9pbnN0YWxsX2ltYWdlcy9naXRfaW5zdGFsbF9zdGVwX2RlZmF1bHRfZWRpdG9yX2VkaXRvcl9zZWxlY3Rpb24.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvU0ozbGtqcmg4UW9PUTNJZURIMjBtNi9zYW5kYm94L05aTGhhTm9OQ2FTSXFsdmd5SGtlY1YtaW1hZ2VzXzE3NjAwMzAyNjQ3MTVfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyZHBkRjlwYm5OMFlXeHNYMmx0WVdkbGN5OW5hWFJmYVc1emRHRnNiRjl6ZEdWd1gyUmxabUYxYkhSZlpXUnBkRzl5WDJWa2FYUnZjbDl6Wld4bFkzUnBiMjQucG5nIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&amp;Key-Pair-Id=K2HSFNDJXOU9YS&amp;Signature=EAUiBWCZbCMoh-9rzTe0iZo2RKYBk62mDz9kChFMLZGAD8khtM7Zqbi6JDCQfhs7Vy-jhoC9k1ACY2vrdRCTiOL6jVtGT2OFGRl2AyWXtr1o24hOKT1G~1dlVywl2pIfQSlmtLh6p4VkMTHedSR5VtHM78BQLWeFvk07RHwUM3srGvFk2YRs6L6FjvrCpRuYGkIqqwDTiuIc3UZpJqpTXlN3wN2sgH1pNdQODH6CNz3aMKRpKenMi2h8KYypL4kpNLmIOGeIsSP02M4emUPcKqowTJzcGIqakx0V81U03S8Qc8YuIFOPgYrjMRZrm5dCF388tEKsgJZcBrFyhkHvLQ__" alt="Git for Windows デフォルトエディタ選択画面" loading="lazy" decoding="async" /></p>
+<p><em>図0-9: Git for Windows デフォルトエディタ選択画面</em></p>
+</li>
+<li>
+<strong>Adjusting the name of the initial branch in new repositories</strong>: 新規リポジトリ作成時のブランチ名をGitに任せる場合は「Let Git decide」を選択します。
+<p>→ 「Next」をクリックします。</p>
+</li>
+<li>
+<strong>Adjusting your PATH environment</strong>: 「Git from the command line and also from 3rd-party software」を選択します。
+<p>→ 「Next」をクリックします。</p>
+<p><img src="https://private-us-east-1.manuscdn.com/sessionFile/SJ3lkjrh8QoOQ3IeDH20m6/sandbox/NZLhaNoNCaSIqlvgyHkecV-images_1760030264716_na1fn_L2hvbWUvdWJ1bnR1L2dpdF9pbnN0YWxsX2ltYWdlcy9naXRfaW5zdGFsbF9zdGVwX3BhdGhfZW52.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvU0ozbGtqcmg4UW9PUTNJZURIMjBtNi9zYW5kYm94L05aTGhhTm9OQ2FTSXFsdmd5SGtlY1YtaW1hZ2VzXzE3NjAwMzAyNjQ3MTZfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyZHBkRjlwYm5OMFlXeHNYMmx0WVdkbGN5OW5hWFJmYVc1emRHRnNiRjl6ZEdWd1gzQmhkR2hmWlc1Mi5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&amp;Key-Pair-Id=K2HSFNDJXOU9YS&amp;Signature=nGYj8eTL3iBNcU~y7KwyGXoEPNjXuf7nIFhsJo-Rg1vydtVA9Rl6vzz38QiFEn7U6uPN4GPOCYPvl5LarreLDQIXayYpKLmXY-560F7Cw9K4ijYOXUxkEp7tUY86ZNfOGDdWZe6KOM6KKRFd795qoaxcrFkiFuKCiF0iGnBH3ZZNZvXfpoZ43KBaaYD7B43qq6zIGZjlzV6i-cwtDHtay10IjIR1B8ky~IJLm-3iJD2Sii850seSxMin4D2oWC4GTyRJJUoNIf0Xbxy3WjUXFCcvnG2P3xPsWQBT04IwJAdsYB~3KEDqZoykJFNdtIsIItppQR8o0~PzON-qWM-hYQ__" alt="Git for Windows PATH環境変数設定画面" loading="lazy" decoding="async" /> <em>図0-11: Git for Windows PATH環境変数設定画面</em></p>
+</li>
+<li>
+<strong>Choose the SSH executable</strong>: 「Use bundled OpenSSH」を選択します。
+<p>→ 「Next」をクリックします。</p>
+</li>
+<li>
+<strong>Choose the HTTPS transport backend</strong>: 「Use the OpenSSL library」を選択します。
+<p>→ 「Next」をクリックします。</p>
+</li>
+<li>
+<strong>Configuring the line ending conversions</strong>: 「Checkout Windows-style, commit Unix-style line endings」を選択します。
+<p>→ 「Next」をクリックします。</p>
+</li>
+<li>
+<strong>Configuring the terminal emulator to use with Git Bash</strong>: 「Use MinTTY (the default terminal of MSYS2)」を選択します。
+<p>→ 「Next」をクリックします。</p>
+</li>
+<li>
+<strong>Choose the default behavior of <code>git pull</code></strong>: 「Default (fast-forward or merge)」を選択します。
+<p>→ 「Next」をクリックします。</p>
+</li>
+<li>
+<strong>Choose a credential helper</strong>: 「Git Credential Manager」を選択します。
+<p>→ 「Next」をクリックします。</p>
+</li>
+<li>
+<strong>Configure extra options</strong>: 両方チェックします。
+<p>→ 「Next」をクリックします。</p>
+</li>
+<li>
+<strong>Configure experimental options</strong>: 何もチェックしません。
+<p>→ 「Install」をクリックします。</p>
+</li>
+</ul>
+<ol>
+<li>
+<strong>インストール完了</strong>: インストールが開始され、完了すると「Completing the Git Setup Wizard」と表示されます。「Finish」をクリックして完了です。スタートメニューに「Git Bash」が表示されていればインストール成功です。
+</li>
+</ol>
+</div><h4 id="-gitの初期設定">✅ Gitの初期設定</h4>
+<p>Gitのインストール後、ユーザー名とメールアドレスを設定します。これは、Gitでコミットを行う際に誰が変更を行ったかを識別するために必要です。Git Bashを起動し、以下のコマンドを実行してください。</p>
+<pre><code class="language-bash">git config --global user.name &quot;あなたのユーザー名&quot;
+git config --global user.email &quot;あなたのメールアドレス&quot;
+</code></pre>
+<p>SSHキーの作成は、GitHubなどのリモートリポジトリと安全に通信するために必要です。以下のコマンドを実行し、画面の指示に従ってEnterを押してください（パスフレーズは設定しなくても構いません）。</p>
+<pre><code class="language-bash">ssh-keygen
+</code></pre>
+<ul>
+<li>
+<strong>Webブラウザ</strong>（Google Chrome, Safariなど）
+</li>
+</ul>
+<h3 id="手順">手順</h3>
+<ol>
+<li>
+<strong>Claude Codeのインストールと認証</strong>
+<p>Claude Codeは、AIを活用した開発を始めるための最初のステップです。ここでは、Claude Codeのインストールと基本的な設定方法について説明します。</p>
+</li>
+</ol>
+<div class="claude-install-section"><h4 id="-claude-codeのインストール">✅ Claude Codeのインストール</h4>
+<p>Claude Codeは、AIを活用した開発を始めるための最初のステップです。ここでは、Claude Codeのインストールと基本的な設定方法について説明します。</p>
+<p><strong>1. Claude Codeのインストール</strong></p>
+<p>Claude Codeは、npm（Node.jsのパッケージマネージャー）を使って簡単にインストールできます。このコマンドはグローバルにインストールされるため、どのディレクトリから実行しても問題ありません。ターミナルを開き、以下のコマンドを実行してください。</p>
+<pre><code class="language-bash">npm install -g claude-code
+</code></pre>
+<p><strong>2. 作業ディレクトリの準備（推奨）</strong></p>
+<p>Claude Codeのインストール自体はどのディレクトリからでも可能ですが、その後の開発作業で生成されるファイルが散らばらないよう、専用の作業ディレクトリを作成し、そこに移動してから作業を開始することを強く推奨します。以下のコマンドをターミナルで実行してください。</p>
+<pre><code class="language-bash">mkdir my-claude-project
+cd my-claude-project
+</code></pre>
+<p><strong>Windowsユーザーへの注意点：ターミナルの選択</strong></p>
+<p>Windows環境では、<code>npm</code>コマンドやClaude Codeの操作には、Unixライクなシェル環境を使用することを強く推奨します。これにより、Linuxコマンドラインツールとの互換性が確保され、スムーズな開発体験が得られます。</p>
+<ul>
+<li>
+<strong>Git Bash (推奨)</strong>: <a href="https://gitforwindows.org/" target="_blank" rel="noopener noreferrer">Git for Windows</a>をインストールすると、<strong>Git Bash</strong>というUnixライクなシェルが利用できるようになります。Git Bashは、Windowsのスタートメニューから「Git Bash」と検索して起動できます。Claude Codeのインストールや操作は、このGit Bash上で行うことを推奨します。
+</li>
+<li>
+<strong>WSL (Windows Subsystem for Linux)</strong>: WSL 1およびWSL 2の両方がサポートされています。WSL環境内でUbuntuなどのLinuxディストリビューションを起動し、そのターミナルで上記のコマンドを実行することも可能です。
+</li>
+<li>
+<strong>コマンドプロンプト/PowerShell</strong>: これらのWindows標準のターミナルでも<code>npm</code>コマンドを実行できる場合がありますが、環境設定によっては問題が発生することがあります。特に、パスの設定や一部のコマンドの挙動が異なるため、Git BashまたはWSLの利用を推奨します。
+</li>
+</ul>
+</div><div class="auth-setup-section"><h4 id="-認証設定">✅ 認証設定</h4>
+<p>Claude Codeは、AnthropicのClaude Consoleを通じたOAuth認証を推奨しています。これにより、APIキーを直接管理する手間なく、安全にClaude Codeを利用できます。</p>
+<ol>
+<li>
+<strong>Claude Consoleでの認証（推奨）</strong>
+</li>
+</ol>
+<ul>
+<li>
+<strong>テキストスタイルの選択</strong>: 最初にテキストスタイルの選択画面が表示されます。お好みのスタイルを選択してください（例: <code>1</code> を入力してEnter）。
+</li>
+<li>
+<strong>ログイン方法の選択</strong>: 次にログイン方法の選択画面が表示されます。Proプラン経由でClaude Codeを利用する場合は、通常、一番上の選択肢（Proプラン経由の認証）を選択し、Enterを押します。
+</li>
+<li>
+<strong>ブラウザでの認証</strong>: 自動的にブラウザが立ち上がり、Claude Consoleでの認証を求められます。ブラウザにログイン情報が残っている場合は、しばらく待つと自動的にログインが進行します。画面の指示に従ってログインし、Claude Codeへのアクセスを承認してください。
+</li>
+<li>
+<strong>ターミナルに戻る</strong>: 認証が成功すると、ブラウザで完了画面が表示されます。ターミナルに戻り、Enterを押して続行します。
+</li>
+<li>
+<strong>セキュリティに関する注意事項の確認</strong>: セキュリティに関する注意事項が表示されます。内容をよく読み、理解したらEnterを押して続行します。
+</li>
+<li>
+<strong>ターミナル設定の推奨</strong>: Claude Codeのターミナル設定に関する推奨事項が表示されます。最適なコーディング体験のため、「はい、推奨設定を使用します」を選択することをお勧めします（例: <code>1</code> を入力してEnter）。
+</li>
+<li>
+<strong>フォルダ内のファイルの信頼確認</strong>: 最後に、Claude Codeを実行しているディレクトリ内のファイルを信頼するかどうかの確認が表示されます。Claude Codeは、このディレクトリ以下のファイルを読み込む可能性があるため、不適切なファイルが置かれていないことを確認し、「はい、続行」を選択します（例: <code>1</code> を入力してEnter）。
+</li>
+<li>
+<strong>MCPのインストール</strong>: Super Claudeのインストール時にMCP（Model Context Protocol）のインストールに関する選択肢が表示されます。全てのMCPをインストールすることで、より多くの機能と柔軟な開発が可能になります。以下の選択肢が表示された場合、<strong>「全てのMCPをインストールする」</strong>を選択してください。
+<ul>
+<li>
+<code>1. Install all MCPs (recommended)</code>
+</li>
+<li>
+<code>2. Install only essential MCPs</code>
+</li>
+<li>
+<code>3. Skip MCP installation</code>
+</li>
+</ul>
+</li>
+<li>
+<strong>MCPの初期設定</strong>: MCPのインストール後、いくつかの初期設定に関する質問が表示される場合があります。通常はデフォルトの選択肢（Enterを押す）で問題ありませんが、特定の環境設定が必要な場合は、適宜選択してください。
+<p><img src="https://private-us-east-1.manuscdn.com/sessionFile/SJ3lkjrh8QoOQ3IeDH20m6/sandbox/NZLhaNoNCaSIqlvgyHkecV-images_1760030264718_na1fn_L2hvbWUvdWJ1bnR1L3VwbG9hZC9zZWFyY2hfaW1hZ2VzL1NXNkVsUXdkalI2RA.jpeg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvU0ozbGtqcmg4UW9PUTNJZURIMjBtNi9zYW5kYm94L05aTGhhTm9OQ2FTSXFsdmd5SGtlY1YtaW1hZ2VzXzE3NjAwMzAyNjQ3MThfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwzVndiRzloWkM5elpXRnlZMmhmYVcxaFoyVnpMMU5YTmtWc1VYZGthbEkyUkEuanBlZyIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&amp;Key-Pair-Id=K2HSFNDJXOU9YS&amp;Signature=LzGSYynS4yMQUmhZHZT1enOuF5-A~m-buAtkULmwOuQWev0QZFeyl2ttinYpy8st74C96l3ZmCVuVzK4UjtxJdW2mdWsunKhcIdR10ULXrHsYmSDbOCP0yMoLHJaLHV6ZI0xDI1F1q9~nexEdMY-zFT9kQ~urqEeMva7bb4XwmtpKCp8XvGxR~U0k6aSzWwXG97vgQgVeJKTQKZvIOLgPSEZNVLeEGCr~GvQ-J9QccW5Y8bSSnAmJ5tgSAEOy-IUCOOcgTqpJBM8E0S2oeFriM85HaBj-TwTwNy-lMn3TKxgEiSejwFTfZAPIohGLJh3s2rRBHCiDihsxARHiaZa4w__" alt="Claude Code ログイン成功画面" loading="lazy" decoding="async" /> <em>図0-1: Claude Code ログイン成功画面</em></p>
+<p><img src="https://private-us-east-1.manuscdn.com/sessionFile/SJ3lkjrh8QoOQ3IeDH20m6/sandbox/NZLhaNoNCaSIqlvgyHkecV-images_1760030264718_na1fn_L2hvbWUvdWJ1bnR1L3VwbG9hZC9zZWFyY2hfaW1hZ2VzL09DZm1LUXd1bEFZQg.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvU0ozbGtqcmg4UW9PUTNJZURIMjBtNi9zYW5kYm94L05aTGhhTm9OQ2FTSXFsdmd5SGtlY1YtaW1hZ2VzXzE3NjAwMzAyNjQ3MThfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwzVndiRzloWkM5elpXRnlZMmhmYVcxaFoyVnpMMDlEWm0xTFVYZDFiRUZaUWcucG5nIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&amp;Key-Pair-Id=K2HSFNDJXOU9YS&amp;Signature=n0i8yvdtYOPmZVPkR7sKioM1Ht8SoVLF8zAlb3FucTqfDcHxghaUGHCeKNni6AFmI1-ZzPG~cea5qv-PND2oKxHQSMtQ4ywJHooFzxc-fuqZsWDWGISmcgxc0HizjeiVBso8auW1fxkx61E42nW~OsfJc2XI2AG1g~vg2jZpkxvq0~68Ufa~vAxEO9Vic~mdvZAYJAEOE2FJQnSJ2tVfSCZ894xTJ3MuBWa21CxE7qbd57yuQNebejnh0WbDwKTMhaAMx1HdQ-rSXz~9f5LJ-3iHtG2DUJ6IqJWNrOpUWub1AqzO6B3Aa7K4E5vzbKWUBIOCbjE50NN6200u2Pzo7g__" alt="Claude Code セキュリティ確認画面" loading="lazy" decoding="async" /> <em>図0-2: Claude Code セキュリティ確認画面</em></p>
+</li>
+</ul>
+<ol>
+<li>
+<strong>APIキーの設定（上級者向け）</strong>
+<ol>
+<li>
+<a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener noreferrer">Anthropic公式サイト</a>でAPIキーを発行します。
+</li>
+<li>
+以下のいずれかの方法でAPIキーを設定します。
+</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>
+<strong>環境変数に設定</strong>: <code>export ANTHROPIC_API_KEY=your_api_key_here</code> (macOS/WSL/Git Bash)
+</li>
+<li>
+<strong>設定ファイルに保存</strong>: <code>claude-code config set api_key your_api_key_here</code>
+<p><strong>参考文献</strong> [1] Claude Pro（$20）プランでゼロから始めるClaude Code. Zenn. <a href="https://zenn.dev/asap/articles/700168965fdb7b" target="_blank" rel="noopener noreferrer">https://zenn.dev/asap/articles/700168965fdb7b</a></p>
+</li>
+</ul>
+<ol>
+<li>
+<strong>Claude CodeでHTMLコードを生成してみよう！〜AIと作る最初のWebページ〜</strong>
+<p>このセクションでは、Claude Codeを使って簡単なHTMLページを生成する具体的な例を紹介します。AIに指示を出すだけで、あなたのアイデアが瞬時にWebページとして形になる「魔法」を体験しましょう。ここでは、いくつかの異なるジャンルの例を挙げ、画像利用の方法なども含めて解説します。</p>
+</li>
+</ol>
+</div><h4 id="例1-ペット紹介htmlページ画像付き">例1: ペット紹介HTMLページ（画像付き）</h4>
+<p>画像を使った、よりリッチなWebページを作成してみましょう。Claude Codeは直接画像を生成したり、外部から取得したりすることはできませんが、画像URLを指定することで、AIがその画像を組み込んだHTMLを生成してくれます。</p>
+<ol>
+<li>
+<strong>画像を探す</strong>: まず、Unsplashなどのフリー素材サイトで、あなたのペットに合う画像を探し、そのURLをコピーしておきましょう。例えば、柴犬の画像なら <code>https://images.unsplash.com/photo-1598133441249-14716a44547b</code> のようなURLです。
+</li>
+<li>
+<strong>Claude Codeに指示を出す</strong>: ターミナルを開き、以下のプロンプトを入力してください。画像URLをプロンプトに含めるのがポイントです。
+<pre><code>私のペット「ポチ」を紹介するHTMLページを作成してください。
+
+要件:
+- ページタイトル：「私のかわいいペット - ポチの紹介」
+- 見出し：「うちの柴犬、ポチです！」
+- ペットの画像を表示（画像URL: https://images.unsplash.com/photo-1598133441249-14716a44547b）
+- ポチの紹介文：「ポチは3歳の元気な柴犬です。お散歩が大好きで、毎日公園を走り回っています。」
+- 特徴リスト：
+  - 名前：ポチ
+  - 種類：柴犬
+  - 年齢：3歳
+  - 性格：元気で人懐っこい
+- 温かみのあるデザインで、ペットの魅力が伝わるレイアウトにしてください
+- すべて1つのindex.htmlファイルに含めてください
+</code></pre>
+<p><strong>画像について</strong>: あなた自身のペットの写真を使いたい場合は、画像をWebにアップロードしてそのURLを使用するか、または画像URLの部分を省略して「ペットの画像用のプレースホルダーを用意してください」と指示し、後から手動で画像を差し替えることも可能です。</p>
+</li>
+</ol>
+<h4 id="例2-簡単なゲームの作成クリックゲームでaiとの対話を体験">例2: 簡単なゲームの作成：<br>クリックゲームでAIとの対話を体験！</h4>
+<p>Claude Codeは、HTML、CSS、JavaScriptを組み合わせて、簡単なブラウザゲームを作成することも可能です。ここでは、クリックするとスコアが上がるシンプルなゲームを例に、AIにゲーム作成を指示してみましょう。この例を通じて、AIとの対話がいかにしてアイデアを具体的な形に変えるかを体験します。</p>
+<ol>
+<li>
+<strong>ゲームのアイデアをAIに伝える</strong>: ターミナルでClaude Codeを起動し、以下のプロンプトを入力してください。
+<pre><code>「AIクリックチャレンジ」というタイトルのシンプルなクリックゲームを作成してください。
+
+要件:
+- 画面中央に大きな「クリック！」ボタンを配置
+- ボタンの上にスコア表示（初期値: 0）
+- ボタンをクリックするたびにスコアが1増える
+- スコアが10になったら「クリア！おめでとうございます！」というメッセージを表示
+- モダンでカラフルなデザインにしてください
+- すべて1つのindex.htmlファイルに含めてください
+</code></pre>
+<p><strong>別のゲームアイデア例:</strong></p>
+<p>もし違うゲームを作りたい場合は、以下のようなプロンプトも試してみてください：</p>
+<pre><code>数字当てゲームを作成してください。
+
+要件:
+- 1から100までのランダムな数字を生成
+- プレイヤーが数字を入力するフォーム
+- 「もっと大きい」「もっと小さい」のヒント表示
+- 正解したら「正解！〇回で当たりました！」と表示
+- 「もう一度遊ぶ」ボタンを追加
+- ポップで楽しいデザインにしてください
+</code></pre>
+<p>または、さらにシンプルなゲームから始めることもできます：</p>
+<pre><code>じゃんけんゲームを作成してください。
+
+要件:
+- グー・チョキ・パーのボタンを3つ配置
+- ボタンを押すとコンピューターとじゃんけん
+- 勝敗結果を表示（「あなたの勝ち！」「あなたの負け」「あいこ」）
+- 勝ち数・負け数・あいこの数を記録して表示
+- アニメーションやエフェクトを追加してください
+</code></pre>
+</li>
+<li>
+<strong>AIが生成したコードを確認する</strong>: Claude Codeが<code>index.html</code>というファイル名でコードを生成します。生成されたコードをテキストエディタで開き、内容を確認してみましょう。HTML、CSS、JavaScriptがどのように構成されているかを見てください。
+</li>
+<li>
+<strong>ゲームをブラウザで実行する</strong>: 生成された<code>index.html</code>ファイルをWebブラウザで開いてください。画面中央に「AIクリックチャレンジ」というタイトル、スコア表示、そして「クリック！」ボタンが表示されているはずです。ボタンをクリックして、スコアが増えることを確認しましょう。スコアが10になると「クリア！」と表示されることも確認してください。
+</li>
+<li>
+<strong>AIにゲームの改善を依頼する</strong>: ゲームが動作することを確認したら、さらにAIに改善を依頼してみましょう。例えば、以下のような指示をClaude Codeに与えることができます。
+</li>
+</ol>
+<ul>
+<li>
+「クリックするたびにボタンの色がランダムに変わるようにしてください。」
+</li>
+<li>
+「スコアが20になったら、別の「スーパークリア！」というメッセージを表示してください。」
+</li>
+<li>
+「ゲーム開始時に30秒のタイマーを追加し、時間切れになったらゲームオーバーと表示してください。」
+<p>このプロセスを通じて、AIが単なるコード生成ツールではなく、あなたのアイデアを具体化し、改善していく強力なパートナーとなることを実感できるでしょう。</p>
+</li>
+</ul>
+<h4 id="例3-レシピ紹介ページ">例3: レシピ紹介ページ</h4>
+<p>お気に入りのレシピを紹介するページも作成可能です。材料や手順を具体的に指示しましょう。</p>
+<ol>
+<li>
+<strong>Claude Codeに指示を出す</strong>: ターミナルで以下のプロンプトを入力します。
+<pre><code>「簡単オムライス」のレシピを紹介するHTMLページを作成してください。
+
+要件:
+- ページタイトル：「簡単オムライス - 初心者でも作れる美味しいレシピ」
+- 見出し：「ふわふわ卵の簡単オムライス」
+- 調理時間：20分
+- 材料（2人分）：
+  - ご飯：茶碗2杯分
+  - 卵：4個
+  - 鶏むね肉：100g
+  - 玉ねぎ：1/2個
+  - ケチャップ：大さじ4
+  - バター：20g
+  - 塩・こしょう：少々
+- 作り方の手順：
+  1. 玉ねぎと鶏肉を細かく切る
+  2. フライパンでバターを溶かし、玉ねぎと鶏肉を炒める
+  3. ご飯を加えてケチャップで味付けし、チキンライスを作る
+  4. 別のフライパンで卵を溶いて薄く焼き、オムレツを作る
+  5. チキンライスにオムレツをのせて完成
+- ポイント：卵は半熟に仕上げるとふわふわになります
+- 美味しそうな雰囲気のデザインで、レシピが見やすいレイアウトにしてください
+- すべて1つのindex.htmlファイルに含めてください
+</code></pre>
+</li>
+<li>
+<strong>ブラウザで開いて、魔法の結果を確認！</strong>
+<p>生成された<code>index.html</code>ファイルをWebブラウザで開いてみましょう。あなたの指示がWebページとして形になっているはずです。</p>
+</li>
+</ol>
+<h3 id="生成されたコードをさらに変更改善する">生成されたコードをさらに変更・改善する</h3>
+<p>Claude Codeの真骨頂は、一度生成したコードに対して、さらに指示を出すことで継続的に変更・改善できる点にあります。例えば、以下のようにチャット欄に追加入力することで、AIがコードを修正してくれます。</p>
+<ul>
+<li>
+「このページの背景色を水色に変えてください。」
+</li>
+<li>
+「フッターに著作権情報を追加してください。」
+</li>
+<li>
+「ボタンのデザインをもっとモダンにしてください。」
+<p>このように、AIとの対話を通じて、あなたのイメージ通りのWebページに仕上げていくことができます。</p>
+</li>
+</ul>
+<h3 id="まとめ">まとめ</h3>
+<p>たったこれだけのステップで、あなたのアイデアが具体的な形になりました。プログラミングの知識がなくても、AIにうまくお願いするだけで、Webページを作ることができたのです。</p>
+<p>このマニュアルでは、この「魔法」をさらに強力にし、もっと複雑で面白いアプリを自由に作れるようになるための方法を、ステップバイステップで学んでいきます。最初の感動を忘れずに、次の章へ進みましょう！</p>
+<hr />
+<hr />
+<h2 id="1-ai開発ができると未来はこう変わる"><strong>1. AI開発ができると、<br>未来はこう変わる</strong></h2>
+<hr />
+<h3 id="11-プログラマーの新たな役割とキャリアパス">1.1 プログラマーの新たな役割とキャリアパス</h3>
+<p>AIの進化は、プログラマーの役割を大きく変えつつあります。単にコードを書くだけでなく、AIを「使いこなす」能力が求められる時代です。AIをパートナーとして活用することで、より高度な問題解決や創造的な開発が可能になり、キャリアの可能性が大きく広がります。</p>
+<ul>
+<li>
+<strong>AIを活用した開発効率の向上</strong>: AIが定型的なコーディングやデバッグを支援することで、プログラマーはより戦略的な設計や複雑なロジックの実装に集中できます。
+</li>
+<li>
+<strong>新しいビジネス価値の創出</strong>: AIの力を借りて、これまで実現不可能だったような革新的なアプリケーションやサービスを開発できるようになります。
+</li>
+<li>
+<strong>市場価値の向上</strong>: AI開発スキルを持つプログラマーは、企業にとって非常に価値の高い人材となります。これにより、より良い条件での転職や、高収入を得る機会が増加します。
+</li>
+</ul>
+<h3 id="12-仕様駆動開発sddとバイブコーディングの融合">1.2 仕様駆動開発（SDD）とバイブコーディングの融合</h3>
+<p>本マニュアルで提唱する「仕様駆動開発に則ったバイブコーディング」は、AI時代の新しい開発スタイルです。これは、従来の厳格な仕様駆動開発のメリット（品質、予測可能性）と、AIによる直感的で高速な「バイブコーディング」のメリット（生産性、創造性）を融合させたものです。</p>
+<ul>
+<li>
+<strong>仕様駆動開発（SDD）</strong>: 開発の初期段階で詳細な仕様を定義し、それに従って開発を進める手法です。これにより、手戻りを減らし、品質の高いソフトウェアを効率的に開発できます。
+</li>
+<li>
+<strong>バイブコーディング</strong>: AIの支援を受けながら、直感的にアイデアをコードに落とし込んでいく開発スタイルです。AIがコードの大部分を生成するため、開発者は思考を中断することなく、創造的な作業に集中できます。
+<p>この二つを組み合わせることで、AIの高速なコード生成能力を最大限に活かしつつ、プロジェクトの全体像を見失うことなく、高品質なソフトウェアを効率的に開発することが可能になります。</p>
+</li>
+</ul>
+<hr />
+<hr />
+<h2 id="2-ai開発ロードマップあなたのキャリアを加速する"><strong>2. AI開発ロードマップ：<br>あなたのキャリアを加速する</strong></h2>
+<hr />
+<h3 id="21-ai時代のプログラマーに求められるスキルセット">2.1 AI時代のプログラマーに求められるスキルセット</h3>
+<p>AI時代において、プログラマーに求められるスキルは変化しています。単なるプログラミング言語の知識だけでなく、AIを効果的に活用するためのスキルが重要になります。</p>
+<ul>
+<li>
+<strong>プロンプトエンジニアリング</strong>: AIに意図を正確に伝え、期待する出力を引き出すためのプロンプト（指示）を設計するスキルです。
+</li>
+<li>
+<strong>AIツールの選定と活用</strong>: Super Claude、Cursor IDE、OpenAI Codexなど、様々なAI開発ツールの中から最適なものを選び、使いこなす能力です。
+</li>
+<li>
+<strong>システム設計とアーキテクチャ</strong>: AIが生成したコードを統合し、堅牢でスケーラブルなシステムを構築するための設計能力です。
+</li>
+<li>
+<strong>デバッグと品質保証</strong>: AIが生成したコードの品質を評価し、問題を特定・修正する能力です。
+</li>
+</ul>
+<h3 id="22-本マニュアルで習得できること">2.2 本マニュアルで習得できること</h3>
+<p>本マニュアルは、これらのスキルを体系的に習得し、AI時代のプログラマーとして成功するためのロードマップを提供します。</p>
+<ul>
+<li>
+<strong>Super Claudeの徹底活用</strong>: 要件定義から実装、テスト、デプロイまで、開発の全工程でSuper Claudeを使いこなす方法を学びます。
+</li>
+<li>
+<strong>Cursor IDEの効率的な利用</strong>: AI機能を統合した次世代IDEであるCursorを最大限に活用し、開発効率を飛躍的に向上させます。
+</li>
+<li>
+<strong>OpenAI Codexとの連携</strong>: より高度なコード生成や既存コードの解析にOpenAI Codexを連携させる方法を習得します。
+</li>
+<li>
+<strong>仕様駆動開発（SDD）の実践</strong>: AIを活用しながら、いかにして高品質な仕様に基づいた開発を進めるかを学びます。
+<p>このロードマップに従うことで、あなたはAIを強力なパートナーとし、自身のキャリアを次のレベルへと加速することができるでしょう。</p>
+</li>
+</ul>
+<hr />
+<hr />
+<h2 id="3-aiにうまくお願いするコツ-計画的な進め方"><strong>3. AIに"うまく"お願いするコツ ～計画的な進め方～</strong></h2>
+<hr />
+<h3 id="31-プロンプトエンジニアリングの基本原則">3.1 プロンプトエンジニアリングの基本原則</h3>
+<p>AIを効果的に活用するためには、適切な「プロンプト（指示）」を与えることが不可欠です。プロンプトエンジニアリングは、AIから望む結果を引き出すための技術であり、以下の基本原則に基づいています。</p>
+<ul>
+<li>
+<strong>明確性</strong>: 何をしてほしいのか、具体的に指示します。曖昧な表現は避けましょう。
+</li>
+<li>
+<strong>具体性</strong>: 期待する出力の形式、含めるべき要素、制約条件などを詳細に伝えます。
+</li>
+<li>
+<strong>役割の指定</strong>: AIに「あなたは熟練のWeb開発者です」のように役割を与えることで、その役割に応じた回答を引き出しやすくなります。
+</li>
+<li>
+<strong>例示</strong>: 期待する出力の例を示すことで、AIはより正確に意図を理解します。
+</li>
+<li>
+<strong>制約条件</strong>: 「〇〇は含めないでください」「〇〇文字以内で」など、不要な要素や制限を明確に伝えます。
+</li>
+</ul>
+<h4 id="悪いプロンプトの例と良いプロンプトの例">悪いプロンプトの例と良いプロンプトの例</h4>
+<h3 id="32-super-claudeにおけるプロンプトの設計">3.2 Super Claudeにおけるプロンプトの設計</h3>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>悪い例</th>
+<th>良い例</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Webページを作って。</td>
+<td>あなたは熟練のフロントエンドエンジニアです。ペットの柴犬を紹介する、温かみのあるデザインのWebページを作成してください。HTML、CSS、JavaScriptを1つのファイルにまとめてください。ページには、柴犬のかわいい画像（画像URL: <a href="https://images.unsplash.com/photo-1598133441249-14716a44547b%EF%BC%89%E3%81%A8%E3%80%81%E3%81%9D%E3%81%AE%E5%AD%90%E3%81%AE%E6%80%A7%E6%A0%BC%EF%BC%88%E5%85%83%E6%B0%97%E3%81%A7%E4%BA%BA%E6%87%90%E3%81%A3%E3%81%93%E3%81%84%EF%BC%89%E3%80%81%E5%A5%BD%E3%81%8D%E3%81%AA%E3%81%93%E3%81%A8%EF%BC%88%E6%95%A3%E6%AD%A9%E3%80%81%E3%83%9C%E3%83%BC%E3%83%AB%E9%81%8A%E3%81%B3%EF%BC%89%E3%82%92%E7%B4%B9%E4%BB%8B%E3%81%99%E3%82%8B%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%82%92%E5%90%AB%E3%82%81%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%E8%83%8C%E6%99%AF%E8%89%B2%E3%81%AF%E8%96%84%E3%81%84%E3%83%99%E3%83%BC%E3%82%B8%E3%83%A5%E3%81%AB%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82" target="_blank" rel="noopener noreferrer">https://images.unsplash.com/photo-1598133441249-14716a44547b）と、その子の性格（元気で人懐っこい）、好きなこと（散歩、ボール遊び）を紹介するテキストを含めてください。背景色は薄いベージュにしてください。</a></td>
+</tr>
+<tr>
+<td>このコードを直して。</td>
+<td>このJavaScriptのコードにはバグがあります。<code>button</code>をクリックしても<code>count</code>が増えません。原因を特定し、修正案を提示してください。<code>let count = 0; const button = document.getElementById(&#x27;myButton&#x27;); button.addEventListener(&#x27;click&#x27;, () =&gt; { count++; });</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Super Claudeでは、これらの原則をCLIコマンドと組み合わせることで、ブレのない、より効率的なプロンプト設計が可能です。</p>
+<ul>
+<li>
+<strong>コマンドの選択</strong>: <code>brainstorm</code>, <code>design</code>, <code>implement</code>など、目的のコマンドを適切に選択することが最初のプロンプトです。
+</li>
+<li>
+<strong>引数とオプション</strong>: コマンドに続く引数やオプション（例: <code>--focus feature</code>）で、AIに焦点を当てるべき点や追加情報を伝えます。
+</li>
+<li>
+<strong>対話形式の活用</strong>: Super Claudeは対話形式で情報を深掘りできるため、一度に完璧なプロンプトを作成するのではなく、AIとの対話を通じて徐々に洗練させていくことができます。
+</li>
+</ul>
+<h3 id="33-仕様駆動開発sddとプロンプトの連携">3.3 仕様駆動開発（SDD）とプロンプトの連携</h3>
+<p>仕様駆動開発のプロセスにプロンプトエンジニアリングを組み込むことで、AIの力を最大限に引き出し、高品質なソフトウェア開発を実現します。</p>
+<ul>
+<li>
+<strong>要件定義</strong>: <code>brainstorm</code>コマンドであなたの要望をSuper Claudeが深掘りし、具体的な要件としてAIに整理させます。
+</li>
+<li>
+<strong>設計</strong>: <code>design</code>コマンドで要件に基づいたアーキテクチャやUI/UXの設計をAIに提案させ、レビューします。
+</li>
+<li>
+<strong>実装</strong>: <code>implement</code>コマンドで設計書に基づいたコードをAIに生成させ、テストと修正を繰り返します。
+<p>このように、各開発フェーズでAIに適切なプロンプトを与えることで、AIは単なるツールではなく、開発チームの一員として機能します。</p>
+</li>
+</ul>
+<hr />
+<hr />
+<h2 id="4-最低限の準備ai開発の相棒を迎えよう"><strong>4. 最低限の準備：<br>AI開発の相棒を迎えよう</strong></h2>
+<hr />
+<h3 id="42-super-claudeの導入と設定">4.2 Super Claudeの導入と設定</h3>
+<p>Super Claudeは、Claude Codeをさらに強力にするための拡張機能です。Super Claudeを導入することで、より高度な開発支援機能を利用できるようになります。</p>
+<h4 id="-super-claudeのインストール">✅ Super Claudeのインストール</h4>
+<p>Super Claudeは、以下のいずれかの方法でインストールできます。ご自身の環境や好みに合わせて選択してください。<strong>pipx</strong>を使用したインストールが最も推奨されています。</p>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>Method</th>
+<th>Command</th>
+<th>Best For</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>🐍 pipx</strong></td>
+<td><code>pipx install SuperClaude &amp;&amp; pipx upgrade SuperClaude &amp;&amp; SuperClaude install</code></td>
+<td><strong>✅ Recommended</strong> - Linux/macOS</td>
+</tr>
+<tr>
+<td><strong>📦 pip</strong></td>
+<td><code>pip install SuperClaude &amp;&amp; pip upgrade SuperClaude &amp;&amp; SuperClaude install</code></td>
+<td>Traditional Python environments</td>
+</tr>
+<tr>
+<td><strong>🌐 npm</strong></td>
+<td><code>npm install -g @bifrost_inc/superclaude &amp;&amp; superclaude install</code></td>
+<td>Cross-platform, Node.js users</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>💡 トラブルシューティング: PEP 668 エラー</strong></p>
+<p><code>pip</code>でインストールする際に <code>externally-managed-environment</code> というエラーが出ることがあります。これは、OSのパッケージマネージャーと<code>pip</code>が競合しないようにするための保護機能によるものです。その場合は、以下のいずれかの方法で対処してください。</p>
+<pre><code class="language-shell"># Option 1: pipx を使用する (推奨)
+pipx install SuperClaude
+
+# Option 2: ユーザーインストール
+pip install --user SuperClaude
+
+# Option 3: システムパッケージの破損を許容して強制インストール (注意して使用)
+pip install --break-system-packages SuperClaude
+</code></pre>
+<h4 id="-super-claudeの初期設定mcpサーバーの選択">✅ Super Claudeの初期設定：<br>MCPサーバーの選択</h4>
+<p><code>SuperClaude install</code>コマンドを実行すると、Super Claudeの能力を最大限に引き出すための<strong>MCP（Model Context Protocol）サーバー</strong>を選択する対話形式のメニューが表示されます。これは、AIがあなたのプロジェクトの文脈を深く理解するための重要なステップです。</p>
+<pre><code class="language-bash">% SuperClaude install
+1. [ ] sequential-thinking - Multi-step problem solving and systematic analysis
+2. [ ] context7 - Official library documentation and code examples
+3. [ ] magic - Modern UI component generation and design systems
+4. [ ] playwright - Cross-browser E2E testing and automation
+5. [ ] serena - Semantic code analysis and intelligent editing
+6. [ ] morphllm - Fast Apply capability for context-aware code modifications
+7. [ ] Skip MCP Server installation
+</code></pre>
+<p><strong>基本的に、全てのMCPサーバーをインストールすることが推奨されます。</strong> これにより、Super Claudeはあらゆる開発タスクにおいて、より高い精度と文脈理解能力を発揮します。キーボードの矢印キーで選択し、スペースキーでチェックを入れ、Enterキーでインストールを確定します。（<code>7. Skip MCP Server installation</code>以外を選択してください）または　all と入力してエンターを押してください。de</p>
+<p>各MCPサーバーの役割は以下の通りです。</p>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>番号</th>
+<th>MCPサーバー名</th>
+<th>説明（概略翻訳）</th>
+<th>主な用途</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>sequential-thinking</td>
+<td>多段階的な問題解決と体系的な分析</td>
+<td>複雑なアルゴリズムの設計、段階的なリファクタリング</td>
+</tr>
+<tr>
+<td>2</td>
+<td>context7</td>
+<td>公式ライブラリドキュメントとコード例</td>
+<td>ライブラリの正確な利用、最新のAPI仕様に基づいたコード生成</td>
+</tr>
+<tr>
+<td>3</td>
+<td>magic</td>
+<td>最新のUIコンポーネント生成および設計システム</td>
+<td>モダンなUIコンポーネントの迅速な作成、デザインシステムへの準拠</td>
+</tr>
+<tr>
+<td>4</td>
+<td>playwright</td>
+<td>クロスブラウザE2Eテストと自動化</td>
+<td>E2Eテストコードの自動生成、ブラウザ操作の自動化</td>
+</tr>
+<tr>
+<td>5</td>
+<td>serena</td>
+<td>セマンティックコード分析とインテリジェント編集</td>
+<td>コードの深い意味理解、セッションをまたいだ文脈の永続化</td>
+</tr>
+<tr>
+<td>6</td>
+<td>morphllm</td>
+<td>コンテキストに応じたコード変更のための高速適用機能</td>
+<td>大規模なコードベースに対する一括変更、リファクタリング</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>これらのMCPサーバーをインストールすることで、Super Claudeは単なるコード生成ツールから、プロジェクト全体を理解する真の「AI開発パートナー」へと進化します。</p>
+<h3 id="43-cursor-ideの導入とclaude-code連携">4.3 Cursor IDEの<br>導入とClaude Code連携</h3>
+<p>Cursor IDEは、AIファーストのコードエディタであり、Claude Codeとの連携により、開発体験をさらに向上させます。</p>
+<h4 id="-cursor-ideのインストール">✅ Cursor IDEのインストール</h4>
+<p><a href="https://cursor.sh/download" target="_blank" rel="noopener noreferrer">Cursor公式サイト</a>から、お使いのOSに合わせたインストーラーをダウンロードし、インストールしてください。</p>
+<h4 id="-claude-codeとの連携設定">✅ Claude Codeとの連携設定</h4>
+<p>Cursor IDEを起動後、設定画面からClaude Codeのパスを設定することで、IDE内で直接Super Claudeの機能を利用できるようになります。通常、Claude Codeはグローバルにインストールされているため、パスの指定は不要な場合が多いですが、もし認識されない場合は、<code>which claude-code</code>コマンドでパスを確認し、設定してください。</p>
+<h3 id="44-openai-codex-cliの導入と利用">4.4 OpenAI Codex CLIの導入と利用</h3>
+<p>OpenAI Codex CLIは、ローカル環境で動作するコーディングエージェントであり、ターミナルからコードの読み込み、変更、実行が可能です。Rustで構築されており、高速かつ効率的な動作が特徴です。Super Claudeと連携させることで、より高度なコード生成や既存コードの解析に利用できます。</p>
+<h4 id="-codex-cliのインストール">✅ Codex CLIのインストール</h4>
+<p>Codex CLIは、macOSとLinuxを公式にサポートしています。Windows環境では、WSL (Windows Subsystem for Linux) での実行が推奨されます。以下のいずれかの方法でインストールしてください。</p>
+<ul>
+<li>
+<strong>npm (Node.jsユーザー向け)</strong>:
+</li>
+<li>
+<strong>Homebrew (macOSユーザー向け)</strong>:
+<p>インストール後、ターミナルで <code>codex</code> と入力して起動します。</p>
+</li>
+</ul>
+<div class="auth-setup-section"><h4 id="-認証設定-2">✅ 認証設定</h4>
+<p>Codex CLIを初めて実行する際、認証を求められます。ChatGPT Plus、Pro、Team、Edu、Enterpriseプランのいずれかをお持ちの場合は、ChatGPTアカウントでサインインすることを推奨します。これにより、Codexの機能を最大限に活用できます。</p>
+<p>APIキーを使用してCodexを利用することも可能ですが、追加の設定が必要です。詳細については、<a href="https://openai.com/pricing" target="_blank" rel="noopener noreferrer">OpenAIの料金ページ</a>をご確認ください。</p>
+</div><h4 id="-codex-cliの基本的な利用方法">✅ Codex CLIの基本的な利用方法</h4>
+<p>Codex CLIはインタラクティブなターミナルUIで動作し、コードベースを読み込み、編集し、コマンドを実行できます。プロンプトや画像入力を使ってCodexをガイドできます。</p>
+<ul>
+<li>
+<strong>プロンプトを直接与える</strong>:
+</li>
+<li>
+<strong>非対話型での実行</strong>:
+</li>
+<li>
+<strong>モデルと推論レベルの変更</strong>: デフォルトではGPT-5が実行されますが、<code>/model</code> コマンドでGPT-5-Codexに切り替えることができます。また、推論レベルも変更可能です。
+</li>
+<li>
+<strong>承認モードの設定</strong>: <code>/approvals</code> コマンドで、Codexが作業ディレクトリ外のファイルにアクセスしたり、ネットワークにアクセスしたりする際の承認モードを設定できます。
+<p>Codex CLIのより詳細なドキュメントは、<a href="https://github.com/openai/codex" target="_blank" rel="noopener noreferrer">GitHubリポジトリ</a>で確認できます。</p>
+</li>
+</ul>
+<hr />
+<hr />
+<h2 id="5-mcpmodel-context-protocol完全活用ガイド"><strong>5. MCP（Model Context Protocol）完全活用ガイド</strong></h2>
+<hr />
+<h3 id="51-mcpとは">5.1 MCPとは？</h3>
+<p>MCP (Model Context Protocol) は、AIモデルがコードベース全体のコンテキストを理解し、より正確で関連性の高い提案やコード生成を行うためのプロトコルです。これにより、AIは単一のファイルだけでなく、プロジェクト全体の構造、依存関係、コーディング規約などを考慮した上で、開発支援を行うことができます。</p>
+<h3 id="52-mcpの仕組みと重要性">5.2 MCPの仕組みと重要性</h3>
+<p>MCPは、プロジェクトのメタデータ、ファイル構造、既存のコードスニペット、ドキュメントなどをAIモデルに提供します。これにより、AIは以下のような高度な開発支援が可能になります。</p>
+<ul>
+<li>
+<strong>コード補完の精度向上</strong>: プロジェクト全体のコンテキストに基づいた、より適切なコード補完。
+</li>
+<li>
+<strong>バグ修正の効率化</strong>: 関連するファイルやロジックを考慮したバグの特定と修正提案。
+</li>
+<li>
+<strong>新機能開発の加速</strong>: 既存のコードベースに適合する形で、新しい機能を効率的に実装するためのコード生成。
+</li>
+<li>
+<strong>リファクタリングの支援</strong>: プロジェクトの品質基準に合わせたリファクタリング提案。
+</li>
+</ul>
+<h3 id="53-super-claudeとmcpの連携">5.3 Super ClaudeとMCPの連携</h3>
+<p>Super Claudeは、MCPをネイティブにサポートしており、プロジェクトのコンテキストを自動的にAIモデルに提供します。これにより、Super Claudeの各コマンド（<code>implement</code>, <code>improve</code>, <code>test</code>など）は、より賢く、よりプロジェクトに即した結果を生成します。</p>
+<h4 id="-mcpの有効化と設定">✅ MCPの有効化と設定</h4>
+<p>Super Claudeでは、通常MCPはデフォルトで有効になっています。プロジェクトルートに<code>.mcp</code>ファイルを作成し、AIに提供するコンテキストの範囲や優先順位を定義することで、さらに詳細な制御が可能です。</p>
+<pre><code class="language-json">// .mcpファイル例
+{
+  &quot;include&quot;: [
+    &quot;src/**/*.js&quot;,
+    &quot;src/**/*.ts&quot;,
+    &quot;docs/**/*.md&quot;
+  ],
+  &quot;exclude&quot;: [
+    &quot;node_modules/**&quot;,
+    &quot;dist/**&quot;
+  ],
+  &quot;priority&quot;: {
+    &quot;src/core/**/*.js&quot;: 10,
+    &quot;src/utils/**/*.js&quot;: 5
+  }
+}
+</code></pre>
+<ul>
+<li>
+<code>include</code>: AIにコンテキストとして含めるファイルのパターン。
+</li>
+<li>
+<code>exclude</code>: AIにコンテキストとして含めないファイルのパターン。
+</li>
+<li>
+<code>priority</code>: 特定のファイルのコンテキストの重要度を設定します。値が大きいほど優先されます。
+</li>
+</ul>
+<h3 id="54-mcpを活用した開発ワークフロー">5.4 MCPを活用した開発ワークフロー</h3>
+<p>MCPを最大限に活用することで、Super Claudeの各コマンドがより強力になり、以下のような開発ワークフローを実現できます。</p>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>フェーズ</th>
+<th>Super Claudeコマンド</th>
+<th>MCPによる恩恵と実践的なヒント</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>プロジェクト初期化</strong></td>
+<td><code>sc init</code></td>
+<td>プロジェクトの初期化時に<code>.mcp</code>ファイルを自動生成し、AIがコードベース全体を理解するための土台を築きます。これにより、以降のコマンドがプロジェクトの構造や既存ファイルに即した提案を行えるようになります。</td>
+</tr>
+<tr>
+<td><strong>要件定義</strong></td>
+<td><code>sc brainstorm</code></td>
+<td>既存のプロジェクトファイルやドキュメントをMCPがAIに提供することで、<code>brainstorm</code>はより現実的で、プロジェクトの文脈に合ったアイデアや要件を提案します。例えば、既存のAPI定義を考慮した機能追加のアイデア出しが可能です。</td>
+</tr>
+<tr>
+<td><strong>設計</strong></td>
+<td><code>sc design</code></td>
+<td><code>design</code>コマンドは、MCPが提供する既存のアーキテクチャやデザインパターンを参照し、一貫性のある設計案を生成します。これにより、プロジェクトのスタイルガイドに沿ったUIコンポーネントの設計や、既存のデータベース構造に適合するスキーマ設計が容易になります。</td>
+</tr>
+<tr>
+<td><strong>実装</strong></td>
+<td><code>sc implement</code></td>
+<td><code>implement</code>コマンドは、MCPが提供するコードベースのコンテキスト（コーディング規約、既存の関数、クラスなど）に基づいて、より正確で統合性の高いコードを生成します。例えば、既存のユーティリティ関数を自動的に利用したコードスニペットの生成が可能です。</td>
+</tr>
+<tr>
+<td><strong>レビューと改善</strong></td>
+<td><code>sc improve</code></td>
+<td><code>improve</code>コマンドは、MCPを通じてプロジェクト全体の品質基準やパフォーマンス要件を理解し、コードの改善提案を行います。例えば、特定のモジュールのリファクタリングや、プロジェクト全体で一貫したエラーハンドリングの導入などが提案されます。</td>
+</tr>
+<tr>
+<td><strong>テスト</strong></td>
+<td><code>sc test</code></td>
+<td><code>test</code>コマンドは、MCPが提供する既存のテストフレームワークやテストパターンを考慮し、効果的なテストコードを生成します。これにより、プロジェクトのテストカバレッジを向上させ、バグの早期発見に貢献します。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<hr />
+<h2 id="5-mcpmodel-context-protocol完全活用ガイド-2"><strong>5. MCP（Model Context Protocol）完全活用ガイド</strong></h2>
+<hr />
+<h3 id="51-mcpとは-2">5.1 MCPとは？</h3>
+<p>MCP (Model Context Protocol) は、AIモデルがコードベース全体のコンテキストを理解し、より正確で関連性の高い提案やコード生成を行うためのプロトコルです。これにより、AIは単一のファイルだけでなく、プロジェクト全体の構造、依存関係、コーディング規約などを考慮した上で、開発支援を行うことができます。</p>
+<h3 id="52-mcpの仕組みと重要性-2">5.2 MCPの仕組みと重要性</h3>
+<p>MCPは、プロジェクトのメタデータ、ファイル構造、既存のコードスニペット、ドキュメントなどをAIモデルに提供します。これにより、AIは以下のような高度な開発支援が可能になります。</p>
+<ul>
+<li>
+<strong>コード補完の精度向上</strong>: プロジェクト全体のコンテキストに基づいた、より適切なコード補完。
+</li>
+<li>
+<strong>バグ修正の効率化</strong>: 関連するファイルやロジックを考慮したバグの特定と修正提案。
+</li>
+<li>
+<strong>新機能開発の加速</strong>: 既存のコードベースに適合する形で、新しい機能を効率的に実装するためのコード生成。
+</li>
+<li>
+<strong>リファクタリングの支援</strong>: プロジェクトの品質基準に合わせたリファクタリング提案。
+</li>
+</ul>
+<h3 id="53-super-claudeとmcpの連携-2">5.3 Super ClaudeとMCPの連携</h3>
+<p>Super Claudeは、MCPをネイティブにサポートしており、プロジェクトのコンテキストを自動的にAIモデルに提供します。これにより、Super Claudeの各コマンド（<code>implement</code>, <code>improve</code>, <code>test</code>など）は、より賢く、よりプロジェクトに即した結果を生成します。</p>
+<h4 id="-mcpの有効化と設定-2">✅ MCPの有効化と設定</h4>
+<p>Super Claudeでは、通常MCPはデフォルトで有効になっています。プロジェクトルートに<code>.mcp</code>ファイルを作成し、AIに提供するコンテキストの範囲や優先順位を定義することで、さらに詳細な制御が可能です。</p>
+<pre><code class="language-json">// .mcpファイル例
+{
+  &quot;include&quot;: [
+    &quot;src/**/*.js&quot;,
+    &quot;src/**/*.ts&quot;,
+    &quot;docs/**/*.md&quot;
+  ],
+  &quot;exclude&quot;: [
+    &quot;node_modules/**&quot;,
+    &quot;dist/**&quot;
+  ],
+  &quot;priority&quot;: {
+    &quot;src/core/**/*.js&quot;: 10,
+    &quot;src/utils/**/*.js&quot;: 5
+  }
+}
+</code></pre>
+<ul>
+<li>
+<code>include</code>: AIにコンテキストとして含めるファイルのパターン。
+</li>
+<li>
+<code>exclude</code>: AIにコンテキストとして含めないファイルのパターン。
+</li>
+<li>
+<code>priority</code>: 特定のファイルのコンテキストの重要度を設定します。値が大きいほど優先されます。
+</li>
+</ul>
+<h3 id="54-mcpを活用した開発ワークフロー-2">5.4 MCPを活用した開発ワークフロー</h3>
+<p>MCPを最大限に活用することで、Super Claudeの各コマンドがより強力になり、以下のような開発ワークフローを実現できます。</p>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>フェーズ</th>
+<th>Super Claudeコマンド</th>
+<th>MCPによる恩恵と実践的なヒント</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>プロジェクト初期化</strong></td>
+<td><code>sc init</code></td>
+<td>プロジェクトの初期化時に<code>.mcp</code>ファイルを自動生成し、AIがコードベース全体を理解するための土台を築きます。これにより、以降のコマンドがプロジェクトの構造や既存ファイルに即した提案を行えるようになります。</td>
+</tr>
+<tr>
+<td><strong>要件定義</strong></td>
+<td><code>sc brainstorm</code></td>
+<td>既存のプロジェクトファイルやドキュメントをMCPがAIに提供することで、<code>brainstorm</code>はより現実的で、プロジェクトの文脈に合ったアイデアや要件を提案します。例えば、既存のAPI定義を考慮した機能追加のアイデア出しが可能です。</td>
+</tr>
+<tr>
+<td><strong>設計</strong></td>
+<td><code>sc design</code></td>
+<td><code>design</code>コマンドは、MCPが提供する既存のアーキテクチャやデザインパターンを参照し、一貫性のある設計案を生成します。これにより、プロジェクトのスタイルガイドに沿ったUIコンポーネントの設計や、既存のデータベース構造に適合するスキーマ設計が容易になります。</td>
+</tr>
+<tr>
+<td><strong>実装</strong></td>
+<td><code>sc implement</code></td>
+<td><code>implement</code>コマンドは、MCPが提供するコードベースのコンテキスト（コーディング規約、既存の関数、クラスなど）に基づいて、より正確で統合性の高いコードを生成します。例えば、既存のユーティリティ関数を自動的に利用したコードスニペットの生成が可能です。</td>
+</tr>
+<tr>
+<td><strong>レビューと改善</strong></td>
+<td><code>sc improve</code></td>
+<td><code>improve</code>コマンドは、MCPを通じてプロジェクト全体の品質基準やパフォーマンス要件を理解し、コードの改善提案を行います。例えば、特定のモジュールのリファクタリングや、プロジェクト全体で一貫したエラーハンドリングの導入などが提案されます。</td>
+</tr>
+<tr>
+<td><strong>テスト</strong></td>
+<td><code>sc test</code></td>
+<td><code>test</code>コマンドは、MCPが提供する既存のテストフレームワークやテストパターンを考慮し、効果的なテストコードを生成します。これにより、プロジェクトのテストカバレッジを向上させ、バグの早期発見に貢献します。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="6-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>6. AIと作ろう！"あなただけ"の<br>オリジナルWebアプリ開発</strong></h2>
+<hr />
+<h3 id="61-ハンズオンの準備旅の始まり">6.1 ハンズオンの準備：旅の始まり</h3>
+<p>この章では、Super Claudeを最大限に活用し、<strong>あなた自身のアイデア</strong>を基にしたオリジナルWebアプリケーションをゼロから開発するハンズオンを行います。難しい知識は一旦置いておき、「AIと一緒にものを作る楽しさ」を体験することに焦点を当てます。Super Claudeのコマンドフローチャートを「自分のアイデアを形にする旅の地図」として活用し、ステップバイステップで進めましょう。</p>
+<p><strong>目的:</strong> あなた自身のアイデアをAIと共に具体化し、簡単なWebアプリケーションを開発するための準備をします。</p>
+<p><strong>必要なもの:</strong></p>
+<ul>
+<li>
+4章までの手順で、Claude CodeとSuper Claudeがインストールされ、APIキーが設定されていること。
+</li>
+<li>
+「こんなアプリがあったらいいな」という漠然としたアイデア。（例：「読んだ本を記録するアプリ」「今日の献立を提案してくれるアプリ」など、何でもOK！）
+<p><strong>Step 1: プロジェクトフォルダの作成</strong></p>
+<p>まずは、あなたのアプリのための「アトリエ」を用意しましょう。ターミナルを開き、以下のコマンドでプロジェクト用のフォルダを作成し、その中に移動します。</p>
+<pre><code class="language-bash"># アプリ名はあなたの好きな名前に変更してください
+mkdir my-first-app
+cd my-first-app
+</code></pre>
+</li>
+</ul>
+<h3 id="62-step-2-アイデアの壁打ち---brainstormコマンドで要件定義">6.2 Step 2: アイデアの壁打ち - <code>brainstorm</code>コマンドで要件定義</h3>
+<p><strong>目的:</strong> あなたの頭の中にある漠然としたアイデアを、AIとの対話を通じて具体的な機能やコンセプトに落とし込みます。Super Claudeの<code>brainstorm</code>コマンドは、まるで熟練のビジネスアナリストのように、あなたのアイデアを深掘りし、要件を明確化してくれます。</p>
+<div class="flowchart-container"><div class="flowchart-step">新規開発</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-highlight">アイデアがある</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-command">/sc:brainstorm</div></div>
+<p><strong>手順:</strong></p>
+<ol>
+<li>
+<strong>AIにアイデアを投げかける:</strong> ターミナルで以下のコマンドを実行します。すると、Super Claudeが「どんなアプリを作りたいですか？」と尋ねてきます。あなたのアイデアを自由に伝えてみましょう。
+</li>
+<li>
+<strong>AIと対話を深める:</strong> Super Claudeは、あなたのアイデアに対して、さらに質問を投げかけてきます。例えば、「どんな科目を記録しますか？」「目標設定機能は必要ですか？」「データの保存はどうしますか？」といった具合です。この対話を通じて、あなた自身も気づかなかった要望や、アプリに必要な機能、技術的な考慮事項が明確になっていきます。AIの質問に具体的に答えることで、要件定義の精度が高まります。
+</li>
+<li>
+<strong>要件定義の完成:</strong> 対話が一段落すると、Super Claudeはここまでのやり取りをまとめた「要件定義」を生成してくれます。これは、アプリ開発の方向性を示す重要なドキュメントとなります。生成された要件定義をしっかりと確認し、必要であればさらにAIと対話して修正しましょう。
+</li>
+</ol>
+<h3 id="63-step-3-設計図の作成---designコマンドでアーキテクチャとuiuxを具体化">6.3 Step 3: 設計図の作成 - <code>design</code>コマンドでアーキテクチャとUI/UXを具体化</h3>
+<p><strong>目的:</strong> <code>brainstorm</code>で固まった要件を基に、アプリの具体的な設計図（システムアーキテクチャ、データベーススキーマ、UI/UXデザインなど）を作成します。<code>design</code>コマンドは、要件を満たすための最適な技術選定や構造をAIが提案してくれます。</p>
+<div class="flowchart-container"><div class="flowchart-step">新規開発</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-highlight">設計が必要</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-command">/sc:design</div></div>
+<p><strong>手順:</strong></p>
+<ol>
+<li>
+<strong>設計をAIに依頼:</strong> 先ほどの要件定義を基に、設計を依頼します。Super Claudeは、あなたのアプリの規模や要件に応じて、最適な技術スタック（例：フロントエンドはReact、バックエンドはNode.js、データベースはSQLiteなど）や、必要な画面構成、データ構造などを提案してくれます。
+</li>
+<li>
+<strong>設計図のレビューと調整:</strong> 生成された設計図を確認し、あなたのイメージや技術的な制約と合っているかレビューします。もし修正したい点があれば、対話形式でAIに指示を出して、設計を洗練させていきましょう。例えば、「もっとシンプルなデザインにしたい」「このデータベースではなく、別のものを使いたい」といった具体的な要望を伝えることができます。
+</li>
+</ol>
+<h3 id="64-step-4-実装計画---workflowコマンドでタスクを明確化">6.4 Step 4: 実装計画 - <code>workflow</code>コマンドでタスクを明確化</h3>
+<p><strong>目的:</strong> 設計図を基に、どのような順番で開発を進めていくかの具体的な作業計画（タスクリスト）を作成します。<code>workflow</code>コマンドは、複雑な開発プロセスを小さなタスクに分解し、効率的な実装順序を提案してくれます。</p>
+<div class="flowchart-container"><div class="flowchart-step">新規開発</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-highlight">計画を立てる</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-command">/sc:workflow</div></div>
+<p><strong>手順:</strong></p>
+<ol>
+<li>
+<strong>開発計画の作成を依頼:</strong>
+</li>
+<li>
+<strong>タスクリストの確認と調整:</strong> 生成されたタスクリストを確認し、優先順位の変更やタスクの追加・削除が必要であれば、AIに指示して調整しましょう。この計画が、今後の実装のガイドラインとなります。
+</li>
+<li>
+<strong>タスクリストをドキュメントとして保存:</strong>
+<p>開発中に休憩を取ったり、次の日に作業を再開したりすると、<strong>Claude Codeのセッション</strong>（起動してから終了するまでの作業期間）が切れてしまいます。そうすると、AIが生成したタスクリストが消えてしまい、「次は何をするんだっけ？」となってしまいます。</p>
+<p>個人開発では、企業開発で使われるような<strong>issue管理システム</strong>（GitHubのIssuesやJiraなど、タスクを管理するWebツール）を使わないことが多いです。そこで、タスクリストを<strong>ファイル</strong>として保存しておくことで、いつでも進捗状況を確認できるようにします。以下のプロンプトを入力しましょう：</p>
+<pre><code>個人での開発なので、issueは使わずに、タスクリストをドキュメントとして保存し、セッションが切れても参照できるようにしてください。
+</code></pre>
+<p><strong>Super Claudeの動作:</strong></p>
+<p>このプロンプトにより、AIは <code>tasks.md</code> や <code>TODO.md</code> といったファイルを作成し、以下のような形式でタスクリストを保存してくれます：</p>
+<pre><code class="language-markdown"># タスクリスト - 読書記録アプリ
+
+## 完了したタスク
+- [x] 1. プロジェクトの初期設定（HTML/CSS/JSファイルの作成）
+- [x] 2. 本のデータ構造の設計
+
+## 進行中のタスク
+- [ ] 3. 本の一覧表示機能の実装 ← 今ここ！
+
+## 未着手のタスク
+- [ ] 4. 本の追加フォームの実装
+- [ ] 5. 本の削除機能の実装
+- [ ] 6. ローカルストレージへのデータ保存機能
+</code></pre>
+<p><strong>使い方のコツ:</strong></p>
+</li>
+</ol>
+<ul>
+<li>
+タスクが完了したら、<code>[ ]</code> を <code>[x]</code> のようにチェックを入れていきます（AIが自動でやってくれることもあります）
+</li>
+<li>
+次回セッションを開始する時に、このファイルを見れば「どこまで進んだか」「次は何をするか」が一目瞭然
+</li>
+<li>
+新しいタスクが増えたら、このファイルに追記していきます
+</li>
+<li>
+ファイルは通常のテキストファイルなので、エディタで自由に編集できます
+</li>
+</ul>
+<h3 id="65-step-5-コーディング開始---implementコマンドでコードを生成">6.5 Step 5: コーディング開始 - <code>implement</code>コマンドでコードを生成</h3>
+<p><strong>目的:</strong> <code>workflow</code>で作成したタスクリストに従って、AIに実際のコードを書いてもらいます。<code>implement</code>コマンドは、あなたの指示に基づいて、必要なコードスニペットやファイルを生成し、開発を加速させます。</p>
+<div class="flowchart-container"><div class="flowchart-step">新規開発</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-highlight">実装する</div><div class="flowchart-arrow">→</div><div class="flowchart-step flowchart-command">/sc:implement</div></div>
+<p><strong>手順:</strong></p>
+<ol>
+<li>
+<strong>タスクを指定して実装を依頼:</strong> <code>workflow</code>で示されたタスクを一つずつ、<code>implement</code>コマンドでAIに依頼します。具体的なタスク内容をプロンプトとして与えることで、AIはより正確なコードを生成します。
+</li>
+<li>
+<strong>コードの生成と確認:</strong> Super Claudeは、指示に基づいてHTML、CSS、JavaScriptなどのコードを生成し、適切なファイル（例：<code>index.html</code>, <code>style.css</code>, <code>script.js</code>）に保存してくれます。生成されたファイルをエディタで開き、内容を確認しましょう。AIが生成したコードを理解し、必要に応じて手動で修正することも重要です。
+</li>
+<li>
+<strong>動作確認とE2Eテスト（2段階の品質保証）:</strong>
+<p>AIがコードを生成したら、それが本当に動くかを確認する必要があります。確認は<strong>2つのステップ</strong>で行います：目視確認（あなたの目で見て確認）とE2Eテスト（AIが自動で確認）。この2段階チェックにより、見た目も動作も完璧なアプリが作れます。</p>
+<p><strong>ステップ1: 目視確認（手動テスト）</strong></p>
+<p>まずは、あなた自身の目で動作を確認します。生成された<code>index.html</code>ファイルをブラウザで開いて、以下のポイントをチェックしましょう：</p>
+</li>
+</ol>
+<ul>
+<li>
+<strong>見た目の確認:</strong> ボタンやフォームが正しく表示されているか？デザインは崩れていないか？
+</li>
+<li>
+<strong>基本動作の確認:</strong> ボタンをクリックしたら反応するか？フォームに入力できるか？
+</li>
+<li>
+<strong>データの確認:</strong> フォームに「テストデータ」を入力して送信ボタンを押し、画面に表示されるか？ブラウザをリロード（更新）しても消えないか？
+<p>例えば、読書記録アプリなら「テスト本」というタイトルを入力→送信→画面に「テスト本」が表示される、という流れを実際に試してみます。</p>
+<p><strong>ステップ2: E2Eテスト（自動テスト）</strong></p>
+<p>目視確認で問題なさそうだったら、次はAIに<strong>E2Eテスト</strong>（イーツーイーテスト）をお願いします。</p>
+<p><strong>E2Eテストとは？</strong> "E2E"は"End-to-End"（最初から最後まで）の略です。実際のユーザーが操作する流れを、AIが自動的にシミュレーション（再現）してテストしてくれます。例えば：</p>
+</li>
+</ul>
+<ol>
+<li>
+AIがブラウザを自動で開く
+</li>
+<li>
+フォームに自動でテストデータを入力
+</li>
+<li>
+送信ボタンを自動でクリック
+</li>
+<li>
+画面に正しく表示されたか自動で確認
+</li>
+<li>
+問題があればエラーとして報告
+<p>これにより、「あなたが手動で試した操作」をAIが何度でも繰り返し確認してくれるので、バグ（プログラムの間違い）の見落としを防げます。</p>
+<p>以下のプロンプトを入力して、E2Eテストを実行しましょう：</p>
+<pre><code>/sc:test 今作成した内容をe2eテストしたい。問題なければタスク完了。次のタスクへ
+</code></pre>
+<p><strong>Super Claudeの動作:</strong></p>
+<p>このプロンプトにより、AIは以下の処理を自動で行います：</p>
+</li>
+<li>
+<strong>テストコードの生成:</strong> あなたのアプリに合わせたE2Eテストコード（Playwrightなどのツールを使用）を作成
+</li>
+<li>
+<strong>テストの実行:</strong> 実際にブラウザを起動し、ユーザー操作をシミュレート
+</li>
+<li>
+<strong>結果の報告:</strong>
+<ul>
+<li>
+✅ <strong>成功の場合:</strong> 「テストが全て通りました。タスク完了です。次のタスクに進みましょう。」
+</li>
+<li>
+❌ <strong>失敗の場合:</strong> 「エラーが見つかりました。[具体的なエラー内容]を修正する必要があります。」
+<p><strong>テストが失敗した場合の対処法:</strong></p>
+<p>もしE2Eテストが失敗したら、慌てずに以下の手順で対処しましょう：</p>
+</li>
+</ul>
+</li>
+<li>
+<strong>エラーメッセージを読む:</strong> AIが「どこで」「何が」問題なのかを教えてくれます
+</li>
+<li>
+<strong>AIに修正を依頼:</strong> エラー内容をそのままAIに見せて、「このエラーを修正してください」と依頼
+</li>
+<li>
+<strong>再度テスト:</strong> 修正後、もう一度目視確認→E2Eテストのサイクルを実行
+<p>例えば、「フォーム送信後、データが表示されませんでした」というエラーなら、データの保存処理や表示処理に問題がある可能性があります。AIがコードを修正してくれるので、何度でもトライできます。</p>
+<p><strong>なぜ目視確認とE2Eテスト、両方必要なの？</strong></p>
+</li>
+</ol>
+<ul>
+<li>
+<strong>目視確認の強み:</strong> 見た目の違和感や使いづらさなど、「人間の感覚」でしか分からない問題を見つけられる
+</li>
+<li>
+<strong>E2Eテストの強み:</strong> 複雑な操作や細かいバグを見落とさず、何度でも同じテストを自動で実行できる
+<p>この2つを組み合わせることで、<strong>見た目も動作も完璧</strong>なアプリに仕上がります。この「実装→目視確認→E2Eテスト→次のタスク」のサイクルを繰り返すことで、品質を保ちながら確実にアプリが形になっていきます。</p>
+</li>
+</ul>
+<h3 id="66-step-6-問題解決と改善---troubleshoot-analyze-improveコマンド">6.6 Step 6: 問題解決と改善 - <code>troubleshoot</code>, <code>analyze</code>, <code>improve</code>コマンド</h3>
+<p>開発中にエラーが出たり、コードを改善したくなったりすることは避けられません。そんな時もSuper Claudeが強力な助っ人となります。</p>
+<ul>
+<li>
+<strong>エラーが出た場合 - </strong><strong><code>troubleshoot</code></strong><strong>:</strong> アプリケーションの実行中にエラーが発生した場合、エラーメッセージを<code>troubleshoot</code>コマンドに貼り付けて実行します。AIが原因を特定し、解決策を提案してくれます。
+</li>
+<li>
+<strong>コードをきれいにしたい場合 - </strong><strong><code>improve</code></strong><strong>:</strong> 生成されたコードの品質を向上させたい、可読性を高めたい、ベストプラクティスに沿わせたいといった場合は、<code>improve</code>コマンドを使用します。<code>--type quality</code>オプションで品質向上に焦点を当てさせることができます。
+</li>
+<li>
+<strong>パフォーマンスを分析したい場合 - </strong><strong><code>analyze</code></strong><strong>:</strong> アプリの動作が遅いと感じた場合や、特定の処理のボトルネックを特定したい場合は、<code>analyze</code>コマンドを使用します。<code>--focus performance</code>オプションでパフォーマンス分析に特化させることができます。
+</li>
+</ul>
+<h3 id="67-実践プロジェクトタスク管理アプリケーションを開発しよう">6.7 実践プロジェクト：<br>タスク管理アプリケーションを開発しよう！</h3>
+<p>このセクションでは、Super Claudeの全コマンドを連携させ、より実践的なWebアプリケーション開発を体験します。目標は、ユーザーがタスクを作成、管理、完了できるシンプルな<strong>タスク管理アプリケーション</strong>を開発することです。</p>
+<h4 id="プロジェクト概要">プロジェクト概要</h4>
+<ul>
+<li>
+<strong>アプリケーション名</strong>: Simple Task Manager
+</li>
+<li>
+<strong>主要機能</strong>: タスクの追加、一覧表示、完了マーク、削除
+</li>
+<li>
+<strong>技術スタック</strong>: フロントエンド（HTML/CSS/JavaScript）、バックエンド（Node.js + Express）、データベース（SQLite）
+</li>
+</ul>
+<h4 id="step-1-アイデアの壁打ちと要件定義-brainstorm">Step 1: アイデアの壁打ちと要件定義 (<code>brainstorm</code>)</h4>
+<p>まずは、タスク管理アプリの基本的な要件をAIと一緒に洗い出します。プロジェクトフォルダでSuper Claudeを起動し、以下のコマンドを実行してください。</p>
+<pre><code class="language-bash">sc brainstorm --focus &quot;タスク管理アプリケーション&quot;
+</code></pre>
+<p>AIとの対話を通じて、以下のような要件を明確にしていきます。</p>
+<ul>
+<li>
+タスクには「タイトル」「説明」「期日」「完了ステータス」が必要。
+</li>
+<li>
+ユーザーはタスクを一覧で確認でき、新しいタスクを追加できる。
+</li>
+<li>
+既存のタスクを完了済みにしたり、削除したりできる。
+</li>
+</ul>
+<h4 id="step-2-設計図の作成-design">Step 2: 設計図の作成 (<code>design</code>)</h4>
+<p>要件が固まったら、次にアプリケーションの設計を行います。データベースのスキーマ、APIエンドポイント、基本的なUI構成などをAIに提案させましょう。</p>
+<pre><code class="language-bash">sc design --focus &quot;タスク管理アプリケーションの設計&quot;
+</code></pre>
+<p>AIは、例えば以下のような設計を提案するでしょう。</p>
+<ul>
+<li>
+<strong>データベーススキーマ</strong>: <code>tasks</code>テーブル（<code>id</code>, <code>title</code>, <code>description</code>, <code>due_date</code>, <code>completed</code>）
+</li>
+<li>
+<strong>APIエンドポイント</strong>: <code>/api/tasks</code> (GET, POST), <code>/api/tasks/:id</code> (PUT, DELETE)
+</li>
+<li>
+<strong>UI構成</strong>: タスク一覧表示、タスク追加フォーム、各タスクの完了/削除ボタン
+</li>
+</ul>
+<h4 id="step-3-実装計画の策定-workflow">Step 3: 実装計画の策定 (<code>workflow</code>)</h4>
+<p>設計に基づいて、具体的な実装タスクを洗い出し、効率的な開発順序を計画します。</p>
+<pre><code class="language-bash">sc workflow --focus &quot;タスク管理アプリケーションの実装計画&quot;
+</code></pre>
+<p>AIは、以下のようなタスクリストを生成するはずです。</p>
+<ol>
+<li>
+ExpressサーバーのセットアップとSQLiteデータベースの初期化
+</li>
+<li>
+タスクモデルの定義とCRUD操作（作成、読み取り、更新、削除）APIの実装
+</li>
+<li>
+フロントエンドのHTML構造とCSSスタイルの作成
+</li>
+<li>
+JavaScriptによるタスク一覧表示機能の実装
+</li>
+<li>
+JavaScriptによるタスク追加機能の実装
+</li>
+<li>
+JavaScriptによるタスク完了/削除機能の実装
+</li>
+</ol>
+<h4 id="step-4-コーディング開始-implement">Step 4: コーディング開始 (<code>implement</code>)</h4>
+<p>計画に従って、各タスクのコードをAIに生成してもらいます。まずは、バックエンドのセットアップとAPIの実装から始めましょう。</p>
+<pre><code class="language-bash"># 1. ExpressサーバーのセットアップとSQLiteデータベースの初期化
+sc implement --focus &quot;ExpressサーバーとSQLiteデータベースの初期設定&quot;
+
+# 2. タスクモデルの定義とCRUD操作APIの実装
+sc implement --focus &quot;タスクのCRUD APIを実装してください。GET /api/tasks, POST /api/tasks, PUT /api/tasks/:id, DELETE /api/tasks/:id&quot;
+</code></pre>
+<p>次に、フロントエンドのコードを生成します。</p>
+<pre><code class="language-bash"># 3. フロントエンドのHTML構造とCSSスタイルの作成
+sc implement --focus &quot;タスク管理アプリの基本的なHTML構造とCSSスタイル&quot;
+
+# 4. JavaScriptによるタスク一覧表示機能の実装
+sc implement --focus &quot;JavaScriptでAPIからタスクを取得し、一覧表示する機能&quot;
+
+# 5. JavaScriptによるタスク追加機能の実装
+sc implement --focus &quot;JavaScriptでタスク追加フォームとAPI連携機能&quot;
+
+# 6. JavaScriptによるタスク完了/削除機能の実装
+sc implement --focus &quot;JavaScriptでタスクの完了マークと削除ボタンの機能&quot;
+</code></pre>
+<p>各<code>implement</code>コマンドの実行後には、生成されたコードを確認し、必要に応じて手動で調整したり、AIにさらに改善を依頼したりしてください。この反復的なプロセスが、AI開発の醍醐味です。</p>
+<h4 id="step-5-問題解決と改善-troubleshoot-analyze-improve">Step 5: 問題解決と改善 (<code>troubleshoot</code>, <code>analyze</code>, <code>improve</code>)</h4>
+<p>開発中にエラーが発生したり、機能の改善が必要になったりした場合は、以下のコマンドを活用します。</p>
+<ul>
+<li>
+<strong>エラーが発生した場合</strong>: <code>sc troubleshoot &quot;[エラーメッセージ]&quot;</code>
+</li>
+<li>
+<strong>コードの品質を向上させたい場合</strong>: <code>sc improve --type quality --focus &quot;[ファイル名またはコードスニペット]&quot;</code>
+</li>
+<li>
+<strong>パフォーマンスを分析したい場合</strong>: <code>sc analyze --focus performance --focus &quot;[ファイル名または機能]&quot;</code>
+</li>
+</ul>
+<h3 id="まとめ-2">まとめ</h3>
+<p>おめでとうございます！ あなたは今、AIを相棒にして、自分だけのオリジナルアプリ開発の第一歩を踏み出しました。この章で体験したように、<code>brainstorm</code>で夢を語り、<code>design</code>で形にし、<code>workflow</code>で計画を立て、<code>implement</code>で実現する、というサイクルを回すことで、どんなアイデアもプログラムにすることができます。この楽しさを忘れずに、次の章でさらなるステップアップを目指しましょう！</p>
+<hr />
+<hr />
+<h2 id="7-github連携"><strong>7. GitHub連携</strong></h2>
+<hr />
+<h3 id="71-gitとgithubの基本">7.1 GitとGitHubの基本</h3>
+<p>バージョン管理システムGitと、そのホスティングサービスであるGitHubは、現代のソフトウェア開発において不可欠なツールです。コードの変更履歴を管理し、チームでの共同開発を効率的に進めるために利用されます。</p>
+<ul>
+<li>
+<strong>Git</strong>: ローカル環境でコードのバージョン管理を行うためのシステムです。
+</li>
+<li>
+<strong>GitHub</strong>: Gitリポジトリをホスティングし、コードの共有、共同開発、レビュー機能などを提供するプラットフォームです。
+</li>
+</ul>
+<h3 id="72-なぜgithubが必要か---aiバイブコーディングの安全網">7.2 なぜGitHubが<br>必要か？ - AIバイブコーディングの安全網</h3>
+<p>AIとのバイブコーディングは強力ですが、<strong>AIが誤って全てのファイルを上書きしてしまう</strong>という事例も数多く報告されています。例えば、AIに「リファクタリングして」と頼んだら、重要なファイルが予期せず削除されたり、動いていたコードが壊れたりすることがあります。</p>
+<p><strong>GitHubは、ゲームの「セーブデータ」のような役割を果たします。</strong></p>
+<ul>
+<li>
+💾 <strong>定期的にコミット</strong>: 作業の区切りでコードをGitHubに保存（コミット＆プッシュ）
+</li>
+<li>
+⏮ <strong>いつでも元に戻せる</strong>: 問題が起きても、過去の正常な状態に一瞬で復元可能
+</li>
+<li>
+🛡 <strong>失敗を恐れない開発</strong>: AIの提案を安心して試せる（ダメなら戻せばいい）
+<p><strong>おすすめの習慣</strong>:</p>
+</li>
+</ul>
+<ol>
+<li>
+機能の区切りごとにコミット（「ログイン機能完成」「デザイン調整」など）
+</li>
+<li>
+AIに大きな変更を依頼する前に必ずコミット
+</li>
+<li>
+1日の終わりには必ずGitHubにプッシュ
+<p>これにより、AIとの共同開発が安全で安心なものになります。</p>
+</li>
+</ol>
+<h3 id="73-開発スタイル別のgithub活用法">7.3 開発スタイル別のGitHub活用法</h3>
+<p>AIを使った開発において、<strong>開発スタイル</strong>によって<strong>GitHubの使い方が大きく異なります</strong>。自分の状況に合った方法を選びましょう。</p>
+<h4 id="ケース1-完全な個人プロジェクト趣味学習用">ケース1: 完全な個人プロジェクト（趣味・学習用）</h4>
+<p>6章で学んだように、誰にも報告する必要がない個人プロジェクトでは、以下の方法が効率的です：</p>
+<ul>
+<li>
+<strong>タスク管理</strong>: ローカルの <code>tasks.md</code> や <code>TODO.md</code> ファイルでタスクリストを管理
+</li>
+<li>
+<strong>ブランチ</strong>: 基本的に <code>main</code> ブランチで直接作業（シンプルさ優先）
+</li>
+<li>
+<strong>コミット</strong>: 自分のペースで自由にコミット
+</li>
+<li>
+<strong>レビュー</strong>: 不要（自分だけなので）
+<p><strong>こんな場合に最適</strong>:</p>
+</li>
+<li>
+趣味で作るWebアプリ
+</li>
+<li>
+プログラミングの勉強用プロジェクト
+</li>
+<li>
+自分専用のツール開発
+<p>これは<strong>一人で全てをコントロールできる</strong>ため、シンプルで素早く開発できます。</p>
+</li>
+</ul>
+<h4 id="ケース2-一人で企業の開発を担当pm上司への報告が必要">ケース2: 一人で企業の<br>開発を担当（PM・上司への報告が必要）</h4>
+<p><strong>一人で開発していても、PMや上司が進捗を確認する必要がある場合</strong>は、issueを使うことが推奨されます。</p>
+<p>✅ <strong>issueを使うメリット</strong>:</p>
+<ul>
+<li>
+<strong>進捗の可視化</strong>: PMや上司がGitHub上で作業状況を確認できる
+</li>
+<li>
+<strong>作業記録</strong>: 何をやったか、なぜやったかの履歴が残る
+</li>
+<li>
+<strong>コミュニケーション</strong>: 質問や相談をissueのコメントで記録
+</li>
+<li>
+<strong>AIとの作業記録</strong>: AIに何を依頼したか、どんな問題があったかを記録
+<p><strong>具体例</strong>:</p>
+<pre><code>Issue #15: ログイン機能の実装
+担当: 自分
+期限: 2025-10-20
+
+【タスク内容】
+- ログインフォームのUI作成
+- 認証API連携
+- エラーハンドリング
+
+【進捗メモ】
+2025-10-10: AIにUI生成を依頼、レスポンシブ対応完了
+2025-10-12: 認証API連携でエラー、AIに修正依頼中
+2025-10-15: 完了、PMレビュー待ち
+</code></pre>
+<p><strong>おすすめの運用</strong>:</p>
+</li>
+<li>
+タスクごとにissueを作成（PMが進捗確認しやすい）
+</li>
+<li>
+ブランチは <code>main</code> で直接作業してもOK（一人なので衝突しない）
+</li>
+<li>
+AIとのやり取りをissueのコメントに記録（後で振り返れる）
+</li>
+<li>
+週次ミーティング前にissueを整理（報告がスムーズ）
+</li>
+</ul>
+<h4 id="ケース3-チーム開発複数人での共同開発">ケース3: チーム開発（複数人での共同開発）</h4>
+<p><strong>複数人で開発する場合</strong>、個人開発の方法では問題が起こります：</p>
+<p>❌ <strong>個人開発の方法だと起こる問題</strong>:</p>
+<ul>
+<li>
+誰かが <code>main</code> ブランチで作業中、別の人も同じブランチで変更すると衝突
+</li>
+<li>
+ローカルの <code>tasks.md</code> は自分のPCにしかないため、他のメンバーが見られない
+</li>
+<li>
+AIが生成したコードを直接 <code>main</code> にプッシュすると、動かないコードでチーム全体がストップ
+<p>✅ <strong>チーム開発では以下が必須</strong>:</p>
+</li>
+<li>
+<strong>issue</strong>: チーム全員が見られるタスク管理（GitHubのWebサイト上で管理）
+</li>
+<li>
+<strong>ブランチ</strong>: 各メンバーが独立した作業空間で開発（衝突回避）
+</li>
+<li>
+<strong>プルリクエスト（PR）</strong>: コードをチームでレビューしてから <code>main</code> に統合（品質保証）
+<p><strong>まとめ表</strong>:</p>
+</li>
+</ul>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>項目</th>
+<th>完全な個人プロジェクト</th>
+<th>一人で企業開発</th>
+<th>チーム開発</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>タスク管理</strong></td>
+<td>ローカルtasks.md</td>
+<td><strong>GitHub issue</strong> 📊</td>
+<td><strong>GitHub issue</strong> 📊</td>
+</tr>
+<tr>
+<td><strong>ブランチ</strong></td>
+<td>mainで直接作業</td>
+<td>mainで直接作業</td>
+<td><strong>機能ブランチ必須</strong> 🌿</td>
+</tr>
+<tr>
+<td><strong>プルリクエスト</strong></td>
+<td>不要</td>
+<td>任意（PMレビュー時）</td>
+<td><strong>必須</strong> ✅</td>
+</tr>
+<tr>
+<td><strong>理由</strong></td>
+<td>シンプルさ優先</td>
+<td><strong>進捗の可視化</strong></td>
+<td>衝突回避・品質保証</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>次のセクションで、issue・ブランチ・プルリクエストの概念を初心者向けに説明します。</p>
+<h3 id="74-チーム開発の基礎知識---ブランチissueプルリクエスト">7.4 チーム開発の基礎知識 - ブランチ・issue・プルリクエスト</h3>
+<h4 id="741-ブランチbranchとは">7.4.1 ブランチ（Branch）とは？</h4>
+<p><strong>ブランチ = 独立した作業空間</strong></p>
+<p>ゲームの「別セーブデータ」のようなものです。<code>main</code> ブランチ（本番のコード）を触らずに、新しい機能を試せる安全な場所です。</p>
+<p><strong>具体例</strong>:</p>
+<pre><code class="language-bash"># 新しいブランチを作成して切り替え
+git checkout -b feature/login-form
+
+# このブランチで自由に作業
+# （mainブランチには影響しない）
+
+# 作業完了後、mainに統合（マージ）
+</code></pre>
+<p><strong>チーム開発での使い方</strong>:</p>
+<ul>
+<li>
+各メンバーが<strong>自分専用のブランチ</strong>で作業
+</li>
+<li>
+メンバーAが <code>feature/user-profile</code> ブランチ、メンバーBが <code>feature/payment</code> ブランチ
+</li>
+<li>
+お互いのコードが干渉せず、並行して開発可能
+<p><strong>AIと一緒に使う場合の注意</strong>:</p>
+<pre><code class="language-bash"># AIに大きな変更を依頼する前に、専用ブランチを作成
+git checkout -b ai/refactor-auth
+
+# AIに依頼: 「認証システムをリファクタリングして」
+# → 失敗しても、ブランチごと削除すればOK
+</code></pre>
+</li>
+</ul>
+<h4 id="742-issueイシューとは">7.4.2 issue（イシュー）とは？</h4>
+<p><strong>issue = チーム全員が見られるタスク・バグ管理</strong></p>
+<p>個人開発の <code>tasks.md</code> をGitHub上に移動し、チーム全員で共有できるようにしたものです。</p>
+<p><strong>何ができるか</strong>:</p>
+<ul>
+<li>
+タスクの作成・割り当て（「田中さん、このバグ修正お願い」）
+</li>
+<li>
+進捗状況の共有（Open → In Progress → Closed）
+</li>
+<li>
+議論・質問（「このデザインどう思う？」）
+</li>
+<li>
+AIが生成したコード問題の報告
+<p><strong>具体例</strong>:</p>
+<pre><code>Issue #23: ログインフォームのバリデーションが機能しない
+
+担当: 田中
+ラベル: bug, priority-high
+期限: 2025-10-15
+
+【問題】
+メールアドレスの形式チェックが動作していない
+
+【再現手順】
+1. ログインフォームを開く
+2. 「test」と入力して送信
+3. エラーが表示されない（本来はエラーが出るべき）
+
+【解決策の案】
+バリデーション関数を見直す
+</code></pre>
+<p><strong>AIとissueを組み合わせる</strong>:</p>
+<pre><code class="language-bash"># issueを見ながらAIに依頼
+/sc:implement issue #23のバグを修正してください
+</code></pre>
+</li>
+</ul>
+<h4 id="743-プルリクエストpull-request--prとは">7.4.3 プルリクエスト（Pull Request / PR）とは？</h4>
+<p><strong>プルリクエスト = 「このコード、mainに統合していい？」とチームに確認する仕組み</strong></p>
+<p>AIが生成したコードを、いきなり <code>main</code> ブランチに入れるのは危険です。プルリクエストを使えば、<strong>チームでレビュー</strong>してから統合できます。</p>
+<p><strong>流れ</strong>:</p>
+<pre><code>1. ブランチで作業完了
+   └─ feature/login-form ブランチでコード作成
+
+2. GitHubにプルリクエストを作成
+   └─ 「feature/login-form を main に統合したい」
+
+3. チームメンバーがレビュー
+   ├─ コードを見てコメント
+   ├─ 「ここ、こう直した方がいいよ」
+   └─ AIが生成したコードの品質チェック
+
+4. 修正・改善
+
+5. 承認（Approve）されたらマージ
+   └─ main ブランチに統合完了
+</code></pre>
+<p><strong>プルリクエストの例</strong>:</p>
+<pre><code class="language-markdown">## PR #45: ログイン機能を追加
+
+**関連issue**: #23, #24
+
+**変更内容**:
+- ログインフォームのUI作成（AI生成 + 手動調整）
+- バリデーション機能の実装
+- E2Eテストの追加
+
+**確認事項**:
+- [ ] ログインが正常に動作する
+- [ ] エラーメッセージが適切に表示される
+- [ ] レスポンシブデザインが正しい
+
+**スクリーンショット**:
+[ログイン画面のスクリーンショット]
+
+🤖 Generated with Claude Code
+</code></pre>
+<p><strong>AIとプルリクエストを組み合わせる</strong>:</p>
+<ul>
+<li>
+AIに生成させたコードをPRでチームレビュー
+</li>
+<li>
+AIの提案に問題があれば、PRのコメントで指摘
+</li>
+<li>
+修正後、再度AIに調整を依頼
+</li>
+</ul>
+<h4 id="744-チーム開発でaiと一緒に作業する際のワークフロー">7.4.4 チーム開発で<br>AIと一緒に作業する際のワークフロー</h4>
+<p><strong>推奨フロー</strong>:</p>
+<pre><code>ステップ1: issueを確認
+├─ 自分に割り当てられたタスクをissueで確認
+└─ 例: issue #30「決済機能の実装」
+
+ステップ2: ブランチを作成
+├─ git checkout -b feature/payment-#30
+└─ issue番号をブランチ名に含めると分かりやすい
+
+ステップ3: AIに実装を依頼
+├─ /sc:implement issue #30の決済機能を実装してください
+├─ AIがコード生成
+└─ 定期的にコミット（セーブポイント作成）
+
+ステップ4: ローカルでテスト
+├─ 目視確認
+├─ /sc:test でE2Eテスト
+└─ 問題があればAIに修正依頼
+
+ステップ5: GitHubにプッシュ &amp; PR作成
+├─ git push origin feature/payment-#30
+└─ GitHubでプルリクエスト作成
+
+ステップ6: チームレビュー
+├─ チームメンバーがコードレビュー
+├─ コメントや改善提案を受け取る
+└─ 必要に応じてAIに再調整依頼
+
+ステップ7: マージ
+├─ 承認されたら main にマージ
+└─ issue #30 を Close（完了）
+</code></pre>
+<p><strong>重要なポイント</strong>:</p>
+<ol>
+<li>
+<strong>絶対に main ブランチで直接作業しない</strong>
+<ul>
+<li>
+AIの予期せぬ変更から main を守る
+</li>
+<li>
+必ずブランチを作成
+</li>
+</ul>
+</li>
+<li>
+<strong>issueとブランチを紐付ける</strong>
+<ul>
+<li>
+ブランチ名に issue番号を含める（<code>feature/login-#23</code>）
+</li>
+<li>
+PRにissue番号を記載（<code>Closes #23</code>）
+</li>
+</ul>
+</li>
+<li>
+<strong>AIが生成したコードは必ずレビュー</strong>
+<ul>
+<li>
+プルリクエストで「🤖 AIが生成したコード」と明記
+</li>
+<li>
+チームメンバーによるダブルチェック
+</li>
+</ul>
+</li>
+<li>
+<strong>小さく・頻繁にコミット</strong>
+<ul>
+<li>
+AIの変更を小さな単位で保存
+</li>
+<li>
+問題があればピンポイントで元に戻せる
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="75-super-claudeとgithubの連携">7.5 Super ClaudeとGitHubの連携</h3>
+<p>Super Claudeは、GitHubとの連携を強化することで、開発ワークフローをさらにスムーズにします。AIが生成したコードを直接GitHubリポジトリにプッシュしたり、既存のリポジトリからコンテキストを読み込んだりすることが可能です。</p>
+<h4 id="-githubリポジトリの初期化と連携">✅ GitHubリポジトリの初期化と連携</h4>
+<p>Super Claudeで開発しているプロジェクトをGitHubに連携するには、まずローカルでGitリポジトリを初期化し、GitHubにリモートリポジトリを作成します。</p>
+<ol>
+<li>
+<strong>Gitリポジトリの初期化</strong>: プロジェクトフォルダで以下のコマンドを実行します。
+</li>
+<li>
+<strong>GitHubリポジトリの作成</strong>: GitHub上で新しいリポジトリを作成し、リモートとして追加します。
+</li>
+<li>
+<strong>Super ClaudeのGitHub連携設定</strong>: Super Claudeの設定ファイル（<code>~/.claude-code/config.json</code>など）にGitHubの認証情報を設定することで、AIがGitHubと連携できるようになります。通常はGitHubのPersonal Access Tokenを使用します。
+</li>
+</ol>
+<h4 id="-aiによるコミットとプルリクエストの作成">✅ AIによるコミットとプルリクエストの作成</h4>
+<p>Super Claudeは、<code>implement</code>コマンドなどでコードを生成した後、その変更を自動的にコミットし、プルリクエストを作成する機能を提供します。これにより、開発者はコードの品質向上やレビュープロセスに集中できます。</p>
+<pre><code class="language-bash"># コード生成後、自動的にコミットとプルリクエストを作成
+sc implement &quot;新しい機能を追加&quot; --commit --pr
+</code></pre>
+<p><strong>チーム開発での活用</strong>:</p>
+<ul>
+<li>
+AIにコード生成を依頼 → 自動でブランチ作成 → 自動でPR作成
+</li>
+<li>
+PRにはAIが生成した変更内容の説明が自動で記載される
+</li>
+<li>
+チームメンバーはPRをレビューして承認・マージ
+</li>
+</ul>
+<h3 id="76-cicdパイプラインの構築">7.6 CI/CDパイプラインの構築</h3>
+<p>CI/CD (継続的インテグレーション/継続的デリバリー) は、コードの変更を頻繁に統合し、自動的にテスト・デプロイするプラクティスです。Super Claudeは、CI/CDパイプラインの構築と最適化を支援します。</p>
+<h4 id="-aiによるcicd設定ファイルの生成">✅ AIによるCI/CD設定ファイルの生成</h4>
+<p>Super Claudeの<code>design</code>コマンドや<code>workflow</code>コマンドは、GitHub ActionsやCircleCIなどのCI/CDツール向けの設定ファイルを生成することができます。これにより、手動での設定ミスを減らし、迅速なパイプライン構築を支援します。</p>
+<pre><code class="language-bash"># GitHub ActionsのCI/CD設定ファイルを生成
+sc design --type ci/cd --platform github-actions
+</code></pre>
+<h4 id="-aiによるテストとデプロイの自動化">✅ AIによるテストとデプロイの自動化</h4>
+<p>Super Claudeの<code>test</code>コマンドは、生成されたコードに対するテストコードを自動生成し、CI/CDパイプラインに組み込むことができます。また、<code>deploy</code>コマンドは、指定された環境へのデプロイプロセスを自動化します。</p>
+<pre><code class="language-bash"># テストコードを自動生成し、CI/CDに組み込む
+sc test --integrate-ci
+
+# 本番環境へのデプロイを自動化
+sc deploy --target production
+</code></pre>
+<hr />
+<hr />
+<h2 id="8-モダン技術スタックの構築"><strong>8. モダン技術スタックの<br>構築</strong></h2>
+<hr />
+<p>この章では、Super Claudeを活用して、現代のWebアプリケーション開発で一般的に使用されるモダンな技術スタックを効率的に構築する方法を解説します。</p>
+<h3 id="81-フロントエンドフレームワークの選定と導入">8.1 フロントエンドフレームワークの選定と導入</h3>
+<p>現代のWebアプリケーション開発では、React, Vue.js, Angularなどのフロントエンドフレームワークが広く利用されています。Super Claudeは、これらのフレームワークの選定から初期設定、コンポーネント生成までを支援します。</p>
+<h4 id="-フレームワークの選定とプロジェクト初期化">✅ フレームワークの選定とプロジェクト初期化</h4>
+<p><code>design</code>コマンドでプロジェクトの要件をAIに伝えることで、最適なフロントエンドフレームワークを提案させることができます。その後、<code>implement</code>コマンドでプロジェクトの初期設定を行います。</p>
+<pre><code class="language-bash"># 要件に基づいたフロントエンドフレームワークの提案
+sc design &quot;ユーザー管理機能とデータ可視化機能を持つSPAを開発したい&quot;
+
+# Reactプロジェクトの初期化
+sc implement &quot;ReactプロジェクトをTypeScriptとTailwind CSSで初期化してください&quot;
+</code></pre>
+<h3 id="82-バックエンドフレームワークの選定と導入">8.2 バックエンドフレームワークの選定と導入</h3>
+<p>バックエンドでは、Node.js (Express, NestJS), Python (Django, Flask), Ruby (Rails) などが人気です。Super Claudeは、フロントエンドと同様に、バックエンドフレームワークの選定とAPIエンドポイントの生成を支援します。</p>
+<h4 id="-バックエンドapiの設計と実装">✅ バックエンドAPIの設計と実装</h4>
+<p><code>design</code>コマンドでAPIの要件をAIに伝えることで、RESTful APIやGraphQL APIの設計を支援させることができます。その後、<code>implement</code>コマンドでAPIエンドポイントのコードを生成します。</p>
+<pre><code class="language-bash"># ユーザー認証と投稿管理のAPI設計
+sc design &quot;ユーザー認証と投稿管理のRESTful APIをNode.js (Express) で設計してください&quot;
+
+# ユーザー登録APIエンドポイントの実装
+sc implement &quot;Expressでユーザー登録APIエンドポイントを実装してください。パスワードはハッシュ化し、JWTで認証を行います。&quot;
+</code></pre>
+<h3 id="83-データベースの選定とスキーマ設計">8.3 データベースの選定とスキーマ設計</h3>
+<p>アプリケーションのデータ永続化には、リレーショナルデータベース（PostgreSQL, MySQL）やNoSQLデータベース（MongoDB, DynamoDB）が利用されます。Super Claudeは、要件に基づいたデータベースの選定とスキーマ設計を支援します。</p>
+<h4 id="-データベーススキーマの生成">✅ データベーススキーマの生成</h4>
+<p><code>design</code>コマンドでアプリケーションのデータモデルをAIに伝えることで、最適なデータベースとスキーマ設計を提案させることができます。<code>implement</code>コマンドでマイグレーションファイルやORMのモデル定義を生成します。</p>
+<pre><code class="language-bash"># 勉強時間記録アプリのデータベーススキーマ設計
+sc design &quot;勉強時間記録アプリのデータモデルを設計してください。ユーザー、科目、記録（日付、時間）の情報を管理します。&quot;
+
+# PostgreSQL用のテーブル作成マイグレーションファイルを生成
+sc implement &quot;PostgreSQLでユーザー、科目、記録テーブルを作成するマイグレーションファイルを生成してください&quot;
+</code></pre>
+<h3 id="84-クラウドインフラの活用とデプロイ">8.4 クラウドインフラの活用とデプロイ</h3>
+<p>開発したアプリケーションを公開するには、AWS, GCP, Azureなどのクラウドプラットフォームを利用します。Super Claudeは、インフラのプロビジョニングやデプロイプロセスの自動化を支援します。</p>
+<h4 id="-インフラ設定ファイルの生成とデプロイ">✅ インフラ設定ファイルの生成とデプロイ</h4>
+<p><code>design</code>コマンドでデプロイ先のクラウドプラットフォームと要件をAIに伝えることで、TerraformやCloudFormationなどのIaC (Infrastructure as Code) 設定ファイルを生成させることができます。<code>deploy</code>コマンドでアプリケーションをクラウド環境にデプロイします。</p>
+<pre><code class="language-bash"># AWS ECS Fargateへのデプロイ設定ファイルを生成
+sc design &quot;Dockerコンテナ化したWebアプリケーションをAWS ECS FargateにデプロイするためのTerraform設定ファイルを生成してください&quot;
+
+# アプリケーションをデプロイ
+sc deploy --target aws-ecs
+</code></pre>
+<hr />
+<hr />
+<h2 id="9-あなたのアプリを進化させよう機能追加プロジェクト"><strong>9. あなたのアプリを<br>進化させよう！機能追加プロジェクト</strong></h2>
+<hr />
+<p>この章では、6章で作成した<strong>学習者自身のオリジナルアプリ</strong>をベースに、さらに高度な機能を追加していくプロジェクトに取り組みます。継続的な開発の楽しさと、Super Claudeが提供する強力な機能拡張能力を体験しましょう。ここでは、Super Claudeのコマンドフローチャートにおける「品質向上」や「問題がある場合」のコマンドも活用し、既存コードの改善や機能追加を効率的に行います。</p>
+<h3 id="91-ユーザー認証機能の追加supabase連携">9.1 ユーザー認証機能の追加（Supabase連携）</h3>
+<h4 id="目的-2">目的</h4>
+<p>Webアプリケーションにユーザー認証機能を追加し、セキュリティとパーソナライゼーションを向上させます。ここでは、バックエンドサービスとしてSupabaseを活用します。Super Claudeの<code>implement</code>コマンドと<code>design</code>コマンドを駆使して、Supabaseとの連携をスムーズに行いましょう。</p>
+<h4 id="手順-2">手順</h4>
+<ol>
+<li>
+<strong>Supabaseプロジェクトのセットアップ</strong>
+</li>
+</ol>
+<ul>
+<li>
+<a href="https://supabase.com/" target="_blank" rel="noopener noreferrer">Supabase公式サイト</a>にアクセスし、新しいプロジェクトを作成します。プロジェクトURLとAPIキーを控えておきましょう。
+</li>
+</ul>
+<ol>
+<li>
+<strong>Super ClaudeでSupabase連携を設計</strong>
+</li>
+<li>
+<strong>認証UIとロジックの実装</strong>
+</li>
+<li>
+<strong>既存ページへの認証ガードの追加</strong>
+</li>
+</ol>
+<h3 id="92-メール通知機能の追加resend連携">9.2 メール通知機能の追加（Resend連携）</h3>
+<h4 id="目的-3">目的</h4>
+<p>ユーザー登録時や特定のアクションが発生した際に、メールで通知を送信する機能を追加します。ここでは、メール送信サービスとしてResendを利用します。Super Claudeの<code>implement</code>コマンドで、Resend APIとの連携コードを生成しましょう。</p>
+<h4 id="手順-3">手順</h4>
+<ol>
+<li>
+<strong>Resendアカウントのセットアップ</strong>
+</li>
+</ol>
+<ul>
+<li>
+<a href="https://resend.com/" target="_blank" rel="noopener noreferrer">Resend公式サイト</a>にアクセスし、アカウントを作成します。APIキーと送信元ドメインを設定しておきましょう。
+</li>
+</ul>
+<ol>
+<li>
+<strong>Super Claudeでメール送信機能を実装</strong>
+</li>
+<li>
+<strong>既存のイベントへの組み込み</strong>
+</li>
+</ol>
+<h3 id="93-コード品質の向上とテストの追加">9.3 コード品質の向上とテストの追加</h3>
+<p>機能追加だけでなく、既存コードの品質向上も継続的な開発において重要です。Super Claudeの<code>improve</code>と<code>test</code>コマンドを活用しましょう。</p>
+<h4 id="手順-4">手順</h4>
+<ol>
+<li>
+<strong>コード品質の分析と改善 - </strong><code>analyze</code><strong>, </strong><strong><code>improve</code></strong>
+</li>
+<li>
+<strong>テストコードの自動生成 - </strong><strong><code>test</code></strong>
+</li>
+</ol>
+<h3 id="まとめ-3">まとめ</h3>
+<p>この章では、6章で作成したアプリに具体的な機能を追加し、さらに品質を向上させるプロセスを体験しました。Super Claudeの各コマンドを組み合わせることで、複雑な機能追加やコード改善も効率的に進められることが理解できたでしょう。あなたのアプリは、この「進化プロジェクト」を通じて、より堅牢で実用的なものへと成長していきます。</p>
+<hr />
+<hr />
+<h2 id="10-企業導入のためのsdd組織変革ガイド"><strong>10. 企業導入の<br>ためのSDD組織変革ガイド</strong></h2>
+<hr />
+<p>この章では、個人としてのスキルアップだけでなく、チームや組織全体で「仕様駆動開発に則ったバイブコーディング」を導入し、開発文化を変革していくための戦略的なアプローチを解説します。Super Claudeのコマンドフローチャートは、個人の開発効率を上げるだけでなく、チーム全体の開発プロセスを標準化し、品質を向上させるための共通言語としても機能します。</p>
+<h3 id="101-なぜ組織的な導入が必要か">10.1 なぜ組織的な導入が必要か？</h3>
+<p>個々の開発者がAIツールをバラバラに使用するだけでは、その効果は限定的です。組織として統一された開発プロセス（ワークフロー）を定義し、チーム全体でAIを活用することで、以下のような相乗効果が生まれます。</p>
+<ul>
+<li>
+<strong>開発プロセスの標準化:</strong> 誰が担当しても一定の品質が保たれる。
+</li>
+<li>
+<strong>コード品質の均一化:</strong> AIがコーディング規約を遵守し、属人性を排除。
+</li>
+<li>
+<strong>ナレッジの共有:</strong> AIとの対話ログが、そのまま生きたドキュメントになる。
+</li>
+<li>
+<strong>オンボーディングの効率化:</strong> 新メンバーも標準化されたプロセスに沿ってすぐに貢献できる。
+</li>
+<li>
+<strong>生産性の飛躍的向上:</strong> 定型作業をAIに任せることで、開発者はより創造的なタスクに集中できる。
+</li>
+</ul>
+<h3 id="102-super-claudeコマンドフローチャートを活用したチーム開発プロセス">10.2 Super Claudeコマンドフローチャートを活用したチーム開発プロセス</h3>
+<p>Super Claudeのコマンドフローチャートを、チームの共通言語として開発プロセスに組み込みます。これにより、どのフェーズでどのコマンドを使うべきかが明確になり、チームメンバー間のコミュニケーションが円滑になります。以下に、一般的な開発プロセスにおけるコマンドの活用例を示します。</p>
+<h3 id="103-導入のステップと成功の鍵">10.3 導入のステップと成功の鍵</h3>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>開発フェーズ</th>
+<th>Super Claudeコマンド</th>
+<th>活用例と効果</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>1. 要件定義</strong></td>
+<td><code>/sc:brainstorm</code></td>
+<td>顧客の漠然とした要望をAIと共に深掘りし、具体的な機能要件や非機能要件を明確化。認識齟齬を早期に解消。</td>
+</tr>
+<tr>
+<td><strong>2. 設計</strong></td>
+<td><code>/sc:design</code></td>
+<td>要件定義を基に、技術的なアーキテクチャ、データベーススキーマ、UI/UXデザインなどをAIが提案。複数の設計案を比較検討し、最適な選択を支援。</td>
+</tr>
+<tr>
+<td><strong>3. タスク分割・計画</strong></td>
+<td><code>/sc:workflow</code></td>
+<td>設計書を基に、実装タスクを洗い出し、依存関係を考慮した上で最適な開発計画を立案。タスクの粒度を均一化し、進捗管理を容易に。</td>
+</tr>
+<tr>
+<td><strong>4. 実装</strong></td>
+<td><code>/sc:implement</code></td>
+<td>各タスクに基づき、AIにコードを生成させる。開発者はビジネスロジックの実装や複雑な問題解決に集中し、定型的なコーディング作業を大幅に削減。</td>
+</tr>
+<tr>
+<td><strong>5. コードレビュー</strong></td>
+<td><code>/sc:analyze</code>, <code>/sc:improve</code></td>
+<td>AIが静的解析、セキュリティ脆弱性チェック、パフォーマンスボトルネックの特定、改善提案を行う。レビューの属人性を排除し、コード品質を客観的に評価・向上。</td>
+</tr>
+<tr>
+<td><strong>6. テスト</strong></td>
+<td><code>/sc:test</code></td>
+<td>AIに単体テスト、結合テスト、E2Eテストなどのテストコードを自動生成させ、テストカバレッジを向上させる。品質保証の効率化と信頼性向上。</td>
+</tr>
+<tr>
+<td><strong>7. ドキュメント作成</strong></td>
+<td><code>/sc:document</code></td>
+<td>AIがコード、設計書、要件定義から仕様書、APIドキュメント、ユーザーマニュアルなどを自動生成。ドキュメント作成の工数を大幅に削減し、常に最新の状態を維持。</td>
+</tr>
+<tr>
+<td><strong>8. 問題発生時</strong></td>
+<td><code>/sc:troubleshoot</code>, <code>/sc:analyze</code></td>
+<td>エラーメッセージやログをAIに分析させ、原因を特定し、解決策を提案。パフォーマンス問題やセキュリティ脆弱性の早期発見と対応を支援。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Step 1: スモールスタートと成功体験の創出</strong></p>
+<ul>
+<li>
+まずは、AIツールに前向きな意欲を持つ2〜3人の小規模なパイロットチームを選定します。
+</li>
+<li>
+彼らにSuper Claudeを導入し、具体的なプロジェクトで小さな成功体験を積ませます。例えば、既存の簡単な機能の改修や、新規の小規模なツール開発など、AIの効果を実感しやすいタスクから始めましょう。
+</li>
+<li>
+この成功体験を社内で共有し、他のチームへの興味と期待を高めます。
+<p><strong>Step 2: プロセスの標準化とナレッジ共有</strong></p>
+</li>
+<li>
+パイロットプロジェクトで得られた知見を基に、Super Claudeのコマンドフローチャートを組み込んだ「AI活用開発ガイドライン」を作成します。
+</li>
+<li>
+このガイドラインには、各コマンドの具体的な使い方、プロンプトのベストプラクティス、AIが生成したコードのレビュー方法などを盛り込みます。
+</li>
+<li>
+定期的な勉強会やワークショップを開催し、成功事例や便利な使い方を共有する場を設けます。AI活用に関するQ&amp;Aセッションも有効です。
+<p><strong>Step 3: 評価指標の導入と継続的な改善</strong></p>
+</li>
+<li>
+AI導入の効果を定量的に測定するための評価指標（KPI）を設定します。例えば、開発リードタイムの短縮、バグ発生率の低下、デプロイ頻度の増加、開発者の満足度向上などです。
+</li>
+<li>
+これらの指標を定期的にモニタリングし、AI活用プロセスを継続的に改善していきます。AIが生成したコードの品質評価も重要な要素です。
+<p><strong>Step 4: AI CoE (Center of Excellence) の設立</strong></p>
+</li>
+<li>
+組織全体でのAI活用を推進するため、AI CoE（Center of Excellence）を設立することを検討します。AI CoEは、AI技術の調査、ベストプラクティスの策定、社内トレーニングの実施、各チームへの技術支援などを担当します。
+</li>
+<li>
+これにより、組織全体でAIに関する専門知識とノウハウが蓄積され、より戦略的なAI活用が可能になります。
+</li>
+</ul>
+<h3 id="104-文化の変革aiとの協調と成長のマインドセット">10.4 文化の変革：<br>AIとの協調と成長のマインドセット</h3>
+<p>AI開発ツールの導入は、単なるツール変更以上の「文化変革」です。AIが生成したコードが常に完璧であるとは限りません。重要なのは、AIを「完璧な答えをくれる魔法の箱」ではなく、「優秀なアシスタント」と捉え、AIとの対話を通じてより良い成果物を創り上げていくという<strong>協調と成長のマインドセット</strong>をチーム全体で共有することです。</p>
+<ul>
+<li>
+<strong>AIを信頼し、活用する</strong>: AIの提案を積極的に試し、その結果から学びましょう。AIは開発者の思考を加速させ、新たな視点を提供してくれます。
+</li>
+<li>
+<strong>AIを教育する</strong>: AIの出力が期待通りでなかった場合、具体的なフィードバックを与えることで、AIは学習し、次回の精度が向上します。これは、AIを「育てる」という感覚に近いでしょう。
+</li>
+<li>
+<strong>失敗を恐れない</strong>: AIとの協調開発では、試行錯誤が不可欠です。失敗を恐れずに様々なアプローチを試し、その経験をチームで共有することで、組織全体のAI活用能力が向上します。
+<p>このような文化を醸成することが、組織的な成功の最大の鍵となります。AIは、開発者の創造性を解き放ち、チームの可能性を無限に広げる強力なパートナーとなるでしょう。</p>
+</li>
+</ul>
+<hr />
+<hr />
+<h2 id="11-トラブルシューティング"><strong>11. トラブルシューティング</strong></h2>
+<hr />
+<h3 id="111-一般的な問題と解決策">11.1 一般的な問題と解決策</h3>
+<h4 id="-claude-codesuper-claudeが起動しない">✅ Claude Code/Super Claudeが起動しない</h4>
+<ul>
+<li>
+<strong>Node.jsのバージョン確認</strong>: <code>node -v</code>でNode.jsのバージョンが18以上であることを確認してください。古い場合はアップデートが必要です。
+</li>
+<li>
+<strong>npmパッケージの再インストール</strong>: <code>npm uninstall -g claude-code &amp;&amp; npm install -g claude-code</code>で再インストールを試してください。
+</li>
+<li>
+<strong>APIキーの確認</strong>: <code>ANTHROPIC_API_KEY</code>が正しく設定されているか確認してください。
+</li>
+</ul>
+<h4 id="-aiの出力が期待通りではない">✅ AIの出力が期待通りではない</h4>
+<ul>
+<li>
+<strong>プロンプトの改善</strong>: より明確で具体的なプロンプトを試してください。役割の指定、例示、制約条件などを活用しましょう。
+</li>
+<li>
+<strong>対話の継続</strong>: 一度で完璧な出力を求めず、AIとの対話を繰り返して要件を絞り込みましょう。
+</li>
+<li>
+<strong>モデルの変更</strong>: Super Claudeの設定で、より高性能なモデル（例: <code>gpt-4o</code>）を使用しているか確認してください。
+</li>
+</ul>
+<h4 id="-パフォーマンスが遅い">✅ パフォーマンスが遅い</h4>
+<ul>
+<li>
+<strong>ネットワーク接続の確認</strong>: 安定したインターネット接続があるか確認してください。
+</li>
+<li>
+<strong>APIレートリミット</strong>: 短時間に大量のリクエストを送信していないか確認してください。APIプロバイダーのレートリミットに達している可能性があります。
+</li>
+<li>
+<strong>MCP設定の最適化</strong>: <code>.mcp</code>ファイルで<code>include</code>や<code>exclude</code>を適切に設定し、AIに提供するコンテキストの量を最適化してください。
+</li>
+</ul>
+<h3 id="112-サポートとコミュニティ">11.2 サポートとコミュニティ</h3>
+<p>上記で解決しない問題や、さらに詳しい情報が必要な場合は、以下のリソースを参照してください。</p>
+<ul>
+<li>
+<strong>Super Claude公式GitHubリポジトリ</strong>: <a href="https://github.com/SuperClaude-Org/SuperClaude_Framework" target="_blank" rel="noopener noreferrer">https://github.com/SuperClaude-Org/SuperClaude_Framework</a>
+</li>
+<li>
+<strong>Claude Code公式ドキュメント</strong>: <a href="https://docs.claude.com/ja/docs/claude-code/setup" target="_blank" rel="noopener noreferrer">https://docs.claude.com/ja/docs/claude-code/setup</a>
+</li>
+<li>
+<strong>OpenAIコミュニティ</strong>: <a href="https://community.openai.com/" target="_blank" rel="noopener noreferrer">https://community.openai.com/</a>
+<p>これらのリソースを活用し、AI開発の旅をさらに深めていきましょう。</p>
+</li>
+</ul>
+<h3 id="まとめ-4">まとめ</h3>
+<p>たったこれだけのステップで、あなたのアイデアが具体的な形になりました。プログラミングの知識がなくても、AIにうまくお願いするだけで、Webページを作ることができたのです。</p>
+<p>このマニュアルでは、この「魔法」をさらに強力にし、もっと複雑で面白いアプリを自由に作れるようになるための方法を、ステップバイステップで学んでいきます。最初の感動を忘れずに、次の章へ進みましょう！</p>
+<hr />
+<hr />
+    </main>
+  </div>
+  <footer class="manual-footer">
+    <p>このドキュメントは自動生成されました。元ファイルを更新した際は <code>python tools/build_manual.py</code> を再実行してください。</p>
+  </footer>
+</body>
+</html>

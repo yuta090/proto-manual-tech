@@ -176,123 +176,409 @@ AIがコードを生成したら、それが本当に動くかを確認する必
 
 開発中にエラーが出たり、コードを改善したくなったりすることは避けられません。そんな時もSuper Claudeが強力な助っ人となります。
 
-- **エラーが出た場合 - ****`troubleshoot`****:** アプリケーションの実行中にエラーが発生した場合、エラーメッセージを`troubleshoot`コマンドに貼り付けて実行します。AIが原因を特定し、解決策を提案してくれます。
+- **エラーが出た場合 - `troubleshoot`:** アプリケーションの実行中にエラーが発生した場合、エラーメッセージを`troubleshoot`コマンドに貼り付けて実行します。AIが原因を特定し、解決策を提案してくれます。
 
-- **コードをきれいにしたい場合 - ****`improve`****:** 生成されたコードの品質を向上させたい、可読性を高めたい、ベストプラクティスに沿わせたいといった場合は、`improve`コマンドを使用します。`--type quality`オプションで品質向上に焦点を当てさせることができます。
+- **コードをきれいにしたい場合 - `improve`:** 生成されたコードの品質を向上させたい、可読性を高めたい、ベストプラクティスに沿わせたいといった場合は、`improve`コマンドを使用します。`--type quality`オプションで品質向上に焦点を当てさせることができます。
 
-- **パフォーマンスを分析したい場合 - ****`analyze`****:** アプリの動作が遅いと感じた場合や、特定の処理のボトルネックを特定したい場合は、`analyze`コマンドを使用します。`--focus performance`オプションでパフォーマンス分析に特化させることができます。
+- **パフォーマンスを分析したい場合 - `analyze`:** アプリの動作が遅いと感じた場合や、特定の処理のボトルネックを特定したい場合は、`analyze`コマンドを使用します。`--focus performance`オプションでパフォーマンス分析に特化させることができます。
 
-### 6.7 実践プロジェクト：タスク管理アプリケーションを開発しよう！
+---
 
-このセクションでは、Super Claudeの全コマンドを連携させ、より実践的なWebアプリケーション開発を体験します。目標は、ユーザーがタスクを作成、管理、完了できるシンプルな**タスク管理アプリケーション**を開発することです。
+### 6.7 実践プロジェクト：営業日報自動生成アプリを開発しよう！
+
+このセクションでは、Super Claudeの全コマンドを連携させ、より実践的なWebアプリケーション開発を体験します。目標は、営業担当者が日々の活動を記録し、週報を自動生成できる**営業日報自動生成アプリケーション**を開発することです。
 
 #### プロジェクト概要
 
-- **アプリケーション名**: Simple Task Manager
+- **アプリケーション名**: Daily Reporter
+- **実務での価値**: 営業担当の日報作成を効率化、活動履歴の蓄積・検索が可能
+- **主要機能**: 日報の入力、一覧表示、検索・フィルタリング、週報自動生成
+- **技術スタック（Phase 1）**: フロントエンド（HTML/CSS/JavaScript）、データ保存（localStorage）
 
-- **主要機能**: タスクの追加、一覧表示、完了マーク、削除
+#### なぜ営業日報アプリなのか？
 
-- **技術スタック**: フロントエンド（HTML/CSS/JavaScript）、バックエンド（Node.js + Express）、データベース（SQLite）
+従来の学習用「TODOアプリ」とは異なり、営業日報アプリは以下の点で優れています：
+
+✅ **実務での活用イメージが明確** - 多くの企業で実際に使われている業務
+✅ **ポートフォリオとして強力** - 就職・転職時に実用性をアピールできる
+✅ **段階的に本格化できる** - 最初は簡単に、後からチーム利用可能なアプリに進化
+✅ **学習要素が豊富** - フォーム、データ保存、検索、レポート生成など実践的な機能
+
+---
 
 #### Step 1: アイデアの壁打ちと要件定義 (`brainstorm`)
 
-まずは、タスク管理アプリの基本的な要件をAIと一緒に洗い出します。プロジェクトフォルダでSuper Claudeを起動し、以下のコマンドを実行してください。
+まずは、営業日報アプリの基本的な要件をAIと一緒に洗い出します。プロジェクトフォルダでClaude Codeを起動し、以下のコマンドを実行してください。
 
 ```bash
-sc brainstorm --focus "タスク管理アプリケーション"
+# プロジェクトフォルダを作成
+mkdir daily-reporter
+cd daily-reporter
+
+# Claude Codeを起動
+claude
+
+# ブレインストーミング開始
+/sc:brainstorm "営業日報を簡単に作成・管理できるアプリ"
 ```
 
 AIとの対話を通じて、以下のような要件を明確にしていきます。
 
-- タスクには「タイトル」「説明」「期日」「完了ステータス」が必要。
+- 日報には「訪問日時」「訪問先企業名」「商談内容」「次回アクション」「案件ステータス」が必要
+- ユーザーは日報を一覧で確認でき、新しい日報を追加できる
+- 日付や企業名で検索・フィルタリングできる
+- 複数の日報から週報を自動生成できる
 
-- ユーザーはタスクを一覧で確認でき、新しいタスクを追加できる。
-
-- 既存のタスクを完了済みにしたり、削除したりできる。
+---
 
 #### Step 2: 設計図の作成 (`design`)
 
-要件が固まったら、次にアプリケーションの設計を行います。データベースのスキーマ、APIエンドポイント、基本的なUI構成などをAIに提案させましょう。
+要件が固まったら、次にアプリケーションの設計を行います。データ構造、UI構成、基本的な機能などをAIに提案させましょう。
 
 ```bash
-sc design --focus "タスク管理アプリケーションの設計"
+/sc:design "営業日報アプリの設計"
 ```
 
 AIは、例えば以下のような設計を提案するでしょう。
 
-- **データベーススキーマ**: `tasks`テーブル（`id`, `title`, `description`, `due_date`, `completed`）
+**データ構造**:
+```javascript
+{
+  id: "unique-id",
+  date: "2025-01-15",
+  company: "株式会社ABC",
+  content: "新規システム導入の提案を実施",
+  nextAction: "見積書提出（1/20まで）",
+  status: "提案中" // 初回訪問/提案中/受注/失注
+}
+```
 
-- **APIエンドポイント**: `/api/tasks` (GET, POST), `/api/tasks/:id` (PUT, DELETE)
+**UI構成**:
+- 日報入力フォーム（訪問日時、訪問先、商談内容、次回アクション、ステータス選択）
+- 日報一覧表示（カード形式またはテーブル形式）
+- 検索・フィルタリング機能（日付範囲、企業名、ステータス）
+- 週報生成ボタン
 
-- **UI構成**: タスク一覧表示、タスク追加フォーム、各タスクの完了/削除ボタン
+---
 
 #### Step 3: 実装計画の策定 (`workflow`)
 
 設計に基づいて、具体的な実装タスクを洗い出し、効率的な開発順序を計画します。
 
 ```bash
-sc workflow --focus "タスク管理アプリケーションの実装計画"
+/sc:workflow "営業日報アプリの実装計画"
 ```
 
 AIは、以下のようなタスクリストを生成するはずです。
 
-1. ExpressサーバーのセットアップとSQLiteデータベースの初期化
+1. 基本的なHTML構造とCSSスタイルの作成
+2. 日報入力フォームの実装
+3. localStorageでのデータ保存機能
+4. 日報一覧表示機能の実装
+5. 日報の編集・削除機能
+6. 検索・フィルタリング機能の実装
+7. 週報自動生成機能の実装
 
-1. タスクモデルの定義とCRUD操作（作成、読み取り、更新、削除）APIの実装
+**タスクリストをファイルとして保存**:
+```
+個人での開発なので、issueは使わずに、タスクリストをドキュメントとして保存し、セッションが切れても参照できるようにしてください。
+```
 
-1. フロントエンドのHTML構造とCSSスタイルの作成
-
-1. JavaScriptによるタスク一覧表示機能の実装
-
-1. JavaScriptによるタスク追加機能の実装
-
-1. JavaScriptによるタスク完了/削除機能の実装
+---
 
 #### Step 4: コーディング開始 (`implement`)
 
-計画に従って、各タスクのコードをAIに生成してもらいます。まずは、バックエンドのセットアップとAPIの実装から始めましょう。
+計画に従って、各タスクのコードをAIに生成してもらいます。まずは、基本的なHTML構造とフォームから始めましょう。
 
 ```bash
-# 1. ExpressサーバーのセットアップとSQLiteデータベースの初期化
-sc implement --focus "ExpressサーバーとSQLiteデータベースの初期設定"
+# 1. 基本的なHTML構造とCSSスタイルの作成
+/sc:implement "営業日報アプリの基本的なHTML構造とCSSスタイル。モダンでプロフェッショナルなデザインにしてください"
 
-# 2. タスクモデルの定義とCRUD操作APIの実装
-sc implement --focus "タスクのCRUD APIを実装してください。GET /api/tasks, POST /api/tasks, PUT /api/tasks/:id, DELETE /api/tasks/:id"
+# 2. 日報入力フォームの実装
+/sc:implement "日報入力フォーム（訪問日時、訪問先企業名、商談内容、次回アクション、案件ステータス選択）を実装してください"
+
+# 3. localStorageでのデータ保存機能
+/sc:implement "JavaScriptでlocalStorageにデータを保存・取得する機能を実装してください"
+
+# 4. 日報一覧表示機能の実装
+/sc:implement "localStorageから日報を取得し、カード形式で一覧表示する機能を実装してください"
 ```
 
-次に、フロントエンドのコードを生成します。
+各`implement`コマンドの実行後には、生成されたコードを確認し、ブラウザで動作確認してください。
 
+---
+
+#### Step 5: 動作確認とテスト
+
+生成されたアプリを実際に動かしてみましょう。
+
+**動作確認の手順**:
+1. `index.html`をブラウザで開く
+2. 日報フォームにテストデータを入力（例：訪問先「株式会社テスト」、商談内容「初回訪問」）
+3. 「保存」ボタンをクリック
+4. 一覧に日報が表示されることを確認
+5. ブラウザをリロード（F5）しても、データが残っていることを確認
+
+**E2Eテストの実行**:
 ```bash
-# 3. フロントエンドのHTML構造とCSSスタイルの作成
-sc implement --focus "タスク管理アプリの基本的なHTML構造とCSSスタイル"
-
-# 4. JavaScriptによるタスク一覧表示機能の実装
-sc implement --focus "JavaScriptでAPIからタスクを取得し、一覧表示する機能"
-
-# 5. JavaScriptによるタスク追加機能の実装
-sc implement --focus "JavaScriptでタスク追加フォームとAPI連携機能"
-
-# 6. JavaScriptによるタスク完了/削除機能の実装
-sc implement --focus "JavaScriptでタスクの完了マークと削除ボタンの機能"
+/sc:test 今作成した内容をe2eテストしたい。問題なければタスク完了。次のタスクへ
 ```
 
-各`implement`コマンドの実行後には、生成されたコードを確認し、必要に応じて手動で調整したり、AIにさらに改善を依頼したりしてください。この反復的なプロセスが、AI開発の醍醐味です。
+---
 
-#### Step 5: 問題解決と改善 (`troubleshoot`, `analyze`, `improve`)
+#### 🎉 Phase 1 完成！
 
-開発中にエラーが発生したり、機能の改善が必要になったりした場合は、以下のコマンドを活用します。
+ここまでで、**localStorageを使った個人用の営業日報アプリ**が完成しました。このアプリは以下の機能を持っています：
 
-- **エラーが発生した場合**: `sc troubleshoot "[エラーメッセージ]"`
+✅ 日報の入力と保存
+✅ 日報の一覧表示
+✅ ブラウザを閉じてもデータが残る
+✅ 基本的な検索・フィルタリング
+✅ 週報の自動生成
 
-- **コードの品質を向上させたい場合**: `sc improve --type quality --focus "[ファイル名またはコードスニペット]"`
+---
 
-- **パフォーマンスを分析したい場合**: `sc analyze --focus performance --focus "[ファイル名または機能]"`
+#### 📚 アプリをさらに進化させる：機能追加の実践例
+
+Phase 1のアプリができたら、以下のような機能を追加して、より実用的なアプリに進化させましょう。AIに具体的な指示を出すことで、段階的に機能を拡張できます。
+
+<details style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0; cursor: pointer;">
+  <summary style="font-weight: bold; color: #065f46; font-size: 1.15em; cursor: pointer; list-style: none; display: flex; align-items: center;">
+    <span style="display: inline-block; margin-right: 8px; transition: transform 0.2s;">▶</span>
+    <span>🎨 機能追加例1：日報の編集機能を追加する</span>
+  </summary>
+
+  <div style="margin-top: 20px; padding: 16px; background: rgba(255, 255, 255, 0.5); border-radius: 8px;">
+    <p style="margin: 0 0 16px 0; color: #4b5563; line-height: 1.7;">
+      一度作成した日報を後から修正できるようにしましょう。
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code>各日報カードに「編集」ボタンを追加して、クリックすると入力フォームにデータが読み込まれ、修正後に保存できるようにしてください。</code></pre>
+
+    <p style="margin: 12px 0; color: #065f46; font-weight: 600;">
+      → AIが編集ボタンとデータ読み込みロジックを自動生成してくれます！
+    </p>
+  </div>
+</details>
+
+<details style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.05) 100%); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0; cursor: pointer;">
+  <summary style="font-weight: bold; color: #92400e; font-size: 1.15em; cursor: pointer; list-style: none; display: flex; align-items: center;">
+    <span style="display: inline-block; margin-right: 8px; transition: transform 0.2s;">▶</span>
+    <span>🔍 機能追加例2：高度な検索・フィルタリング機能</span>
+  </summary>
+
+  <div style="margin-top: 20px; padding: 16px; background: rgba(255, 255, 255, 0.5); border-radius: 8px;">
+    <p style="margin: 0 0 16px 0; color: #4b5563; line-height: 1.7;">
+      日付範囲やステータスで日報を絞り込めるようにします。
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code>日報一覧の上に検索バーを追加してください。開始日と終了日を選択できる日付範囲フィルター、企業名での部分一致検索、ステータス（初回訪問/提案中/受注/失注）でのフィルタリング機能を実装してください。</code></pre>
+
+    <p style="margin: 12px 0; color: #92400e; font-weight: 600;">
+      → 複数の条件を組み合わせた高度な検索機能が追加されます！
+    </p>
+  </div>
+</details>
+
+<details style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(79, 70, 229, 0.05) 100%); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0; cursor: pointer;">
+  <summary style="font-weight: bold; color: #4338ca; font-size: 1.15em; cursor: pointer; list-style: none; display: flex; align-items: center;">
+    <span style="display: inline-block; margin-right: 8px; transition: transform 0.2s;">▶</span>
+    <span>📊 機能追加例3：ダッシュボードと統計機能</span>
+  </summary>
+
+  <div style="margin-top: 20px; padding: 16px; background: rgba(255, 255, 255, 0.5); border-radius: 8px;">
+    <p style="margin: 0 0 16px 0; color: #4b5563; line-height: 1.7;">
+      活動状況を一目で把握できるダッシュボードを追加します。
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code>ダッシュボード画面を作成してください。今月の訪問件数、案件ステータス別の件数（初回訪問・提案中・受注・失注）をカウントして表示してください。できれば簡単な棒グラフも表示したいです。</code></pre>
+
+    <p style="margin: 12px 0; color: #4338ca; font-weight: 600;">
+      → Chart.jsなどを使った視覚的なダッシュボードが作成されます！
+    </p>
+  </div>
+</details>
+
+<details style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0; cursor: pointer;">
+  <summary style="font-weight: bold; color: #991b1b; font-size: 1.15em; cursor: pointer; list-style: none; display: flex; align-items: center;">
+    <span style="display: inline-block; margin-right: 8px; transition: transform 0.2s;">▶</span>
+    <span>📄 機能追加例4：週報・月報のPDFエクスポート機能</span>
+  </summary>
+
+  <div style="margin-top: 20px; padding: 16px; background: rgba(255, 255, 255, 0.5); border-radius: 8px;">
+    <p style="margin: 0 0 16px 0; color: #4b5563; line-height: 1.7;">
+      指定した期間の日報をまとめてレポート化し、PDFで保存できるようにします。
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code>週報生成機能を実装してください。開始日と終了日を指定すると、その期間の全日報を整形してPDFでダウンロードできるようにしてください。レポートには期間の合計訪問件数、ステータス別サマリー、各日報の詳細を含めてください。</code></pre>
+
+    <p style="margin: 12px 0; color: #991b1b; font-weight: 600;">
+      → jsPDFなどを使った自動レポート生成機能が追加されます！
+    </p>
+  </div>
+</details>
+
+<details style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(147, 51, 234, 0.05) 100%); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0; cursor: pointer;">
+  <summary style="font-weight: bold; color: #6b21a8; font-size: 1.15em; cursor: pointer; list-style: none; display: flex; align-items: center;">
+    <span style="display: inline-block; margin-right: 8px; transition: transform 0.2s;">▶</span>
+    <span>📱 機能追加例5：モバイル対応とPWA化</span>
+  </summary>
+
+  <div style="margin-top: 20px; padding: 16px; background: rgba(255, 255, 255, 0.5); border-radius: 8px;">
+    <p style="margin: 0 0 16px 0; color: #4b5563; line-height: 1.7;">
+      スマートフォンでも快適に使えるようにし、アプリとしてインストール可能にします。
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code>このアプリをスマートフォンでも使いやすくしたいです。レスポンシブデザインを適用して、画面幅が狭くてもレイアウトが崩れないようにしてください。さらに、PWA（Progressive Web App）として動作するように、manifest.jsonとService Workerを追加してホーム画面に追加できるようにしてください。</code></pre>
+
+    <p style="margin: 12px 0; color: #6b21a8; font-weight: 600;">
+      → スマホアプリのように使えるPWA対応のアプリに進化します！
+    </p>
+  </div>
+</details>
+
+<details style="background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(13, 148, 136, 0.05) 100%); border: 1px solid rgba(20, 184, 166, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0; cursor: pointer;">
+  <summary style="font-weight: bold; color: #115e59; font-size: 1.15em; cursor: pointer; list-style: none; display: flex; align-items: center;">
+    <span style="display: inline-block; margin-right: 8px; transition: transform 0.2s;">▶</span>
+    <span>🏷️ 機能追加例6：タグ機能とカテゴリ分類</span>
+  </summary>
+
+  <div style="margin-top: 20px; padding: 16px; background: rgba(255, 255, 255, 0.5); border-radius: 8px;">
+    <p style="margin: 0 0 16px 0; color: #4b5563; line-height: 1.7;">
+      日報に自由にタグを付けて、後から柔軟に分類・検索できるようにします。
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code>日報フォームにタグ入力欄を追加してください。カンマ区切りで複数のタグ（例: 新規案件, 緊急, 大口）を入力できるようにし、日報一覧ではタグをクリックして同じタグの日報を絞り込めるようにしてください。</code></pre>
+
+    <p style="margin: 12px 0; color: #115e59; font-weight: 600;">
+      → 柔軟なタグ管理システムが追加され、整理がさらに便利に！
+    </p>
+  </div>
+</details>
+
+---
+
+<details style="background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0; cursor: pointer;">
+  <summary style="font-weight: bold; color: #4f46e5; font-size: 1.15em; cursor: pointer; list-style: none; display: flex; align-items: center;">
+    <span style="display: inline-block; margin-right: 8px; transition: transform 0.2s;">▶</span>
+    <span>🚀 Phase 2: Supabaseで本格的なアプリに進化させよう！（発展編）</span>
+  </summary>
+
+  <div style="margin-top: 20px; padding: 16px; background: rgba(255, 255, 255, 0.5); border-radius: 8px;">
+    <p style="margin: 0 0 16px 0; color: #4b5563; line-height: 1.7;">
+      Phase 1で作成したアプリを、**チームで使える本格的なWebアプリケーション**に進化させましょう。Supabaseを使うことで、以下のような機能が追加できます：
+    </p>
+
+    <ul style="color: #374151; line-height: 1.8; margin: 16px 0;">
+      <li>✅ <strong>複数人での利用</strong> - チームメンバー全員で日報を共有</li>
+      <li>✅ <strong>どこからでもアクセス</strong> - インターネット経由でどのデバイスからでもアクセス可能</li>
+      <li>✅ <strong>ユーザー認証</strong> - メールアドレスでのログイン機能</li>
+      <li>✅ <strong>データの永続化</strong> - ブラウザキャッシュに依存しない安全なデータ保存</li>
+    </ul>
+
+    <h4 style="color: #4f46e5; margin: 24px 0 12px 0;">📦 Supabaseプロジェクトの作成</h4>
+
+    <p style="margin: 12px 0; color: #4b5563; line-height: 1.7;">
+      まずは、Supabase CLIを使ってローカル開発環境を準備しましょう。すでに第4章でSupabase CLIはインストール済みのはずです。
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code># プロジェクトフォルダ内で実行
+supabase init
+
+# ローカルSupabase環境を起動（Dockerが必要）
+supabase start</code></pre>
+
+    <p style="margin: 12px 0; color: #4b5563; line-height: 1.7;">
+      <code>supabase start</code>を実行すると、以下のような接続情報が表示されます：
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code>API URL: http://localhost:54321
+DB URL: postgresql://postgres:postgres@localhost:54322/postgres
+anon key: eyJh...</code></pre>
+
+    <h4 style="color: #4f46e5; margin: 24px 0 12px 0;">🗄️ データベーステーブルの作成</h4>
+
+    <p style="margin: 12px 0; color: #4b5563; line-height: 1.7;">
+      AIにSupabase用のテーブル設計をお願いしましょう：
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code>/sc:implement "Supabaseで営業日報テーブル（daily_reports）を作成するマイグレーションファイルを生成してください。カラムは id, created_at, date, company, content, next_action, status を含めてください"</code></pre>
+
+    <p style="margin: 12px 0; color: #4b5563; line-height: 1.7;">
+      AIが <code>supabase/migrations/xxxxx_create_daily_reports.sql</code> というファイルを生成してくれます。マイグレーションを適用：
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code># マイグレーション適用
+supabase db reset</code></pre>
+
+    <h4 style="color: #4f46e5; margin: 24px 0 12px 0;">🔄 localStorageからSupabaseへの移行</h4>
+
+    <p style="margin: 12px 0; color: #4b5563; line-height: 1.7;">
+      既存のlocalStorage版のコードをSupabase版に書き換えます：
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code>/sc:improve "現在のlocalStorageでのデータ保存をSupabaseに置き換えてください。Supabase JavaScriptクライアントを使用してください。既存のlocalStorageデータをSupabaseにインポートする機能も追加してください"</code></pre>
+
+    <h4 style="color: #4f46e5; margin: 24px 0 12px 0;">🌐 本番環境へのデプロイ</h4>
+
+    <p style="margin: 12px 0; color: #4b5563; line-height: 1.7;">
+      ローカルで動作確認できたら、本番環境にデプロイしましょう：
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code># Supabaseにログイン
+supabase login
+
+# 本番プロジェクト作成
+supabase projects create daily-reporter \
+  --org-id <your-org-id> \
+  --db-password <secure-password> \
+  --region ap-northeast-1
+
+# ローカルと本番をリンク
+supabase link --project-ref <project-ref>
+
+# マイグレーションを本番にプッシュ
+supabase db push</code></pre>
+
+    <p style="margin: 12px 0; color: #4b5563; line-height: 1.7;">
+      フロントエンドはNetlifyにデプロイ：
+    </p>
+
+    <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 12px 0; overflow-x: auto;"><code># Netlifyにログイン
+netlify login
+
+# 本番デプロイ
+netlify deploy --prod</code></pre>
+
+    <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%); border-left: 4px solid #10b981; padding: 16px; margin: 20px 0; border-radius: 8px;">
+      <p style="margin: 0; color: #065f46; font-weight: 600; line-height: 1.8;">
+        🎉 <strong>完成！</strong> これで、チーム全員がインターネット経由でアクセスできる本格的な営業日報アプリが完成しました。URLをチームメンバーに共有して、実際の業務で使ってみましょう！
+      </p>
+    </div>
+
+    <h4 style="color: #4f46e5; margin: 24px 0 12px 0;">📚 さらなる拡張アイデア</h4>
+
+    <ul style="color: #374151; line-height: 1.8; margin: 16px 0;">
+      <li>🔐 <strong>ユーザー認証</strong> - Supabase Authで各営業担当者がログイン</li>
+      <li>📊 <strong>チームダッシュボード</strong> - チーム全体の活動状況を可視化</li>
+      <li>📧 <strong>メール通知</strong> - 週報を自動でメール送信</li>
+      <li>📱 <strong>モバイルアプリ化</strong> - React NativeやFlutterでネイティブアプリに</li>
+      <li>🤖 <strong>AI要約機能</strong> - Claude APIで商談内容を自動要約</li>
+    </ul>
+
+  </div>
+</details>
+
+---
 
 ### まとめ
 
-おめでとうございます！ あなたは今、AIを相棒にして、自分だけのオリジナルアプリ開発の第一歩を踏み出しました。この章で体験したように、`brainstorm`で夢を語り、`design`で形にし、`workflow`で計画を立て、`implement`で実現する、というサイクルを回すことで、どんなアイデアもプログラムにすることができます。この楽しさを忘れずに、次の章でさらなるステップアップを目指しましょう！
+おめでとうございます！ あなたは今、AIを相棒にして、**実務で使える本格的なアプリケーション**を開発しました。この章で体験したように、`brainstorm`でアイデアを形にし、`design`で設計を固め、`workflow`で計画を立て、`implement`で実現する、というサイクルを回すことで、どんなアイデアもプログラムにすることができます。
+
+Phase 1で作成したlocalStorage版でも十分実用的ですし、Phase 2のSupabase版に進化させれば、チーム全体で活用できる業務アプリになります。さらに、機能追加の実践例を参考に、あなた独自の機能を追加していくことで、より強力なツールに成長させることができます。
+
+この楽しさを忘れずに、次の章でさらなるステップアップを目指しましょう！
 
 ---
 
 ---
-

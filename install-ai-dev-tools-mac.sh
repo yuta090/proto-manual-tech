@@ -76,7 +76,8 @@ print_banner() {
     ║                     for macOS                             ║
     ║                                                           ║
     ║   Node.js | Git | GitHub CLI | Claude Code               ║
-    ║       Super Claude | Cursor IDE | Codex CLI              ║
+    ║   Super Claude | Cursor IDE | Codex CLI                  ║
+    ║   Supabase CLI | Netlify CLI                             ║
     ║                                                           ║
     ╚═══════════════════════════════════════════════════════════╝
 EOF
@@ -88,7 +89,7 @@ print_section() {
     local step=$1
     local title=$2
     echo -e "\n${BOLD}${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-    echo -e "${BOLD}${WHITE}[$step/7] $title${RESET}"
+    echo -e "${BOLD}${WHITE}[$step/9] $title${RESET}"
     echo -e "${BOLD}${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
 }
 
@@ -134,7 +135,9 @@ init_state() {
   "claude_code": {"installed": false, "authenticated": false},
   "super_claude": {"installed": false, "mcp_configured": false},
   "cursor": {"installed": false},
-  "codex": {"installed": false, "authenticated": false}
+  "codex": {"installed": false, "authenticated": false},
+  "supabase": {"installed": false, "authenticated": false},
+  "netlify": {"installed": false, "authenticated": false}
 }
 EOF
     fi
@@ -219,6 +222,12 @@ show_account_requirements() {
 
     echo -e "${YELLOW}${BOLD}[推奨]${RESET} ${YELLOW}GitHub${RESET} - ${WHITE}無料${RESET}"
     echo -e "       ${CYAN}└─ Git連携、SSH鍵登録に使用${RESET}\n"
+
+    echo -e "${YELLOW}${BOLD}[推奨]${RESET} ${YELLOW}Supabase${RESET} - ${WHITE}無料（Proプランあり）${RESET}"
+    echo -e "       ${CYAN}└─ BaaS（Backend as a Service）${RESET}\n"
+
+    echo -e "${YELLOW}${BOLD}[推奨]${RESET} ${YELLOW}Netlify${RESET} - ${WHITE}無料（Proプランあり）${RESET}"
+    echo -e "       ${CYAN}└─ Web ホスティング、デプロイ自動化${RESET}\n"
 
     echo -e "${BLUE}${BOLD}[任意]${RESET} ${YELLOW}ChatGPT Plus/Pro${RESET} - ${WHITE}\$20/月${RESET}"
     echo -e "       ${CYAN}└─ Codex CLI 使用時のみ必要${RESET}\n"
@@ -760,6 +769,116 @@ install_codex() {
     fi
 }
 
+install_supabase() {
+    print_section 8 "Supabase CLI のインストール"
+
+    if [[ "$(get_state supabase installed)" == "True" ]]; then
+        print_success "Supabase CLI は既にインストール済みです (スキップ)"
+    else
+        if check_command supabase; then
+            print_success "Supabase CLI が既にインストールされています"
+            update_state supabase installed True
+        else
+            print_info "Supabase CLI をインストール中..."
+            npm install -g supabase &
+            spinner $!
+            wait $!
+
+            if check_command supabase; then
+                print_success "Supabase CLI インストール完了"
+                update_state supabase installed True
+            else
+                print_error "Supabase CLI のインストールに失敗しました"
+                exit 1
+            fi
+        fi
+    fi
+
+    # 認証チェック
+    if [[ "$(get_state supabase authenticated)" != "True" ]]; then
+        echo ""
+        print_warning "${LOCK} Supabase CLI の認証"
+        echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+        echo -e "${WHITE}ブラウザが開き、Supabase アカウントでログインします${RESET}\n"
+        echo -ne "${CYAN}認証を開始しますか? (y/N): ${RESET}"
+        read -r response
+
+        if [[ "$response" =~ ^[Yy]$ ]]; then
+            echo ""
+            print_info "ブラウザで Supabase 認証を開始します..."
+
+            supabase login
+
+            # 認証確認
+            if supabase projects list &> /dev/null; then
+                print_success "Supabase CLI 認証完了！"
+                update_state supabase authenticated True
+            else
+                print_warning "認証をスキップしました。後で 'supabase login' コマンドを実行して認証してください"
+            fi
+        else
+            print_info "後で 'supabase login' コマンドを実行して認証してください"
+        fi
+    else
+        print_success "Supabase CLI は既に認証済みです"
+    fi
+}
+
+install_netlify() {
+    print_section 9 "Netlify CLI のインストール"
+
+    if [[ "$(get_state netlify installed)" == "True" ]]; then
+        print_success "Netlify CLI は既にインストール済みです (スキップ)"
+    else
+        if check_command netlify; then
+            print_success "Netlify CLI が既にインストールされています"
+            update_state netlify installed True
+        else
+            print_info "Netlify CLI をインストール中..."
+            npm install -g netlify-cli &
+            spinner $!
+            wait $!
+
+            if check_command netlify; then
+                print_success "Netlify CLI インストール完了"
+                update_state netlify installed True
+            else
+                print_error "Netlify CLI のインストールに失敗しました"
+                exit 1
+            fi
+        fi
+    fi
+
+    # 認証チェック
+    if [[ "$(get_state netlify authenticated)" != "True" ]]; then
+        echo ""
+        print_warning "${LOCK} Netlify CLI の認証"
+        echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+        echo -e "${WHITE}ブラウザが開き、Netlify アカウントでログインします${RESET}\n"
+        echo -ne "${CYAN}認証を開始しますか? (y/N): ${RESET}"
+        read -r response
+
+        if [[ "$response" =~ ^[Yy]$ ]]; then
+            echo ""
+            print_info "ブラウザで Netlify 認証を開始します..."
+
+            netlify login
+
+            # 認証確認
+            if netlify status &> /dev/null; then
+                print_success "Netlify CLI 認証完了！"
+                update_state netlify authenticated True
+            else
+                print_warning "認証をスキップしました。後で 'netlify login' コマンドを実行して認証してください"
+            fi
+        else
+            print_info "後で 'netlify login' コマンドを実行して認証してください"
+        fi
+    else
+        print_success "Netlify CLI は既に認証済みです"
+    fi
+}
+
 # ============================================================================
 # メイン処理
 # ============================================================================
@@ -815,6 +934,12 @@ main() {
     fi
 
     install_codex
+    sleep 0.5
+
+    install_supabase
+    sleep 0.5
+
+    install_netlify
 
     # 完了メッセージ
     echo -e "\n${GREEN}${BOLD}"
@@ -834,6 +959,8 @@ EOF
     echo -e "  ${YELLOW}•${RESET} Super Claude: ${GREEN}SuperClaude --help${RESET} でコマンド確認"
     echo -e "  ${YELLOW}•${RESET} Cursor IDE: アプリケーションフォルダから起動"
     echo -e "  ${YELLOW}•${RESET} Codex CLI: ${GREEN}codex${RESET} コマンドで起動"
+    echo -e "  ${YELLOW}•${RESET} Supabase CLI: ${GREEN}supabase${RESET} コマンドで利用"
+    echo -e "  ${YELLOW}•${RESET} Netlify CLI: ${GREEN}netlify${RESET} コマンドで利用"
     echo ""
 
     print_info "${SPARKLE} Happy Coding with AI! ${SPARKLE}"

@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI開発環境 自動セットアップスクリプト - 技術仕様書</title>
+  <link rel="stylesheet" href="../assets/manual.css" />
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // すべてのpreタグにコピーボタンを追加
+      document.querySelectorAll('.manual-content pre').forEach(function(pre) {
+        const button = document.createElement('button');
+        button.className = 'code-copy-btn';
+        button.textContent = 'コピー';
+
+        button.addEventListener('click', function() {
+          const code = pre.querySelector('code');
+          const text = code ? code.textContent : pre.textContent;
+
+          navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'コピー完了！';
+            button.classList.add('copied');
+
+            setTimeout(function() {
+              button.textContent = 'コピー';
+              button.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('コピー失敗:', err);
+            button.textContent = 'エラー';
+          });
+        });
+
+        pre.appendChild(button);
+      });
+
+      // ナビゲーショントグル機能
+      const navToggle = document.getElementById('navToggle');
+      const manualLayout = document.getElementById('manualLayout');
+      const manualNav = document.getElementById('manualNav');
+
+      if (navToggle && manualLayout && manualNav) {
+        navToggle.addEventListener('click', function() {
+          manualLayout.classList.toggle('nav-collapsed');
+          navToggle.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <header class="manual-header">
+    <div class="header-text">
+      <h1>AI開発環境 自動セットアップスクリプト - 技術仕様書</h1>
+      
+      <dl class="manual-meta">
+        <div>
+          <dt>最終更新</dt>
+          <dd>2025-10-11 10:25</dd>
+        </div>
+      </dl>
+    </div>
+  </header>
+  <button class="nav-toggle" id="navToggle" aria-label="目次を開閉">☰</button>
+  <div class="manual-layout" id="manualLayout">
+    <aside class="manual-nav" id="manualNav">
+      <nav class="toc" aria-label="目次"><h2>Quick Links</h2><ol class="toc-list"><li><a href="#目次">目次</a></li><li><a href="#概要">概要</a><ol><li><a href="#目的">目的</a></li><li><a href="#設計原則">設計原則</a></li></ol></li><li><a href="#アーキテクチャ設計">アーキテクチャ設計</a><ol><li><a href="#全体構成図">全体構成図</a></li><li><a href="#コンポーネント構成">コンポーネント構成</a></li></ol></li><li><a href="#状態管理システム">状態管理システム</a><ol><li><a href="#install_progressjson-スキーマ"><code>.install_progress.json</code> スキーマ</a></li><li><a href="#状態遷移図">状態遷移図</a></li><li><a href="#状態管理関数">状態管理関数</a></li><li><a href="#macos-bash">macOS (Bash)</a></li><li><a href="#windows-powershell">Windows (PowerShell)</a></li></ol></li><li><a href="#インストールフロー">インストールフロー</a><ol><li><a href="#全体フロー">全体フロー</a></li><li><a href="#各ツールのインストール詳細">各ツールのインストール詳細</a></li><li><a href="#1-nodejs">1. Node.js</a></li><li><a href="#2-git">2. Git</a></li><li><a href="#3-claude-code-認証あり">3. Claude Code (認証あり)</a></li><li><a href="#4-super-claude">4. Super Claude</a></li><li><a href="#5-cursor-ide">5. Cursor IDE</a></li><li><a href="#6-openai-codex-cli-認証あり">6. OpenAI Codex CLI (認証あり)</a></li></ol></li><li><a href="#認証メカニズム">認証メカニズム</a><ol><li><a href="#認証が必要なツール">認証が必要なツール</a></li><li><a href="#認証フロー">認証フロー</a></li><li><a href="#認証検証方法">認証検証方法</a></li></ol></li><li><a href="#関数リファレンス">関数リファレンス</a><ol><li><a href="#出力関数macos">出力関数（macOS）</a></li><li><a href="#出力関数windows">出力関数（Windows）</a></li><li><a href="#アニメーション関数">アニメーション関数</a></li></ol></li><li><a href="#エラーハンドリング">エラーハンドリング</a><ol><li><a href="#エラー分類">エラー分類</a></li><li><a href="#エラーハンドリング例">エラーハンドリング例</a></li></ol></li><li><a href="#プラットフォーム別実装">プラットフォーム別実装</a><ol><li><a href="#macos-bash-2">macOS (Bash)</a></li><li><a href="#windows-powershell-2">Windows (PowerShell)</a></li></ol></li><li><a href="#パフォーマンス最適化">パフォーマンス最適化</a><ol><li><a href="#並列処理の考慮">並列処理の考慮</a></li><li><a href="#キャッシュ戦略">キャッシュ戦略</a></li></ol></li><li><a href="#セキュリティ考慮事項">セキュリティ考慮事項</a><ol><li><a href="#認証情報の取り扱い">認証情報の取り扱い</a></li><li><a href="#ssh鍵管理">SSH鍵管理</a></li></ol></li><li><a href="#トラブルシューティング">トラブルシューティング</a><ol><li><a href="#よくある問題と解決方法">よくある問題と解決方法</a></li><li><a href="#デバッグモード">デバッグモード</a></li></ol></li><li><a href="#今後の拡張予定">今後の拡張予定</a><ol><li><a href="#機能追加案">機能追加案</a></li><li><a href="#対応予定プラットフォーム">対応予定プラットフォーム</a></li></ol></li><li><a href="#変更履歴">変更履歴</a></li></ol></nav>
+    </aside>
+    <main class="manual-content">
+      <h2 id="目次">目次</h2>
+<ul>
+<li>
+<a href="#概要">概要</a>
+</li>
+<li>
+<a href="#アーキテクチャ設計">アーキテクチャ設計</a>
+</li>
+<li>
+<a href="#状態管理システム">状態管理システム</a>
+</li>
+<li>
+<a href="#インストールフロー">インストールフロー</a>
+</li>
+<li>
+<a href="#認証メカニズム">認証メカニズム</a>
+</li>
+<li>
+<a href="#関数リファレンス">関数リファレンス</a>
+</li>
+<li>
+<a href="#エラーハンドリング">エラーハンドリング</a>
+</li>
+<li>
+<a href="#プラットフォーム別実装">プラットフォーム別実装</a>
+</li>
+</ul>
+<hr />
+<h2 id="概要">概要</h2>
+<h3 id="目的">目的</h3>
+<p>AI開発に必要な以下のツールを自動でインストールし、セットアップする:</p>
+<ul>
+<li>
+Node.js 18+
+</li>
+<li>
+Git
+</li>
+<li>
+Claude Code
+</li>
+<li>
+Super Claude
+</li>
+<li>
+Cursor IDE
+</li>
+<li>
+OpenAI Codex CLI
+</li>
+</ul>
+<h3 id="設計原則">設計原則</h3>
+<ol>
+<li>
+<strong>冪等性</strong>: 何度実行しても安全（既にインストール済みのソフトはスキップ）
+</li>
+<li>
+<strong>レジューム性</strong>: 中断しても続きから再開可能
+</li>
+<li>
+<strong>対話型認証</strong>: 認証が必要な箇所で一時停止し、完了後自動で次へ進む
+</li>
+<li>
+<strong>進捗の可視化</strong>: アニメーション付きの進捗表示でユーザー体験を向上
+</li>
+<li>
+<strong>クロスプラットフォーム</strong>: macOS（Bash）とWindows（PowerShell）の両対応
+</li>
+</ol>
+<hr />
+<h2 id="アーキテクチャ設計">アーキテクチャ設計</h2>
+<h3 id="全体構成図">全体構成図</h3>
+<pre><code>┌─────────────────────────────────────────┐
+│         User Execution                   │
+│  ./install-ai-dev-tools-mac.sh          │
+│  .\install-ai-dev-tools-win.ps1         │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│      State Initialization                │
+│  - Create .install_progress.json        │
+│  - Check for existing state              │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│    Install Check &amp; Execution Loop        │
+│  For each software:                      │
+│   1. Check state                         │
+│   2. Skip if installed                   │
+│   3. Install if needed                   │
+│   4. Update state                        │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│      Authentication Handling             │
+│  - Pause script                          │
+│  - Prompt user to authenticate           │
+│  - Wait for confirmation                 │
+│  - Verify authentication                 │
+│  - Continue to next step                 │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│         Completion Report                │
+│  - Display summary                       │
+│  - Show installed versions               │
+│  - Provide next steps                    │
+└─────────────────────────────────────────┘
+</code></pre>
+<h3 id="コンポーネント構成">コンポーネント構成</h3>
+<pre><code>install-ai-dev-tools-{mac,win}.{sh,ps1}
+├── Color Output Functions
+│   ├── print_header()
+│   ├── print_info()
+│   ├── print_success()
+│   ├── print_error()
+│   └── print_section()
+│
+├── State Management Functions
+│   ├── init_state()
+│   ├── get_state()
+│   ├── update_state()
+│   └── has_state()
+│
+├── Installation Functions
+│   ├── install_nodejs()
+│   ├── install_git()
+│   ├── install_claude_code()
+│   ├── install_super_claude()
+│   ├── install_cursor()
+│   └── install_codex()
+│
+├── Utility Functions
+│   ├── show_spinner()
+│   ├── draw_progress_bar()
+│   ├── check_command()
+│   └── wait_for_authentication()
+│
+└── Main Execution Flow
+    └── main()
+</code></pre>
+<hr />
+<h2 id="状態管理システム">状態管理システム</h2>
+<h3 id="install_progressjson-スキーマ"><code>.install_progress.json</code> スキーマ</h3>
+<pre><code class="language-json">{
+  &quot;nodejs&quot;: {
+    &quot;installed&quot;: false,
+    &quot;version&quot;: &quot;&quot;
+  },
+  &quot;git&quot;: {
+    &quot;installed&quot;: false,
+    &quot;configured&quot;: false,
+    &quot;ssh_key&quot;: false
+  },
+  &quot;claude_code&quot;: {
+    &quot;installed&quot;: false,
+    &quot;authenticated&quot;: false
+  },
+  &quot;super_claude&quot;: {
+    &quot;installed&quot;: false,
+    &quot;mcp_servers_installed&quot;: false
+  },
+  &quot;cursor&quot;: {
+    &quot;installed&quot;: false
+  },
+  &quot;codex&quot;: {
+    &quot;installed&quot;: false,
+    &quot;authenticated&quot;: false
+  }
+}
+</code></pre>
+<h3 id="状態遷移図">状態遷移図</h3>
+<pre><code>[未インストール]
+    │
+    ├─ installed: false
+    │
+    ▼ (インストール実行)
+    │
+[インストール済み]
+    │
+    ├─ installed: true
+    ├─ version: &quot;x.x.x&quot;
+    │
+    ▼ (認証が必要な場合)
+    │
+[認証待ち]
+    │
+    ├─ authenticated: false
+    │
+    ▼ (ユーザー認証完了)
+    │
+[完全セットアップ完了]
+    │
+    └─ authenticated: true
+</code></pre>
+<h3 id="状態管理関数">状態管理関数</h3>
+<h4 id="macos-bash">macOS (Bash)</h4>
+<pre><code class="language-bash"># 状態ファイルの初期化
+init_state() {
+    if [[ ! -f &quot;$STATE_FILE&quot; ]]; then
+        cat &gt; &quot;$STATE_FILE&quot; &lt;&lt; EOF
+{
+  &quot;nodejs&quot;: {&quot;installed&quot;: false, &quot;version&quot;: &quot;&quot;},
+  ...
+}
+EOF
+    fi
+}
+
+# 状態の取得 (Python JSON パース)
+get_state() {
+    local key=$1
+    local subkey=$2
+    python3 -c &quot;import json; data=json.load(open(&#x27;$STATE_FILE&#x27;)); print(data[&#x27;$key&#x27;][&#x27;$subkey&#x27;])&quot;
+}
+
+# 状態の更新
+update_state() {
+    local key=$1
+    local subkey=$2
+    local value=$3
+    python3 &lt;&lt; EOF
+import json
+with open(&#x27;$STATE_FILE&#x27;, &#x27;r&#x27;) as f:
+    data = json.load(f)
+data[&#x27;$key&#x27;][&#x27;$subkey&#x27;] = $value
+with open(&#x27;$STATE_FILE&#x27;, &#x27;w&#x27;) as f:
+    json.dump(data, f, indent=2)
+EOF
+}
+</code></pre>
+<h4 id="windows-powershell">Windows (PowerShell)</h4>
+<pre><code class="language-powershell"># 状態の取得
+function Get-State {
+    param(
+        [string]$Key,
+        [string]$SubKey
+    )
+    $state = Get-Content $StateFile | ConvertFrom-Json
+    return $state.$Key.$SubKey
+}
+
+# 状態の更新
+function Update-State {
+    param(
+        [string]$Key,
+        [string]$SubKey,
+        $Value
+    )
+    $state = Get-Content $StateFile | ConvertFrom-Json
+    $state.$Key.$SubKey = $Value
+    $state | ConvertTo-Json -Depth 10 | Out-File -FilePath $StateFile -Encoding UTF8
+}
+</code></pre>
+<hr />
+<h2 id="インストールフロー">インストールフロー</h2>
+<h3 id="全体フロー">全体フロー</h3>
+<pre><code>Start
+  │
+  ├─ 1. Display Banner
+  ├─ 2. Initialize State File
+  ├─ 3. Check for Resume
+  │
+  ▼
+[Node.js]
+  ├─ Check if installed
+  ├─ Install via Homebrew/Winget
+  ├─ Verify installation
+  └─ Update state
+  │
+  ▼
+[Git]
+  ├─ Check if installed
+  ├─ Install via Homebrew/Winget
+  ├─ Configure user.name and user.email
+  ├─ Generate SSH key (if needed)
+  └─ Update state
+  │
+  ▼
+[Claude Code]
+  ├─ Check if installed
+  ├─ Install via npm (global)
+  ├─ PAUSE: Wait for user authentication
+  ├─ Verify authentication with `claude-code --version`
+  └─ Update state
+  │
+  ▼
+[Super Claude]
+  ├─ Check if installed
+  ├─ Install via pipx
+  ├─ Install with --force --yes flags
+  ├─ Verify installation
+  └─ Update state
+  │
+  ▼
+[Cursor IDE]
+  ├─ Check if installed
+  ├─ macOS: Install via Homebrew cask
+  ├─ Windows: Open download page (manual)
+  └─ Update state
+  │
+  ▼
+[OpenAI Codex CLI]
+  ├─ Check if installed
+  ├─ Install via npm (global)
+  ├─ PAUSE: Wait for user authentication
+  ├─ Verify authentication with `codex --version`
+  └─ Update state
+  │
+  ▼
+[Completion]
+  ├─ Display summary
+  ├─ Show installed versions
+  └─ Provide next steps
+  │
+End
+</code></pre>
+<h3 id="各ツールのインストール詳細">各ツールのインストール詳細</h3>
+<h4 id="1-nodejs">1. Node.js</h4>
+<p><strong>macOS</strong>:</p>
+<pre><code class="language-bash">install_nodejs() {
+    if [[ $(get_state nodejs installed) == &quot;True&quot; ]]; then
+        print_info &quot;Node.js は既にインストールされています (スキップ)&quot;
+        return
+    fi
+
+    print_section &quot;Node.js のインストール&quot;
+    brew install node
+
+    local version=$(node --version)
+    update_state nodejs installed True
+    update_state nodejs version &quot;$version&quot;
+    print_success &quot;Node.js $version インストール完了&quot;
+}
+</code></pre>
+<p><strong>Windows</strong>:</p>
+<pre><code class="language-powershell">function Install-NodeJS {
+    if ((Get-State nodejs installed) -eq $true) {
+        Write-Info &quot;Node.js は既にインストールされています (スキップ)&quot;
+        return
+    }
+
+    Write-Section &quot;Node.js のインストール&quot;
+    winget install OpenJS.NodeJS --silent
+
+    # パスのリフレッシュ
+    $env:Path = [System.Environment]::GetEnvironmentVariable(&quot;Path&quot;,&quot;Machine&quot;) + &quot;;&quot; + [System.Environment]::GetEnvironmentVariable(&quot;Path&quot;,&quot;User&quot;)
+
+    $version = node --version
+    Update-State nodejs installed $true
+    Update-State nodejs version $version
+    Write-Success &quot;Node.js $version インストール完了&quot;
+}
+</code></pre>
+<h4 id="2-git">2. Git</h4>
+<p><strong>macOS</strong>:</p>
+<pre><code class="language-bash">install_git() {
+    if [[ $(get_state git installed) == &quot;True&quot; ]]; then
+        print_info &quot;Git は既にインストールされています (スキップ)&quot;
+    else
+        print_section &quot;Git のインストール&quot;
+        brew install git
+        update_state git installed True
+        print_success &quot;Git インストール完了&quot;
+    fi
+
+    # Git設定
+    local git_name=$(git config --global user.name 2&gt;/dev/null || echo &quot;&quot;)
+    local git_email=$(git config --global user.email 2&gt;/dev/null || echo &quot;&quot;)
+
+    if [[ -z &quot;$git_name&quot; ]]; then
+        echo -ne &quot;${CYAN}ユーザー名を入力してください: ${RESET}&quot;
+        read git_name
+        git config --global user.name &quot;$git_name&quot;
+    else
+        print_success &quot;user.name: $git_name (設定済み)&quot;
+    fi
+
+    if [[ -z &quot;$git_email&quot; ]]; then
+        echo -ne &quot;${CYAN}メールアドレスを入力してください: ${RESET}&quot;
+        read git_email
+        git config --global user.email &quot;$git_email&quot;
+    else
+        print_success &quot;user.email: $git_email (設定済み)&quot;
+    fi
+
+    update_state git configured True
+
+    # SSH鍵生成
+    if [[ ! -f &quot;$HOME/.ssh/id_ed25519&quot; ]]; then
+        print_info &quot;SSH鍵を生成しています...&quot;
+        ssh-keygen -t ed25519 -C &quot;$git_email&quot; -f &quot;$HOME/.ssh/id_ed25519&quot; -N &quot;&quot;
+        update_state git ssh_key True
+        print_success &quot;SSH鍵生成完了&quot;
+    else
+        print_info &quot;SSH鍵は既に存在します (スキップ)&quot;
+    fi
+}
+</code></pre>
+<h4 id="3-claude-code-認証あり">3. Claude Code (認証あり)</h4>
+<p><strong>macOS</strong>:</p>
+<pre><code class="language-bash">install_claude_code() {
+    if [[ $(get_state claude_code installed) == &quot;True&quot; ]]; then
+        print_info &quot;Claude Code は既にインストールされています (スキップ)&quot;
+    else
+        print_section &quot;Claude Code のインストール&quot;
+        npm install -g @anthropic/claude-code
+        update_state claude_code installed True
+        print_success &quot;Claude Code インストール完了&quot;
+    fi
+
+    if [[ $(get_state claude_code authenticated) == &quot;True&quot; ]]; then
+        print_info &quot;Claude Code 認証済み (スキップ)&quot;
+        return
+    fi
+
+    # 認証プロセス
+    print_section &quot;Claude Code 認証&quot;
+    echo -e &quot;${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}&quot;
+    echo -e &quot;${CYAN}1. ブラウザが自動で開きます${RESET}&quot;
+    echo -e &quot;${CYAN}2. Claude Pro アカウントでログインしてください${RESET}&quot;
+    echo -e &quot;${CYAN}3. 認証が完了したら、このターミナルに戻ってください${RESET}&quot;
+    echo -e &quot;${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}&quot;
+
+    # 認証コマンド実行（バックグラウンド）
+    claude-code login &amp;
+
+    # 認証完了待ち
+    while true; do
+        echo -ne &quot;\n${CYAN}認証が完了したら Enter を押してください...${RESET}&quot;
+        read
+
+        if claude-code --version &amp;&gt; /dev/null; then
+            print_success &quot;認証成功！&quot;
+            update_state claude_code authenticated True
+            break
+        else
+            print_error &quot;認証が確認できませんでした。もう一度お試しください。&quot;
+        fi
+    done
+}
+</code></pre>
+<h4 id="4-super-claude">4. Super Claude</h4>
+<p><strong>macOS</strong>:</p>
+<pre><code class="language-bash">install_super_claude() {
+    if [[ $(get_state super_claude installed) == &quot;True&quot; ]]; then
+        print_info &quot;Super Claude は既にインストールされています (スキップ)&quot;
+        return
+    fi
+
+    print_section &quot;Super Claude のインストール&quot;
+
+    # pipx がインストールされているか確認
+    if ! command -v pipx &amp;&gt; /dev/null; then
+        print_info &quot;pipx をインストールしています...&quot;
+        brew install pipx
+        pipx ensurepath
+    fi
+
+    # Super Claude インストール (非対話モード)
+    SuperClaude install --force --yes
+
+    update_state super_claude installed True
+    print_success &quot;Super Claude インストール完了&quot;
+}
+</code></pre>
+<h4 id="5-cursor-ide">5. Cursor IDE</h4>
+<p><strong>macOS</strong>:</p>
+<pre><code class="language-bash">install_cursor() {
+    if [[ $(get_state cursor installed) == &quot;True&quot; ]]; then
+        print_info &quot;Cursor IDE は既にインストールされています (スキップ)&quot;
+        return
+    fi
+
+    print_section &quot;Cursor IDE のインストール&quot;
+    brew install --cask cursor
+
+    update_state cursor installed True
+    print_success &quot;Cursor IDE インストール完了&quot;
+}
+</code></pre>
+<p><strong>Windows</strong>:</p>
+<pre><code class="language-powershell">function Install-Cursor {
+    if ((Get-State cursor installed) -eq $true) {
+        Write-Info &quot;Cursor IDE は既にインストールされています (スキップ)&quot;
+        return
+    }
+
+    Write-Section &quot;Cursor IDE のインストール&quot;
+    Write-Warning &quot;Cursor IDE は手動インストールが必要です&quot;
+    Write-Info &quot;ブラウザでダウンロードページを開きます...&quot;
+
+    Start-Process &quot;https://cursor.sh&quot;
+
+    Write-Info &quot;ダウンロード・インストールが完了したら Enter を押してください...&quot;
+    Read-Host
+
+    Update-State cursor installed $true
+    Write-Success &quot;Cursor IDE インストール完了&quot;
+}
+</code></pre>
+<h4 id="6-openai-codex-cli-認証あり">6. OpenAI Codex CLI (認証あり)</h4>
+<p><strong>macOS</strong>:</p>
+<pre><code class="language-bash">install_codex() {
+    if [[ $(get_state codex installed) == &quot;True&quot; ]]; then
+        print_info &quot;OpenAI Codex CLI は既にインストールされています (スキップ)&quot;
+    else
+        print_section &quot;OpenAI Codex CLI のインストール&quot;
+        npm install -g @openai/codex
+        update_state codex installed True
+        print_success &quot;OpenAI Codex CLI インストール完了&quot;
+    fi
+
+    if [[ $(get_state codex authenticated) == &quot;True&quot; ]]; then
+        print_info &quot;Codex CLI 認証済み (スキップ)&quot;
+        return
+    fi
+
+    # 認証プロセス
+    print_section &quot;Codex CLI 認証&quot;
+    echo -e &quot;${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}&quot;
+    echo -e &quot;${CYAN}1. ターミナルで &#x27;codex&#x27; コマンドを実行します${RESET}&quot;
+    echo -e &quot;${CYAN}2. ChatGPT Plus/Pro アカウントでサインインしてください${RESET}&quot;
+    echo -e &quot;${CYAN}3. 認証が完了したら、このターミナルに戻ってください${RESET}&quot;
+    echo -e &quot;${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}&quot;
+
+    # 認証コマンド実行
+    codex login &amp;
+
+    # 認証完了待ち
+    while true; do
+        echo -ne &quot;\n${CYAN}認証が完了したら Enter を押してください...${RESET}&quot;
+        read
+
+        if codex --version &amp;&gt; /dev/null; then
+            print_success &quot;認証成功！&quot;
+            update_state codex authenticated True
+            break
+        else
+            print_error &quot;認証が確認できませんでした。もう一度お試しください。&quot;
+        fi
+    done
+}
+</code></pre>
+<hr />
+<h2 id="認証メカニズム">認証メカニズム</h2>
+<h3 id="認証が必要なツール">認証が必要なツール</h3>
+<ol>
+<li>
+<strong>Claude Code</strong>: Claude Pro アカウントが必要
+</li>
+<li>
+<strong>OpenAI Codex CLI</strong>: ChatGPT Plus/Pro アカウントが必要
+</li>
+</ol>
+<h3 id="認証フロー">認証フロー</h3>
+<pre><code>[インストール完了]
+     │
+     ▼
+[認証コマンド実行]
+  (バックグラウンド)
+     │
+     ▼
+[スクリプト一時停止]
+     │
+     ├─ ユーザーへガイド表示
+     ├─ ブラウザ/ターミナルで認証実行
+     │
+     ▼
+[Enter待機ループ]
+     │
+     ├─ ユーザーがEnter押下
+     │
+     ▼
+[認証検証]
+  (--version コマンド)
+     │
+     ├─ 成功 → 状態更新 → 次へ進む
+     └─ 失敗 → 再度Enter待機
+</code></pre>
+<h3 id="認証検証方法">認証検証方法</h3>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>ツール</th>
+<th>検証コマンド</th>
+<th>成功条件</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Claude Code</td>
+<td><code>claude-code --version</code></td>
+<td>終了コード 0</td>
+</tr>
+<tr>
+<td>Codex CLI</td>
+<td><code>codex --version</code></td>
+<td>終了コード 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="関数リファレンス">関数リファレンス</h2>
+<h3 id="出力関数macos">出力関数（macOS）</h3>
+<pre><code class="language-bash"># ANSIカラーコード定義
+RESET=&quot;\033[0m&quot;
+BOLD=&quot;\033[1m&quot;
+RED=&quot;\033[31m&quot;
+GREEN=&quot;\033[32m&quot;
+YELLOW=&quot;\033[33m&quot;
+BLUE=&quot;\033[34m&quot;
+CYAN=&quot;\033[36m&quot;
+
+# ヘッダー表示
+print_header() {
+    echo -e &quot;${BOLD}${BLUE}$1${RESET}&quot;
+}
+
+# 情報表示
+print_info() {
+    echo -e &quot;${CYAN}ℹ️  $1${RESET}&quot;
+}
+
+# 成功表示
+print_success() {
+    echo -e &quot;${GREEN}✅ $1${RESET}&quot;
+}
+
+# エラー表示
+print_error() {
+    echo -e &quot;${RED}❌ $1${RESET}&quot;
+}
+
+# セクション区切り
+print_section() {
+    echo -e &quot;\n${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}&quot;
+    echo -e &quot;${BOLD}${BLUE}[$1]${RESET}&quot;
+    echo -e &quot;${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n&quot;
+}
+</code></pre>
+<h3 id="出力関数windows">出力関数（Windows）</h3>
+<pre><code class="language-powershell"># カラー定義
+$ColorInfo = &quot;Cyan&quot;
+$ColorSuccess = &quot;Green&quot;
+$ColorError = &quot;Red&quot;
+$ColorWarning = &quot;Yellow&quot;
+$ColorHeader = &quot;Blue&quot;
+
+# 情報表示
+function Write-Info {
+    param([string]$Message)
+    Write-Host &quot;ℹ️  $Message&quot; -ForegroundColor $ColorInfo
+}
+
+# 成功表示
+function Write-Success {
+    param([string]$Message)
+    Write-Host &quot;✅ $Message&quot; -ForegroundColor $ColorSuccess
+}
+
+# エラー表示
+function Write-Error {
+    param([string]$Message)
+    Write-Host &quot;❌ $Message&quot; -ForegroundColor $ColorError
+}
+
+# セクション表示
+function Write-Section {
+    param([string]$Title)
+    Write-Host &quot;`n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━&quot; -ForegroundColor $ColorWarning
+    Write-Host &quot;[$Title]&quot; -ForegroundColor $ColorHeader
+    Write-Host &quot;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`n&quot; -ForegroundColor $ColorWarning
+}
+</code></pre>
+<h3 id="アニメーション関数">アニメーション関数</h3>
+<p><strong>スピナー（macOS）</strong>:</p>
+<pre><code class="language-bash">show_spinner() {
+    local pid=$1
+    local message=$2
+    local spin=&#x27;⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏&#x27;
+    local i=0
+
+    while kill -0 $pid 2&gt;/dev/null; do
+        i=$(( (i+1) % 10 ))
+        echo -ne &quot;\r${CYAN}${message} [${spin:$i:1}]${RESET}&quot;
+        sleep 0.1
+    done
+    echo -ne &quot;\r&quot;
+}
+</code></pre>
+<p><strong>プログレスバー（macOS）</strong>:</p>
+<pre><code class="language-bash">draw_progress_bar() {
+    local current=$1
+    local total=$2
+    local width=50
+    local percentage=$((current * 100 / total))
+    local filled=$((width * current / total))
+    local empty=$((width - filled))
+
+    echo -ne &quot;\r${CYAN}[&quot;
+    printf &quot;%${filled}s&quot; | tr &#x27; &#x27; &#x27;█&#x27;
+    printf &quot;%${empty}s&quot; | tr &#x27; &#x27; &#x27;░&#x27;
+    echo -ne &quot;] ${percentage}%${RESET}&quot;
+}
+</code></pre>
+<hr />
+<h2 id="エラーハンドリング">エラーハンドリング</h2>
+<h3 id="エラー分類">エラー分類</h3>
+<h3 id="エラーハンドリング例">エラーハンドリング例</h3>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>エラーカテゴリ</th>
+<th>例</th>
+<th>対処方法</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>インストール失敗</strong></td>
+<td>Homebrew/Wingetエラー</td>
+<td>エラーメッセージ表示、スクリプト継続</td>
+</tr>
+<tr>
+<td><strong>認証失敗</strong></td>
+<td>Claude Code認証タイムアウト</td>
+<td>再試行プロンプト、無限ループで待機</td>
+</tr>
+<tr>
+<td><strong>設定エラー</strong></td>
+<td>Git設定の入力ミス</td>
+<td>再入力プロンプト</td>
+</tr>
+<tr>
+<td><strong>状態ファイル破損</strong></td>
+<td>JSONパースエラー</td>
+<td>状態ファイル再初期化</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>macOS</strong>:</p>
+<pre><code class="language-bash">install_nodejs() {
+    if ! brew install node; then
+        print_error &quot;Node.jsのインストールに失敗しました&quot;
+        print_info &quot;手動でインストールしてください: https://nodejs.org/&quot;
+        return 1
+    fi
+}
+</code></pre>
+<p><strong>Windows</strong>:</p>
+<pre><code class="language-powershell">function Install-NodeJS {
+    try {
+        winget install OpenJS.NodeJS --silent
+        Write-Success &quot;Node.js インストール完了&quot;
+    } catch {
+        Write-Error &quot;Node.jsのインストールに失敗しました&quot;
+        Write-Info &quot;手動でインストールしてください: https://nodejs.org/&quot;
+        return
+    }
+}
+</code></pre>
+<hr />
+<h2 id="プラットフォーム別実装">プラットフォーム別実装</h2>
+<h3 id="macos-bash-2">macOS (Bash)</h3>
+<p><strong>必須環境</strong>:</p>
+<ul>
+<li>
+macOS 11 (Big Sur) 以降
+</li>
+<li>
+Homebrew (自動インストール)
+</li>
+<li>
+Python 3 (プリインストール)
+<p><strong>パッケージマネージャー</strong>:</p>
+<pre><code class="language-bash"># Homebrew がなければインストール
+if ! command -v brew &amp;&gt; /dev/null; then
+    echo &quot;Homebrew をインストールしています...&quot;
+    /bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+fi
+</code></pre>
+<p><strong>インストールコマンド</strong>:</p>
+<pre><code class="language-bash">brew install node          # Node.js
+brew install git           # Git
+npm install -g @anthropic/claude-code  # Claude Code
+brew install pipx          # pipx
+pipx install SuperClaude   # Super Claude
+brew install --cask cursor # Cursor IDE
+npm install -g @openai/codex  # Codex CLI
+</code></pre>
+</li>
+</ul>
+<h3 id="windows-powershell-2">Windows (PowerShell)</h3>
+<p><strong>必須環境</strong>:</p>
+<ul>
+<li>
+Windows 10 (1809以降) または Windows 11
+</li>
+<li>
+Winget (標準搭載)
+</li>
+<li>
+管理者権限推奨
+<p><strong>パッケージマネージャー</strong>:</p>
+<pre><code class="language-powershell"># Winget の確認
+if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+    Write-Error &quot;Winget がインストールされていません&quot;
+    Write-Info &quot;Microsoft Store から &#x27;アプリ インストーラー&#x27; をインストールしてください&quot;
+    exit 1
+}
+</code></pre>
+<p><strong>インストールコマンド</strong>:</p>
+<pre><code class="language-powershell">winget install OpenJS.NodeJS --silent  # Node.js
+winget install Git.Git --silent        # Git
+npm install -g @anthropic/claude-code  # Claude Code
+pip install pipx                       # pipx
+pipx install SuperClaude               # Super Claude
+# Cursor IDE: 手動ダウンロード（https://cursor.sh）
+npm install -g @openai/codex           # Codex CLI
+</code></pre>
+<p><strong>パスのリフレッシュ</strong>:</p>
+<pre><code class="language-powershell"># インストール後、PowerShellのPATH環境変数を更新
+$env:Path = [System.Environment]::GetEnvironmentVariable(&quot;Path&quot;,&quot;Machine&quot;) + &quot;;&quot; + [System.Environment]::GetEnvironmentVariable(&quot;Path&quot;,&quot;User&quot;)
+</code></pre>
+</li>
+</ul>
+<hr />
+<h2 id="パフォーマンス最適化">パフォーマンス最適化</h2>
+<h3 id="並列処理の考慮">並列処理の考慮</h3>
+<p>現在の実装は順次実行ですが、以下の最適化が可能:</p>
+<p><strong>macOS (バックグラウンドジョブ)</strong>:</p>
+<pre><code class="language-bash"># 並列インストール（認証不要なものだけ）
+install_nodejs &amp;
+PID_NODE=$!
+
+install_git &amp;
+PID_GIT=$!
+
+# 完了待ち
+wait $PID_NODE
+wait $PID_GIT
+</code></pre>
+<p><strong>Windows (ジョブ管理)</strong>:</p>
+<pre><code class="language-powershell"># 並列実行
+$jobs = @()
+$jobs += Start-Job -ScriptBlock { Install-NodeJS }
+$jobs += Start-Job -ScriptBlock { Install-Git }
+
+# 完了待ち
+$jobs | Wait-Job | Receive-Job
+</code></pre>
+<h3 id="キャッシュ戦略">キャッシュ戦略</h3>
+<p><strong>Homebrewキャッシュ</strong>:</p>
+<pre><code class="language-bash"># Homebrew のボトルキャッシュを活用
+export HOMEBREW_NO_AUTO_UPDATE=1  # 自動更新を無効化（高速化）
+</code></pre>
+<p><strong>状態ファイルの最適化</strong>:</p>
+<ul>
+<li>
+状態ファイルは軽量（&lt;1KB）
+</li>
+<li>
+JSON形式で高速パース
+</li>
+<li>
+Python標準ライブラリのみ使用（外部依存なし）
+</li>
+</ul>
+<hr />
+<h2 id="セキュリティ考慮事項">セキュリティ考慮事項</h2>
+<h3 id="認証情報の取り扱い">認証情報の取り扱い</h3>
+<p><strong>保存しない情報</strong>:</p>
+<ul>
+<li>
+Claude Pro パスワード
+</li>
+<li>
+ChatGPT Plus/Pro パスワード
+</li>
+<li>
+GitHub Personal Access Token
+<p><strong>保存する情報</strong>:</p>
+</li>
+<li>
+Git user.name（公開情報）
+</li>
+<li>
+Git user.email（公開情報）
+</li>
+<li>
+インストール状態（機密性なし）
+</li>
+</ul>
+<h3 id="ssh鍵管理">SSH鍵管理</h3>
+<pre><code class="language-bash"># Ed25519鍵の生成（推奨）
+ssh-keygen -t ed25519 -C &quot;$git_email&quot; -f &quot;$HOME/.ssh/id_ed25519&quot; -N &quot;&quot;
+
+# パスフレーズは空（自動化のため）
+# ユーザーに後で設定を促す
+echo -e &quot;${YELLOW}⚠️  セキュリティのため、SSH鍵にパスフレーズを設定することを推奨します${RESET}&quot;
+echo -e &quot;${CYAN}ssh-keygen -p -f ~/.ssh/id_ed25519${RESET}&quot;
+</code></pre>
+<hr />
+<h2 id="トラブルシューティング">トラブルシューティング</h2>
+<h3 id="よくある問題と解決方法">よくある問題と解決方法</h3>
+<h3 id="デバッグモード">デバッグモード</h3>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>問題</th>
+<th>原因</th>
+<th>解決方法</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Homebrew インストールエラー</td>
+<td>Xcode Command Line Tools未インストール</td>
+<td><code>xcode-select --install</code> 実行</td>
+</tr>
+<tr>
+<td>Winget が見つからない</td>
+<td>Windows標準アプリ不足</td>
+<td>Microsoft Storeから「アプリ インストーラー」をインストール</td>
+</tr>
+<tr>
+<td>Claude Code 認証失敗</td>
+<td>ブラウザでログインしていない</td>
+<td>ブラウザで https://claude.ai/code にアクセスしてログイン</td>
+</tr>
+<tr>
+<td>PATH に追加されない（Windows）</td>
+<td>環境変数の更新が反映されていない</td>
+<td>PowerShell再起動、または手動でパス更新</td>
+</tr>
+<tr>
+<td>状態ファイルが壊れた</td>
+<td>JSON形式が不正</td>
+<td><code>.install_progress.json</code> を削除して再実行</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>macOS</strong>:</p>
+<pre><code class="language-bash"># デバッグ出力を有効化
+set -x  # すべてのコマンドを表示
+./install-ai-dev-tools-mac.sh
+</code></pre>
+<p><strong>Windows</strong>:</p>
+<pre><code class="language-powershell"># デバッグ出力を有効化
+Set-PSDebug -Trace 1
+.\install-ai-dev-tools-win.ps1
+</code></pre>
+<hr />
+<h2 id="今後の拡張予定">今後の拡張予定</h2>
+<h3 id="機能追加案">機能追加案</h3>
+<ol>
+<li>
+<strong>アンインストールスクリプト</strong>: 全ツールを一括削除
+</li>
+<li>
+<strong>アップデートスクリプト</strong>: インストール済みツールの一括更新
+</li>
+<li>
+<strong>ログ記録</strong>: 詳細なインストールログファイル作成
+</li>
+<li>
+<strong>エラーリカバリ</strong>: 失敗したステップの自動リトライ
+</li>
+<li>
+<strong>設定バックアップ</strong>: Git設定やSSH鍵のバックアップ機能
+</li>
+</ol>
+<h3 id="対応予定プラットフォーム">対応予定プラットフォーム</h3>
+<ul>
+<li>
+Linux (Debian/Ubuntu)
+</li>
+<li>
+Linux (Red Hat/CentOS)
+</li>
+</ul>
+<hr />
+<h2 id="変更履歴">変更履歴</h2>
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>バージョン</th>
+<th>日付</th>
+<th>変更内容</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1.0.0</td>
+<td>2025-06-15</td>
+<td>初版作成 - macOS/Windows対応</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<p><strong>作成者</strong>: Development Team <strong>最終更新</strong>: 2025-06-15 <strong>ライセンス</strong>: MIT License</p>
+    </main>
+  </div>
+  <footer class="manual-footer">
+    <p>このドキュメントは自動生成されました。元ファイルを更新した際は <code>python tools/build_manual.py</code> を再実行してください。</p>
+  </footer>
+</body>
+</html>
