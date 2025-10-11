@@ -1,6 +1,29 @@
 #!/usr/bin/env python3
-"""Generate a styled HTML manual site from Markdown documents in ./docs."""
+"""
+⚠️ THIS BUILD SCRIPT IS ARCHIVED AND DISABLED ⚠️
 
+このビルドスクリプトは無効化されています。
+site/ ディレクトリのHTMLファイルを直接編集してください。
+
+復元方法は .BUILD_SYSTEM_DISABLED ファイルを参照してください。
+"""
+
+import sys
+
+if __name__ == "__main__":
+    print("""
+⛔ ビルドスクリプトは無効化されています ⛔
+
+理由: site/ai/index.html にグラスモーフィズムデザインが含まれており、
+      ビルド実行によりHTML手動編集が失われます。
+
+今後の方針: site/ ディレクトリのHTMLファイルを直接編集してください。
+
+詳細: .BUILD_SYSTEM_DISABLED ファイルを参照
+""")
+    sys.exit(1)
+
+# 以下のコードは無効化されていますが、構文エラーを防ぐために保持されています
 from __future__ import annotations
 
 import argparse

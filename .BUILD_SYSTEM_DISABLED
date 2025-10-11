@@ -6,10 +6,10 @@
 理由: HTMLの直接編集を可能にするため、ビルド機能を完全に無効化
 
 変更内容:
-- tools/build_manual.py → tools/build_manual.py.ARCHIVED にリネーム
-- 実行権限を削除（chmod -x）
-- 誤実行を防止するため、拡張子を .ARCHIVED に変更
-- .DISABLED拡張子でもPythonとして実行できたため、.ARCHIVEDに変更
+- tools/build_manual.py → tools/build_manual.py.txt にリネーム
+- .txt 拡張子により、Pythonとして実行不可能
+- スクリプト先頭に exit() を追加
+- .DISABLED, .ARCHIVED拡張子でも実行できたため、.txt に最終変更
 
 今後の編集方針:
 - site/ ディレクトリ内のHTMLファイルを直接編集してください

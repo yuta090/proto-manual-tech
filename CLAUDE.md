@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 このプロジェクトは、元々Markdown形式で記述されたドキュメントを、スタイル付きHTMLマニュアルに変換する静的サイトジェネレーターでした。
 
 **現在の運用方針:**
-- ビルドスクリプト (`tools/build_manual.py.DISABLED`) は実行不可能な状態です
+- ビルドスクリプト (`tools/build_manual.py.txt`) は実行不可能な状態です
 - `.BUILD_SYSTEM_DISABLED` マーカーファイルが存在します
 - **`site/` ディレクトリのHTMLファイルを直接編集してください**
 - `docs/` ディレクトリのMarkdownは参照用として保持されています
@@ -167,10 +167,11 @@ open site/index.html  # macOS
 
 ### 禁止事項
 
-1. **⛔ ビルドスクリプトを実行・復元しない（最重要）**
-   - `tools/build_manual.py.DISABLED` は無効化されており、実行できません
-   - 復元する場合は必ずユーザーに確認してください
-   - ビルド実行により `site/` 内のHTML手動編集がすべて失われます
+1. **⛔ ビルドスクリプトを絶対に実行しない（最重要）**
+   - `tools/build_manual.py.txt` は完全に無効化されており、**実行してはいけません**
+   - `.txt` 拡張子により、誤ってPythonとして実行することもできません
+   - **いかなる理由があっても、ビルドスクリプトを実行・復元・リネームしてはいけません**
+   - ビルド実行により `site/` 内のHTML手動編集（グラスモーフィズムデザイン）がすべて失われます
 
 2. **✅ `site/` ディレクトリのHTMLファイルを直接編集する（推奨）**
    - ビルドシステムが無効化されているため、HTML直接編集が安全です
