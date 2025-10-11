@@ -538,11 +538,76 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
     </div>
   </div>
 </details>
-<h4 id="例3-ポートフォリオサイト" style="color: #7c3aed; margin: 32px 0 16px 0;">🎨 例3: ポートフォリオサイト</h4>
+<h4 id="例3-ローカルseoトラッカー" style="color: #7c3aed; margin: 32px 0 16px 0;">🔍 例3: ローカルSEOトラッカー（Playwright自動化）</h4>
 
-<pre style="background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: 12px; overflow-x: auto; margin: 20px 0;"><code>自己紹介とスキル、プロジェクトを紹介するポートフォリオサイトを作って</code><button class="code-copy-btn">コピー</button></pre>
+<pre style="background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: 12px; overflow-x: auto; margin: 20px 0;"><code>「渋谷 カフェ おしゃれ」でGoogle検索して、検索結果の1〜2ページ目のタイトル、URL、説明文を取得。CSVファイルに日時と一緒に保存するアプリを作って。</code><button class="code-copy-btn">コピー</button></pre>
 
-<p style="margin: 16px 0; color: #6b7280; font-size: 0.95em;">プロフィール、スキルセクション、プロジェクトギャラリーを含むプロフェッショナルなサイトが生成されます。</p>
+<p style="margin: 16px 0; color: #6b7280; font-size: 0.95em;">Playwright（ブラウザ自動操作ツール）を使って、検索結果を自動収集し、SEO順位チェックや競合調査を効率化できる実務的なツールが完成します。企業の業務効率化で実際に使われている技術を学べます。</p>
+
+<details style="margin: 24px 0; border: 2px solid #e0e7ff; border-radius: 12px; padding: 0; background: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+  <summary style="padding: 20px; cursor: pointer; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; font-weight: 600; font-size: 1.05em; transition: all 0.3s ease; user-select: none;">
+    ✨ 追加アレンジ例：検索結果トラッカーをさらにパワーアップ！
+  </summary>
+  <div style="padding: 24px; background: linear-gradient(180deg, #faf5ff 0%, #ffffff 100%);">
+    <p style="margin: 0 0 20px 0; color: #4b5563; line-height: 1.8; font-size: 0.95em;">
+      基本的な検索結果取得ができたら、以下のような機能を追加して、プロレベルのSEO分析ツールに進化させましょう！
+    </p>
+
+    <div style="border-left: 4px solid #10b981; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #065f46; margin: 0 0 8px 0;">📸 検索結果のスクリーンショットを自動保存</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>各検索結果のトップページをスクリーンショットで保存して。日付ごとにフォルダ分けして管理して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #047857; font-size: 0.95em;">→ screenshots/2025-06-11/ フォルダに各サイトのスクショを自動保存！競合サイトのデザイン変更履歴を視覚的に追跡できます。</p>
+    </div>
+
+    <div style="border-left: 4px solid #3b82f6; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #1e40af; margin: 0 0 8px 0;">📊 順位変動をグラフで可視化</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>過去のCSVデータと比較して、順位が上がったサイトを緑、下がったサイトを赤でハイライトして。順位推移グラフも表示して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #1e3a8a; font-size: 0.95em;">→ Chart.jsで折れ線グラフを生成！どのサイトが上昇トレンド・下降トレンドなのか一目瞭然になります。</p>
+    </div>
+
+    <div style="border-left: 4px solid #f59e0b; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #92400e; margin: 0 0 8px 0;">🔔 順位変動アラート機能</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>前回と比較して3位以上順位が変動したサイトがあったら、ブラウザ通知を出して。変動内容をメールで送信する機能も追加して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #78350f; font-size: 0.95em;">→ 大きな順位変動を見逃さない！Web Notifications APIとmailto:リンクで即座に把握できます。</p>
+    </div>
+
+    <div style="border-left: 4px solid #ec4899; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #831843; margin: 0 0 8px 0;">🌍 複数検索エンジン対応</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>GoogleだけじゃなくてYahoo、Bingの検索結果も取得できるようにして。検索エンジンごとに結果を比較できるようにして。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #9f1239; font-size: 0.95em;">→ 検索エンジンごとの順位の違いを分析！どのエンジンで強い・弱いかが一目でわかります。</p>
+    </div>
+
+    <div style="border-left: 4px solid #8b5cf6; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #5b21b6; margin: 0 0 8px 0;">📱 PC版・スマホ版を比較</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>PC版とスマホ版の検索結果を両方取得して。デバイスごとの順位の違いを比較表示して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #6b21a8; font-size: 0.95em;">→ PlaywrightのモバイルエミュレーションでPC/スマホの順位差を検証！モバイルSEOの重要性が実感できます。</p>
+    </div>
+
+    <div style="border-left: 4px solid #06b6d4; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #164e63; margin: 0 0 8px 0;">🎯 複数キーワード一括チェック</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>CSVファイルからキーワードリストを読み込んで、一括で検索結果を取得して。全キーワードの結果を1つのExcelファイルにまとめて。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #155e75; font-size: 0.95em;">→ 「渋谷 カフェ」「新宿 カフェ」「池袋 カフェ」など複数キーワードを自動巡回！時間を大幅に節約できます。</p>
+    </div>
+
+    <div style="border-left: 4px solid #ef4444; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #991b1b; margin: 0 0 8px 0;">🤖 競合サイトの詳細分析</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>各サイトのメタタグ（title、description）も取得して。ページの読み込み速度も計測して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #b91c1c; font-size: 0.95em;">→ 競合のSEO戦略を丸裸に！メタタグの書き方やサイトパフォーマンスから学べることがたくさん見つかります。</p>
+    </div>
+
+    <div style="border-left: 4px solid #a855f7; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #581c87; margin: 0 0 8px 0;">⏰ 定期実行スケジューラー</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>毎日朝9時に自動で検索結果をチェックするようにして。結果をメールで送信して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #6b21a8; font-size: 0.95em;">→ Node.jsのnode-cronやcronジョブで完全自動化！毎朝出社すると最新のSEOレポートが届いている状態に。</p>
+    </div>
+
+    <div style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(79, 70, 229, 0.05) 100%); border-left: 4px solid #9333ea; padding: 16px; margin: 20px 0; border-radius: 8px;">
+      <p style="margin: 0; color: #581c87; font-weight: 600; line-height: 1.8; font-size: 0.95em;">
+        💡 <strong>ポイント：</strong> このツールは実際のSEO業務やマーケティング業務で使われている機能ばかりです。完成したら「業務効率化ツールを自作できる人材」として企業から高く評価されます。Playwright（ブラウザ自動化）は、Webスクレイピング、E2Eテスト、RPA（業務自動化）など様々な場面で活躍する超実用的なスキルです！
+      </p>
+    </div>
+  </div>
+</details>
 
 <h3 id="生成されたコードをさらに変更改善する">生成されたコードをさらに変更・改善する</h3>
 <p>Claude Codeの真骨頂は、一度生成したコードに対して、さらに指示を出すことで継続的に変更・改善できる点にあります。例えば、以下のようにチャット欄に追加入力することで、AIがコードを修正してくれます。</p>
