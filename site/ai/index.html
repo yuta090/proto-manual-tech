@@ -705,23 +705,26 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 <hr>
 <h3 id="31-プロンプトエンジニアリングの基本原則">3.1 プロンプトエンジニアリングの基本原則</h3>
 <p>AIを効果的に活用するためには、適切な「プロンプト（指示）」を与えることが不可欠です。プロンプトエンジニアリングは、AIから望む結果を引き出すための技術であり、以下の基本原則に基づいています。</p>
-<ul>
-<li>
-<strong>明確性</strong>: 何をしてほしいのか、具体的に指示します。曖昧な表現は避けましょう。
+
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ul style="margin: 0;">
+<li style="margin-bottom: 16px;">
+<strong style="color: #3b82f6;">明確性</strong>: 何をしてほしいのか、具体的に指示します。曖昧な表現は避けましょう。
 </li>
-<li>
-<strong>具体性</strong>: 期待する出力の形式、含めるべき要素、制約条件などを詳細に伝えます。
+<li style="margin-bottom: 16px;">
+<strong style="color: #8b5cf6;">具体性</strong>: 期待する出力の形式、含めるべき要素、制約条件などを詳細に伝えます。
 </li>
-<li>
-<strong>役割の指定</strong>: AIに「あなたは熟練のWeb開発者です」のように役割を与えることで、その役割に応じた回答を引き出しやすくなります。
+<li style="margin-bottom: 16px;">
+<strong style="color: #ec4899;">役割の指定</strong>: AIに「あなたは熟練のWeb開発者です」のように役割を与えることで、その役割に応じた回答を引き出しやすくなります。
 </li>
-<li>
-<strong>例示</strong>: 期待する出力の例を示すことで、AIはより正確に意図を理解します。
+<li style="margin-bottom: 16px;">
+<strong style="color: #10b981;">例示</strong>: 期待する出力の例を示すことで、AIはより正確に意図を理解します。
 </li>
-<li>
-<strong>制約条件</strong>: 「〇〇は含めないでください」「〇〇文字以内で」など、不要な要素や制限を明確に伝えます。
+<li style="margin: 0;">
+<strong style="color: #f59e0b;">制約条件</strong>: 「〇〇は含めないでください」「〇〇文字以内で」など、不要な要素や制限を明確に伝えます。
 </li>
 </ul>
+</div>
 <h4 id="悪いプロンプトの例と良いプロンプトの例">悪いプロンプトの例と良いプロンプトの例</h4>
 <h3 id="32-super-claudeにおけるプロンプトの設計">3.2 Super Claudeにおけるプロンプトの設計</h3>
 <div class="table-wrapper">
@@ -743,31 +746,39 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 </table>
 </div>
 <p>Super Claudeでは、これらの原則をCLIコマンドと組み合わせることで、ブレのない、より効率的なプロンプト設計が可能です。</p>
-<ul>
-<li>
-<strong>コマンドの選択</strong>: <code>brainstorm</code>, <code>design</code>, <code>implement</code>など、目的のコマンドを適切に選択することが最初のプロンプトです。
+
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
+<ul style="margin: 0;">
+<li style="margin-bottom: 16px;">
+<strong style="color: #3b82f6;">コマンドの選択</strong>: <code>brainstorm</code>, <code>design</code>, <code>implement</code>など、目的のコマンドを適切に選択することが最初のプロンプトです。
 </li>
-<li>
-<strong>引数とオプション</strong>: コマンドに続く引数やオプション（例: <code>--focus feature</code>）で、AIに焦点を当てるべき点や追加情報を伝えます。
+<li style="margin-bottom: 16px;">
+<strong style="color: #8b5cf6;">引数とオプション</strong>: コマンドに続く引数やオプション（例: <code>--focus feature</code>）で、AIに焦点を当てるべき点や追加情報を伝えます。
 </li>
-<li>
-<strong>対話形式の活用</strong>: Super Claudeは対話形式で情報を深掘りできるため、一度に完璧なプロンプトを作成するのではなく、AIとの対話を通じて徐々に洗練させていくことができます。
+<li style="margin: 0;">
+<strong style="color: #10b981;">対話形式の活用</strong>: Super Claudeは対話形式で情報を深掘りできるため、一度に完璧なプロンプトを作成するのではなく、AIとの対話を通じて徐々に洗練させていくことができます。
 </li>
 </ul>
+</div>
 <h3 id="33-仕様駆動開発sddとプロンプトの連携">3.3 仕様駆動開発（SDD）とプロンプトの連携</h3>
 <p>仕様駆動開発のプロセスにプロンプトエンジニアリングを組み込むことで、AIの力を最大限に引き出し、高品質なソフトウェア開発を実現します。</p>
-<ul>
-<li>
-<strong>要件定義</strong>: <code>brainstorm</code>コマンドであなたの要望をSuper Claudeが深掘りし、具体的な要件としてAIに整理させます。
+
+<div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1)); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);">
+<ul style="margin: 0 0 16px 0;">
+<li style="margin-bottom: 16px;">
+<strong style="color: #8b5cf6;">要件定義</strong>: <code>brainstorm</code>コマンドであなたの要望をSuper Claudeが深掘りし、具体的な要件としてAIに整理させます。
 </li>
-<li>
-<strong>設計</strong>: <code>design</code>コマンドで要件に基づいたアーキテクチャやUI/UXの設計をAIに提案させ、レビューします。
+<li style="margin-bottom: 16px;">
+<strong style="color: #3b82f6;">設計</strong>: <code>design</code>コマンドで要件に基づいたアーキテクチャやUI/UXの設計をAIに提案させ、レビューします。
 </li>
-<li>
-<strong>実装</strong>: <code>implement</code>コマンドで設計書に基づいたコードをAIに生成させ、テストと修正を繰り返します。
-<p>このように、各開発フェーズでAIに適切なプロンプトを与えることで、AIは単なるツールではなく、開発チームの一員として機能します。</p>
+<li style="margin: 0;">
+<strong style="color: #10b981;">実装</strong>: <code>implement</code>コマンドで設計書に基づいたコードをAIに生成させ、テストと修正を繰り返します。
 </li>
 </ul>
+<p style="margin: 0; padding: 16px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; border-left: 4px solid #8b5cf6;">
+このように、各開発フェーズでAIに適切なプロンプトを与えることで、AIは単なるツールではなく、開発チームの一員として機能します。
+</p>
+</div>
 <hr>
 <h2 id="4-最低限の準備ai開発の相棒を迎えよう"><strong>4. 最低限の準備：<br>AI開発の相棒を迎えよう</strong></h2>
 <hr>
