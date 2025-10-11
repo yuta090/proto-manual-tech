@@ -315,14 +315,14 @@ spec.mdとして保存してください。」</code><button class="code-copy-bt
 <p>💬 「実装したコードをレビューしてください。</p>
 
 <p><strong>チェック項目:</strong></p>
-<ol>
-<li>セキュリティ
+<ul>
+<li><strong>セキュリティ</strong>
 <ul>
 <li>XSS対策（ユーザー入力のエスケープ）</li>
 <li>CSVインジェクション対策</li>
 </ul>
 </li>
-<li>パフォーマンス
+<li><strong>パフォーマンス</strong>
 <ul>
 <li>大量データ（1000件）の処理速度</li>
 <li>グラフ描画の最適化</li>
@@ -342,7 +342,7 @@ spec.mdとして保存してください。」</code><button class="code-copy-bt
 <li>カラーコントラスト</li>
 </ul>
 </li>
-</ol>
+</ul>
 
 <p>各項目について改善点を指摘し、修正案を提示してください。」</p>
 </div>
@@ -367,35 +367,35 @@ spec.mdとして保存してください。」</code><button class="code-copy-bt
 </ul>
 
 <p><strong>テストファイル構成:</strong></p>
-<ol>
-<li>dataProcessing.test.js
+<ul>
+<li><strong>dataProcessing.test.js</strong>
 <ul>
 <li>月次集計関数のテスト</li>
 <li>カテゴリ集計関数のテスト</li>
 <li>フィルタリング関数のテスト</li>
 </ul>
 </li>
-<li>chartRendering.test.js
+<li><strong>chartRendering.test.js</strong>
 <ul>
 <li>グラフデータ生成のテスト</li>
 <li>オプション設定のテスト</li>
 </ul>
 </li>
-<li>dataImportExport.test.js
+<li><strong>dataImportExport.test.js</strong>
 <ul>
 <li>CSVパースのテスト</li>
 <li>JSONパースのテスト</li>
 <li>データバリデーションのテスト</li>
 </ul>
 </li>
-<li>integration.test.js
+<li><strong>integration.test.js</strong>
 <ul>
 <li>データインポート → 表示のフロー</li>
 <li>フィルタ適用 → グラフ更新のフロー</li>
 <li>エクスポート機能のフロー</li>
 </ul>
 </li>
-</ol>
+</ul>
 
 <p>各テストで正常系・異常系・境界値をカバーしてください。」</p>
 </div>
@@ -416,26 +416,26 @@ npm test -- --coverage</code></pre>
 <p>💬 「実装したコードをリファクタリングしてください。</p>
 
 <p><strong>改善ポイント:</strong></p>
-<ol>
-<li>関数の分割
+<ul>
+<li><strong>関数の分割</strong>
 <ul>
 <li>100行を超える関数を小さく分割</li>
 <li>単一責任の原則に従う</li>
 </ul>
 </li>
-<li>重複コードの削除
+<li><strong>重複コードの削除</strong>
 <ul>
 <li>共通処理を関数化</li>
 <li>ユーティリティ関数の作成</li>
 </ul>
 </li>
-<li>命名の改善
+<li><strong>命名の改善</strong>
 <ul>
 <li>変数名を説明的に</li>
 <li>関数名を動詞で開始</li>
 </ul>
 </li>
-<li>ES6+記法の適用
+<li><strong>ES6+記法の適用</strong>
 <ul>
 <li>アロー関数</li>
 <li>分割代入</li>
@@ -443,13 +443,13 @@ npm test -- --coverage</code></pre>
 <li>オプショナルチェイニング</li>
 </ul>
 </li>
-<li>定数の整理
+<li><strong>定数の整理</strong>
 <ul>
 <li>マジックナンバーを定数化</li>
 <li>設定値を一箇所に集約</li>
 </ul>
 </li>
-</ol>
+</ul>
 
 <p>すべての改善後、テストが通ることを確認してください。」</p>
 </div>
@@ -533,13 +533,13 @@ npm test -- --coverage</code></pre>
 <p><strong>背景</strong>: タスク管理アプリと経費精算アプリが別々に存在し、管理が非効率</p>
 <p><strong>目的</strong>: タスクと経費を統合管理し、プロジェクトごとの工数・コストを可視化</p>
 <p><strong>主要機能</strong>:</p>
-<ol>
+<ul>
 <li>プロジェクト管理（作成・編集・削除、ステータス管理）</li>
 <li>タスク管理の拡張（プロジェクト紐付け、工数入力）</li>
 <li>経費管理の拡張（プロジェクト紐付け、承認ワークフロー）</li>
 <li>ダッシュボード（工数・コスト集計、予算vs実績）</li>
 <li>レポート出力（PDF/CSV、月次レポート）</li>
-</ol>
+</ul>
 <p><strong>技術要件</strong>: SPA、Bootstrap 5 + Chart.js、localStorage</p>
 <p><strong>制約</strong>: 開発期間1週間、既存データの移行パス提供、段階的リリース</p>
 <p>spec.mdとして詳細な仕様書を作成してください。」</p>
@@ -565,14 +565,14 @@ npm test -- --coverage</code></pre>
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <p>💬 「実装したコードを総合レビューしてください。</p>
 <p><strong>レビュー観点</strong>:</p>
-<ol>
+<ul>
 <li>🔒 セキュリティ（XSS対策、データバリデーション）</li>
 <li>⚡ パフォーマンス（DOM操作、データ構造）</li>
 <li>📖 可読性（コード構造、命名規則）</li>
 <li>🧪 テスタビリティ（関数の独立性）</li>
 <li>♿ アクセシビリティ（キーボード操作、ARIA）</li>
 <li>🏗️ 保守性（拡張性、依存関係）</li>
-</ol>
+</ul>
 <p>各観点で問題があれば、優先度をつけて指摘してください。」</p>
 </div>
 
