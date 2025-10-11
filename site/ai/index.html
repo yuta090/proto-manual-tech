@@ -473,6 +473,59 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 <pre style="background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: 12px; overflow-x: auto; margin: 20px 0;"><code>営業日報を簡単に作成・管理できるアプリを作って</code><button class="code-copy-btn">コピー</button></pre>
 
 <p style="margin: 16px 0; color: #6b7280; font-size: 0.95em;">訪問先企業名、商談内容、次回アクションを記録し、週報を自動生成できる実務的なアプリが完成します。詳細は6.7章で実践プロジェクトとして解説します。</p>
+
+<details style="margin: 24px 0; border: 2px solid #e0e7ff; border-radius: 12px; padding: 0; background: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+  <summary style="padding: 20px; cursor: pointer; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; font-weight: 600; font-size: 1.05em; transition: all 0.3s ease; user-select: none;">
+    ✨ 追加アレンジ例：営業日報アプリをさらにパワーアップ！
+  </summary>
+  <div style="padding: 24px; background: linear-gradient(180deg, #faf5ff 0%, #ffffff 100%);">
+    <p style="margin: 0 0 20px 0; color: #4b5563; line-height: 1.8; font-size: 0.95em;">
+      基本的な営業日報アプリが完成したら、以下のような追加機能を実装して、より実務的で便利なツールに進化させましょう！
+    </p>
+
+    <div style="border-left: 4px solid #10b981; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #065f46; margin: 0 0 8px 0;">📊 グラフ・統計機能を追加する</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>月別の訪問件数を棒グラフで表示して。商談の進捗状況も円グラフで可視化して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #047857; font-size: 0.95em;">→ Chart.jsを使って、訪問数の推移や商談ステータスの内訳を視覚的に把握できるダッシュボードに！</p>
+    </div>
+
+    <div style="border-left: 4px solid #3b82f6; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #1e40af; margin: 0 0 8px 0;">📧 メール連携機能を追加する</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>週報をメールで上司に送信できるボタンを追加して。件名と本文を自動生成して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #1e3a8a; font-size: 0.95em;">→ mailto:リンクで週報を整形してメール送信！件名には期間、本文には訪問実績と次週の予定が自動挿入されます。</p>
+    </div>
+
+    <div style="border-left: 4px solid #f59e0b; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #92400e; margin: 0 0 8px 0;">🔍 高度な検索・フィルタ機能を追加する</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>企業名で検索できる機能と、日付範囲で絞り込める機能を追加して。商談ステータスでもフィルタできるようにして。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #78350f; font-size: 0.95em;">→ 検索ボックス、期間セレクター、ステータスフィルターが追加され、過去の日報を素早く検索できるように！</p>
+    </div>
+
+    <div style="border-left: 4px solid #ec4899; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #831843; margin: 0 0 8px 0;">📱 レスポンシブデザインにする</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>スマホでも使いやすいようにレスポンシブデザインにして。タブレットでも快適に使えるようにして。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #9f1239; font-size: 0.95em;">→ モバイルファーストのレイアウトで、移動中や外出先からでもサクサク日報入力！タッチ操作にも最適化されます。</p>
+    </div>
+
+    <div style="border-left: 4px solid #8b5cf6; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #5b21b6; margin: 0 0 8px 0;">🔔 リマインダー・通知機能を追加する</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>次回アクションの期限が近づいたらブラウザ通知を出して。毎日17時に日報作成を促す通知も追加して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #6b21a8; font-size: 0.95em;">→ Web Notifications APIで期限管理とリマインダー機能を実装！日報の書き忘れ防止と、フォローアップ漏れがなくなります。</p>
+    </div>
+
+    <div style="border-left: 4px solid #06b6d4; padding-left: 16px; margin: 16px 0;">
+      <h5 style="color: #164e63; margin: 0 0 8px 0;">💾 データのエクスポート機能を追加する</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>日報データをCSV形式でダウンロードできる機能を追加して。Excelで開けるようにして。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #155e75; font-size: 0.95em;">→ 月次報告書作成やデータ分析に便利！CSVダウンロードボタンで全データを一括エクスポートできます。</p>
+    </div>
+
+    <div style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(79, 70, 229, 0.05) 100%); border-left: 4px solid #9333ea; padding: 16px; margin: 20px 0; border-radius: 8px;">
+      <p style="margin: 0; color: #581c87; font-weight: 600; line-height: 1.8; font-size: 0.95em;">
+        💡 <strong>ポイント：</strong> 最初は基本機能だけで完成させ、実際に使いながら「こんな機能があったら便利だな」と思ったものを追加していくのがおすすめです。AIと対話しながら、あなたの業務に最適化された営業日報アプリに育てていきましょう！
+      </p>
+    </div>
+  </div>
+</details>
 <h4 id="例3-ポートフォリオサイト" style="color: #7c3aed; margin: 32px 0 16px 0;">🎨 例3: ポートフォリオサイト</h4>
 
 <pre style="background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: 12px; overflow-x: auto; margin: 20px 0;"><code>自己紹介とスキル、プロジェクトを紹介するポートフォリオサイトを作って</code><button class="code-copy-btn">コピー</button></pre>
