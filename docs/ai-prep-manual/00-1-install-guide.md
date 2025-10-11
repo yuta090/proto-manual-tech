@@ -219,7 +219,7 @@ GitHub アカウント登録（推奨）
 ├─ pipx 経由でインストール
 ├─ --quick --yes オプションで自動設定
 ├─ Core framework インストール
-├─ MCP servers インストール
+├─ 拡張機能インストール
 │   ├─ Context7
 │   ├─ Sequential
 │   ├─ Magic

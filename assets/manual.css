@@ -271,14 +271,17 @@ body {
 
 .toc-list a {
   display: block;
-  padding: 0.35rem 0.5rem;
-  border-radius: 0.75rem;
-  color: var(--text-muted);
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.5rem;
+  color: #475569;
   text-decoration: none;
   font-weight: 500;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, border-left 0.2s ease;
-  border-left: 3px solid transparent;
-  padding-left: 0.65rem;
+  font-size: 0.95rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 2px solid transparent;
+  padding-left: 1rem;
+  position: relative;
+  background: transparent;
 
   /* Magazine-quality typography for multi-line TOC entries */
   line-height: 1.5;
@@ -286,12 +289,30 @@ body {
   line-break: strict;
 }
 
+.toc-list a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: linear-gradient(180deg, #1e293b 0%, #334155 100%);
+  border-radius: 2px;
+  transition: height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .toc-list a:hover,
 .toc-list a:focus {
-  background: rgba(37, 99, 235, 0.12);
-  color: var(--accent);
-  transform: translateX(4px);
-  border-left-color: var(--accent);
+  background: linear-gradient(90deg, rgba(30, 41, 59, 0.04) 0%, transparent 100%);
+  color: #1e293b;
+  font-weight: 600;
+  padding-left: 1.1rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.toc-list a:hover::before {
+  height: 60%;
 }
 
 .toc-list ol {
@@ -366,8 +387,8 @@ body {
   margin-bottom: 0.75rem;
   font-size: 1.4rem;
   position: relative;
-  padding-left: 1rem;
-  color: #475569;
+  padding-left: 0;
+  color: #1f2937;
   font-weight: 600;
 
   /* Magazine-quality typography for multi-line headings */
@@ -375,18 +396,6 @@ body {
   word-break: keep-all;
   line-break: strict;
   text-wrap: balance;
-}
-
-.manual-content h3::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.4rem;
-  width: 6px;
-  height: 6px;
-  background: var(--accent-secondary);
-  border-radius: 50%;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
 }
 
 .manual-content h4 {
