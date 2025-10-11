@@ -105,7 +105,7 @@
 <a href="#4-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>4. AIと作ろう！オリジナルWebアプリ開発</strong></a><br>
 <span style="font-size: 0.9em; color: #666;">あなたの最初の実用的なWebアプリケーションを作成</span>
 </li>
-<h2 id="5-トラブルシューティング"><strong>5. トラブルシューティング</strong></h2>
+<h2 id="10-トラブルシューティング"><strong>10. トラブルシューティング</strong></h2>
 <hr>
 <h3 id="111-一般的な問題と解決策">11.1 一般的な問題と解決策</h3>
 <h4 id="-claude-codesuper-claudeが起動しない">✅ Claude Code/Super Claudeが起動しない</h4>
@@ -170,7 +170,7 @@
 <p>たったこれだけのステップで、あなたのアイデアが具体的な形になりました。プログラミングの知識がなくても、AIにうまくお願いするだけで、Webページやアプリケーションを作ることができたのです。</p>
 <p>このマニュアルでは、この「魔法」をさらに強力にし、もっと複雑で面白いアプリを自由に作れるようになるための方法を、ステップバイステップで学んでいきます。最初の感動を忘れずに、次の章へ進みましょう！</p>
 <hr>
-<h2 id="5-データダッシュボードを作る"><strong>5. データダッシュボードを作る</strong></h2>
+<h2 id="11-データダッシュボードを作る"><strong>11. データダッシュボードを作る</strong></h2>
 <hr>
 
 <p>⏱️ <strong>所要時間</strong>: 実践60分</p>
@@ -506,7 +506,7 @@ npm test -- --coverage</code></pre>
 <p><strong>すべてチェックできたら、次は13章で総合実践です！</strong></p>
 
 <hr>
-<h2 id="5-総合実践ガイド"><strong>5. 総合実践ガイド</strong></h2>
+<h2 id="12-総合実践ガイド"><strong>12. 総合実践ガイド</strong></h2>
 <hr>
 
 <p>⏱️ <strong>所要時間</strong>: 実践60分</p>
@@ -653,152 +653,270 @@ npm test -- --coverage</code></pre>
 <p><strong>次は14章で、これまで使ってきた技術の裏側を理解します。</strong></p>
 
 <hr>
-<h2 id="5-裏側の技術-mcp"><strong>5. 裏側の技術 - MCP</strong></h2>
+<h2 id="13-裏側の技術-mcp"><strong>13. 裏側の技術 - MCP</strong></h2>
 <hr>
 
-<p>⏱️ <strong>所要時間</strong>: 理論15分</p>
+<p>⏱️ <strong>所要時間</strong>: 参照5分</p>
 
-<h3 id="📋-この章の目標-14">📋 この章の目標</h3>
+<h3 id="📋-この章の目標-14">📋 この章の目的</h3>
 
-<ul>
-<li>MCPの基本概念を理解する</li>
-<li>Claude Codeの仕組みを知る</li>
-<li>バイブコーディングの技術的背景を把握する</li>
-</ul>
+<p>これまで5章と7章で実践的に使ってきた<strong>MCP（Model Context Protocol）</strong>について、全体像を把握し、どんなMCPが使えるかを知る。</p>
 
-<hr>
-
-<h3 id="🎯-mcpとは何か">🎯 MCPとは何か</h3>
-
-<p><strong>MCP（Model Context Protocol）</strong> = AIモデルとツールをつなぐ共通プロトコル</p>
-
-<h4>簡単に言うと</h4>
-
-<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<pre><code>あなた（ユーザー）
-    ↓ プロンプト
-Claude Code
-    ↓ MCP経由
-各種ツール（ファイル操作、Git、テスト実行など）
-    ↓ 結果
-Claude Code
-    ↓ 回答
-あなた
-</code></pre>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p><strong>💡 MCPとは？</strong></p>
+<p>AIモデル（Claude Code）と外部ツール・サービスをつなぐ<strong>標準プロトコル</strong>です。プラグインのように、AIに新しい能力を追加できます。</p>
 </div>
-
-<p>MCPは、この「Claude Code → ツール」の通信方法を標準化したものです。</p>
 
 <hr>
 
-<h3 id="🏗️-mcpの3つの要素">🏗️ MCPの3つの要素</h3>
+<h3 id="🎯-実用mcpカタログ">🎯 実用MCPカタログ</h3>
 
-<h4>1. Client（クライアント）</h4>
-
-<p><strong>Claude Code</strong> がクライアントとして動作：</p>
-<ul>
-<li>ユーザーのプロンプトを理解</li>
-<li>必要なツールを選択</li>
-<li>ツールに命令を送信</li>
-<li>結果を統合して回答</li>
-</ul>
-
-<h4>2. Server（サーバー）</h4>
-
-<p>各ツールが <strong>MCPサーバー</strong> として動作：</p>
-
-<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p><strong>例: ファイル操作サーバー</strong></p>
-<ul>
-<li>read_file: ファイル読み込み</li>
-<li>write_file: ファイル書き込み</li>
-<li>list_directory: ディレクトリ一覧</li>
-</ul>
-
-<p><strong>例: Gitサーバー</strong></p>
-<ul>
-<li>git_status: 状態確認</li>
-<li>git_commit: コミット</li>
-<li>git_push: プッシュ</li>
-</ul>
-
-<p><strong>例: テストサーバー</strong></p>
-<ul>
-<li>run_tests: テスト実行</li>
-<li>get_coverage: カバレッジ取得</li>
-</ul>
-</div>
-
-<h4>3. Protocol（プロトコル）</h4>
-
-<p><strong>標準化された通信方法</strong>：</p>
-<ul>
-<li>JSON形式でやり取り</li>
-<li>リクエスト/レスポンスの定義</li>
-<li>エラーハンドリングの仕様</li>
-</ul>
+<p>ここでは、実際の開発で役立つMCPを、用途別に紹介します。各MCPの<strong>「何ができるか」「いつ使うか」</strong>を中心に説明します。</p>
 
 <hr>
 
-<h3 id="🧩-mcpのメリット">🧩 MCPのメリット</h3>
+<h4 id="📚-ドキュメント参照系">📚 ドキュメント参照系</h4>
 
-<h4>1. 拡張性</h4>
-
-<p>新しいツールを簡単に追加できる：</p>
-
-<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p><strong>既存:</strong></p>
+<h5 style="color: #10b981; margin-top: 16px;">Context7 MCP</h5>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 16px; margin: 16px 0;">
+<p><strong>できること</strong>:</p>
 <ul>
-<li>ファイル操作</li>
-<li>Git</li>
-<li>テスト</li>
+<li>React、Next.js、TypeScriptなどの公式ドキュメントを即座に参照</li>
+<li>最新のベストプラクティスに基づいたコード生成</li>
+<li>非推奨APIの回避</li>
 </ul>
-
-<p><strong>追加したい:</strong></p>
+<p><strong>使うタイミング</strong>:</p>
 <ul>
-<li>データベース操作</li>
-<li>クラウドデプロイ</li>
-<li>API連携</li>
+<li>フレームワークやライブラリの正しい使い方を確認したいとき</li>
+<li>公式の推奨パターンに従ってコードを書きたいとき</li>
 </ul>
-
-<p>→ MCPサーバーを作るだけで追加可能</p>
+<p><strong>プロンプト例</strong>:</p>
+<pre><code>/sc:implement Reactのカスタムフックを使って、フォーム管理機能を実装してください。
+公式ドキュメントのベストプラクティスに従ってください。</code><button class="code-copy-btn">コピー</button></pre>
 </div>
 
-<h4>2. 互換性</h4>
+<hr>
 
-<p>どのAIモデルでも同じツールが使える：</p>
+<h4 id="📝-プロジェクト管理系">📝 プロジェクト管理系</h4>
 
-<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h5 style="color: #3b82f6; margin-top: 16px;">Notion MCP</h5>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 16px; margin: 16px 0;">
+<p><strong>できること</strong>:</p>
 <ul>
-<li>Claude Code + MCP</li>
-<li>GPT-based tool + MCP</li>
-<li>Gemini-based tool + MCP</li>
+<li>Notionデータベースへのタスク自動追加・更新</li>
+<li>開発タスクの進捗管理</li>
+<li>チームメンバーとのタスク共有</li>
 </ul>
-<p>→ すべて同じツールセットを利用可能</p>
+<p><strong>使うタイミング</strong>:</p>
+<ul>
+<li>タスクリストをNotionで管理したいとき</li>
+<li>チーム開発で進捗を共有したいとき</li>
+</ul>
+<p><strong>プロンプト例</strong>:</p>
+<pre><code>/sc:workflow タスク管理アプリの開発計画を作成し、
+Notionデータベースに保存してください。</code><button class="code-copy-btn">コピー</button></pre>
+<p><strong>⚙️ 設定要件</strong>: Notion APIキーの事前設定が必要</p>
 </div>
 
-<h4>3. セキュリティ</h4>
-
-<p>ツールごとに権限を管理：</p>
-
-<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h5 style="color: #3b82f6; margin-top: 16px;">GitHub MCP</h5>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 16px; margin: 16px 0;">
+<p><strong>できること</strong>:</p>
 <ul>
-<li>ファイル操作: プロジェクトディレクトリのみ</li>
-<li>Git操作: 読み取り専用 or 書き込み可</li>
-<li>外部API: APIキーで制限</li>
+<li>ブランチの自動作成</li>
+<li>プルリクエストの自動作成（Issue情報含む）</li>
+<li>Issue番号との自動紐付け</li>
+<li>コミット・プッシュの自動化</li>
 </ul>
+<p><strong>使うタイミング</strong>:</p>
+<ul>
+<li>新機能開発時に自動でブランチを作りたいとき</li>
+<li>実装完了後に自動でPRを作成したいとき</li>
+<li>Issue駆動開発をしたいとき</li>
+</ul>
+<p><strong>プロンプト例</strong>:</p>
+<pre><code>/sc:git 新機能「決済システム」の開発を開始します。
+issue #42 に紐づいたブランチを作成し、実装後に自動でPRを作成してください。</code><button class="code-copy-btn">コピー</button></pre>
 </div>
+
+<hr>
+
+<h4 id="🧪-テスト・品質保証系">🧪 テスト・品質保証系</h4>
+
+<h5 style="color: #a855f7; margin-top: 16px;">Playwright MCP</h5>
+<div style="background: rgba(168, 85, 247, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 16px; margin: 16px 0;">
+<p><strong>できること</strong>:</p>
+<ul>
+<li>ブラウザの自動操作によるE2Eテスト</li>
+<li>フォーム入力、ボタンクリックなどのユーザー操作シミュレーション</li>
+<li>複数ブラウザ（Chrome、Firefox、Safari）での動作検証</li>
+<li>スクリーンショット付きテストレポート生成</li>
+</ul>
+<p><strong>使うタイミング</strong>:</p>
+<ul>
+<li>フロントエンドのUI動作を確認したいとき</li>
+<li>ログイン→ダッシュボード→機能実行のようなフローをテストしたいとき</li>
+<li>5章で学んだ「目視確認→E2Eテスト」の2段階チェックを自動化したいとき</li>
+</ul>
+<p><strong>プロンプト例</strong>:</p>
+<pre><code>/sc:test ログイン機能をE2Eテストしてください。
+ブラウザで実際にログインフォームを操作し、ダッシュボードに遷移することを確認します。</code><button class="code-copy-btn">コピー</button></pre>
+</div>
+
+<hr>
+
+<h4 id="💾-データベース・バックエンド系">💾 データベース・バックエンド系</h4>
+
+<h5 style="color: #10b981; margin-top: 16px;">Supabase MCP</h5>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 16px; margin: 16px 0;">
+<p><strong>できること</strong>:</p>
+<ul>
+<li>データベーステーブルの作成・管理</li>
+<li>データの挿入・更新・削除</li>
+<li>認証機能の設定</li>
+<li>リアルタイムデータ同期</li>
+</ul>
+<p><strong>使うタイミング</strong>:</p>
+<ul>
+<li>バックエンドなしでWebアプリを作りたいとき</li>
+<li>ユーザー認証機能を簡単に実装したいとき</li>
+<li>データベース操作を効率化したいとき</li>
+</ul>
+<p><strong>プロンプト例</strong>:</p>
+<pre><code>/sc:implement Supabaseを使ってユーザー認証機能を実装してください。
+メール認証とソーシャルログイン（Google）を含めてください。</code><button class="code-copy-btn">コピー</button></pre>
+</div>
+
+<hr>
+
+<h3 id="🔗-mcpの組み合わせで最強の開発フロー">🔗 MCPの組み合わせで最強の開発フロー</h3>
+
+<p>複数のMCPを組み合わせることで、完全自動化された開発フローが実現します。</p>
+
+<div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1)); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h5 style="margin-top: 0;">🚀 完全自動化フローの例</h5>
+<p><strong>プロンプト</strong>:</p>
+<pre><code>/sc:implement issue #42 の決済システムを実装してください。
+実装後、E2Eテストを実行し、問題なければ自動でPRを作成してください。</code><button class="code-copy-btn">コピー</button></pre>
+
+<p><strong>Super Claudeの自動処理フロー</strong>:</p>
+<pre><code>1. GitHub MCP → ブランチ作成 (feature/payment-#42)
+2. Context7 MCP → 決済API公式ドキュメント参照
+3. 実装 → コード生成
+4. Playwright MCP → E2Eテスト実行
+5. ✅ テスト成功
+6. GitHub MCP → 自動コミット＆プッシュ
+7. GitHub MCP → プルリクエスト作成（Issue #42と紐付け）
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p><strong>💡 あなたの役割</strong>: 「何を作りたいか」を指示するだけ。AIが実装からテスト、PR作成まで全て完了します。</p>
+</div>
+
+<hr>
+
+<h3 id="⚙️-mcp設定のヒント">⚙️ MCP設定のヒント</h3>
+
+<p>多くのMCPは、APIキーや認証情報の設定が必要です。以下を参考に設定してください。</p>
+
+<div class="table-wrapper">
+<table>
+<thead><tr>
+<th>MCP名</th>
+<th>必要な設定</th>
+<th>参考リンク</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Context7</td>
+<td>設定不要</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Notion</td>
+<td>Notion APIキー</td>
+<td><a href="https://www.notion.so/my-integrations" target="_blank">Notion Integrations</a></td>
+</tr>
+<tr>
+<td>GitHub</td>
+<td>GitHub Personal Access Token</td>
+<td><a href="https://github.com/settings/tokens" target="_blank">GitHub Tokens</a></td>
+</tr>
+<tr>
+<td>Playwright</td>
+<td>設定不要（初回自動インストール）</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Supabase</td>
+<td>Supabase Project URL, API Key</td>
+<td><a href="https://supabase.com/dashboard" target="_blank">Supabase Dashboard</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><strong>📝 設定場所</strong>: Super Claudeの設定ファイル <code>~/.claude/config.json</code> または環境変数</p>
 
 <hr>
 
 <h3 id="✅-この章のまとめ-14">✅ この章のまとめ</h3>
 
 <ul>
-<li><strong>MCP</strong>: AIとツールをつなぐ標準プロトコル</li>
-<li><strong>メリット</strong>: 拡張性、互換性、セキュリティ</li>
-<li><strong>エコシステム</strong>: 公式・コミュニティ・自作</li>
-<li><strong>未来</strong>: より多くのツール統合と高度な自動化</li>
+<li><strong>MCP</strong>: AIに外部ツールの能力を追加するプロトコル</li>
+<li><strong>実用MCP</strong>: Context7（ドキュメント）、Notion（タスク管理）、GitHub（Git操作）、Playwright（E2Eテスト）、Supabase（バックエンド）</li>
+<li><strong>組み合わせ</strong>: 複数MCPの連携で完全自動化フローを実現</li>
+<li><strong>設定</strong>: 一部MCPはAPIキーの設定が必要</li>
 </ul>
+
+<hr>
+
+<h3 id="🎉-全13章完了おめでとうございます">🎉 全13章完了おめでとうございます！</h3>
+
+<p>これで、AI開発ツールを使った<strong>バイブコーディング</strong>の全スキルを習得しました。</p>
+
+<div style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1)); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h4 style="margin-top: 0;">🚀 卒業後のロードマップ</h4>
+
+<h5>短期（1ヶ月）</h5>
+<ul>
+<li>学んだスキルを使って3つのプロジェクトを完成</li>
+<li>ポートフォリオをGitHubに公開</li>
+<li>副業プラットフォームでプロフィール作成</li>
+</ul>
+
+<h5>中期（3ヶ月）</h5>
+<ul>
+<li>副業案件を5件受注・完遂</li>
+<li>TypeScript・React等の学習</li>
+<li>自社プロダクトのプロトタイプ作成</li>
+</ul>
+
+<h5>長期（6ヶ月〜）</h5>
+<ul>
+<li>月収+10万円達成</li>
+<li>企業内での評価・昇進</li>
+<li>フルタイムフリーランス or 転職成功</li>
+</ul>
+</div>
+
+<hr>
+
+<h3 id="🙏-終わりに">🙏 終わりに</h3>
+
+<p>このマニュアルで学んだスキルは、あなたの <strong>生涯のスキル</strong> です。</p>
+
+<p>AI技術は進化し続けますが、基本となる考え方は変わりません：</p>
+<ul>
+<li><strong>仕様を明確にする</strong></li>
+<li><strong>段階的に進める</strong></li>
+<li><strong>品質を保証する</strong></li>
+<li><strong>改善し続ける</strong></li>
+</ul>
+
+<p>これらの原則を守れば、どんな技術にも対応できます。</p>
+
+<p><strong>さあ、バイブコーディングの世界へ飛び込みましょう！</strong> 🚀</p>
+
+<hr>
 
 <hr>
 
