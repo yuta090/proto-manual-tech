@@ -6,98 +6,79 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## プロジェクト概要
 
-**⚠️ 重要: ビルドシステムは無効化されています（2025-10-11）**
+**🚨🚨🚨 最重要: ビルドは絶対にしません（2025-10-11確定）🚨🚨🚨**
 
 このプロジェクトは、元々Markdown形式で記述されたドキュメントを、スタイル付きHTMLマニュアルに変換する静的サイトジェネレーターでした。
 
-**現在の運用方針:**
-- ビルドスクリプト (`tools/build_manual.py.txt`) は実行不可能な状態です
-- `.BUILD_SYSTEM_DISABLED` マーカーファイルが存在します
-- **`site/` ディレクトリのHTMLファイルを直接編集してください**
-- `docs/` ディレクトリのMarkdownは参照用として保持されています
+**現在の運用方針（絶対厳守）:**
+- ✅ **HTMLファイル（`site/ai/index.html`）を直接編集する**
+- ❌ **ビルドスクリプトは絶対に実行しない・復元しない・リネームしない**
+- ❌ **MDファイルからのビルドは二度と行わない**
+- 📝 `docs/` ディレクトリのMarkdownは参考資料として保持
+- ⚠️ ビルドを実行すると、グラスモーフィズムデザインなど手動で作成したHTML内容がすべて消失します
 
 ## プロジェクト構成の理解
 
 ### ディレクトリ構造
 ```
 proto-manual-tech/
-├── docs/               # Markdownソースファイル（ここを編集）
+├── docs/               # Markdownファイル（参考資料・編集しない）
 │   └── ai-prep-manual/ # チャプター別に分割されたMarkdownファイル
-├── templates/          # HTMLテンプレート（変更頻度低）
+├── templates/          # HTMLテンプレート（使用しない）
 │   ├── manual_template.html   # 個別マニュアルページのテンプレート
 │   └── index_template.html    # インデックスページのテンプレート
 ├── assets/            # CSSやその他のアセット
 │   └── manual.css     # スタイル定義（デザインシステム）
-├── tools/             # ビルドツール
-│   └── build_manual.py # 唯一のビルドスクリプト
-└── site/              # 生成されるHTML出力（自動生成、直接編集禁止）
+├── tools/             # ビルドツール（無効化済み）
+│   └── build_manual.py.txt # ビルドスクリプト（実行不可）
+└── site/              # ✅ ここを直接編集する
     ├── index.html
-    ├── assets/        # assetsディレクトリからコピーされる
-    └── [manual-name]/ # マニュアルごとのディレクトリ
+    ├── assets/        # CSS等のアセット
+    └── ai/            # AIマニュアル
+        └── index.html # ★ このHTMLファイルを直接編集する
 ```
 
 ### アーキテクチャの重要ポイント
 
-**1. ソースと出力の分離**
-- `docs/` がソース真実（source of truth）
-- `site/` は完全に自動生成される出力
-- **絶対に `site/` 内のファイルを直接編集してはいけない** - 再ビルド時に上書きされる
+**🚨 現在の運用方針（2025-10-11確定）**
 
-**2. チャプターファイルの命名規則**
-- Markdownファイルは `NN-slug.md` 形式で命名（例: `00-sdd.md`, `05-3-ai.md`）
-- 先頭の2桁の数字は表示順序を保証する
-- この順序を変更すると目次構造に影響する
+**1. HTMLを直接編集する**
+- ✅ `site/ai/index.html` を直接編集する
+- ❌ `docs/` のMarkdownは編集しない（参考資料として保持のみ）
+- ❌ ビルドパイプラインは使用しない
 
-**3. ビルドパイプライン**
-```
-Markdown (docs/)
-  → MarkdownConverter (Python)
-  → HTML fragments
-  → Template Application (templates/)
-  → Styled HTML (site/)
-```
+**2. 以前の運用方針（現在は無効）**
+~~以下は過去のビルドシステムの説明です。現在は使用しません。~~
 
-**4. テンプレート変数システム**
-テンプレート内の `{{ variable_name }}` プレースホルダーが以下の値で置換される:
-- `{{ title }}` - ドキュメントのH1見出しから抽出
-- `{{ subtitle_block }}` - H2見出しから生成されるサブタイトル
-- `{{ content }}` - 変換されたHTMLコンテンツ
-- `{{ toc }}` - 自動生成される目次
-- `{{ assets_href }}` - アセットへの相対パス
-- `{{ generated_on }}` - 生成日時
-- `{{ source_path }}` - ソースファイルパス
+- ~~`docs/` がソース真実（source of truth）~~
+- ~~`site/` は完全に自動生成される出力~~
+- ~~Markdown → Python変換 → HTMLテンプレート適用~~
 
-## 開発コマンド
+**現在は:** HTMLファイルを直接編集することで、グラスモーフィズムデザインなど高度なスタイリングを保持します。
 
-### 基本ビルドコマンド
-```bash
-# 標準ビルド - docs/以下の全マニュアルをsite/に生成
-python3 tools/build_manual.py
+## 開発ワークフロー（現在の方針）
 
-# カスタム出力先を指定（プレビュー用）
-python3 tools/build_manual.py --docs docs --out site-dev
+### HTMLファイルの直接編集
 
-# ビルド後の確認
-open site/index.html  # macOS
-```
-
-### 開発ワークフロー
-
-**ドキュメント編集時**:
-1. `docs/ai-prep-manual/` 内の対応するMarkdownファイルを編集
-2. `python3 tools/build_manual.py` を実行
-3. `site/index.html` をブラウザで開いて確認
+**マニュアル編集時**:
+1. `site/ai/index.html` を直接編集する
+2. ブラウザで `file:///Users/takahashiyuuta/Documents/scripts/proto-manual-tech/site/ai/index.html` を開いて確認
+3. ハードリロード（Cmd+Shift+R）で変更を確認
 4. 問題があれば1に戻る
 
-**テンプレート変更時**:
-1. `templates/manual_template.html` または `index_template.html` を編集
-2. 再ビルドして全マニュアルに変更を反映
-3. 複数のマニュアルページで表示確認
-
 **CSS変更時**:
-1. `assets/manual.css` を編集
-2. 再ビルド（assetsディレクトリがsite/にコピーされる）
-3. ブラウザでハードリロード（Cmd+Shift+R）して確認
+1. `site/assets/manual.css` を直接編集する
+2. ブラウザでハードリロード（Cmd+Shift+R）して確認
+
+### ❌ 使用しないコマンド（実行禁止）
+
+~~以下のコマンドは絶対に実行しないでください：~~
+```bash
+# ❌ 絶対に実行禁止
+python3 tools/build_manual.py
+python3 tools/build_manual.py.txt
+mv tools/build_manual.py.txt tools/build_manual.py
+```
 
 ## コーディング規約
 
