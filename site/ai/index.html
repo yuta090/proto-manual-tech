@@ -795,23 +795,57 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 <hr>
 <h3 id="21-プロンプトエンジニアリングの基本原則">2.1 プロンプトエンジニアリングの基本原則</h3>
 <p>AIを効果的に活用するためには、適切な「プロンプト（指示）」を与えることが不可欠です。プロンプトエンジニアリングは、AIから望む結果を引き出すための技術であり、以下の基本原則に基づいています。</p>
-<ul>
-<li>
-<strong>明確性</strong>: 何をしてほしいのか、具体的に指示します。曖昧な表現は避けましょう。
-</li>
-<li>
-<strong>具体性</strong>: 期待する出力の形式、含めるべき要素、制約条件などを詳細に伝えます。
-</li>
-<li>
-<strong>役割の指定</strong>: AIに「あなたは熟練のWeb開発者です」のように役割を与えることで、その役割に応じた回答を引き出しやすくなります。
-</li>
-<li>
-<strong>例示</strong>: 期待する出力の例を示すことで、AIはより正確に意図を理解します。
-</li>
-<li>
-<strong>制約条件</strong>: 「〇〇は含めないでください」「〇〇文字以内で」など、不要な要素や制限を明確に伝えます。
-</li>
-</ul>
+<div style="display: grid; gap: 16px; margin: 24px 0;">
+  <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);">
+    <div style="display: flex; align-items: flex-start; gap: 12px;">
+      <span style="font-size: 1.5em; line-height: 1;">🎯</span>
+      <div>
+        <strong style="color: #92400e; font-size: 1.1em; display: block; margin-bottom: 6px;">明確性</strong>
+        <p style="margin: 0; color: #78350f; line-height: 1.6;">何をしてほしいのか、具体的に指示します。曖昧な表現は避けましょう。</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%); padding: 20px; border-radius: 12px; border-left: 4px solid #8b5cf6; box-shadow: 0 2px 8px rgba(139, 92, 246, 0.15);">
+    <div style="display: flex; align-items: flex-start; gap: 12px;">
+      <span style="font-size: 1.5em; line-height: 1;">📋</span>
+      <div>
+        <strong style="color: #5b21b6; font-size: 1.1em; display: block; margin-bottom: 6px;">具体性</strong>
+        <p style="margin: 0; color: #6b21a8; line-height: 1.6;">期待する出力の形式、含めるべき要素、制約条件などを詳細に伝えます。</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%); padding: 20px; border-radius: 12px; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);">
+    <div style="display: flex; align-items: flex-start; gap: 12px;">
+      <span style="font-size: 1.5em; line-height: 1;">🎭</span>
+      <div>
+        <strong style="color: #1e40af; font-size: 1.1em; display: block; margin-bottom: 6px;">役割の指定</strong>
+        <p style="margin: 0; color: #1e3a8a; line-height: 1.6;">AIに「あなたは熟練のWeb開発者です」のように役割を与えることで、その役割に応じた回答を引き出しやすくなります。</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%); padding: 20px; border-radius: 12px; border-left: 4px solid #10b981; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);">
+    <div style="display: flex; align-items: flex-start; gap: 12px;">
+      <span style="font-size: 1.5em; line-height: 1;">💡</span>
+      <div>
+        <strong style="color: #065f46; font-size: 1.1em; display: block; margin-bottom: 6px;">例示</strong>
+        <p style="margin: 0; color: #047857; line-height: 1.6;">期待する出力の例を示すことで、AIはより正確に意図を理解します。</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%); padding: 20px; border-radius: 12px; border-left: 4px solid #ef4444; box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);">
+    <div style="display: flex; align-items: flex-start; gap: 12px;">
+      <span style="font-size: 1.5em; line-height: 1;">⚠️</span>
+      <div>
+        <strong style="color: #991b1b; font-size: 1.1em; display: block; margin-bottom: 6px;">制約条件</strong>
+        <p style="margin: 0; color: #7f1d1d; line-height: 1.6;">「〇〇は含めないでください」「〇〇文字以内で」など、不要な要素や制限を明確に伝えます。</p>
+      </div>
+    </div>
+  </div>
+</div>
 <h4 id="悪いプロンプトの例と良いプロンプトの例">悪いプロンプトの例と良いプロンプトの例</h4>
 <h3 id="22-super-claudeにおけるプロンプトの設計">2.2 Super Claudeにおけるプロンプトの設計</h3>
 <div class="table-wrapper">
