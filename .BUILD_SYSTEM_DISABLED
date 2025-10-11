@@ -1,0 +1,22 @@
+⚠️ BUILD SYSTEM DISABLED ⚠️
+
+このファイルが存在する限り、ビルドシステムは無効化されています。
+
+無効化日: 2025-10-11
+理由: HTMLの直接編集を可能にするため、ビルド機能を完全に無効化
+
+変更内容:
+- tools/build_manual.py → tools/build_manual.py.DISABLED にリネーム
+- 実行権限を削除（chmod -x）
+- 誤実行を防止するため、拡張子を .DISABLED に変更
+
+今後の編集方針:
+- site/ ディレクトリ内のHTMLファイルを直接編集してください
+- docs/ ディレクトリのMarkdownファイルは参照用として保持
+
+復元方法（必要な場合）:
+1. mv tools/build_manual.py.DISABLED tools/build_manual.py
+2. chmod +x tools/build_manual.py
+3. このファイル（.BUILD_SYSTEM_DISABLED）を削除
+
+⚠️ ビルドシステムを復元する場合は、site/ 内の手動編集がすべて失われることに注意

@@ -764,11 +764,12 @@ def main(argv: Optional[List[str]] = None) -> int:
     # Markdownからのビルドは行わない（2025-10-11 方針変更）
     #
     # 以下のコードをコメントアウトして、既存HTMLを保持
-    print("[!] HTML直接編集モード: Markdownからの変換はスキップされます")
-    print("[!] site/ai/index.html を直接編集してください")
-    return 0  # ビルド処理を中断
+    # print("[!] HTML直接編集モード: Markdownからの変換はスキップされます")
+    # print("[!] site/ai/index.html を直接編集してください")
+    # return 0  # ビルド処理を中断
+    print("[i] Markdownからビルドモード: site/ai/index.html を再生成します")
 
-    # ----- 以下、従来のビルドロジック（無効化） -----
+    # ----- 以下、従来のビルドロジック（有効化） -----
     for source in manual_sources:
         converter = MarkdownConverter()
         markdown_segments: List[str] = []

@@ -56,7 +56,7 @@
       <dl class="manual-meta">
         <div>
           <dt>最終更新</dt>
-          <dd>2025-10-11 21:03</dd>
+          <dd>2025-10-11 21:26</dd>
         </div>
       </dl>
     </div>
@@ -834,29 +834,70 @@ git config --global user.email &quot;あなたのメールアドレス&quot;
 </li>
 </ol>
 <div class="claude-install-section"><h4 id="-claude-codeのインストール">✅ Claude Codeのインストール</h4>
-<p>Claude Codeは、AIを活用した開発を始めるための最初のステップです。ここでは、Claude Codeのインストールと基本的な設定方法について説明します。</p>
-<p><strong>1. Claude Codeのインストール</strong></p>
-<p>Claude Codeは、npm（Node.jsのパッケージマネージャー）を使って簡単にインストールできます。このコマンドはグローバルにインストールされるため、どのディレクトリから実行しても問題ありません。ターミナルを開き、以下のコマンドを実行してください。</p>
-<pre><code class="language-bash">npm install -g claude-code
-</code></pre>
-<p><strong>2. 作業ディレクトリの準備（推奨）</strong></p>
-<p>Claude Codeのインストール自体はどのディレクトリからでも可能ですが、その後の開発作業で生成されるファイルが散らばらないよう、専用の作業ディレクトリを作成し、そこに移動してから作業を開始することを強く推奨します。以下のコマンドをターミナルで実行してください。</p>
-<pre><code class="language-bash">mkdir my-claude-project
+<div style="background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 2rem; margin: 2rem 0; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+  <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem; color: #e0e0e0;">
+    Claude Codeは、AIを活用した開発を始めるための最初のステップです。ここでは、Claude Codeのインストールと基本的な設定方法について説明します。
+  </p>
+
+  <!-- ステップ1: インストール -->
+  <div style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(59, 130, 246, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(96, 165, 250, 0.3); border-radius: 15px; padding: 1.5rem; margin-bottom: 1.5rem;">
+    <div style="display: flex; align-items: flex-start; gap: 1rem;">
+      <div style="font-size: 2rem; line-height: 1;">📦</div>
+      <div style="flex: 1;">
+        <h5 style="margin: 0 0 0.75rem 0; font-size: 1.2rem; color: #60a5fa; font-weight: 600;">1. Claude Codeのインストール</h5>
+        <p style="margin: 0 0 1rem 0; line-height: 1.7; color: #d1d5db;">
+          Claude Codeは、<code style="background: rgba(96, 165, 250, 0.2); padding: 0.2rem 0.5rem; border-radius: 4px; color: #93c5fd;">npm</code>（Node.jsのパッケージマネージャー）を使って簡単にインストールできます。このコマンドはグローバルにインストールされるため、どのディレクトリから実行しても問題ありません。ターミナルを開き、以下のコマンドを実行してください。
+        </p>
+
+```bash
+npm install -g claude-code
+```
+
+      </div>
+</div>
+</div>
+  <!-- ステップ2: 作業ディレクトリ準備 -->
+  <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 15px; padding: 1.5rem; margin-bottom: 1.5rem;">
+    <div style="display: flex; align-items: flex-start; gap: 1rem;">
+      <div style="font-size: 2rem; line-height: 1;">📁</div>
+      <div style="flex: 1;">
+        <h5 style="margin: 0 0 0.75rem 0; font-size: 1.2rem; color: #10b981; font-weight: 600;">2. 作業ディレクトリの準備（推奨）</h5>
+        <p style="margin: 0 0 1rem 0; line-height: 1.7; color: #d1d5db;">
+          Claude Codeのインストール自体はどのディレクトリからでも可能ですが、その後の開発作業で生成されるファイルが散らばらないよう、<span style="color: #10b981; font-weight: 500;">専用の作業ディレクトリを作成</span>し、そこに移動してから作業を開始することを強く推奨します。以下のコマンドをターミナルで実行してください。
+        </p>
+
+```bash
+mkdir my-claude-project
 cd my-claude-project
-</code></pre>
-<p><strong>Windowsユーザーへの注意点：ターミナルの選択</strong></p>
-<p>Windows環境では、<code>npm</code>コマンドやClaude Codeの操作には、Unixライクなシェル環境を使用することを強く推奨します。これにより、Linuxコマンドラインツールとの互換性が確保され、スムーズな開発体験が得られます。</p>
-<ul>
-<li>
-<strong>Git Bash (推奨)</strong>: <a href="https://gitforwindows.org/" target="_blank" rel="noopener noreferrer">Git for Windows</a>をインストールすると、<strong>Git Bash</strong>というUnixライクなシェルが利用できるようになります。Git Bashは、Windowsのスタートメニューから「Git Bash」と検索して起動できます。Claude Codeのインストールや操作は、このGit Bash上で行うことを推奨します。
-</li>
-<li>
-<strong>WSL (Windows Subsystem for Linux)</strong>: WSL 1およびWSL 2の両方がサポートされています。WSL環境内でUbuntuなどのLinuxディストリビューションを起動し、そのターミナルで上記のコマンドを実行することも可能です。
-</li>
-<li>
-<strong>コマンドプロンプト/PowerShell</strong>: これらのWindows標準のターミナルでも<code>npm</code>コマンドを実行できる場合がありますが、環境設定によっては問題が発生することがあります。特に、パスの設定や一部のコマンドの挙動が異なるため、Git BashまたはWSLの利用を推奨します。
-</li>
-</ul>
+```
+
+      </div>
+</div>
+</div>
+  <!-- Windows注意点ボックス -->
+  <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.1)); backdrop-filter: blur(10px); border: 2px solid rgba(251, 191, 36, 0.4); border-radius: 15px; padding: 1.5rem;">
+    <div style="display: flex; align-items: flex-start; gap: 1rem;">
+      <div style="font-size: 2rem; line-height: 1;">⚠️</div>
+      <div style="flex: 1;">
+        <h5 style="margin: 0 0 0.75rem 0; font-size: 1.2rem; color: #fbbf24; font-weight: 600;">Windowsユーザーへの注意点：ターミナルの選択</h5>
+        <p style="margin: 0 0 1rem 0; line-height: 1.7; color: #e0e0e0;">
+          Windows環境では、<code style="background: rgba(251, 191, 36, 0.2); padding: 0.2rem 0.5rem; border-radius: 4px; color: #fcd34d;">npm</code>コマンドやClaude Codeの操作には、Unixライクなシェル環境を使用することを強く推奨します。これにより、Linuxコマンドラインツールとの互換性が確保され、スムーズな開発体験が得られます。
+        </p>
+        <ul style="margin: 0; padding-left: 1.5rem; line-height: 1.8; color: #d1d5db;">
+          <li style="margin-bottom: 0.75rem;">
+            <strong style="color: #fbbf24;">Git Bash (推奨)</strong>: <a href="https://gitforwindows.org/" target="_blank" rel="noopener noreferrer" style="color: #60a5fa; text-decoration: underline;">Git for Windows</a>をインストールすると、<strong>Git Bash</strong>というUnixライクなシェルが利用できるようになります。Git Bashは、Windowsのスタートメニューから「Git Bash」と検索して起動できます。Claude Codeのインストールや操作は、このGit Bash上で行うことを推奨します。
+          </li>
+          <li style="margin-bottom: 0.75rem;">
+            <strong style="color: #fbbf24;">WSL (Windows Subsystem for Linux)</strong>: WSL 1およびWSL 2の両方がサポートされています。WSL環境内でUbuntuなどのLinuxディストリビューションを起動し、そのターミナルで上記のコマンドを実行することも可能です。
+          </li>
+          <li>
+            <strong style="color: #fbbf24;">コマンドプロンプト/PowerShell</strong>: これらのWindows標準のターミナルでも<code style="background: rgba(251, 191, 36, 0.2); padding: 0.2rem 0.5rem; border-radius: 4px; color: #fcd34d;">npm</code>コマンドを実行できる場合がありますが、環境設定によっては問題が発生することがあります。特に、パスの設定や一部のコマンドの挙動が異なるため、Git BashまたはWSLの利用を推奨します。
+          </li>
+        </ul>
+      </div>
+</div>
+</div>
+</div>
 </div><div class="auth-setup-section"><h4 id="-認証設定">✅ 認証設定</h4>
 <p>Claude Codeは、AnthropicのClaude Consoleを通じたOAuth認証を推奨しています。これにより、APIキーを直接管理する手間なく、安全にClaude Codeを利用できます。</p>
 <ol>
