@@ -550,7 +550,7 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
   </summary>
   <div style="padding: 24px; background: linear-gradient(180deg, #faf5ff 0%, #ffffff 100%);">
     <p style="margin: 0 0 20px 0; color: #4b5563; line-height: 1.8; font-size: 0.95em;">
-      基本的な検索結果取得ができたら、以下のような機能を追加して、プロレベルのSEO分析ツールに進化させましょう！
+      基本的な検索結果取得ができたら、以下のような機能を追加して、実務で使える業務自動化ツールに進化させましょう！
     </p>
 
     <div style="border-left: 4px solid #10b981; padding-left: 16px; margin: 16px 0;">
@@ -560,50 +560,34 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
     </div>
 
     <div style="border-left: 4px solid #3b82f6; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #1e40af; margin: 0 0 8px 0;">📊 順位変動をグラフで可視化</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>過去のCSVデータと比較して、順位が上がったサイトを緑、下がったサイトを赤でハイライトして。順位推移グラフも表示して。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #1e3a8a; font-size: 0.95em;">→ Chart.jsで折れ線グラフを生成！どのサイトが上昇トレンド・下降トレンドなのか一目瞭然になります。</p>
+      <h5 style="color: #1e40af; margin: 0 0 8px 0;">📄 ページ全体のテキスト内容を取得・保存</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>各サイトのページ全体のテキスト内容を取得して、テキストファイルに保存して。HTMLタグは除いて、読みやすいプレーンテキストにして。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #1e3a8a; font-size: 0.95em;">→ contents/site1.txt のようにテキスト保存！後から検索したり、内容を分析するのに便利です。</p>
     </div>
 
     <div style="border-left: 4px solid #f59e0b; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #92400e; margin: 0 0 8px 0;">🔔 順位変動アラート機能</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>前回と比較して3位以上順位が変動したサイトがあったら、ブラウザ通知を出して。変動内容をメールで送信する機能も追加して。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #78350f; font-size: 0.95em;">→ 大きな順位変動を見逃さない！Web Notifications APIとmailto:リンクで即座に把握できます。</p>
+      <h5 style="color: #92400e; margin: 0 0 8px 0;">🔄 前回との差分を表示（変化検知）</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>前回保存したテキストファイルと今回のテキストを比較して、追加・削除された部分を表示して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #78350f; font-size: 0.95em;">→ 入札案件サイトの新着情報や、競合サイトのコンテンツ更新を自動検知！緑色で追加部分、赤色で削除部分が一目でわかります。</p>
     </div>
 
     <div style="border-left: 4px solid #ec4899; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #831843; margin: 0 0 8px 0;">🌍 複数検索エンジン対応</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>GoogleだけじゃなくてYahoo、Bingの検索結果も取得できるようにして。検索エンジンごとに結果を比較できるようにして。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #9f1239; font-size: 0.95em;">→ 検索エンジンごとの順位の違いを分析！どのエンジンで強い・弱いかが一目でわかります。</p>
+      <h5 style="color: #831843; margin: 0 0 8px 0;">🏢 特定企業サイトの変化を監視</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>監視対象URLをconfig.jsonに保存して。そのURLのページ内容を定期的に取得・保存して、変化があったら通知して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #9f1239; font-size: 0.95em;">→ ライバル企業のニュースページや採用情報を自動監視！価格変更や新商品リリースを見逃しません。</p>
     </div>
 
     <div style="border-left: 4px solid #8b5cf6; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #5b21b6; margin: 0 0 8px 0;">📱 PC版・スマホ版を比較</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>PC版とスマホ版の検索結果を両方取得して。デバイスごとの順位の違いを比較表示して。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #6b21a8; font-size: 0.95em;">→ PlaywrightのモバイルエミュレーションでPC/スマホの順位差を検証！モバイルSEOの重要性が実感できます。</p>
-    </div>
-
-    <div style="border-left: 4px solid #06b6d4; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #164e63; margin: 0 0 8px 0;">🎯 複数キーワード一括チェック</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>CSVファイルからキーワードリストを読み込んで、一括で検索結果を取得して。全キーワードの結果を1つのExcelファイルにまとめて。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #155e75; font-size: 0.95em;">→ 「渋谷 カフェ」「新宿 カフェ」「池袋 カフェ」など複数キーワードを自動巡回！時間を大幅に節約できます。</p>
-    </div>
-
-    <div style="border-left: 4px solid #ef4444; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #991b1b; margin: 0 0 8px 0;">🤖 競合サイトの詳細分析</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>各サイトのメタタグ（title、description）も取得して。ページの読み込み速度も計測して。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #b91c1c; font-size: 0.95em;">→ 競合のSEO戦略を丸裸に！メタタグの書き方やサイトパフォーマンスから学べることがたくさん見つかります。</p>
-    </div>
-
-    <div style="border-left: 4px solid #a855f7; padding-left: 16px; margin: 16px 0;">
-      <h5 style="color: #581c87; margin: 0 0 8px 0;">⏰ 定期実行スケジューラー</h5>
-      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>毎日朝9時に自動で検索結果をチェックするようにして。結果をメールで送信して。</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 4px 0; color: #6b21a8; font-size: 0.95em;">→ Node.jsのnode-cronやcronジョブで完全自動化！毎朝出社すると最新のSEOレポートが届いている状態に。</p>
+      <h5 style="color: #5b21b6; margin: 0 0 8px 0;">🔐 自動ログイン機能（社内システムへのアクセス）</h5>
+      <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 0.9em;"><code>config.jsonにログイン情報を保存して。
+ログインURL、ユーザー名の入力欄セレクタ、パスワードの入力欄セレクタ、
+ログインボタンのセレクタを指定して、自動ログイン後のダッシュボードをスクショ保存して。</code><button class="code-copy-btn">コピー</button></pre>
+      <p style="margin: 4px 0; color: #6b21a8; font-size: 0.95em;">→ 社内管理画面や業務システムに自動アクセス！毎朝のルーティン作業を自動化できます。セレクタの指定方法（input[name="username"]など）も学べます。</p>
     </div>
 
     <div style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(79, 70, 229, 0.05) 100%); border-left: 4px solid #9333ea; padding: 16px; margin: 20px 0; border-radius: 8px;">
       <p style="margin: 0; color: #581c87; font-weight: 600; line-height: 1.8; font-size: 0.95em;">
-        💡 <strong>ポイント：</strong> このツールは実際のSEO業務やマーケティング業務で使われている機能ばかりです。完成したら「業務効率化ツールを自作できる人材」として企業から高く評価されます。Playwright（ブラウザ自動化）は、Webスクレイピング、E2Eテスト、RPA（業務自動化）など様々な場面で活躍する超実用的なスキルです！
+        💡 <strong>ポイント：</strong> これらは全て「追加して」という指示だけで実装できるシンプルな機能です。しかし、Playwrightによるブラウザ自動化は、RPA（業務自動化）の基本スキルであり、企業で実際に使われている技術です。完成したツールは「業務効率化ができる人材」としての強力なアピールポイントになります！
       </p>
     </div>
   </div>
