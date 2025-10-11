@@ -108,7 +108,6 @@
 </li>
 </ul>
 <hr>
-
 <!-- グラスモーフィズム Hero Section -->
 <div style="background: linear-gradient(135deg, #fce7f3 0%, #f3e8ff 50%, #dbeafe 100%); padding: 60px 32px; border-radius: 24px; margin: 40px 0; position: relative; overflow: hidden; box-shadow: 0 20px 60px rgba(236, 72, 153, 0.15);">
   <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); filter: blur(40px);"></div>
@@ -634,14 +633,10 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 <hr style="border: none; border-top: 1px solid #e5e7eb; margin: -40px 0 48px 0;">
 <h2 id="1-ai開発ができると未来はこう変わる"><strong>1. AI開発ができると、<br>未来はこう変わる</strong></h2>
 <hr>
-
 <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 24px; margin: 32px 0; border-radius: 8px;">
-  <h3 style="color: #92400e; margin: 0 0 16px 0; font-size: 1.1em;">💭 ここまでプログラムを書いてきて...</h3>
-  <p style="margin: 0 0 16px 0; color: #78350f; line-height: 1.8;">
-    うまくいくこともあれば、中々思い通りにAIがいうことを聞いてくれないということもあったのではないでしょうか？
-  </p>
+  <h3 style="color: #92400e; margin: 0 0 16px 0; font-size: 1.1em;">💭 次のステップへ</h3>
   <p style="margin: 0; color: #78350f; line-height: 1.8; font-weight: 500;">
-    業務で案件を獲得したり、企業内で求められる結果を残すためには、<strong style="color: #92400e;">なるべく最初に設計をすることが大事</strong>になります。本章では、AI開発によってあなたの未来がどう変わるのか、そしてプロフェッショナルとして求められる設計思考について学んでいきましょう。
+    業務での成功には<strong style="color: #92400e;">最初の設計</strong>が重要です。本章では、AI開発があなたのキャリアをどう変えるか、プロフェッショナルに求められる設計思考を学びます。
   </p>
 </div>
 
@@ -669,7 +664,6 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 <p>この二つを組み合わせることで、AIの高速なコード生成能力を最大限に活かしつつ、プロジェクトの全体像を見失うことなく、高品質なソフトウェアを効率的に開発することが可能になります。</p>
 </li>
 </ul>
-<hr>
 <hr>
 <h2 id="2-ai開発ロードマップあなたのキャリアを加速する"><strong>2. AI開発ロードマップ：<br>あなたのキャリアを加速する</strong></h2>
 <hr>
@@ -706,7 +700,6 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 <p>このロードマップに従うことで、あなたはAIを強力なパートナーとし、自身のキャリアを次のレベルへと加速することができるでしょう。</p>
 </li>
 </ul>
-<hr>
 <hr>
 <h2 id="3-aiにうまくお願いするコツ-計画的な進め方"><strong>3. AIに"うまく"お願いするコツ ～計画的な進め方～</strong></h2>
 <hr>
@@ -776,10 +769,8 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 </li>
 </ul>
 <hr>
-<hr>
 <h2 id="4-最低限の準備ai開発の相棒を迎えよう"><strong>4. 最低限の準備：<br>AI開発の相棒を迎えよう</strong></h2>
 <hr>
-
 <p>この章は、自動セットアップスクリプトで全てのツール（Node.js、Git、GitHub CLI、Claude Code、Super Claude、Cursor IDE、Codex CLI）が既にインストールされていることを前提としています。</p>
 
 <p>これらのツールは、<strong>Chapter 0の自動セットアップスクリプト</strong>で一括インストール済みです。各ツールの詳しい使い方については、以下の章を参照してください：</p>
@@ -823,7 +814,6 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 <p>Codex CLIのより詳細なドキュメントは、<a href="https://github.com/openai/codex" target="_blank" rel="noopener noreferrer">GitHubリポジトリ</a>で確認できます。</p>
 </li>
 </ul>
-<hr>
 <hr>
 <h2 id="5-mcpmodel-context-protocol完全活用ガイド"><strong>5. MCP（Model Context Protocol）完全活用ガイド</strong></h2>
 <hr>
@@ -878,103 +868,6 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 </li>
 </ul>
 <h3 id="54-mcpを活用した開発ワークフロー">5.4 MCPを活用した開発ワークフロー</h3>
-<p>MCPを最大限に活用することで、Super Claudeの各コマンドがより強力になり、以下のような開発ワークフローを実現できます。</p>
-<div class="table-wrapper">
-<table>
-<thead><tr>
-<th>フェーズ</th>
-<th>Super Claudeコマンド</th>
-<th>MCPによる恩恵と実践的なヒント</th>
-</tr></thead>
-<tbody>
-<tr>
-<td><strong>プロジェクト初期化</strong></td>
-<td><code>sc init</code></td>
-<td>プロジェクトの初期化時に<code>.mcp</code>ファイルを自動生成し、AIがコードベース全体を理解するための土台を築きます。これにより、以降のコマンドがプロジェクトの構造や既存ファイルに即した提案を行えるようになります。</td>
-</tr>
-<tr>
-<td><strong>要件定義</strong></td>
-<td><code>sc brainstorm</code></td>
-<td>既存のプロジェクトファイルやドキュメントをMCPがAIに提供することで、<code>brainstorm</code>はより現実的で、プロジェクトの文脈に合ったアイデアや要件を提案します。例えば、既存のAPI定義を考慮した機能追加のアイデア出しが可能です。</td>
-</tr>
-<tr>
-<td><strong>設計</strong></td>
-<td><code>sc design</code></td>
-<td><code>design</code>コマンドは、MCPが提供する既存のアーキテクチャやデザインパターンを参照し、一貫性のある設計案を生成します。これにより、プロジェクトのスタイルガイドに沿ったUIコンポーネントの設計や、既存のデータベース構造に適合するスキーマ設計が容易になります。</td>
-</tr>
-<tr>
-<td><strong>実装</strong></td>
-<td><code>sc implement</code></td>
-<td><code>implement</code>コマンドは、MCPが提供するコードベースのコンテキスト（コーディング規約、既存の関数、クラスなど）に基づいて、より正確で統合性の高いコードを生成します。例えば、既存のユーティリティ関数を自動的に利用したコードスニペットの生成が可能です。</td>
-</tr>
-<tr>
-<td><strong>レビューと改善</strong></td>
-<td><code>sc improve</code></td>
-<td><code>improve</code>コマンドは、MCPを通じてプロジェクト全体の品質基準やパフォーマンス要件を理解し、コードの改善提案を行います。例えば、特定のモジュールのリファクタリングや、プロジェクト全体で一貫したエラーハンドリングの導入などが提案されます。</td>
-</tr>
-<tr>
-<td><strong>テスト</strong></td>
-<td><code>sc test</code></td>
-<td><code>test</code>コマンドは、MCPが提供する既存のテストフレームワークやテストパターンを考慮し、効果的なテストコードを生成します。これにより、プロジェクトのテストカバレッジを向上させ、バグの早期発見に貢献します。</td>
-</tr>
-</tbody>
-</table>
-</div>
-<hr>
-<hr>
-<h2 id="5-mcpmodel-context-protocol完全活用ガイド-2"><strong>5. MCP（Model Context Protocol）完全活用ガイド</strong></h2>
-<hr>
-<h3 id="51-mcpとは-2">5.1 MCPとは？</h3>
-<p>MCP (Model Context Protocol) は、AIモデルがコードベース全体のコンテキストを理解し、より正確で関連性の高い提案やコード生成を行うためのプロトコルです。これにより、AIは単一のファイルだけでなく、プロジェクト全体の構造、依存関係、コーディング規約などを考慮した上で、開発支援を行うことができます。</p>
-<h3 id="52-mcpの仕組みと重要性-2">5.2 MCPの仕組みと重要性</h3>
-<p>MCPは、プロジェクトのメタデータ、ファイル構造、既存のコードスニペット、ドキュメントなどをAIモデルに提供します。これにより、AIは以下のような高度な開発支援が可能になります。</p>
-<ul>
-<li>
-<strong>コード補完の精度向上</strong>: プロジェクト全体のコンテキストに基づいた、より適切なコード補完。
-</li>
-<li>
-<strong>バグ修正の効率化</strong>: 関連するファイルやロジックを考慮したバグの特定と修正提案。
-</li>
-<li>
-<strong>新機能開発の加速</strong>: 既存のコードベースに適合する形で、新しい機能を効率的に実装するためのコード生成。
-</li>
-<li>
-<strong>リファクタリングの支援</strong>: プロジェクトの品質基準に合わせたリファクタリング提案。
-</li>
-</ul>
-<h3 id="53-super-claudeとmcpの連携-2">5.3 Super ClaudeとMCPの連携</h3>
-<p>Super Claudeは、MCPをネイティブにサポートしており、プロジェクトのコンテキストを自動的にAIモデルに提供します。これにより、Super Claudeの各コマンド（<code>implement</code>, <code>improve</code>, <code>test</code>など）は、より賢く、よりプロジェクトに即した結果を生成します。</p>
-<h4 id="-mcpの有効化と設定-2">✅ MCPの有効化と設定</h4>
-<p>Super Claudeでは、通常MCPはデフォルトで有効になっています。プロジェクトルートに<code>.mcp</code>ファイルを作成し、AIに提供するコンテキストの範囲や優先順位を定義することで、さらに詳細な制御が可能です。</p>
-<pre><code class="language-json">// .mcpファイル例
-{
-  "include": [
-    "src/**/*.js",
-    "src/**/*.ts",
-    "docs/**/*.md"
-  ],
-  "exclude": [
-    "node_modules/**",
-    "dist/**"
-  ],
-  "priority": {
-    "src/core/**/*.js": 10,
-    "src/utils/**/*.js": 5
-  }
-}
-</code><button class="code-copy-btn">コピー</button></pre>
-<ul>
-<li>
-<code>include</code>: AIにコンテキストとして含めるファイルのパターン。
-</li>
-<li>
-<code>exclude</code>: AIにコンテキストとして含めないファイルのパターン。
-</li>
-<li>
-<code>priority</code>: 特定のファイルのコンテキストの重要度を設定します。値が大きいほど優先されます。
-</li>
-</ul>
-<h3 id="54-mcpを活用した開発ワークフロー-2">5.4 MCPを活用した開発ワークフロー</h3>
 <p>MCPを最大限に活用することで、Super Claudeの各コマンドがより強力になり、以下のような開発ワークフローを実現できます。</p>
 <div class="table-wrapper">
 <table>
@@ -1331,7 +1224,6 @@ sc implement --focus "JavaScriptでタスクの完了マークと削除ボタン
 </ul>
 <h3 id="まとめ-2">まとめ</h3>
 <p>おめでとうございます！ あなたは今、AIを相棒にして、自分だけのオリジナルアプリ開発の第一歩を踏み出しました。この章で体験したように、<code>brainstorm</code>で夢を語り、<code>design</code>で形にし、<code>workflow</code>で計画を立て、<code>implement</code>で実現する、というサイクルを回すことで、どんなアイデアもプログラムにすることができます。この楽しさを忘れずに、次の章でさらなるステップアップを目指しましょう！</p>
-<hr>
 <hr>
 <h2 id="7-github連携"><strong>7. GitHub連携</strong></h2>
 <hr>
@@ -1760,7 +1652,6 @@ sc test --integrate-ci
 sc deploy --target production
 </code><button class="code-copy-btn">コピー</button></pre>
 <hr>
-<hr>
 <h2 id="8-モダン技術スタックの構築"><strong>8. モダン技術スタックの<br>構築</strong></h2>
 <hr>
 <p>この章では、Super Claudeを活用して、現代のWebアプリケーション開発で一般的に使用されるモダンな技術スタックを効率的に構築する方法を解説します。</p>
@@ -1804,7 +1695,6 @@ sc design "Dockerコンテナ化したWebアプリケーションをAWS ECS Farg
 # アプリケーションをデプロイ
 sc deploy --target aws-ecs
 </code><button class="code-copy-btn">コピー</button></pre>
-<hr>
 <hr>
 <h2 id="9-あなたのアプリを進化させよう機能追加プロジェクト"><strong>9. あなたのアプリを<br>進化させよう！機能追加プロジェクト</strong></h2>
 <hr>
@@ -1869,7 +1759,6 @@ sc deploy --target aws-ecs
 </ol>
 <h3 id="まとめ-3">まとめ</h3>
 <p>この章では、6章で作成したアプリに具体的な機能を追加し、さらに品質を向上させるプロセスを体験しました。Super Claudeの各コマンドを組み合わせることで、複雑な機能追加やコード改善も効率的に進められることが理解できたでしょう。あなたのアプリは、この「進化プロジェクト」を通じて、より堅牢で実用的なものへと成長していきます。</p>
-<hr>
 <hr>
 <h2 id="10-企業導入のためのsdd組織変革ガイド"><strong>10. 企業導入の<br>ためのSDD組織変革ガイド</strong></h2>
 <hr>
@@ -1998,7 +1887,6 @@ AI導入の効果を定量的に測定するための評価指標（KPI）を設
 </li>
 </ul>
 <hr>
-<hr>
 <h2 id="11-トラブルシューティング"><strong>11. トラブルシューティング</strong></h2>
 <hr>
 <h3 id="111-一般的な問題と解決策">11.1 一般的な問題と解決策</h3>
@@ -2056,8 +1944,7 @@ AI導入の効果を定量的に測定するための評価指標（KPI）を設
 <p>たったこれだけのステップで、あなたのアイデアが具体的な形になりました。プログラミングの知識がなくても、AIにうまくお願いするだけで、Webページを作ることができたのです。</p>
 <p>このマニュアルでは、この「魔法」をさらに強力にし、もっと複雑で面白いアプリを自由に作れるようになるための方法を、ステップバイステップで学んでいきます。最初の感動を忘れずに、次の章へ進みましょう！</p>
 <hr>
-<hr>
-    </main>
+</main>
   </div>
   <footer class="manual-footer">
     <p>このドキュメントは自動生成されました。元ファイルを更新した際は <code>python tools/build_manual.py</code> を再実行してください。</p>
