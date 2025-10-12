@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI開発ツール完全活用マニュアル - Session 4: 本番運用編</title>
+  <link rel="stylesheet" href="../assets/manual.css" />
+  <style>
+    /* 修了証モーダルのスタイル */
+    .certificate-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.95));
+      backdrop-filter: blur(15px);
+    }
+
+    .certificate-modal.active {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .certificate-content {
+      background: linear-gradient(145deg, #ffffff 0%, #fff7ed 30%, #fef3c7 60%, #fed7aa 100%);
+      padding: 60px 48px;
+      border-radius: 32px;
+      max-width: 700px;
+      width: 90%;
+      position: relative;
+      box-shadow:
+        0 30px 90px rgba(245, 158, 11, 0.4),
+        0 0 0 1px rgba(251, 146, 60, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      border: 8px double #d97706;
+      animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* 装飾的な角の飾り */
+    .certificate-content::before,
+    .certificate-content::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border: 3px solid #c2410c;
+    }
+
+    .certificate-content::before {
+      top: 20px;
+      left: 20px;
+      border-right: none;
+      border-bottom: none;
+      border-top-left-radius: 20px;
+    }
+
+    .certificate-content::after {
+      bottom: 20px;
+      right: 20px;
+      border-left: none;
+      border-top: none;
+      border-bottom-right-radius: 20px;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-100px) scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .certificate-close {
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      font-size: 36px;
+      font-weight: bold;
+      color: #9a3412;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid #d97706;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      line-height: 1;
+      transition: all 0.3s;
+      z-index: 10;
+    }
+
+    .certificate-close:hover {
+      transform: rotate(90deg) scale(1.1);
+      background: rgba(234, 88, 12, 0.9);
+      color: white;
+      box-shadow: 0 4px 16px rgba(234, 88, 12, 0.4);
+    }
+
+    .certificate-header {
+      text-align: center;
+      border-bottom: 3px double #d97706;
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+
+    .certificate-emblem {
+      font-size: 5em;
+      margin-bottom: 16px;
+      text-shadow: 0 4px 20px rgba(217, 119, 6, 0.3);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .certificate-title {
+      text-align: center;
+      color: #78350f;
+      font-size: 3em;
+      margin: 0;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-shadow:
+        2px 2px 0 rgba(255, 255, 255, 0.8),
+        4px 4px 12px rgba(217, 119, 6, 0.3);
+      font-family: 'Georgia', serif;
+    }
+
+    .certificate-subtitle {
+      text-align: center;
+      color: #92400e;
+      font-size: 1.2em;
+      margin-top: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .certificate-body {
+      text-align: center;
+      color: #78350f;
+      font-size: 1.2em;
+      line-height: 2;
+      padding: 24px 0;
+    }
+
+    .certificate-recipient-label {
+      font-size: 0.9em;
+      color: #92400e;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+    }
+
+    .certificate-name {
+      font-size: 2em;
+      font-weight: 900;
+      color: #c2410c;
+      margin: 16px 0 32px 0;
+      font-family: 'Georgia', serif;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 10px rgba(194, 65, 12, 0.2);
+      border-top: 2px solid #f59e0b;
+      border-bottom: 2px solid #f59e0b;
+      padding: 20px 0;
+    }
+
+    .certificate-description {
+      font-size: 1em;
+      color: #78350f;
+      line-height: 1.8;
+      margin: 24px 0;
+      padding: 0 24px;
+    }
+
+    .certificate-achievements {
+      background: rgba(254, 243, 199, 0.5);
+      border-left: 4px solid #f59e0b;
+      border-right: 4px solid #f59e0b;
+      padding: 20px;
+      margin: 24px 0;
+      text-align: left;
+    }
+
+    .certificate-achievements ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .certificate-achievements li {
+      padding: 8px 0;
+      color: #78350f;
+      font-size: 0.95em;
+    }
+
+    .certificate-achievements li::before {
+      content: '✓';
+      color: #16a34a;
+      font-weight: bold;
+      margin-right: 12px;
+      font-size: 1.2em;
+    }
+
+    .certificate-footer {
+      border-top: 3px double #d97706;
+      padding-top: 24px;
+      margin-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .certificate-date {
+      color: #78350f;
+      font-size: 1em;
+      font-weight: 600;
+    }
+
+    .certificate-signature {
+      text-align: right;
+      color: #92400e;
+      font-size: 0.9em;
+      font-style: italic;
+    }
+
+    .certificate-seal {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fbbf24, #f59e0b, #ea580c);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(234, 88, 12, 0.4);
+      border: 4px solid #78350f;
+      transform: rotate(-15deg);
+    }
+
+    .certificate-seal-text {
+      font-size: 0.7em;
+      line-height: 1.2;
+    }
+
+    .completion-button {
+      background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+      color: white;
+      border: none;
+      padding: 20px 48px;
+      font-size: 1.3em;
+      font-weight: bold;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow:
+        0 12px 32px rgba(249, 115, 22, 0.4),
+        0 0 0 4px rgba(251, 146, 60, 0.2);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .completion-button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .completion-button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .completion-button:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow:
+        0 20px 48px rgba(249, 115, 22, 0.5),
+        0 0 0 6px rgba(251, 146, 60, 0.3);
+    }
+
+    .completion-button:active {
+      transform: translateY(-2px) scale(1);
+    }
+
+    @media (max-width: 768px) {
+      .certificate-content {
+        padding: 40px 24px;
+      }
+
+      .certificate-title {
+        font-size: 2em;
+      }
+
+      .certificate-name {
+        font-size: 1.5em;
+      }
+
+      .certificate-seal {
+        width: 80px;
+        height: 80px;
+        bottom: 30px;
+        left: 30px;
+      }
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // すべてのpreタグにコピーボタンを追加
+      document.querySelectorAll('.manual-content pre').forEach(function(pre) {
+        const button = document.createElement('button');
+        button.className = 'code-copy-btn';
+        button.textContent = 'コピー';
+
+        button.addEventListener('click', function() {
+          const code = pre.querySelector('code');
+          const text = code ? code.textContent : pre.textContent;
+
+          navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'コピー完了！';
+            button.classList.add('copied');
+
+            setTimeout(function() {
+              button.textContent = 'コピー';
+              button.classList.remove('copied');
+            }, 2000);
+          }).catch(function(err) {
+            console.error('コピー失敗:', err);
+            button.textContent = 'エラー';
+          });
+        });
+
+        pre.appendChild(button);
+      });
+
+      // ナビゲーショントグル機能
+      const navToggle = document.getElementById('navToggle');
+      const manualLayout = document.getElementById('manualLayout');
+      const manualNav = document.getElementById('manualNav');
+
+      if (navToggle && manualLayout && manualNav) {
+        navToggle.addEventListener('click', function() {
+          manualLayout.classList.toggle('nav-collapsed');
+          navToggle.classList.toggle('active');
+        });
+      }
+
+      // 修了証モーダル機能
+      const completionBtn = document.getElementById('completionBtn');
+      const certificateModal = document.getElementById('certificateModal');
+      const closeBtn = document.querySelector('.certificate-close');
+
+      if (completionBtn && certificateModal) {
+        completionBtn.addEventListener('click', function() {
+          certificateModal.classList.add('active');
+          // 現在の日付を表示
+          const today = new Date();
+          const dateStr = today.getFullYear() + '年' + (today.getMonth() + 1) + '月' + today.getDate() + '日';
+          document.getElementById('certificateDate').textContent = dateStr;
+        });
+      }
+
+      if (closeBtn && certificateModal) {
+        closeBtn.addEventListener('click', function() {
+          certificateModal.classList.remove('active');
+        });
+      }
+
+      // モーダル外クリックで閉じる
+      if (certificateModal) {
+        certificateModal.addEventListener('click', function(e) {
+          if (e.target === certificateModal) {
+            certificateModal.classList.remove('active');
+          }
+        });
+      }
+
+      // Escキーで閉じる
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && certificateModal && certificateModal.classList.contains('active')) {
+          certificateModal.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <header class="manual-header">
+    <div class="header-text">
+      <h1>AI開発ツール完全活用マニュアル</h1>
+      <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+      <h3 style="font-size: 1.2rem; font-weight: 400; margin-bottom: 1rem; color: #1f2937;">Session 4: 本番運用とプロフェッショナル化</h3>
+      <p style="font-size: 1rem; margin-bottom: 0.5rem; color: rgba(255, 255, 255, 0.8);">あなたのWebアプリを世界に公開し、プロフェッショナルなサービスとして運用するための実践的ガイド。</p>
+
+      <dl class="manual-meta" style="margin-top: 1.5rem;">
+        <div>
+          <dt>最終更新</dt>
+          <dd>2025-10-12 12:00</dd>
+        </div>
+      </dl>
+    </div>
+  </header>
+  <button class="nav-toggle" id="navToggle" aria-label="目次を開閉">☰</button>
+  <div class="manual-layout" id="manualLayout">
+    <aside class="manual-nav" id="manualNav">
+      <nav class="toc" aria-label="目次"><h2>Quick Links</h2>
+<ol class="toc-list">
+<li><a href="#目次"><strong>目次</strong></a></li>
+<li><a href="#14-カスタムドメインで本格サイトに"><strong>14. カスタムドメインで本格サイトに</strong></a></li>
+<li><a href="#15-環境変数とセキュリティの深掘り"><strong>15. 環境変数とセキュリティの深掘り</strong></a></li>
+<li><a href="#16-resendでメール送信機能を実装"><strong>16. Resendでメール送信機能を実装</strong></a></li>
+<li><a href="#17-運用監視とユーザーフィードバック"><strong>17. 運用監視とユーザーフィードバック</strong></a></li>
+</ol></nav>
+    </aside>
+    <main class="manual-content">
+      <h2 id="目次"><strong>目次</strong></h2>
+<hr>
+<h3>🚀 Phase 5: 本番運用とプロフェッショナル化（14-17章）</h3>
+<ul>
+<li>
+<a href="#14-カスタムドメインで本格サイトに"><strong>14. カスタムドメインで本格サイトに</strong></a><br>
+<span style="font-size: 0.9em; color: #666;">独自ドメイン取得とSSL証明書の自動発行</span>
+</li>
+<li>
+<a href="#15-環境変数とセキュリティの深掘り"><strong>15. 環境変数とセキュリティの深掘り</strong></a><br>
+<span style="font-size: 0.9em; color: #666;">APIキーの安全な管理とNetlify Functions導入</span>
+</li>
+<li>
+<a href="#16-cicdと自動デプロイの仕組み"><strong>16. CI/CDと自動デプロイの仕組み</strong></a><br>
+<span style="font-size: 0.9em; color: #666;">GitHub Actionsで自動テストとデプロイパイプライン構築</span>
+</li>
+<li>
+<a href="#17-運用監視とユーザーフィードバック"><strong>17. 運用監視とユーザーフィードバック</strong></a><br>
+<span style="font-size: 0.9em; color: #666;">Sentryエラー監視とGoogle Analytics導入</span>
+</li>
+</ul>
+<hr>
+<h3>📖 このセッションについて</h3>
+<p>Session 4では、これまでに作成したWebアプリを<strong>本番環境</strong>にデプロイし、プロフェッショナルなサービスとして運用するための知識とスキルを学びます。カスタムドメインの取得、セキュリティ強化、CI/CDパイプラインの構築、そして運用監視まで、実際のビジネスで必要となる実践的なテクニックを習得します。</p>
+
+<p><strong>💡 想定所要時間</strong>: 約4-5時間（各章60-90分）</p>
+
+<hr>
+
+<!-- グラスモーフィズム Hero Section - オレンジ系 -->
+<div style="background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 50%, #fef3c7 100%); padding: 60px 32px; border-radius: 24px; margin: 40px 0; position: relative; overflow: hidden; box-shadow: 0 20px 60px rgba(251, 146, 60, 0.15);">
+  <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); filter: blur(40px);"></div>
+  <div style="position: relative; z-index: 1;">
+    <h2 id="14-カスタムドメインで本格サイトに" style="color: #9a3412; margin: 0 0 16px 0; font-size: 2.2em; text-align: center; text-shadow: 0 2px 10px rgba(255,255,255,0.8);">
+      🌐 14章: カスタムドメインで<br>本格サイトに
+    </h2>
+    <p style="margin: 0; text-align: center; font-size: 1.1em; color: #c2410c; font-weight: 500; background: rgba(255, 255, 255, 0.9); padding: 16px 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);">あなたのアプリに独自ドメインを設定して、プロフェッショナルなサービスとして世界に公開しよう</p>
+  </div>
+</div>
+
+<!-- 目的セクション - グラスモーフィズム -->
+<div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(249, 115, 22, 0.1);">
+  <h3 id="目的" style="margin: 0 0 16px 0; color: #9a3412; display: flex; align-items: center; gap: 10px;">
+    <span style="font-size: 1.4em;">🎯</span>
+    <span>この章で学ぶこと</span>
+  </h3>
+  <p style="margin: 0; color: #78350f; line-height: 1.7;">これまでに作成したWebアプリは、Netlifyの自動生成されたURL（例: <code>random-name-12345.netlify.app</code>）で公開されていました。この章では、<strong>あなた独自のドメイン名</strong>（例: <code>myapp.com</code>）を取得し、プロフェッショナルなWebサービスとして運用するための設定方法を学びます。</p>
+</div>
+
+<h3 id="必要なもの" style="color: #9a3412; margin: 32px 0 20px 0;">必要なもの</h3>
+
+<ul>
+<li><strong>Netlifyアカウント</strong>: Session 2でデプロイ済みのアプリ</li>
+<li><strong>クレジットカード</strong>: ドメイン購入用（年間1,000-2,000円程度）</li>
+<li><strong>所要時間</strong>: 約60-90分</li>
+</ul>
+
+<h3 id="14-1-ドメインとは何か">14.1 ドメインとは何か？</h3>
+
+<p>ドメインとは、インターネット上の「住所」のようなものです。</p>
+
+<div style="background: rgba(251, 146, 60, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(251, 146, 60, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(251, 146, 60, 0.1);">
+  <h4 style="color: #c2410c; margin-top: 0;">🏠 ドメインの構造</h4>
+  <p style="margin: 0;">例: <code style="background: rgba(255, 255, 255, 0.8); padding: 4px 8px; border-radius: 4px; color: #9a3412;">www.example.com</code></p>
+  <ul style="margin-top: 16px;">
+    <li><strong>www</strong>: サブドメイン（省略可能）</li>
+    <li><strong>example</strong>: ドメイン名（あなたが選ぶ）</li>
+    <li><strong>com</strong>: トップレベルドメイン（TLD）</li>
+  </ul>
+</div>
+
+<h4 style="color: #c2410c;">💰 ドメインの費用</h4>
+<table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+  <thead>
+    <tr style="background-color: #fff7ed;">
+      <th style="padding: 12px; text-align: left; border: 1px solid #fed7aa;">TLD</th>
+      <th style="padding: 12px; text-align: left; border: 1px solid #fed7aa;">年間費用</th>
+      <th style="padding: 12px; text-align: left; border: 1px solid #fed7aa;">特徴</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 12px; border: 1px solid #fed7aa;"><code>.com</code></td>
+      <td style="padding: 12px; border: 1px solid #fed7aa;">約1,500円</td>
+      <td style="padding: 12px; border: 1px solid #fed7aa;">最も一般的、信頼性が高い</td>
+    </tr>
+    <tr style="background-color: #fffbeb;">
+      <td style="padding: 12px; border: 1px solid #fed7aa;"><code>.net</code></td>
+      <td style="padding: 12px; border: 1px solid #fed7aa;">約1,500円</td>
+      <td style="padding: 12px; border: 1px solid #fed7aa;">技術系サービス向け</td>
+    </tr>
+    <tr>
+      <td style="padding: 12px; border: 1px solid #fed7aa;"><code>.app</code></td>
+      <td style="padding: 12px; border: 1px solid #fed7aa;">約2,000円</td>
+      <td style="padding: 12px; border: 1px solid #fed7aa;">アプリサービス向け、SSL必須</td>
+    </tr>
+    <tr style="background-color: #fffbeb;">
+      <td style="padding: 12px; border: 1px solid #fed7aa;"><code>.jp</code></td>
+      <td style="padding: 12px; border: 1px solid #fed7aa;">約3,000円</td>
+      <td style="padding: 12px; border: 1px solid #fed7aa;">日本向けサービス、信頼性高</td>
+    </tr>
+  </tbody>
+</table>
+
+<div style="background: rgba(251, 191, 36, 0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.3); margin: 24px 0;">
+  <p style="margin: 0; font-weight: 600; color: #78350f;">💡 初めての方へ</p>
+  <p style="margin: 8px 0 0 0; color: #78350f;">まずは<code>.com</code>または<code>.net</code>がおすすめです。費用も手頃で、ユーザーにも馴染みがあります。</p>
+</div>
+
+<h3 id="14-2-netlifyでドメインを取得する">14.2 Netlifyでドメインを取得する（推奨方法）</h3>
+
+<p>Netlifyでは、ドメインの購入から設定まで、すべて一箇所で完結できます。外部のドメイン登録サービスを使うよりも<strong>設定が簡単</strong>で、初心者に最適です。</p>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);">
+  <h4 style="color: #059669; margin-top: 0;">✅ Netlifyでドメインを取得するメリット</h4>
+  <ul style="margin: 0;">
+    <li><strong>設定が超簡単</strong>: DNSレコードの設定が自動で完了</li>
+    <li><strong>SSL証明書も自動</strong>: HTTPSが自動で有効化</li>
+    <li><strong>管理が一元化</strong>: アプリとドメインを同じ場所で管理</li>
+    <li><strong>サポートが充実</strong>: トラブル時のサポートが早い</li>
+  </ul>
+</div>
+
+<h4 id="手順1-netlifyにログイン" style="color: #c2410c;">📋 手順1: Netlifyにログイン</h4>
+
+<ol>
+<li><a href="https://app.netlify.com/" target="_blank" style="color: #ea580c; font-weight: 600;">Netlify</a>にアクセスし、ログインします</li>
+<li>デプロイ済みのサイトを選択します</li>
+</ol>
+
+<h4 id="手順2-ドメイン購入ページへアクセス" style="color: #c2410c;">📋 手順2: ドメイン購入ページへアクセス</h4>
+
+<ol>
+<li>サイトの管理画面で、<strong>「Domain management」</strong>タブをクリック</li>
+<li><strong>「Add a domain」</strong>ボタンをクリック</li>
+<li><strong>「Register a new domain」</strong>を選択</li>
+</ol>
+
+<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 12px; border-left: 4px solid #f97316; margin: 24px 0;">
+  <p style="margin: 0; color: #9a3412; line-height: 1.7;"><strong>🖼️ スクリーンショット</strong>: この手順は、Netlifyの管理画面を操作しながら進めます。各ステップでボタンをクリックするだけなので、プログラミング知識は不要です。</p>
+</div>
+
+<h4 id="手順3-ドメイン名を検索" style="color: #c2410c;">📋 手順3: ドメイン名を検索</h4>
+
+<ol>
+<li>検索ボックスに希望のドメイン名を入力します（例: <code>myapp</code>）</li>
+<li>Netlifyが利用可能なドメインを表示します</li>
+</ol>
+
+<div style="background: rgba(251, 146, 60, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(251, 146, 60, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0;">
+  <h5 style="color: #c2410c; margin-top: 0;">🔍 ドメイン名の選び方のコツ</h5>
+  <ul style="margin-bottom: 0;">
+    <li><strong>短くて覚えやすい</strong>: 5-10文字程度が理想</li>
+    <li><strong>意味が明確</strong>: アプリの目的が分かりやすい</li>
+    <li><strong>発音しやすい</strong>: 口頭で伝えやすい名前</li>
+    <li><strong>数字や記号は避ける</strong>: 覚えにくくなる原因</li>
+  </ul>
+</div>
+
+<p><strong>例</strong>:</p>
+<ul>
+<li>✅ <strong>良い例</strong>: <code>timetrack.com</code>, <code>myreadinglist.net</code></li>
+<li>❌ <strong>悪い例</strong>: <code>my-app-2024-v2.com</code>, <code>app123xyz.net</code></li>
+</ul>
+
+<h4 id="手順4-ドメインを購入" style="color: #c2410c;">📋 手順4: ドメインを購入</h4>
+
+<ol>
+<li>希望のドメインが利用可能であることを確認</li>
+<li><strong>「Add domain」</strong>ボタンをクリック</li>
+<li>支払い情報（クレジットカード）を入力</li>
+<li><strong>「Complete purchase」</strong>で購入完了</li>
+</ol>
+
+<div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.3); margin: 24px 0;">
+  <p style="margin: 0; font-weight: 600; color: #b91c1c;">⚠️ 重要な注意事項</p>
+  <ul style="margin: 8px 0 0 0; color: #991b1b;">
+    <li><strong>ドメインは年単位の契約</strong>: 初年度の費用が発生します</li>
+    <li><strong>自動更新</strong>: 期限が切れると失効するので、自動更新設定を推奨</li>
+    <li><strong>キャンセル不可</strong>: 購入後のキャンセルや返金は基本的にできません</li>
+  </ul>
+</div>
+
+<h4 id="手順5-ドメインの設定完了" style="color: #c2410c;">📋 手順5: ドメインの設定完了</h4>
+
+<p>購入が完了すると、Netlifyが自動的に以下の設定を行います：</p>
+
+<ul>
+<li>✅ <strong>DNSレコードの設定</strong>: ドメインとサイトを紐付け</li>
+<li>✅ <strong>SSL証明書の発行</strong>: HTTPS通信を自動で有効化</li>
+<li>✅ <strong>リダイレクト設定</strong>: <code>www</code>あり/なしの統一</li>
+</ul>
+
+<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了！</strong> 設定が完了すると、数分〜数時間で新しいドメインでアクセスできるようになります。</p>
+</div>
+
+<h3 id="14-3-ssl証明書とhttps">14.3 SSL証明書とHTTPS</h3>
+
+<p>Netlifyでドメインを購入すると、<strong>SSL証明書</strong>が自動的に発行され、あなたのサイトは<strong>HTTPS</strong>で通信するようになります。</p>
+
+<div style="background: rgba(251, 146, 60, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(251, 146, 60, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(251, 146, 60, 0.1);">
+  <h4 style="color: #c2410c; margin-top: 0;">🔒 HTTPSとは？</h4>
+  <p style="margin: 0;">HTTPSは、ウェブサイトとユーザーの間の通信を<strong>暗号化</strong>する仕組みです。これにより、第三者にデータを盗聴されるリスクが大幅に減少します。</p>
+
+  <table style="width: 100%; margin-top: 16px; border-collapse: collapse;">
+    <thead>
+      <tr style="background-color: #fff7ed;">
+        <th style="padding: 10px; text-align: left; border: 1px solid #fed7aa;">項目</th>
+        <th style="padding: 10px; text-align: left; border: 1px solid #fed7aa;">HTTP</th>
+        <th style="padding: 10px; text-align: left; border: 1px solid #fed7aa;">HTTPS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #fed7aa;">暗号化</td>
+        <td style="padding: 10px; border: 1px solid #fed7aa;">❌ なし</td>
+        <td style="padding: 10px; border: 1px solid #fed7aa;">✅ あり</td>
+      </tr>
+      <tr style="background-color: #fffbeb;">
+        <td style="padding: 10px; border: 1px solid #fed7aa;">SEO評価</td>
+        <td style="padding: 10px; border: 1px solid #fed7aa;">❌ 低い</td>
+        <td style="padding: 10px; border: 1px solid #fed7aa;">✅ 高い</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #fed7aa;">ブラウザの警告</td>
+        <td style="padding: 10px; border: 1px solid #fed7aa;">⚠️ 「保護されていません」</td>
+        <td style="padding: 10px; border: 1px solid #fed7aa;">✅ 「保護された通信」</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h4 style="color: #c2410c;">🔧 SSL証明書の確認方法</h4>
+
+<ol>
+<li>Netlifyの管理画面で、<strong>「Domain management」</strong>タブを開く</li>
+<li><strong>「HTTPS」</strong>セクションを確認</li>
+<li><strong>「Your site has HTTPS enabled」</strong>と表示されていればOK</li>
+</ol>
+
+<div style="background: rgba(251, 191, 36, 0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.3); margin: 24px 0;">
+  <p style="margin: 0; font-weight: 600; color: #78350f;">💡 証明書の自動更新</p>
+  <p style="margin: 8px 0 0 0; color: #78350f;">Netlifyは、SSL証明書を<strong>90日ごとに自動更新</strong>します。あなたが何もしなくても、証明書は常に有効な状態を保ちます。</p>
+</div>
+
+<h3 id="14-4-独自ドメインのメリット">14.4 独自ドメインのメリット</h3>
+
+<div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(249, 115, 22, 0.1);">
+  <h4 style="color: #9a3412; margin-top: 0;">🎯 なぜ独自ドメインが重要なのか？</h4>
+
+  <ul style="margin: 0;">
+    <li style="margin-bottom: 12px;">
+      <strong style="color: #c2410c;">信頼性の向上</strong><br>
+      <span style="color: #78350f;">ユーザーは独自ドメインのサイトをより信頼します。ビジネスとしての本気度が伝わります。</span>
+    </li>
+    <li style="margin-bottom: 12px;">
+      <strong style="color: #c2410c;">ブランディング</strong><br>
+      <span style="color: #78350f;">覚えやすいドメイン名は、ブランドとして記憶されやすくなります。</span>
+    </li>
+    <li style="margin-bottom: 12px;">
+      <strong style="color: #c2410c;">SEO効果</strong><br>
+      <span style="color: #78350f;">独自ドメインは検索エンジンの評価が高まり、検索結果の上位に表示されやすくなります。</span>
+    </li>
+    <li style="margin-bottom: 0;">
+      <strong style="color: #c2410c;">プラットフォームからの独立</strong><br>
+      <span style="color: #78350f;">Netlifyなどのプラットフォームを変更しても、ドメイン名は引き継げます。</span>
+    </li>
+  </ul>
+</div>
+
+<h3 id="14-5-トラブルシューティング">14.5 トラブルシューティング</h3>
+
+<h4 style="color: #c2410c;">❌ よくある問題と解決方法</h4>
+
+<div style="background: rgba(239, 68, 68, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 20px; margin: 20px 0;">
+  <h5 style="color: #b91c1c; margin-top: 0;">問題1: ドメインが反映されない</h5>
+  <p style="margin: 0 0 8px 0; color: #78350f;"><strong>症状</strong>: 購入したドメインでアクセスできない</p>
+  <p style="margin: 0; color: #78350f;"><strong>解決策</strong>:</p>
+  <ul style="margin: 8px 0 0 0; color: #78350f;">
+    <li>DNSの反映には<strong>最大48時間</strong>かかる場合があります（通常は数分〜数時間）</li>
+    <li>ブラウザのキャッシュをクリアして再度アクセス</li>
+    <li>Netlifyの管理画面で「DNS settings」を確認</li>
+  </ul>
+</div>
+
+<div style="background: rgba(239, 68, 68, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 20px; margin: 20px 0;">
+  <h5 style="color: #b91c1c; margin-top: 0;">問題2: SSL証明書が発行されない</h5>
+  <p style="margin: 0 0 8px 0; color: #78350f;"><strong>症状</strong>: HTTPSが有効にならない</p>
+  <p style="margin: 0; color: #78350f;"><strong>解決策</strong>:</p>
+  <ul style="margin: 8px 0 0 0; color: #78350f;">
+    <li>ドメインの反映を待つ（DNS設定が完了していない可能性）</li>
+    <li>Netlifyの「HTTPS」セクションで「Verify DNS configuration」をクリック</li>
+    <li>それでも解決しない場合は、Netlifyサポートに問い合わせ</li>
+  </ul>
+</div>
+
+<div style="background: rgba(239, 68, 68, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 20px; margin: 20px 0;">
+  <h5 style="color: #b91c1c; margin-top: 0;">問題3: 希望のドメイン名が取得できない</h5>
+  <p style="margin: 0 0 8px 0; color: #78350f;"><strong>症状</strong>: すでに他の人が使っている</p>
+  <p style="margin: 0; color: #78350f;"><strong>解決策</strong>:</p>
+  <ul style="margin: 8px 0 0 0; color: #78350f;">
+    <li>ドメイン名を少し変更する（例: <code>myapp</code> → <code>myapp-pro</code>）</li>
+    <li>別のTLDを試す（例: <code>.com</code> → <code>.net</code>, <code>.app</code>）</li>
+    <li>ハイフンを追加する（例: <code>myapp</code> → <code>my-app</code>）</li>
+  </ul>
+</div>
+
+<h3 id="まとめ-14章">まとめ</h3>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin: 24px 0;">
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>🎉 おめでとうございます！</strong> この章では、Netlifyで独自ドメインを取得し、あなたのWebアプリをプロフェッショナルなサービスとして公開する方法を学びました。次の章では、環境変数とセキュリティについて深掘りします。</p>
+</div>
+
+<hr>
+
+<!-- 15章 Hero Section -->
+<div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%); padding: 60px 32px; border-radius: 24px; margin: 40px 0; position: relative; overflow: hidden; box-shadow: 0 20px 60px rgba(245, 158, 11, 0.15);">
+  <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); filter: blur(40px);"></div>
+  <div style="position: relative; z-index: 1;">
+    <h2 id="15-環境変数とセキュリティの深掘り" style="color: #78350f; margin: 0 0 16px 0; font-size: 2.2em; text-align: center; text-shadow: 0 2px 10px rgba(255,255,255,0.8);">
+      🔐 15章: 環境変数とClaudeCode統合
+    </h2>
+    <p style="margin: 0; text-align: center; font-size: 1.1em; color: #92400e; font-weight: 500; background: rgba(255, 255, 255, 0.9); padding: 16px 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(245, 158, 11, 0.15);">.envファイルとClaudeCodeで、環境変数を簡単かつ安全に管理しよう</p>
+  </div>
+</div>
+
+<div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
+  <h3 style="margin: 0 0 16px 0; color: #78350f; display: flex; align-items: center; gap: 10px;">
+    <span style="font-size: 1.4em;">🎯</span>
+    <span>この章で学ぶこと</span>
+  </h3>
+  <p style="margin: 0; color: #92400e; line-height: 1.7;">Webアプリを作る時、<strong>「秘密にしておきたい情報」</strong>があります。例えば、データベースのパスワードやAPIキーなど。これらを<strong>コードに直接書いてしまう</strong>と、GitHubに公開した時に誰でも見られてしまいます。この章では、そうした大切な情報を安全に管理する方法を学びます。</p>
+</div>
+
+<div style="background: rgba(251, 191, 36, 0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.3); margin: 24px 0;">
+  <h4 style="margin: 0 0 12px 0; color: #78350f;">⏱️ 所要時間：約75分</h4>
+  <p style="margin: 0; color: #78350f;">休憩を挟みながら、ゆっくり進めていきましょう。</p>
+</div>
+
+<h3 id="15-1-環境変数って何">15.1 環境変数って何？</h3>
+
+<p>環境変数とは、<strong>プログラムの外側に保存する設定値</strong>のことです。</p>
+
+<div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
+  <h4 style="color: #92400e; margin-top: 0;">🏠 家の鍵に例えると</h4>
+  <ul style="margin: 0;">
+    <li><strong>コードに直接書く</strong> = 家の鍵を玄関に貼り付ける（誰でも見られる😱）</li>
+    <li><strong>環境変数に保存</strong> = 鍵を自分のポケットに入れておく（安全🔐）</li>
+  </ul>
+</div>
+
+<h4 style="color: #92400e;">❌ 良くない例（危険）</h4>
+<pre><code class="language-javascript">// ❌ これはダメ！GitHubに公開されたら誰でも見られる
+const apiKey = "sk_test_abc123xyz789";
+const dbPassword = "mySecretPassword123";
+</code></pre>
+
+<h4 style="color: #92400e;">✅ 良い例（安全）</h4>
+<pre><code class="language-javascript">// ✅ これなら安全！環境変数から読み込む
+const apiKey = process.env.API_KEY;
+const dbPassword = process.env.DB_PASSWORD;
+</code></pre>
+
+<h3 id="15-2-envファイルに環境変数を保存しよう">15.2 .envファイルに環境変数を保存しよう</h3>
+
+<p>.envファイルは、<strong>環境変数を保存するための専用ファイル</strong>です。このファイルに秘密の情報を書いておくと、プログラムから簡単に読み込めます。</p>
+
+<h4 style="color: #92400e;">📋 手順1: プロジェクトのルートに.envファイルを作成</h4>
+
+<p>プロジェクトのルートディレクトリ（package.jsonがある場所）に、<code>.env</code>という名前のファイルを作成します。</p>
+
+<h4 style="color: #92400e;">📋 手順2: 環境変数を書き込む</h4>
+
+<p>.envファイルに、以下の形式で環境変数を書き込みます：</p>
+
+<pre><code class="language-bash"># Supabaseの設定
+SUPABASE_URL=https://xxxxx.supabase.co
+SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+# Netlifyの設定
+NETLIFY_SITE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+NETLIFY_AUTH_TOKEN=nfp_xxxxxxxxxxxxxxxxxxxxxxxxx
+
+# その他のAPI設定
+API_KEY=sk_test_abc123xyz789
+</code></pre>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);">
+  <h4 style="color: #059669; margin-top: 0;">✅ 環境変数の命名ルール</h4>
+  <ul style="margin: 0;">
+    <li><strong>すべて大文字</strong>で書く（例: <code>API_KEY</code>）</li>
+    <li><strong>単語の区切りはアンダースコア</strong>（例: <code>DATABASE_URL</code>）</li>
+    <li><strong>分かりやすい名前</strong>をつける（例: <code>SUPABASE_KEY</code>）</li>
+    <li><strong>コメント（#で始まる行）</strong>で説明を追加できる</li>
+  </ul>
+</div>
+
+<h4 style="color: #92400e;">📋 手順3: .gitignoreに追加</h4>
+
+<p><strong>重要:</strong> .envファイルは<strong>絶対にGitHubに公開してはいけません</strong>。.gitignoreファイルに追加して、Gitの管理対象から除外します。</p>
+
+<pre><code class="language-bash"># .gitignoreファイルに追加
+.env
+.env.local
+.env.production
+</code></pre>
+
+<h3 id="15-3-claudecodeに依頼して自動設定しよう">15.3 ClaudeCodeに依頼して自動設定しよう</h3>
+
+<p>ClaudeCodeを使えば、<strong>環境変数の設定を自動化</strong>できます！手動で設定する必要はありません。</p>
+
+<div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);">
+  <h4 style="color: #4338ca; margin-top: 0;">🤖 ClaudeCodeへの依頼プロンプト例</h4>
+  <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">.envファイルを作成して、以下の環境変数を設定してください：
+
+- Supabase URL: [あなたのSupabase URL]
+- Supabase Key: [あなたのSupabase Key]
+- Netlify Site ID: [あなたのNetlify Site ID]
+
+また、.gitignoreに.envを追加して、GitHubにプッシュされないようにしてください。</code></pre>
+</div>
+
+<p>このようにClaudeCodeに依頼すると、自動的に：</p>
+<ul>
+  <li>✅ .envファイルを作成</li>
+  <li>✅ 環境変数を正しい形式で書き込み</li>
+  <li>✅ .gitignoreに.envを追加</li>
+</ul>
+
+<p>してくれます！手動で設定する手間が省けます。</p>
+
+<h3 id="15-4-netlify-cliとsupabase-cliで環境変数を読み込む">15.4 Netlify CLI / Supabase CLIで環境変数を読み込む</h3>
+
+<p>.envファイルに保存した環境変数は、<strong>Netlify CLIやSupabase CLIから自動的に読み込まれます</strong>。</p>
+
+<h4 style="color: #92400e;">📋 Netlify CLIでの使い方</h4>
+
+<p>Netlify CLIは、.envファイルを自動的に読み込んでくれます：</p>
+
+<pre><code class="language-bash"># .envファイルの環境変数を使ってNetlifyにデプロイ
+netlify deploy --prod
+
+# 環境変数を確認
+netlify env:list
+</code></pre>
+
+<h4 style="color: #92400e;">📋 Supabase CLIでの使い方</h4>
+
+<p>Supabase CLIも同様に、.envファイルを自動的に読み込みます：</p>
+
+<pre><code class="language-bash"># .envファイルの環境変数を使ってSupabase CLIを実行
+supabase status
+
+# ローカル開発環境を起動（.envの環境変数を使用）
+supabase start
+</code></pre>
+
+<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ ポイント</strong>: .envファイルに一度書いておけば、NetlifyやSupabaseのCLIが自動的に読み込んでくれます！</p>
+</div>
+
+<h3 id="15-5-コードで環境変数を使う">15.5 コードで環境変数を使う</h3>
+
+<p>.envファイルに保存した環境変数は、プログラムから簡単に読み込めます。</p>
+
+<h4 style="color: #92400e;">JavaScript/TypeScriptでの使い方</h4>
+<pre><code class="language-javascript">// .envファイルから環境変数を読み込む
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+
+// Supabaseに接続
+import { createClient } from '@supabase/supabase-js';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// これでSupabaseが使えるようになります！
+</code></pre>
+
+<div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);">
+  <h4 style="color: #4338ca; margin-top: 0;">🤖 ClaudeCodeへの依頼プロンプト例</h4>
+  <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">Supabaseに接続するコードを書いてください。
+環境変数（SUPABASE_URLとSUPABASE_KEY）を使って、
+createClientで接続してください。</code></pre>
+</div>
+
+<p>このように依頼すると、ClaudeCodeが環境変数を使った安全なコードを自動生成してくれます！</p>
+
+<h3 id="まとめ-15章">まとめ</h3>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin: 24px 0;">
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>🎉 お疲れさまでした！</strong> この章では、.envファイルで環境変数を管理する方法と、ClaudeCodeを使って自動設定する方法、そしてNetlify CLI/Supabase CLIで簡単に環境変数を読み込む方法を学びました。次の章では、Resendを使ったメール送信について学びます。</p>
+</div>
+
+<hr>
+
+<!-- 16章 Hero Section -->
+<div style="background: linear-gradient(135deg, #fde68a 0%, #fbbf24 50%, #f59e0b 100%); padding: 60px 32px; border-radius: 24px; margin: 40px 0; position: relative; overflow: hidden; box-shadow: 0 20px 60px rgba(245, 158, 11, 0.15);">
+  <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); filter: blur(40px);"></div>
+  <div style="position: relative; z-index: 1;">
+    <h2 id="16-resendでメール送信機能を追加" style="color: #78350f; margin: 0 0 16px 0; font-size: 2.2em; text-align: center; text-shadow: 0 2px 10px rgba(255,255,255,0.8);">
+      ✉️ 16章: Resendでメール送信機能を追加
+    </h2>
+    <p style="margin: 0; text-align: center; font-size: 1.1em; color: #92400e; font-weight: 500; background: rgba(255, 255, 255, 0.9); padding: 16px 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(245, 158, 11, 0.15);">独自ドメインから本格的なメールを送信。問い合わせフォームや通知機能を実装しよう</p>
+  </div>
+</div>
+
+<div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
+  <h3 style="margin: 0 0 16px 0; color: #78350f; display: flex; align-items: center; gap: 10px;">
+    <span style="font-size: 1.4em;">🎯</span>
+    <span>この章で学ぶこと</span>
+  </h3>
+  <p style="margin: 0; color: #92400e; line-height: 1.7;"><strong>Resend</strong>は、開発者向けの<strong>モダンなメール配信サービス</strong>です。問い合わせフォームの送信、パスワードリセット、ユーザー通知など、Webアプリには欠かせないメール機能を簡単に実装できます。独自ドメインから送信することで、プロフェッショナルな印象を与えることができます。</p>
+</div>
+
+<div style="background: rgba(251, 191, 36, 0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.3); margin: 24px 0;">
+  <h4 style="margin: 0 0 12px 0; color: #78350f;">⏱️ 所要時間：約75分</h4>
+  <p style="margin: 0; color: #78350f;">Resendアカウント作成から、ClaudeCodeを使った実装まで体験します。</p>
+</div>
+
+<h3 id="16-1-resendって何なぜ使うの">16.1 Resendって何？なぜ使うの？</h3>
+
+<p>Resendは、<strong>開発者向けのモダンなメール配信サービス</strong>です。GmailやYahoo!メールとは違い、<strong>プログラムからメールを送信するための専用サービス</strong>です。</p>
+
+<div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
+  <h4 style="color: #92400e; margin-top: 0;">📧 Resendでできること</h4>
+  <ul style="margin: 0;">
+    <li><strong>問い合わせフォームの送信</strong>: ユーザーからの問い合わせを自動で受信</li>
+    <li><strong>パスワードリセット</strong>: リセットリンクをメールで送信</li>
+    <li><strong>ウェルカムメール</strong>: 新規登録ユーザーに歓迎メール</li>
+    <li><strong>通知メール</strong>: 重要なイベントをユーザーに通知</li>
+  </ul>
+</div>
+
+<h4 style="color: #92400e;">🌟 Resendが選ばれる理由</h4>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);">
+  <ul style="margin: 0;">
+    <li><strong>開発者フレンドリー</strong>: シンプルなAPIで簡単に統合</li>
+    <li><strong>独自ドメイン対応</strong>: あなたのドメイン（例: @myapp.com）からメール送信</li>
+    <li><strong>高い到達率</strong>: 迷惑メールフォルダに入りにくい</li>
+    <li><strong>無料プランあり</strong>: 月3,000通まで無料</li>
+  </ul>
+</div>
+
+<h3 id="16-2-resendアカウント作成とドメイン設定">16.2 Resendアカウント作成とドメイン設定</h3>
+
+<p>まずはResendのアカウントを作成し、独自ドメインを設定します。<strong>初めての方も安心してください！画面を見ながら一緒に進めていきましょう。</strong></p>
+
+<h4 style="color: #92400e;">💰 Resend料金プラン</h4>
+
+<p>Resendは<strong>無料プランから始められます</strong>。開発やテスト、小規模アプリには無料プランで十分です！</p>
+
+<div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
+    <thead>
+      <tr style="background: rgba(245, 158, 11, 0.1);">
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid rgba(245, 158, 11, 0.3); color: #92400e; font-weight: 600;">プラン</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid rgba(245, 158, 11, 0.3); color: #92400e; font-weight: 600;">月額料金</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid rgba(245, 158, 11, 0.3); color: #92400e; font-weight: 600;">送信数</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 2px solid rgba(245, 158, 11, 0.3); color: #92400e; font-weight: 600;">主な制限</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background: rgba(16, 185, 129, 0.05);">
+        <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2);"><strong style="color: #047857;">Free</strong><br><span style="font-size: 0.85em; color: #059669;">👈 おすすめ</span></td>
+        <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); color: #1f2937;"><strong>$0</strong></td>
+        <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); color: #1f2937;">
+          <strong>月3,000通</strong><br>
+          <span style="font-size: 0.85em; color: #6b7280;">1日100通まで</span>
+        </td>
+        <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); color: #1f2937; font-size: 0.9em;">
+          • 1ドメイン<br>
+          • データ保持1日<br>
+          • チケットサポート
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2);"><strong style="color: #92400e;">Pro</strong></td>
+        <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); color: #1f2937;"><strong>$20</strong>/月</td>
+        <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); color: #1f2937;">
+          <strong>月50,000通</strong><br>
+          <span style="font-size: 0.85em; color: #6b7280;">日次制限なし</span>
+        </td>
+        <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); color: #1f2937; font-size: 0.9em;">
+          • 10ドメイン<br>
+          • データ保持3日<br>
+          • チケットサポート
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 12px; color: #1f2937;"><strong style="color: #92400e;">Scale</strong></td>
+        <td style="padding: 12px; color: #1f2937;"><strong>$90</strong>/月</td>
+        <td style="padding: 12px; color: #1f2937;">
+          <strong>月100,000通</strong><br>
+          <span style="font-size: 0.85em; color: #6b7280;">日次制限なし</span>
+        </td>
+        <td style="padding: 12px; color: #1f2937; font-size: 0.9em;">
+          • 1,000ドメイン<br>
+          • データ保持7日<br>
+          • Slack & チケットサポート<br>
+          • 専用IP追加可能
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin: 16px 0;">
+  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">✨ 無料プランで十分なケース</p>
+  <ul style="margin: 0; padding-left: 20px; color: #065f46; line-height: 1.7;">
+    <li>個人プロジェクトや学習用アプリ</li>
+    <li>問い合わせフォーム（1日10-20件程度）</li>
+    <li>ユーザー登録・パスワードリセット（小規模サービス）</li>
+    <li>開発・テスト環境</li>
+  </ul>
+  <p style="margin: 12px 0 0 0; color: #047857; font-size: 0.9em;"><strong>💡 ポイント</strong>: 無料プランでも<strong>月3,000通</strong>送れるので、1日平均100通なら十分です。ビジネスが成長したらProプランにアップグレードしましょう。</p>
+</div>
+
+<h4 style="color: #92400e;">📋 手順1: Resendアカウントを作成（3分）</h4>
+
+<div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
+  <ol style="margin: 0; padding-left: 20px;">
+    <li style="margin-bottom: 12px;"><a href="https://resend.com/" target="_blank" style="color: #ea580c; font-weight: 600;">Resend公式サイト</a>にアクセスします</li>
+    <li style="margin-bottom: 12px;">画面右上の<strong>「Start Building」</strong>ボタンをクリック</li>
+    <li style="margin-bottom: 12px;">サインアップ画面で<strong>「Sign up with GitHub」</strong>または<strong>「Sign up with Google」</strong>を選択（GitHubアカウントがあればそちらを推奨します）</li>
+    <li>認証が完了すると、自動的にResendのダッシュボードに移動します</li>
+  </ol>
+</div>
+
+<div style="background: rgba(59, 130, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-top: 16px;">
+  <p style="margin: 0; color: #1e40af; line-height: 1.7;"><strong>💡 初学者向けポイント</strong>: 「ダッシュボード」とは、サービスの管理画面のことです。ここでメールの送信設定やAPIキーの管理を行います。まるでExcelのホーム画面のようなものです。</p>
+</div>
+
+<h4 style="color: #92400e;">📋 手順2: ドメインをResendに追加（5分）</h4>
+
+<p>独自ドメイン（例: myapp.com）からメールを送信するには、ドメインをResendに登録します。<strong>これは、あなたのドメインからメールを送る許可をResendに与える作業です。</strong></p>
+
+<div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
+  <ol style="margin: 0; padding-left: 20px;">
+    <li style="margin-bottom: 12px;">Resendダッシュボードの左サイドバーにある<strong>「Domains」</strong>タブをクリック</li>
+    <li style="margin-bottom: 12px;">画面右上の<strong>「Add Domain」</strong>ボタンをクリック</li>
+    <li style="margin-bottom: 12px;">ドメイン入力欄にあなたのドメインを入力（例: <code>myapp.com</code>）
+      <div style="margin-top: 8px; padding: 12px; background: rgba(59, 130, 246, 0.1); border-radius: 6px;">
+        <p style="margin: 0; color: #1e40af; font-weight: 600;">💡 Netlifyで管理しているドメインを使う場合</p>
+        <p style="margin: 8px 0 0 0; color: #1e40af; line-height: 1.7; font-size: 0.95em;">Netlifyで既にカスタムドメインを設定済みの場合は、そのドメイン名をそのまま入力します。例: <code>my-app.netlify.app</code> ではなく、<code>myapp.com</code> のようなカスタムドメインです。</p>
+      </div>
+    </li>
+    <li style="margin-bottom: 12px;"><strong>「Add Domain」</strong>ボタンをクリックして確定</li>
+    <li>画面に表示される<strong>DNSレコード</strong>（SPF、DKIM、DMARC）をメモ帳にコピーして保存しておきます
+      <div style="margin-top: 8px; padding: 12px; background: rgba(245, 158, 11, 0.1); border-radius: 6px;">
+        <p style="margin: 0; color: #92400e; font-weight: 600;">📝 次のステップで必要になります</p>
+        <p style="margin: 8px 0 0 0; color: #92400e; line-height: 1.7; font-size: 0.95em;">これらのDNSレコードは、次のステップでNetlifyに設定します。画面を閉じずに、そのまま次の作業に進みましょう。</p>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<div style="background: rgba(59, 130, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-top: 16px;">
+  <p style="margin: 0; color: #1e40af; line-height: 1.7;"><strong>🤔 「DNSレコード」って何？</strong></p>
+  <p style="margin: 8px 0 0 0; color: #1e40af;">DNSレコードは、インターネット上で「このドメインから送られたメールは本物ですよ」と証明するための設定です。電子印鑑のようなものだと考えてください。これを設定しないと、あなたのメールが迷惑メールフォルダに入ってしまう可能性が高くなります。</p>
+</div>
+
+<h4 style="color: #92400e;">📋 手順3: NetlifyにDNSレコードを設定してResendと連携（15分）</h4>
+
+<p>先ほどResendで表示されたDNSレコードを、Netlifyに登録します。<strong>これにより、Netlifyで管理しているドメインとResendが正式に連携され、そのドメインからメール送信できるようになります。</strong></p>
+
+<div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #8b5cf6; margin: 16px 0;">
+  <p style="margin: 0 0 8px 0; color: #6d28d9; font-weight: 600;">🎯 この作業でできるようになること</p>
+  <ul style="margin: 0; padding-left: 20px; color: #7c3aed; line-height: 1.7;">
+    <li>Netlifyで管理している独自ドメイン（例: myapp.com）からメール送信</li>
+    <li>送信元アドレスに独自ドメインを使用（例: noreply@myapp.com）</li>
+    <li>メールの信頼性向上（迷惑メールフォルダに入りにくくなる）</li>
+  </ul>
+</div>
+
+<div style="background: rgba(59, 130, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 16px 0;">
+  <p style="margin: 0 0 8px 0; color: #1e40af; font-weight: 600;">📌 事前準備：Resendの画面を開いたままにしておく</p>
+  <p style="margin: 0; color: #1e40af; line-height: 1.7;">手順2で表示されたResendのDNSレコード画面を<strong>閉じずに</strong>そのままにしておいてください。この画面を見ながらNetlifyに入力していきます。</p>
+</div>
+
+<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">🔧 ステップ3-1: NetlifyのDNS設定画面を開く</p>
+
+<div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
+  <ol style="margin: 0; padding-left: 20px; line-height: 1.8;">
+    <li style="margin-bottom: 12px;"><a href="https://app.netlify.com/" target="_blank" style="color: #ea580c; font-weight: 600;">Netlifyダッシュボード</a>を新しいタブで開きます（Resendの画面と並べて見られるようにします）</li>
+    <li style="margin-bottom: 12px;">サイト一覧から、あなたのサイト（例: my-app）をクリック</li>
+    <li style="margin-bottom: 12px;">サイト管理画面の左サイドバーにある<strong>「Domain management」</strong>（ドメイン管理）をクリック
+      <div style="margin-top: 8px; padding: 10px; background: rgba(59, 130, 246, 0.1); border-radius: 6px;">
+        <p style="margin: 0; color: #1e40af; font-size: 0.9em;"><strong>💡 見つからない場合</strong>: 左サイドバーが閉じている場合は、左上のハンバーガーメニュー（三本線）をクリックしてメニューを開いてください。</p>
+      </div>
+    </li>
+    <li style="margin-bottom: 12px;">「Production domains」セクションに表示されているカスタムドメイン（例: myapp.com）を確認します
+      <div style="margin-top: 8px; padding: 10px; background: rgba(245, 158, 11, 0.1); border-radius: 6px;">
+        <p style="margin: 0; color: #92400e; font-size: 0.9em;"><strong>⚠️ 注意</strong>: <code>xxx.netlify.app</code> というNetlify提供のドメインではなく、<strong>カスタムドメイン</strong>（例: myapp.com）が設定されている必要があります。カスタムドメインがない場合は、14章を参照してドメイン設定を先に行ってください。</p>
+      </div>
+    </li>
+    <li style="margin-bottom: 12px;">カスタムドメインの右側にある<strong>「Options」</strong>（または「...」メニュー）ボタンをクリック</li>
+    <li style="margin-bottom: 12px;">ドロップダウンメニューから<strong>「Go to DNS panel」</strong>（DNS設定画面へ移動）を選択
+      <div style="margin-top: 8px; padding: 10px; background: rgba(16, 185, 129, 0.1); border-radius: 6px;">
+        <p style="margin: 0; color: #047857; font-size: 0.9em;"><strong>✅ 成功</strong>: DNS管理画面が表示され、既存のDNSレコード一覧（A、CNAME、TXT等）が見えます。</p>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #ef4444; margin: 16px 0;">
+  <p style="margin: 0 0 8px 0; color: #b91c1c; font-weight: 600;">⚠️ 「Go to DNS panel」が表示されない場合</p>
+  <p style="margin: 0 0 8px 0; color: #991b1b; line-height: 1.7;">以下のいずれかの可能性があります：</p>
+  <ul style="margin: 0; padding-left: 20px; color: #991b1b; line-height: 1.7;">
+    <li><strong>外部DNSプロバイダーを使用している</strong>: ドメインをお名前.com、Cloudflare等の外部サービスで管理している場合、そちらのDNS設定画面でレコードを追加する必要があります</li>
+    <li><strong>Netlify DNSを使用していない</strong>: ドメイン設定時に「Use Netlify DNS」を選択していない場合、DNSはドメインレジストラ側で管理されています</li>
+  </ul>
+  <p style="margin: 12px 0 0 0; color: #991b1b; line-height: 1.7;"><strong>対処法</strong>: ドメインを購入したサービス（お名前.com、ムームードメイン、Cloudflare等）のDNS設定画面で、以下の手順と同様にレコードを追加してください。</p>
+</div>
+
+<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">📝 ステップ3-2: DNSレコードを1つずつ追加する</p>
+
+<p>Resendで表示された3つのDNSレコード（SPF、DKIM、DMARC）を、Netlifyに順番に追加していきます。<strong>各レコードは必ず正確にコピー＆ペーストしてください。手入力すると間違えやすいです。</strong></p>
+
+<div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
+  <p style="margin: 0 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.05em;">1️⃣ SPFレコードの追加（メール送信元の認証）</p>
+
+  <div style="background: rgba(245, 158, 11, 0.05); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+    <p style="margin: 0 0 12px 0; color: #78350f; font-weight: 600;">📋 入力内容</p>
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
+      <tr style="background: rgba(245, 158, 11, 0.1);">
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 600; color: #92400e; width: 30%;">項目</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 600; color: #92400e;">入力する値</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(255, 255, 255, 0.5);">Record type</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2);"><code style="background: rgba(245, 158, 11, 0.1); padding: 2px 6px; border-radius: 4px;">TXT</code> を選択</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(255, 255, 255, 0.5);">Name</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2);"><code style="background: rgba(245, 158, 11, 0.1); padding: 2px 6px; border-radius: 4px;">@</code> または空欄のまま</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(255, 255, 255, 0.5);">Value</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2);">Resendに表示されている値をコピー＆ペースト<br><span style="font-size: 0.9em; color: #78350f;">例: <code>v=spf1 include:resend.com ~all</code></span></td>
+      </tr>
+    </table>
+  </div>
+
+  <ol style="margin: 0; padding-left: 20px; line-height: 1.8;">
+    <li style="margin-bottom: 10px;">NetlifyのDNS画面で<strong>「Add new record」</strong>ボタンをクリック</li>
+    <li style="margin-bottom: 10px;">「Record type」ドロップダウンから<strong>「TXT」</strong>を選択</li>
+    <li style="margin-bottom: 10px;">「Name」欄に<code>@</code>と入力（または空欄のまま）
+      <div style="margin-top: 6px; padding: 8px; background: rgba(59, 130, 246, 0.1); border-radius: 4px;">
+        <p style="margin: 0; color: #1e40af; font-size: 0.85em;">💡 <code>@</code>は「ルートドメイン」を表します。つまり、<code>myapp.com</code>そのものを指します。</p>
+      </div>
+    </li>
+    <li style="margin-bottom: 10px;">Resendの画面から<strong>SPFレコードのValue</strong>（<code>v=spf1 include:resend.com ~all</code>のような文字列）を<strong>コピー</strong></li>
+    <li style="margin-bottom: 10px;">Netlifyの「Value」欄に<strong>ペースト</strong></li>
+    <li style="margin-bottom: 10px;"><strong>「Save」</strong>または<strong>「Add record」</strong>ボタンをクリック
+      <div style="margin-top: 6px; padding: 8px; background: rgba(16, 185, 129, 0.1); border-radius: 4px;">
+        <p style="margin: 0; color: #047857; font-size: 0.85em;">✅ 成功: レコード一覧にSPFレコードが追加されます</p>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
+  <p style="margin: 0 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.05em;">2️⃣ DKIMレコードの追加（メール内容の改ざん防止）</p>
+
+  <div style="background: rgba(245, 158, 11, 0.05); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+    <p style="margin: 0 0 12px 0; color: #78350f; font-weight: 600;">📋 入力内容</p>
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
+      <tr style="background: rgba(245, 158, 11, 0.1);">
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 600; color: #92400e; width: 30%;">項目</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 600; color: #92400e;">入力する値</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(255, 255, 255, 0.5);">Record type</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2);"><code style="background: rgba(245, 158, 11, 0.1); padding: 2px 6px; border-radius: 4px;">TXT</code> を選択</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(255, 255, 255, 0.5);">Name</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2);">Resendに表示されている値をコピー<br><span style="font-size: 0.9em; color: #78350f;">例: <code>resend._domainkey</code></span></td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(255, 255, 255, 0.5);">Value</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2);">Resendに表示されている長い文字列をコピー<br><span style="font-size: 0.9em; color: #78350f;">（通常200文字以上の長い文字列）</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <ol style="margin: 0; padding-left: 20px; line-height: 1.8;">
+    <li style="margin-bottom: 10px;">もう一度<strong>「Add new record」</strong>ボタンをクリック</li>
+    <li style="margin-bottom: 10px;">「Record type」から<strong>「TXT」</strong>を選択</li>
+    <li style="margin-bottom: 10px;">Resendの画面から<strong>DKIMレコードのName</strong>（<code>resend._domainkey</code>のような文字列）を<strong>コピー</strong>
+      <div style="margin-top: 6px; padding: 8px; background: rgba(245, 158, 11, 0.1); border-radius: 4px;">
+        <p style="margin: 0; color: #92400e; font-size: 0.85em;">⚠️ 重要: DKIMレコードはNameとValueの両方をResendからコピーします。SPFレコードとは異なります。</p>
+      </div>
+    </li>
+    <li style="margin-bottom: 10px;">Netlifyの「Name」欄に<strong>ペースト</strong></li>
+    <li style="margin-bottom: 10px;">Resendの画面から<strong>DKIMレコードのValue</strong>（長い文字列）を<strong>コピー</strong></li>
+    <li style="margin-bottom: 10px;">Netlifyの「Value」欄に<strong>ペースト</strong></li>
+    <li style="margin-bottom: 10px;"><strong>「Save」</strong>または<strong>「Add record」</strong>ボタンをクリック
+      <div style="margin-top: 6px; padding: 8px; background: rgba(16, 185, 129, 0.1); border-radius: 4px;">
+        <p style="margin: 0; color: #047857; font-size: 0.85em;">✅ 成功: レコード一覧にDKIMレコードが追加されます</p>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
+  <p style="margin: 0 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.05em;">3️⃣ DMARCレコードの追加（なりすましメール対策）</p>
+
+  <div style="background: rgba(245, 158, 11, 0.05); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+    <p style="margin: 0 0 12px 0; color: #78350f; font-weight: 600;">📋 入力内容</p>
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
+      <tr style="background: rgba(245, 158, 11, 0.1);">
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 600; color: #92400e; width: 30%;">項目</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 600; color: #92400e;">入力する値</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(255, 255, 255, 0.5);">Record type</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2);"><code style="background: rgba(245, 158, 11, 0.1); padding: 2px 6px; border-radius: 4px;">TXT</code> を選択</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(255, 255, 255, 0.5);">Name</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2);"><code style="background: rgba(245, 158, 11, 0.1); padding: 2px 6px; border-radius: 4px;">_dmarc</code> と入力</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(255, 255, 255, 0.5);">Value</td>
+        <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.2);">Resendに表示されている値をコピー<br><span style="font-size: 0.9em; color: #78350f;">例: <code>v=DMARC1; p=none; rua=mailto:dmarc@resend.com</code></span></td>
+      </tr>
+    </table>
+  </div>
+
+  <ol style="margin: 0; padding-left: 20px; line-height: 1.8;">
+    <li style="margin-bottom: 10px;">最後にもう一度<strong>「Add new record」</strong>ボタンをクリック</li>
+    <li style="margin-bottom: 10px;">「Record type」から<strong>「TXT」</strong>を選択</li>
+    <li style="margin-bottom: 10px;">「Name」欄に<code>_dmarc</code>と入力
+      <div style="margin-top: 6px; padding: 8px; background: rgba(59, 130, 246, 0.1); border-radius: 4px;">
+        <p style="margin: 0; color: #1e40af; font-size: 0.85em;">💡 <code>_dmarc</code>は固定値です。これがDMARCポリシーの標準的な名前です。</p>
+      </div>
+    </li>
+    <li style="margin-bottom: 10px;">Resendの画面から<strong>DMARCレコードのValue</strong>（<code>v=DMARC1; p=none...</code>のような文字列）を<strong>コピー</strong></li>
+    <li style="margin-bottom: 10px;">Netlifyの「Value」欄に<strong>ペースト</strong></li>
+    <li style="margin-bottom: 10px;"><strong>「Save」</strong>または<strong>「Add record」</strong>ボタンをクリック
+      <div style="margin-top: 6px; padding: 8px; background: rgba(16, 185, 129, 0.1); border-radius: 4px;">
+        <p style="margin: 0; color: #047857; font-size: 0.85em;">✅ 成功: レコード一覧にDMARCレコードが追加されます</p>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 24px;">
+  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">🎉 DNSレコードの追加完了！</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;">3つのDNSレコード（SPF、DKIM、DMARC）をすべて追加できました。次のステップでResend側から検証を行います。</p>
+</div>
+
+<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">✅ ステップ3-3: Resendで検証する</p>
+
+<div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
+  <ol style="margin: 0; padding-left: 20px; line-height: 1.8;">
+    <li style="margin-bottom: 12px;">Resendのダッシュボード画面に戻ります</li>
+    <li style="margin-bottom: 12px;">左サイドバーの<strong>「Domains」</strong>をクリック</li>
+    <li style="margin-bottom: 12px;">先ほど追加したドメイン（例: myapp.com）をクリック</li>
+    <li style="margin-bottom: 12px;">ドメイン詳細画面で<strong>「Verify DNS」</strong>ボタンをクリック
+      <div style="margin-top: 8px; padding: 10px; background: rgba(59, 130, 246, 0.1); border-radius: 6px;">
+        <p style="margin: 0; color: #1e40af; font-size: 0.9em;">💡 このボタンで、ResendがNetlifyに追加したDNSレコードを確認します。</p>
+      </div>
+    </li>
+    <li style="margin-bottom: 12px;">数秒～数分待つと、検証結果が表示されます：
+      <ul style="margin-top: 8px;">
+        <li style="color: #047857;"><strong>✅ Verified（検証済み）</strong>: 成功！すべてのレコードが正しく設定されています</li>
+        <li style="color: #d97706;"><strong>⏳ Pending（保留中）</strong>: DNS反映待ち。数時間後に再度試してください</li>
+        <li style="color: #dc2626;"><strong>❌ Failed（失敗）</strong>: レコードの設定に誤りがあります。次のトラブルシューティングを参照</li>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
+  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">⏱️ DNS反映までの時間</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;">DNS設定が反映されるまで、最大48時間かかる場合がありますが、通常は<strong>数分～数時間で完了</strong>します。Resendのダッシュボードで<strong>「Verified ✓」</strong>と表示されたら設定完了です！</p>
+</div>
+
+<div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border-left: 4px solid #ef4444; margin-top: 16px;">
+  <p style="margin: 0 0 12px 0; color: #b91c1c; font-weight: 600; font-size: 1.05em;">⚠️ よくあるトラブルと解決方法</p>
+
+  <div style="margin-bottom: 16px;">
+    <p style="margin: 0 0 6px 0; color: #991b1b; font-weight: 600;">1️⃣ 「Verify DNS」を押しても「Pending」のまま</p>
+    <p style="margin: 0 0 6px 0; color: #991b1b; font-size: 0.95em;"><strong>原因</strong>: DNS設定がインターネット全体に反映されるまで時間がかかっています</p>
+    <p style="margin: 0; color: #991b1b; font-size: 0.95em;"><strong>対処法</strong>:</p>
+    <ul style="margin: 4px 0 0 0; padding-left: 20px; color: #991b1b; font-size: 0.95em;">
+      <li>数時間待ってから再度「Verify DNS」ボタンをクリック</li>
+      <li>最大48時間かかる場合もあります（通常は数分～数時間）</li>
+      <li>急ぎの場合は、ターミナルで <code style="background: rgba(0,0,0,0.1); padding: 2px 4px; border-radius: 3px;">dig TXT myapp.com</code> を実行して、レコードが反映されているか確認できます</li>
+    </ul>
+  </div>
+
+  <div style="margin-bottom: 16px;">
+    <p style="margin: 0 0 6px 0; color: #991b1b; font-weight: 600;">2️⃣ 「Go to DNS panel」ボタンが見つからない</p>
+    <p style="margin: 0 0 6px 0; color: #991b1b; font-size: 0.95em;"><strong>原因</strong>: Netlify DNSを使用していない、または外部DNSプロバイダーを使用している</p>
+    <p style="margin: 0; color: #991b1b; font-size: 0.95em;"><strong>対処法</strong>:</p>
+    <ul style="margin: 4px 0 0 0; padding-left: 20px; color: #991b1b; font-size: 0.95em;">
+      <li>ドメインを購入したサービス（お名前.com、ムームードメイン、Cloudflare等）のDNS設定画面にアクセス</li>
+      <li>そちらで同じようにTXTレコードを追加してください</li>
+      <li>各サービスの設定方法は、ClaudeCodeに「[サービス名]でDNSレコードを追加する方法」と質問すると案内してくれます</li>
+    </ul>
+  </div>
+
+  <div style="margin-bottom: 16px;">
+    <p style="margin: 0 0 6px 0; color: #991b1b; font-weight: 600;">3️⃣ SPFレコードが「既に存在します」というエラーが出る</p>
+    <p style="margin: 0 0 6px 0; color: #991b1b; font-size: 0.95em;"><strong>原因</strong>: 既存のSPFレコードがある場合、複数のSPFレコードは設定できません</p>
+    <p style="margin: 0; color: #991b1b; font-size: 0.95em;"><strong>対処法</strong>:</p>
+    <ul style="margin: 4px 0 0 0; padding-left: 20px; color: #991b1b; font-size: 0.95em;">
+      <li>既存のSPFレコードを編集して、Resendの内容を追加します</li>
+      <li>例: 既存 <code style="background: rgba(0,0,0,0.1); padding: 2px 4px; border-radius: 3px;">v=spf1 include:_spf.google.com ~all</code></li>
+      <li>変更後 <code style="background: rgba(0,0,0,0.1); padding: 2px 4px; border-radius: 3px;">v=spf1 include:_spf.google.com include:resend.com ~all</code></li>
+      <li>複数のincludeをスペース区切りで追加します</li>
+    </ul>
+  </div>
+
+  <div style="margin-bottom: 16px;">
+    <p style="margin: 0 0 6px 0; color: #991b1b; font-weight: 600;">4️⃣ DKIMレコードのValueが長すぎて入力できない</p>
+    <p style="margin: 0 0 6px 0; color: #991b1b; font-size: 0.95em;"><strong>原因</strong>: DKIMレコードは通常200文字以上の長い文字列です</p>
+    <p style="margin: 0; color: #991b1b; font-size: 0.95em;"><strong>対処法</strong>:</p>
+    <ul style="margin: 4px 0 0 0; padding-left: 20px; color: #991b1b; font-size: 0.95em;">
+      <li>文字列全体をコピー＆ペーストしてください（手入力は不可能です）</li>
+      <li>Netlifyの入力欄は長いテキストにも対応しています</li>
+      <li>貼り付け後、入力欄が自動的に拡張されます</li>
+    </ul>
+  </div>
+
+  <div>
+    <p style="margin: 0 0 6px 0; color: #991b1b; font-weight: 600;">5️⃣ Resendで「Failed」と表示される</p>
+    <p style="margin: 0 0 6px 0; color: #991b1b; font-size: 0.95em;"><strong>原因</strong>: レコードの入力内容に誤りがある</p>
+    <p style="margin: 0; color: #991b1b; font-size: 0.95em;"><strong>対処法</strong>:</p>
+    <ul style="margin: 4px 0 0 0; padding-left: 20px; color: #991b1b; font-size: 0.95em;">
+      <li>Resendのドメイン詳細画面で、どのレコードが失敗しているか確認</li>
+      <li>Netlifyに戻り、該当レコードを削除して再度追加</li>
+      <li>コピー＆ペースト時に余分なスペースや改行が入っていないか確認</li>
+      <li>それでも解決しない場合は、ClaudeCodeに「Resendのドメイン検証でエラーが出ました: [エラーメッセージ]」と相談してください</li>
+    </ul>
+  </div>
+</div>
+
+<div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #8b5cf6; margin-top: 16px;">
+  <p style="margin: 0 0 8px 0; color: #6d28d9; font-weight: 600;">💡 DNS設定の仕組みを理解しよう</p>
+  <p style="margin: 0 0 12px 0; color: #7c3aed; line-height: 1.7; font-size: 0.95em;">なぜResendがドメイン設定を直接できないのか、図で理解しましょう：</p>
+
+  <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; margin: 12px 0; font-family: monospace; font-size: 0.9em; line-height: 1.8;">
+    <div style="color: #6d28d9; font-weight: 600; margin-bottom: 8px;">📊 DNS設定の流れ</div>
+    <div style="color: #1f2937;">
+      <div style="margin-bottom: 4px;">あなた → Resend: 「myapp.comでメール送りたい」</div>
+      <div style="margin-bottom: 4px;">Resend → あなた: 「これらのDNSレコードを追加して」（指示のみ）</div>
+      <div style="margin-bottom: 4px; color: #ea580c; font-weight: 600;">　　　　　　　　　↓ ⚠️ Resendはここで実際の設定権限なし</div>
+      <div style="margin-bottom: 4px;">あなた → Netlify: 「ResendからもらったレコードをDNSに追加」</div>
+      <div style="margin-bottom: 4px; color: #047857; font-weight: 600;">　　　　　　　　　↓ ✅ Netlifyが実際にDNS設定を変更</div>
+      <div style="margin-bottom: 4px;">Netlify: DNS設定完了（インターネット全体に反映開始）</div>
+      <div style="margin-bottom: 4px;">　　　　　　　　　↓ ⏱️ 数分～数時間待機</div>
+      <div style="margin-bottom: 4px;">Resend → DNS: 「本当に設定されたか確認」（Verify DNS）</div>
+      <div style="color: #047857; font-weight: 600;">Resend: ✅ 検証完了！メール送信準備OK</div>
+    </div>
+  </div>
+
+  <p style="margin: 12px 0 0 0; color: #7c3aed; line-height: 1.7; font-size: 0.95em;"><strong>重要ポイント</strong>: Resendは「指示を出す」ことと「検証する」ことしかできません。実際のDNS設定は、ドメインを管理しているサービス（Netlify、お名前.com等）でしか行えません。</p>
+</div>
+
+<h4 style="color: #92400e;">📋 手順4: APIキーを取得してResend CLIに設定（10分）</h4>
+
+<p><strong>APIキーは、プログラムからResendを操作するための「パスワード」のようなものです。</strong>セキュリティ上の理由から、ダッシュボードで作成し、コマンドラインツール（Resend CLI）に安全に保存する必要があります。</p>
+
+<div style="background: rgba(59, 130, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 16px 0;">
+  <p style="margin: 0 0 8px 0; color: #1e40af; font-weight: 600;">🤔 なぜダッシュボードでAPIキーを作成する必要があるの？</p>
+  <p style="margin: 0; color: #1e40af; line-height: 1.7;">セキュリティのためです。APIキーはあなたのアカウントの「鍵」です。もし誰かがこの鍵を盗んで悪用したら、あなたの名前でスパムメールを大量送信されてしまう可能性があります。だから、ダッシュボードでログイン認証をした後にだけ作成できるようになっているのです。</p>
+</div>
+
+<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">🔑 ステップ4-1: ダッシュボードでAPIキーを作成</p>
+
+<div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
+  <ol style="margin: 0; padding-left: 20px;">
+    <li style="margin-bottom: 12px;">Resendダッシュボードにサインインした状態で、左サイドバーの<strong>「API Keys」</strong>メニューをクリック</li>
+    <li style="margin-bottom: 12px;">画面右上の<strong>「Create API Key」</strong>ボタンをクリック</li>
+    <li style="margin-bottom: 12px;">APIキーに分かりやすい名前を付けます（例: <code>My CLI Key</code>）</li>
+    <li style="margin-bottom: 12px;">権限（Permission）を選択します：
+      <ul style="margin-top: 8px; margin-bottom: 12px;">
+        <li style="margin-bottom: 8px;"><strong>✅ 「Sending access」を選択</strong>（推奨）
+          <div style="margin-top: 6px; padding: 10px; background: rgba(16, 185, 129, 0.1); border-radius: 6px; font-size: 0.9em;">
+            <div style="font-weight: 600; color: #047857; margin-bottom: 4px;">できること：</div>
+            <ul style="margin: 0; padding-left: 20px; color: #065f46;">
+              <li>メールの送信（POST /emails/send）</li>
+              <li>送信済みメールの取得（GET /emails/:id）</li>
+            </ul>
+            <div style="font-weight: 600; color: #047857; margin-top: 8px; margin-bottom: 4px;">できないこと：</div>
+            <ul style="margin: 0; padding-left: 20px; color: #065f46;">
+              <li>ドメインの追加・削除・変更</li>
+              <li>APIキーの作成・削除</li>
+              <li>オーディエンス・連絡先の管理</li>
+              <li>テンプレートの作成・変更</li>
+            </ul>
+            <div style="margin-top: 8px; padding: 8px; background: rgba(255, 255, 255, 0.8); border-radius: 4px; color: #047857; font-size: 0.95em;">
+              💡 <strong>推奨理由</strong>: メール送信のみに限定されているため、万が一APIキーが漏洩しても、アカウント設定やドメイン設定を変更される心配がありません。
+            </div>
+          </div>
+        </li>
+        <li><strong>⚠️ 「Full access」は選ばないでください</strong>（セキュリティリスク高）
+          <div style="margin-top: 6px; padding: 10px; background: rgba(239, 68, 68, 0.1); border-radius: 6px; font-size: 0.9em;">
+            <div style="font-weight: 600; color: #b91c1c; margin-bottom: 4px;">すべての操作が可能：</div>
+            <ul style="margin: 0; padding-left: 20px; color: #991b1b;">
+              <li>メール送信</li>
+              <li>ドメインの作成・削除・変更</li>
+              <li>APIキーの作成・削除（他のキーも削除可能）</li>
+              <li>オーディエンス・連絡先の管理</li>
+              <li>テンプレートの完全管理</li>
+              <li>ブロードキャストの送信</li>
+            </ul>
+            <div style="margin-top: 8px; padding: 8px; background: rgba(255, 255, 255, 0.8); border-radius: 4px; color: #991b1b; font-size: 0.95em;">
+              ⚠️ <strong>危険性</strong>: APIキーが漏洩すると、アカウントの完全乗っ取り、ドメインの削除、スパムメールの大量送信などが可能になります。バックエンド管理システムでのみ使用してください。
+            </div>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li style="margin-bottom: 12px;"><strong>「Create」</strong>ボタンをクリック</li>
+    <li>画面に表示されるAPIキー（<code>re_xxxxxxxxxx</code>形式）をすぐに<strong>コピー</strong>してください</li>
+  </ol>
+</div>
+
+<div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.3); margin: 24px 0;">
+  <p style="margin: 0 0 8px 0; font-weight: 600; color: #b91c1c; font-size: 1.1em;">⚠️ 超重要！一度しか表示されません</p>
+  <p style="margin: 0; color: #991b1b; line-height: 1.7;">APIキーは<strong>作成直後の画面でしか表示されません。</strong>この画面を閉じたら二度と見ることができません。必ず以下のどちらかに保存してください：</p>
+  <ul style="margin: 8px 0 0 0; padding-left: 24px; color: #991b1b;">
+    <li>メモ帳やテキストエディタに一時的にコピー</li>
+    <li>次のステップでResend CLIに設定する（推奨）</li>
+  </ul>
+  <p style="margin: 12px 0 0 0; color: #991b1b; line-height: 1.7;">紛失した場合は、新しいAPIキーを作成し直す必要があります。</p>
+</div>
+
+<div style="background: rgba(59, 130, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 16px 0;">
+  <p style="margin: 0; color: #1e40af; line-height: 1.7;"><strong>✅ Resend CLIは0章で自動インストール済み</strong></p>
+  <p style="margin: 8px 0 0 0; color: #1e40af;">0章の自動セットアップスクリプトでResend CLIは既にインストールされています。次のステップでAPIキーを設定するだけでOKです！</p>
+</div>
+
+<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">🔐 ステップ4-2: APIキーをResend CLIに設定</p>
+
+<p>先ほどコピーしたAPIキーを、Resend CLIに保存します。この作業により、毎回APIキーを入力しなくても、安全にResendを利用できるようになります。</p>
+
+<div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
+  <ol style="margin: 0; padding-left: 20px;">
+    <li style="margin-bottom: 12px;">ターミナルで以下のコマンドを実行：</li>
+  </ol>
+  <pre style="background: rgba(30, 27, 75, 0.95); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 8px; padding: 16px; overflow-x: auto; margin: 12px 0;"><code style="color: #e0e7ff; font-weight: 600;">resend set</code></pre>
+  <ol start="2" style="margin: 12px 0 0 0; padding-left: 20px;">
+    <li style="margin-bottom: 12px;">「Enter your Resend API key:」というプロンプトが表示されます</li>
+    <li style="margin-bottom: 12px;">先ほどコピーしたAPIキー（<code>re_xxxxxxxxxx</code>）を<strong>ペースト</strong>してEnterを押します</li>
+    <li>「API key saved successfully!」と表示されれば設定完了です</li>
+  </ol>
+</div>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
+  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">✨ これで準備完了！</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;">これで、あなたのコンピューター上でResend CLIを使ってメール送信のテストや管理ができるようになりました。APIキーは暗号化されて安全に保存されています。</p>
+</div>
+
+<div style="background: rgba(59, 130, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-top: 16px;">
+  <p style="margin: 0 0 8px 0; color: #1e40af; font-weight: 600;">🧪 動作確認（オプション）</p>
+  <p style="margin: 0 0 8px 0; color: #1e40af; line-height: 1.7;">以下のコマンドでAPIキーが正しく設定されているか確認できます：</p>
+  <pre style="background: rgba(30, 27, 75, 0.95); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 12px; overflow-x: auto; margin: 0;"><code style="color: #bfdbfe;">resend domains list</code></pre>
+  <p style="margin: 8px 0 0 0; color: #1e40af; font-size: 0.9em;">先ほど登録したドメイン一覧が表示されれば成功です！</p>
+</div>
+
+<h3 id="16-3-claudecodeでresend統合を依頼しよう">16.3 ClaudeCodeでResend統合を依頼しよう</h3>
+
+<p>ClaudeCodeを使えば、Resendの統合を簡単に自動化できます！<strong>メール送信のタイミングをしっかり設計してから実装すると、より良い機能になります。</strong></p>
+
+<h4 style="color: #92400e;">🎯 ステップ1: SuperClaudeで要件を整理（推奨）</h4>
+
+<p>実装前に、<strong>SuperClaudeのbrainstormコマンド</strong>を使って、「どんな時にメールを送りたいか」を整理しましょう。</p>
+
+<div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.1);">
+  <h4 style="color: #6d28d9; margin-top: 0;">💭 SuperClaude Brainstorm例</h4>
+  <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">/sc:brainstorm 作業時間トラッカーアプリにメール送信機能を追加したい。
+どんな時にメールを送ったら便利か、アイデアを一緒に考えたい。</code></pre>
+
+  <p style="margin: 12px 0; color: #6d28d9; font-weight: 600;">SuperClaudeが質問してくれる例：</p>
+  <ul style="margin: 0; color: #7c3aed; line-height: 1.7;">
+    <li>📧 誰にメールを送りますか？（本人、管理者、チームメンバー）</li>
+    <li>⏰ どんなタイミングで送りますか？（即座、定期的、条件付き）</li>
+    <li>📝 メールに何を含めますか？（データ、レポート、通知）</li>
+    <li>🎯 メールの目的は何ですか？（記録、通知、リマインド）</li>
+  </ul>
+
+  <p style="margin: 12px 0 0 0; color: #7c3aed; font-size: 0.9em;"><strong>💡 ポイント</strong>: brainstormで対話しながら要件を固めると、後で「あれも必要だった」となりにくいです！</p>
+</div>
+
+<h4 style="color: #92400e;">🎨 ステップ2: SuperClaudeで設計書を作成（推奨）</h4>
+
+<p>要件が固まったら、<strong>SuperClaudeのdesignコマンド</strong>で詳細な設計書を作成します。</p>
+
+<div style="background: rgba(236, 72, 153, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(236, 72, 153, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(236, 72, 153, 0.1);">
+  <h4 style="color: #be185d; margin-top: 0;">📐 SuperClaude Design例</h4>
+  <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">/sc:design Resendを使ったメール送信機能の設計書を作成してください。
+
+【メール送信タイミング】
+1. 作業記録を保存したとき → 本人に確認メール
+2. 1日の終わりに → 本人に日報メール（その日の作業まとめ）
+3. 問い合わせフォーム送信時 → 管理者に通知メール
+
+【技術要件】
+- Resend SDK使用
+- Netlify Functionsで実装
+- 環境変数でAPIキー管理
+- エラーハンドリング必須</code></pre>
+
+  <p style="margin: 12px 0 0 0; color: #be185d; font-size: 0.9em;"><strong>💡 ポイント</strong>: designコマンドで作成した設計書を、そのままClaudeCodeに渡すと実装がスムーズです！</p>
+</div>
+
+<h4 style="color: #92400e;">💻 ステップ3: ClaudeCodeで実装</h4>
+
+<p>設計書ができたら、ClaudeCodeに実装を依頼します。</p>
+
+<div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);">
+  <h4 style="color: #4338ca; margin-top: 0;">🤖 ClaudeCodeへの依頼プロンプト例</h4>
+
+  <p style="margin: 0 0 12px 0; color: #4338ca; font-weight: 600;">パターン1: 問い合わせフォーム（シンプル）</p>
+  <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">Resend SDKをインストールして、問い合わせフォームからメールを送信する機能を実装してください。
+
+【メール送信タイミング】
+- ユーザーが問い合わせフォームを送信したとき
+
+【送信内容】
+- 送信元: noreply@myapp.com
+- 送信先: contact@myapp.com
+- 件名: 【問い合わせ】{お名前}様からの問い合わせ
+- 本文: フォームの内容（名前、メールアドレス、メッセージ）
+
+【技術要件】
+- Netlify Functionsで実装
+- 環境変数でAPIキー管理（RESEND_API_KEY）
+- エラーハンドリング付き</code></pre>
+
+  <p style="margin: 16px 0 12px 0; color: #4338ca; font-weight: 600;">パターン2: 作業記録保存時の確認メール</p>
+  <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">Resendを使って、作業記録保存時に確認メールを送信する機能を実装してください。
+
+【メール送信タイミング】
+- ユーザーが作業記録（タスク名、作業時間）を保存したとき
+
+【送信内容】
+- 送信元: noreply@myapp.com
+- 送信先: ユーザーのメールアドレス（Supabaseから取得）
+- 件名: 作業記録を保存しました
+- 本文:
+  こんにちは、{ユーザー名}さん
+
+  以下の作業記録を保存しました：
+  - タスク名: {タスク名}
+  - 作業時間: {作業時間}
+  - 保存日時: {保存日時}
+
+  ダッシュボードで確認: https://myapp.com/dashboard
+
+【技術要件】
+- Supabase Functionsのトリガーまたは
+- Netlify Functionsで実装
+- メールテンプレートはHTMLで見やすく
+- エラー時はログに記録（メール送信失敗でもデータ保存は成功させる）</code></pre>
+
+  <p style="margin: 16px 0 12px 0; color: #4338ca; font-weight: 600;">パターン3: 日報メール（定期送信）</p>
+  <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">Resendを使って、毎日夜20時にその日の作業まとめメールを送信する機能を実装してください。
+
+【メール送信タイミング】
+- 毎日20:00（Netlify Scheduled Functionsを使用）
+
+【送信内容】
+- 送信元: noreply@myapp.com
+- 送信先: ユーザーのメールアドレス
+- 件名: 【日報】{日付}の作業まとめ
+- 本文:
+  今日も1日お疲れ様でした！
+
+  本日の作業まとめ：
+  - 総作業時間: {合計時間}
+  - 完了タスク数: {件数}
+  - タスク一覧:
+    1. {タスク名1} - {作業時間1}
+    2. {タスク名2} - {作業時間2}
+
+  詳細: https://myapp.com/dashboard
+
+【技術要件】
+- Netlify Scheduled Functionsで実装（cron: 0 20 * * *）
+- Supabaseから当日のデータを取得
+- ユーザーごとに個別送信
+- HTMLメールテンプレート使用</code></pre>
+</div>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin: 16px 0;">
+  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">✨ プロンプトのコツ</p>
+  <ul style="margin: 0; padding-left: 20px; color: #065f46; line-height: 1.7;">
+    <li><strong>メール送信タイミング</strong>を明確に書く（いつ送るか）</li>
+    <li><strong>送信内容</strong>を具体的に書く（送信元、送信先、件名、本文）</li>
+    <li><strong>技術要件</strong>を明記する（環境変数、エラーハンドリング）</li>
+    <li>エラー時の動作も指定する（メール失敗でもデータ保存は成功させる、など）</li>
+  </ul>
+</div>
+
+<p>このように依頼すると、ClaudeCodeが自動的に：</p>
+<ul>
+  <li>✅ Resend SDKのインストール（<code>npm install resend</code>）</li>
+  <li>✅ .envファイルに環境変数を追加</li>
+  <li>✅ 必要なHTMLフォームを作成</li>
+  <li>✅ Netlify Functionsでメール送信ロジックを実装</li>
+  <li>✅ フロントエンドとバックエンドの接続</li>
+  <li>✅ エラーハンドリングとログ出力</li>
+</ul>
+
+<p>してくれます！</p>
+
+<h3 id="16-4-メール送信機能を実装してテスト">16.4 メール送信機能を実装してテスト</h3>
+
+<p>ClaudeCodeが生成したコードを確認し、実際にメール送信をテストしましょう。</p>
+
+<h4 style="color: #92400e;">🧪 テスト手順</h4>
+
+<ol>
+  <li><strong>ローカルで動作確認</strong>: <code>netlify dev</code>でローカルサーバーを起動</li>
+  <li><strong>問い合わせフォームにアクセス</strong>: ブラウザで開く</li>
+  <li><strong>テストメールを送信</strong>: フォームに入力して送信ボタンをクリック</li>
+  <li><strong>メールを確認</strong>: 送信先メールアドレスの受信トレイを確認</li>
+</ol>
+
+<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了！</strong> メールが届いたら成功です。Resendダッシュボードの「Emails」タブで送信履歴も確認できます。</p>
+</div>
+
+<h4 style="color: #92400e;">🔍 トラブルシューティング</h4>
+
+<div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
+  <ul style="margin: 0;">
+    <li><strong>メールが届かない</strong>: DNSレコードが正しく設定されているか確認（Resendダッシュボードで検証可能）</li>
+    <li><strong>401エラー</strong>: APIキーが正しく.envファイルに設定されているか確認</li>
+    <li><strong>403エラー</strong>: 送信元ドメインが認証されているか確認</li>
+  </ul>
+</div>
+
+<h3 id="まとめ-16章">まとめ</h3>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin: 24px 0;">
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>🎉 素晴らしい！</strong> この章では、Resendを使ったメール送信機能の実装方法を学びました。独自ドメインからプロフェッショナルなメールを送信できるようになりました。ClaudeCodeを使えば、複雑な統合も簡単に実装できます。次の章では、Google AnalyticsとGA4 MCPを使った運用監視について学びます。</p>
+</div>
+
+<hr>
+
+<!-- 17章 Hero Section -->
+<div style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ea580c 100%); padding: 60px 32px; border-radius: 24px; margin: 40px 0; position: relative; overflow: hidden; box-shadow: 0 20px 60px rgba(249, 115, 22, 0.15);">
+  <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); filter: blur(40px);"></div>
+  <div style="position: relative; z-index: 1;">
+    <h2 id="17-google-analyticsとga4-mcpで運用分析" style="color: #78350f; margin: 0 0 16px 0; font-size: 2.2em; text-align: center; text-shadow: 0 2px 10px rgba(255,255,255,0.8);">
+      📊 17章: Google AnalyticsとGA4 MCPで運用分析
+    </h2>
+    <p style="margin: 0; text-align: center; font-size: 1.1em; color: #92400e; font-weight: 500; background: rgba(255, 255, 255, 0.9); padding: 16px 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);">Google AnalyticsとGA4 MCPで、ユーザーの行動を理解し、データ駆動の改善をしよう</p>
+  </div>
+</div>
+
+<div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(249, 115, 22, 0.1);">
+  <h3 style="margin: 0 0 16px 0; color: #78350f; display: flex; align-items: center; gap: 10px;">
+    <span style="font-size: 1.4em;">🎯</span>
+    <span>この章で学ぶこと</span>
+  </h3>
+  <p style="margin: 0; color: #92400e; line-height: 1.7;">Webアプリを公開したら、<strong>「どのくらいの人が使っているのか」「どのページが人気なのか」</strong>を知りたいですよね。この章では、<strong>Google Analytics（GA4）</strong>でアクセス状況を分析する方法と、<strong>GA4 MCP</strong>を使ってClaudeCodeから簡単に質問したり、タグを埋め込んだりする方法を学びます。</p>
+</div>
+
+<div style="background: rgba(251, 191, 36, 0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.3); margin: 24px 0;">
+  <h4 style="margin: 0 0 12px 0; color: #78350f;">⏱️ 所要時間：約75分</h4>
+  <p style="margin: 0; color: #78350f;">Google Analyticsの設定から、GA4 MCPを使った高度な分析まで体験します。</p>
+</div>
+
+<h3 id="17-1-google-analyticsって何なぜ必要">17.1 Google Analyticsって何？なぜ必要？</h3>
+
+<p>Google Analytics（GA4）は、<strong>無料で使える最強のアクセス解析ツール</strong>です。Webアプリの改善には、「何が起きているのか」を知ることが不可欠です。</p>
+
+<div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
+  <h4 style="color: #92400e; margin-top: 0;">📊 Google Analyticsで分かること</h4>
+  <ul style="margin: 0;">
+    <li><strong>訪問者数</strong>: リアルタイムで何人が来ているか</li>
+    <li><strong>人気のページ</strong>: どのページがよく見られているか</li>
+    <li><strong>流入元</strong>: Google検索、SNS、直接アクセスなど</li>
+    <li><strong>ユーザー行動</strong>: どのくらい滞在したか、どう移動したか</li>
+    <li><strong>コンバージョン</strong>: 目標（登録、購入など）の達成状況</li>
+  </ul>
+</div>
+
+<h4 style="color: #92400e;">🌟 GA4（第4世代）の特徴</h4>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);">
+  <ul style="margin: 0;">
+    <li><strong>イベントベース</strong>: ページビューだけでなく、すべてのユーザーアクションを追跡</li>
+    <li><strong>クロスプラットフォーム</strong>: Webとアプリをまとめて分析</li>
+    <li><strong>機械学習</strong>: 予測分析で将来のトレンドを予測</li>
+    <li><strong>プライバシー対応</strong>: Cookie規制に対応した測定</li>
+  </ul>
+</div>
+
+<h3 id="17-2-google-analyticsアカウント作成と設定">17.2 Google Analyticsアカウント作成と設定</h3>
+
+<p>Google Analyticsのアカウントを作成し、Webアプリに測定タグを設置します。</p>
+
+<h4 style="color: #92400e;">📋 手順1: Google Analyticsアカウントを作成</h4>
+
+<ol>
+  <li><a href="https://analytics.google.com/" target="_blank" style="color: #ea580c; font-weight: 600;">Google Analytics</a>にアクセス</li>
+  <li>Googleアカウントでログイン（持っていない場合は作成）</li>
+  <li><strong>「測定を開始」</strong>ボタンをクリック</li>
+  <li><strong>アカウント名</strong>を入力（例: <code>My Company</code>）</li>
+  <li>データ共有設定を確認して<strong>「次へ」</strong></li>
+</ol>
+
+<h4 style="color: #92400e;">📋 手順2: プロパティを作成</h4>
+
+<ol>
+  <li><strong>プロパティ名</strong>を入力（例: <code>Time Tracker App</code>）</li>
+  <li><strong>レポートのタイムゾーン</strong>: 「日本」を選択</li>
+  <li><strong>通貨</strong>: 「日本円（JPY）」を選択</li>
+  <li><strong>「次へ」</strong>をクリック</li>
+</ol>
+
+<h4 style="color: #92400e;">📋 手順3: ビジネス情報を入力</h4>
+
+<ol>
+  <li><strong>業種</strong>: 最も近いものを選択</li>
+  <li><strong>ビジネスの規模</strong>: 「小規模」を選択</li>
+  <li><strong>利用目的</strong>: 該当するものを選択（複数可）</li>
+  <li><strong>「作成」</strong>をクリック</li>
+  <li>利用規約に同意</li>
+</ol>
+
+<h4 style="color: #92400e;">📋 手順4: データストリームを作成</h4>
+
+<ol>
+  <li>プラットフォームで<strong>「ウェブ」</strong>を選択</li>
+  <li><strong>ウェブサイトのURL</strong>を入力（例: <code>https://myapp.netlify.app</code>）</li>
+  <li><strong>ストリーム名</strong>を入力（例: <code>Main Website</code>）</li>
+  <li><strong>「ストリームを作成」</strong>をクリック</li>
+</ol>
+
+<h4 style="color: #92400e;">📋 手順5: 測定IDをコピー</h4>
+
+<p>作成されたデータストリームの詳細画面で、<strong>測定ID</strong>（例: <code>G-XXXXXXXXXX</code>）をコピーします。</p>
+
+<div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.3); margin: 24px 0;">
+  <p style="margin: 0; font-weight: 600; color: #b91c1c;">📝 重要メモ</p>
+  <p style="margin: 8px 0 0 0; color: #991b1b;">測定IDは必ず安全な場所にメモしてください。後ほど使用します。</p>
+</div>
+
+<h3 id="17-3-ga4-mcpで簡単に質問や分析">17.3 GA4 MCPで簡単に質問や分析</h3>
+
+<p><strong>GA4 MCP（Model Context Protocol）</strong>は、ClaudeCodeからGoogle Analyticsのデータに直接アクセスして、自然言語で質問できる強力なツールです。</p>
+
+<div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);">
+  <h4 style="color: #4338ca; margin-top: 0;">🤖 GA4 MCPでできること</h4>
+  <ul style="margin: 0;">
+    <li><strong>自然言語で質問</strong>: 「今日の訪問者数は？」「人気ページTop5は？」</li>
+    <li><strong>複雑な分析</strong>: 「先週と今週の比較」「モバイルとデスクトップの比較」</li>
+    <li><strong>カスタムレポート</strong>: ClaudeCodeが自動でレポート生成</li>
+    <li><strong>リアルタイムデータ</strong>: 最新のデータにアクセス</li>
+  </ul>
+</div>
+
+<h4 style="color: #92400e;">📋 GA4 MCPのセットアップ</h4>
+
+<p>詳しいセットアップ方法は、<a href="https://www.ga4.guide/gamcp/" target="_blank" style="color: #ea580c; font-weight: 600;">GA4 MCP公式ガイド</a>を参照してください。</p>
+
+<h4 style="color: #92400e;">🔍 ClaudeCodeへの質問例</h4>
+
+<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 12px; border-left: 4px solid #6366f1; margin: 24px 0;">
+  <pre style="margin: 0; color: #1f2937; overflow-x: auto;"><code>GA4 MCPを使って、以下を教えてください：
+
+1. 今日の訪問者数とページビュー数
+2. 最も人気のあるページTop 5
+3. 流入元の内訳（検索、SNS、直接など）
+4. モバイルとデスクトップの比較</code></pre>
+</div>
+
+<p>このように質問すると、ClaudeCodeが自動的にGA4のデータを取得して、分かりやすくまとめてくれます！</p>
+
+<h3 id="17-4-ga4-mcpでタグの埋め込みを自動化">17.4 GA4 MCPでタグの埋め込みを自動化</h3>
+
+<p>GA4 MCPを使えば、<strong>測定タグの埋め込みもClaudeCodeに任せられます</strong>。手動でコピペする必要はありません。</p>
+
+<div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);">
+  <h4 style="color: #4338ca; margin-top: 0;">🤖 ClaudeCodeへの依頼プロンプト例</h4>
+  <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">Google Analytics（GA4）の測定タグをHTMLファイルに埋め込んでください。
+
+測定ID: G-XXXXXXXXXX
+
+HTMLの<head>タグ内に、Google Tag Manager（gtag.js）のコードを追加してください。</code></pre>
+</div>
+
+<p>このように依頼すると、ClaudeCodeが自動的に：</p>
+<ul>
+  <li>✅ 正しい位置（<code>&lt;head&gt;</code>タグ内）にコードを挿入</li>
+  <li>✅ 測定IDを正しく設定</li>
+  <li>✅ 最新のgtagスクリプトを使用</li>
+  <li>✅ ページビューの自動追跡を有効化</li>
+</ul>
+
+<p>してくれます！</p>
+
+<h4 style="color: #92400e;">🔍 カスタムイベントの追跡</h4>
+
+<p>GA4 MCPを使えば、カスタムイベント（ボタンクリック、フォーム送信など）の追跡コードも簡単に追加できます。</p>
+
+<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 12px; border-left: 4px solid #6366f1; margin: 24px 0;">
+  <pre style="margin: 0; color: #1f2937; overflow-x: auto;"><code>「タスク追加」ボタンがクリックされたときに、
+Google Analyticsにカスタムイベント「add_task」を送信する
+コードを追加してください。</code></pre>
+</div>
+
+<p>ClaudeCodeがイベント追跡のコードを自動生成してくれます。データ駆動の改善が簡単に実現できます！</p>
+
+<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了！</strong> GA4とGA4 MCPを使えば、データ収集から分析まで、すべてClaudeCodeと連携して行えます。</p>
+</div>
+
+<h3 id="まとめ-17章">まとめ</h3>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin: 24px 0;">
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>🎉 おめでとうございます！</strong> この章では、Google Analytics（GA4）の設定方法と、GA4 MCPを使ってClaudeCodeから簡単にデータ分析や測定タグの埋め込みを行う方法を学びました。これで、あなたのWebアプリは<strong>データ駆動で成長する本格的なサービス</strong>になりました！</p>
+  <p style="margin: 16px 0 0 0; color: #047857; line-height: 1.7;"><strong>Session 4の全章を修了しました。</strong>あなたは、独自ドメイン、環境変数、メール送信、データ分析といった、プロフェッショナルな本番運用に必要なすべてのスキルを習得しました。次は修了証を受け取りましょう！</p>
+</div>
+
+<hr>
+
+<!-- 修了証セクション -->
+<div style="text-align: center; margin: 60px 0;">
+  <h2 style="color: #9a3412; margin-bottom: 24px;">🎓 コース修了</h2>
+  <p style="font-size: 1.2em; color: #78350f; margin-bottom: 32px;">すべてのセッションを完了しました！<br>あなたの努力と成長を讃えます。</p>
+  <button id="completionBtn" class="completion-button">
+    🏆 修了証を表示する
+  </button>
+</div>
+
+<!-- 修了証モーダル -->
+<div id="certificateModal" class="certificate-modal" role="dialog" aria-modal="true" aria-labelledby="certificateTitle">
+  <div class="certificate-content">
+    <button class="certificate-close" aria-label="閉じる">×</button>
+    <h2 id="certificateTitle" class="certificate-title">🎓<br>修了証</h2>
+    <div class="certificate-body">
+      <p>この証明書は、以下の方が</p>
+      <p class="certificate-name">AI開発ツール完全活用マニュアル</p>
+      <p>の全セッション（Session 1-4）を修了したことを証明します。</p>
+      <p style="margin-top: 32px; font-size: 0.95em; color: #92400e;">あなたは、AI開発ツールを駆使して、実用的なWebアプリケーションを開発し、本番環境にデプロイするスキルを習得しました。</p>
+      <p class="certificate-date" id="certificateDate">2025年10月12日</p>
+      <p style="margin-top: 32px; font-size: 0.9em; color: #92400e;">次のステップに進み、さらなる成長を遂げることを期待しています。</p>
+    </div>
+  </div>
+</div>
+
+</main>
+  </div>
+
+  <div style="background: rgba(251, 146, 60, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(251, 146, 60, 0.3); border-radius: 16px; padding: 24px; margin: 24px auto; max-width: 1200px; text-align: center;">
+    <h3 style="margin-top: 0;">📚 セッションナビゲーション</h3>
+    <p style="margin-bottom: 20px;">このマニュアルは4つのセッションで構成されています</p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+      <a href="session-1-basics.html" style="text-decoration: none; flex: 1; min-width: 250px; max-width: 300px;">
+        <div style="background: rgba(59, 130, 246, 0.1); padding: 16px; border-radius: 12px; border: 2px solid rgba(59, 130, 246, 0.3); transition: all 0.3s; cursor: pointer;">
+          <strong style="color: #3B82F6;">← 📘 Session 1: 基礎編</strong><br>
+          <small style="color: #3B82F6;">0-5章 | 所要時間: 3時間</small>
+        </div>
+      </a>
+      <a href="session-2-quality.html" style="text-decoration: none; flex: 1; min-width: 250px; max-width: 300px;">
+        <div style="background: rgba(16, 185, 129, 0.1); padding: 16px; border-radius: 12px; border: 2px solid rgba(16, 185, 129, 0.3); transition: all 0.3s; cursor: pointer;">
+          <strong style="color: #10B981;">← 📗 Session 2: 品質・テスト編</strong><br>
+          <small style="color: #10B981;">6-9章 | 所要時間: 2時間</small>
+        </div>
+      </a>
+      <a href="session-3-advanced.html" style="text-decoration: none; flex: 1; min-width: 250px; max-width: 300px;">
+        <div style="background: rgba(168, 85, 247, 0.1); padding: 16px; border-radius: 12px; border: 2px solid rgba(168, 85, 247, 0.3); transition: all 0.3s; cursor: pointer;">
+          <strong style="color: #A855F7;">← 📕 Session 3: 応用・統合編</strong><br>
+          <small style="color: #A855F7;">10-13章 | 所要時間: 2.5時間</small>
+        </div>
+      </a>
+      <div style="background: rgba(251, 146, 60, 0.2); padding: 16px; border-radius: 12px; flex: 1; min-width: 250px; max-width: 300px;">
+        <strong>📙 Session 4: 本番運用編（現在のページ）</strong><br>
+        <small>14-17章 | 所要時間: 4時間</small>
+      </div>
+    </div>
+  </div>
+
+  <footer class="manual-footer">
+    <p>このドキュメントは手動で作成されました。最終更新: 2025-10-12</p>
+  </footer>
+
+
+</body></html>
