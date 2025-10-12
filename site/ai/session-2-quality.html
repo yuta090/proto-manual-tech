@@ -547,6 +547,74 @@ sc test --integrate-ci
 # 本番環境へのデプロイを自動化
 sc deploy --target production
 </code><button class="code-copy-btn">コピー</button></pre>
+
+<h3 id="77-実践ハンズオンgithub連携と自動デプロイ">7.7 実践ハンズオン：GitHub連携と自動デプロイ</h3>
+<p>この章で学んだGitHubの知識を使って、実際に作業時間トラッカーをGitHubにpushし、Netlifyで自動デプロイする体験をしましょう。0章で既にGitHub・Netlifyの連携は完了しているので、とても簡単です。</p>
+
+<h4 id="step1-githubにpushする10分">Step 1: GitHubにpushする（10分）</h4>
+<p>5章で作った作業時間トラッカーのプロジェクトフォルダを、GitHubに保存します。Claude Codeに任せれば、全自動です。</p>
+<pre><code class="language-bash"># Cursorで、作業時間トラッカーのプロジェクトフォルダを開いた状態で
+Claude Code「このプロジェクトをGitHubにpushして」
+</code><button class="code-copy-btn">コピー</button></pre>
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li>Gitリポジトリを初期化（<code>git init</code>）</li>
+<li>ファイルをステージング（<code>git add .</code>）</li>
+<li>コミット（<code>git commit -m "Initial commit"</code>）</li>
+<li>GitHubに新しいリポジトリを作成</li>
+<li>リモートリポジトリを追加（<code>git remote add origin ...</code>）</li>
+<li>pushを実行（<code>git push -u origin main</code>）</li>
+</ol>
+</div>
+<p>これで、あなたのコードはGitHub上に保存されました！</p>
+
+<h4 id="step2-netlifyが自動デプロイを開始10分">Step 2: Netlifyが自動デプロイを開始（10分）</h4>
+<p>GitHubにpushすると、0章で連携済みのNetlifyが自動的に検知して、デプロイを開始します。</p>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p><strong>Netlifyダッシュボードで確認</strong>：</p>
+<ol>
+<li><a href="https://app.netlify.com" target="_blank" rel="noopener noreferrer">https://app.netlify.com</a> を開く</li>
+<li>プロジェクト一覧から、あなたのリポジトリ名をクリック</li>
+<li>「Deploys」タブで、デプロイの進行状況を確認</li>
+<li>1-2分で「Published」になる</li>
+</ol>
+</div>
+<p>デプロイが完了すると、Netlifyが自動生成したURLが表示されます（例：<code>https://your-app-name.netlify.app</code>）。このURLをクリックすると、世界中からアクセスできる公開URLであなたのアプリが表示されます！</p>
+
+<h4 id="step3-継続的デプロイを体験10分">Step 3: 継続的デプロイを体験（10分）</h4>
+<p>次に、アプリを少し変更して、再度pushしてみましょう。継続的デプロイの便利さを実感できます。</p>
+<pre><code class="language-bash"># 1. アプリの見た目を変更（例：背景色を変える）
+Claude Code「アプリの背景色を青系に変えて」
+
+# 2. 変更を確認
+# ブラウザでindex.htmlを開いて、変更されているか確認
+
+# 3. GitHubにpush
+Claude Code「変更をGitHubにpushして」
+</code><button class="code-copy-btn">コピー</button></pre>
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li>変更をコミット（<code>git commit -m "Change background color"</code>）</li>
+<li>pushを実行（<code>git push</code>）</li>
+</ol>
+</div>
+<p>GitHubにpushすると、再びNetlifyが自動的にデプロイを開始します。1-2分待って、公開URLをリロードすると、変更が反映されています！</p>
+
+<div style="background: rgba(251, 191, 36, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.3); margin: 16px 0;">
+  <p style="margin: 0; color: #78350f; line-height: 1.7;"><strong>💡 これが継続的デプロイ（CD）</strong>：コードを変更 → GitHubにpush → 自動デプロイ、というサイクルを何度でも繰り返せます。手動でサーバーにアップロードする必要はありません。</p>
+</div>
+
+<h4 id="まとめ">まとめ</h4>
+<p>たった30分で、あなたのアプリは：</p>
+<ul>
+<li>✅ GitHubでバージョン管理されている（いつでも過去に戻せる）</li>
+<li>✅ Netlifyで自動デプロイされている（世界中からアクセス可能）</li>
+<li>✅ 継続的デプロイの仕組みが整っている（変更を即座に反映）</li>
+</ul>
+<p>これで、あなたは<strong>プロの開発者と同じ開発フロー</strong>を体験しました。次の章では、Supabaseでデータベースを追加して、さらに本格的なアプリに進化させます！</p>
+
 <hr>
 <h2 id="7-モダン技術スタックの構築"><strong>7. モダン技術スタックの<br>構築</strong></h2>
 <hr>
@@ -670,6 +738,165 @@ issue #42 に紐づいたブランチを作成し、実装が完了したら自�
 <p style="margin-top: 24px;">これらのMCPの詳細な使い方や設定方法は、<strong>13章「裏側の技術 - MCP」</strong>で網羅的に解説します！</p>
 </div>
 
+<h3 id="85-実践ハンズオンsupabaseでデータ永続化">8.5 実践ハンズオン：Supabaseでデータ永続化</h3>
+<p>この章で学んだデータベースの知識を使って、5章で作った作業時間トラッカーのデータをSupabaseに保存します。localStorageでは、ブラウザを変えるとデータが消えてしまいますが、Supabaseを使えば、どのデバイスからでも同じデータにアクセスできるようになります。</p>
+
+<h4 id="座学supabaseとは20分">座学：Supabaseとは？（20分）</h4>
+<p>Supabaseは、PostgreSQLデータベースをベースにした、Firebase代替のオープンソースBaaS（Backend as a Service）です。</p>
+
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p><strong>Supabaseの特徴</strong>：</p>
+<ul>
+<li><strong>リアルタイムデータベース</strong>：データの変更が即座に反映される</li>
+<li><strong>認証機能</strong>：メール、SNSログインなどを簡単に実装</li>
+<li><strong>RESTful API</strong>：自動生成されるAPIでデータ操作が簡単</li>
+<li><strong>Row Level Security (RLS)</strong>：ユーザーごとのデータアクセス制御</li>
+<li><strong>ストレージ</strong>：画像やファイルの保存も可能</li>
+</ul>
+</div>
+
+<p><strong>Supabase CLI（Command Line Interface）とは</strong>：</p>
+<p>Supabase CLIは、ローカル環境でSupabaseを動かすためのツールです。0章の自動セットアップスクリプトで既にインストール済みなので、すぐに使えます。</p>
+
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p><strong>Supabase CLIでできること</strong>：</p>
+<ul>
+<li>ローカルでSupabaseを起動（開発環境）</li>
+<li>テーブル作成・マイグレーション管理</li>
+<li>本番環境へのデプロイ</li>
+<li>データベーススキーマの管理</li>
+</ul>
+</div>
+
+<h4 id="step1-supabase-cliセットアップ10分">Step 1: Supabase CLIセットアップ（10分）</h4>
+<p>まず、作業時間トラッカーのプロジェクトフォルダでSupabaseを初期化します。</p>
+
+<pre><code class="language-bash"># Cursorで、作業時間トラッカーのプロジェクトフォルダを開いた状態で
+Claude Code「Supabaseプロジェクトを初期化して」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li><code>supabase init</code> でプロジェクトを初期化</li>
+<li><code>supabase/</code> フォルダが作成される</li>
+<li><code>supabase start</code> でローカルSupabaseを起動</li>
+<li>ローカルのSupabase Studio URL（例：http://localhost:54323）が表示される</li>
+</ol>
+</div>
+
+<p>ブラウザでローカルSupabase StudioのURLを開くと、データベースの管理画面が表示されます。ここでテーブルやデータを確認できます。</p>
+
+<h4 id="step2-テーブル設計15分">Step 2: テーブル設計（15分）</h4>
+<p>作業時間トラッカーのデータを保存するテーブルを設計します。</p>
+
+<pre><code class="language-bash">Claude Code「作業時間トラッカー用のSupabaseテーブルを設計して。
+タスク名、累計作業時間、作業状態、開始時刻を保存できるようにして」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li><code>supabase/migrations/</code> にマイグレーションファイルを生成</li>
+<li>テーブル定義の例：
+<pre style="margin-top: 8px;"><code>CREATE TABLE tasks (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name TEXT NOT NULL,
+  total_time INTEGER DEFAULT 0,
+  is_running BOOLEAN DEFAULT false,
+  start_time TIMESTAMP,
+  created_at TIMESTAMP DEFAULT NOW()
+);</code></pre>
+</li>
+<li>マイグレーションを適用（<code>supabase db reset</code>）</li>
+</ol>
+</div>
+
+<p>Supabase Studioで「Table Editor」を開くと、新しく作成された <code>tasks</code> テーブルが確認できます。</p>
+
+<h4 id="step3-コード実装30分">Step 3: コード実装（30分）</h4>
+<p>localStorageを使っていた部分を、Supabaseに変更します。</p>
+
+<pre><code class="language-bash">Claude Code「localStorageの代わりにSupabaseを使うように変更して。
+/sc:implement でコードを書き直してください」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li>Supabase JavaScriptクライアントをインストール（<code>npm install @supabase/supabase-js</code>）</li>
+<li>Supabaseクライアントの初期化コードを追加</li>
+<li>localStorage操作をSupabase API呼び出しに変更：
+<ul>
+<li>タスク追加：<code>supabase.from('tasks').insert(...)</code></li>
+<li>タスク取得：<code>supabase.from('tasks').select('*')</code></li>
+<li>タスク更新：<code>supabase.from('tasks').update(...)</code></li>
+<li>タスク削除：<code>supabase.from('tasks').delete(...)</code></li>
+</ul>
+</li>
+<li>エラーハンドリングを追加</li>
+</ol>
+</div>
+
+<p>ブラウザで動作確認すると、タスクの追加・編集・削除がSupabaseに保存されるようになります。Supabase Studioの「Table Editor」で、実際にデータが保存されていることを確認できます。</p>
+
+<h4 id="step4-本番デプロイ20分">Step 4: 本番デプロイ（20分）</h4>
+<p>ローカルで動作確認ができたら、本番環境（Supabase Cloud）にデプロイします。</p>
+
+<pre><code class="language-bash">Claude Code「Supabaseの本番環境にデプロイして」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li>Supabase Cloudにログイン（<code>supabase login</code>）</li>
+<li>新しいプロジェクトを作成（0章で作成済みの場合はスキップ）</li>
+<li>プロジェクトをリンク（<code>supabase link --project-ref YOUR_PROJECT_ID</code>）</li>
+<li>マイグレーションをデプロイ（<code>supabase db push</code>）</li>
+<li>環境変数ファイル（<code>.env</code>）に本番環境のURLとAPIキーを追加</li>
+</ol>
+</div>
+
+<p>これで、あなたのアプリは本番環境のSupabaseに接続され、世界中からアクセスできるようになりました！</p>
+
+<h4 id="step5-rls設定15分">Step 5: RLS（Row Level Security）設定（15分）</h4>
+<p>RLSは、ユーザーごとにデータアクセスを制限する機能です。現状では、誰でも全てのデータを見られてしまうので、セキュリティを強化します。</p>
+
+<pre><code class="language-bash">Claude Code「tasksテーブルにRLSを設定して。
+全てのユーザーが自分のタスクだけを見られるようにして」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li>RLSを有効化（<code>ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;</code>）</li>
+<li>ポリシーを作成：
+<pre style="margin-top: 8px;"><code>-- 自分のタスクだけ見られる
+CREATE POLICY "Users can view their own tasks"
+  ON tasks FOR SELECT
+  USING (auth.uid() = user_id);
+
+-- 自分のタスクだけ作成できる
+CREATE POLICY "Users can create their own tasks"
+  ON tasks FOR INSERT
+  WITH CHECK (auth.uid() = user_id);</code></pre>
+</li>
+<li>テーブルに <code>user_id</code> カラムを追加（ユーザー識別用）</li>
+<li>マイグレーションをデプロイ（<code>supabase db push</code>）</li>
+</ol>
+</div>
+
+<p>これで、各ユーザーは自分のタスクだけを見られるようになり、セキュリティが大幅に向上しました！</p>
+
+<h4 id="まとめ-4">まとめ</h4>
+<p>たった90分で、あなたのアプリは：</p>
+<ul>
+<li>✅ Supabaseでデータが永続化されている（ブラウザが変わってもデータが残る）</li>
+<li>✅ 本番環境にデプロイされている（世界中からアクセス可能）</li>
+<li>✅ RLSでセキュリティが強化されている（ユーザーごとのデータ分離）</li>
+</ul>
+<p>次の章では、ユーザー認証機能を追加して、さらに本格的なWebアプリに進化させます！</p>
+
 <hr>
 <h2 id="8-あなたのアプリを進化させよう機能追加プロジェクト"><strong>8. あなたのアプリを<br>進化させよう！機能追加プロジェクト</strong></h2>
 <hr>
@@ -734,6 +961,407 @@ issue #42 に紐づいたブランチを作成し、実装が完了したら自�
 </ol>
 <h3 id="まとめ-3">まとめ</h3>
 <p>この章では、6章で作成したアプリに具体的な機能を追加し、さらに品質を向上させるプロセスを体験しました。Super Claudeの各コマンドを組み合わせることで、複雑な機能追加やコード改善も効率的に進められることが理解できたでしょう。あなたのアプリは、この「進化プロジェクト」を通じて、より堅牢で実用的なものへと成長していきます。</p>
+
+<h3 id="94-実践ハンズオン認証機能でセキュリティを強化75分">9.4 実践ハンズオン：認証機能でセキュリティを強化（75分）</h3>
+
+<p style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1)); padding: 20px; border-radius: 12px; border-left: 4px solid #8B5CF6; margin: 24px 0;">
+<strong>⏱️ 所要時間</strong>: 75分（座学15分 + 実装60分）<br>
+<strong>🎯 目標</strong>: Supabase Authを使って、作業時間トラッカーに本格的なユーザー認証機能を実装します。<br>
+<strong>📚 前提知識</strong>: 7章でSupabase CLIとデータベース操作を学習済み
+</p>
+
+<h4 id="座学supabase-authとは15分">座学：Supabase Authとは（15分）</h4>
+
+<p><strong>Supabase Auth</strong>は、Supabaseが提供する認証サービスです。複雑な認証ロジックを自分で実装する必要がなく、セキュアなユーザー管理機能を簡単に追加できます。</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h5>Supabase Authの主な機能</h5>
+<ul>
+<li><strong>メール/パスワード認証</strong>: 最も基本的な認証方式</li>
+<li><strong>OAuth連携</strong>: Google、GitHub、Facebookなどのソーシャルログイン</li>
+<li><strong>マジックリンク</strong>: パスワード不要のメールリンク認証</li>
+<li><strong>セッション管理</strong>: 自動的にユーザーセッションを管理</li>
+<li><strong>パスワードリセット</strong>: 安全なパスワード再設定フロー</li>
+</ul>
+
+<h5>なぜ認証が重要なのか？</h5>
+<ul>
+<li><strong>データの保護</strong>: ユーザーごとにデータを分離し、他人のデータを見られないようにする</li>
+<li><strong>個人化</strong>: ユーザーごとにカスタマイズされた体験を提供</li>
+<li><strong>責任の所在</strong>: 誰が何をしたか記録できる（監査ログ）</li>
+<li><strong>セキュリティ</strong>: 不正アクセスを防ぎ、機密情報を守る</li>
+</ul>
+</div>
+
+<div style="background: rgba(245, 158, 11, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
+<h5>💡 認証とRLSの関係</h5>
+<p>7章で学んだRLS（Row Level Security）は、<strong>認証されたユーザー</strong>を前提としています。</p>
+<ul>
+<li><strong>認証（Authentication）</strong>: 「あなたは誰ですか？」→ ユーザーIDを取得</li>
+<li><strong>RLS（Authorization）</strong>: 「あなたは何ができますか？」→ ユーザーIDに基づいてデータアクセスを制限</li>
+</ul>
+<p>つまり、認証機能を追加することで、7章で設定したRLSが初めて機能するようになります。</p>
+</div>
+
+<h4 id="step1-メール認証セットアップ15分">Step 1: メール認証セットアップ（15分）</h4>
+
+<p>まず、Supabaseプロジェクトで認証機能を有効化し、必要な設定を行います。</p>
+
+<pre><code class="language-bash">Claude Code「Supabase Authのメール認証をセットアップして。
+認証設定とメールテンプレートを確認して」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li><strong>Supabase Dashboardで認証設定を確認</strong>
+<ul>
+<li>Authentication → Providers → Email を有効化</li>
+<li>「Confirm email」をオフ（開発中は確認メール不要にする）</li>
+<li>本番環境では必ずオンにする</li>
+</ul>
+</li>
+<li><strong>環境変数を確認</strong>
+<pre style="margin-top: 8px;"><code># .env.local
+NEXT_PUBLIC_SUPABASE_URL=your-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key</code></pre>
+<p style="margin-top: 8px;">これらは7章で既に設定済みです。</p>
+</li>
+<li><strong>Supabase Clientの初期化コードを確認</strong>
+<pre style="margin-top: 8px;"><code>// lib/supabase.js
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)</code></pre>
+</li>
+</ol>
+</div>
+
+<div style="background: rgba(239, 68, 68, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
+<h5>⚠️ 開発時の注意点</h5>
+<ul>
+<li><strong>確認メールをオフにする理由</strong>: 開発中は何度もアカウントを作成してテストするため、メール確認があると手間がかかります。本番環境では必ずオンにしてセキュリティを確保してください。</li>
+<li><strong>テストアカウント</strong>: 開発用のテストメールアドレスを用意しておくと便利です（例: test@example.com）</li>
+</ul>
+</div>
+
+<h4 id="step2-ログインサインアップui実装20分">Step 2: ログイン・サインアップUI実装（20分）</h4>
+
+<p>次に、ユーザーがログイン・サインアップできる画面を作成します。</p>
+
+<pre><code class="language-bash">Claude Code「ログインとサインアップのUIを作成して。
+メールアドレスとパスワードで認証できるようにして。
+エラーメッセージも表示して」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li><strong>ログイン・サインアップフォームを作成</strong>
+<pre style="margin-top: 8px;"><code>// pages/login.jsx
+import { useState } from 'react'
+import { supabase } from '../lib/supabase'
+import { useRouter } from 'next/router'
+
+export default function Login() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [isSignUp, setIsSignUp] = useState(false)
+  const router = useRouter()
+
+  const handleAuth = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    setError(null)
+
+    try {
+      if (isSignUp) {
+        // サインアップ
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+        })
+        if (error) throw error
+        alert('アカウントを作成しました！ログインしてください。')
+        setIsSignUp(false)
+      } else {
+        // ログイン
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        })
+        if (error) throw error
+        router.push('/dashboard')
+      }
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    &lt;div className="min-h-screen flex items-center justify-center bg-gray-50"&gt;
+      &lt;div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md"&gt;
+        &lt;h2 className="text-2xl font-bold mb-6"&gt;
+          {isSignUp ? 'サインアップ' : 'ログイン'}
+        &lt;/h2&gt;
+        &lt;form onSubmit={handleAuth}&gt;
+          &lt;input
+            type="email"
+            placeholder="メールアドレス"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-2 mb-4 border rounded"
+            required
+          /&gt;
+          &lt;input
+            type="password"
+            placeholder="パスワード"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-2 mb-4 border rounded"
+            required
+          /&gt;
+          {error && &lt;p className="text-red-500 mb-4"&gt;{error}&lt;/p&gt;}
+          &lt;button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+          &gt;
+            {loading ? '処理中...' : isSignUp ? 'サインアップ' : 'ログイン'}
+          &lt;/button&gt;
+        &lt;/form&gt;
+        &lt;button
+          onClick={() => setIsSignUp(!isSignUp)}
+          className="mt-4 text-blue-500"
+        &gt;
+          {isSignUp ? 'ログインに切り替え' : 'サインアップに切り替え'}
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+</li>
+<li><strong>認証状態を管理するコンテキストを作成</strong>（オプション、推奨）
+<p style="margin-top: 8px;">複数のページで認証状態を共有するため、React Contextを使用します。</p>
+</li>
+</ol>
+</div>
+
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
+<h5>✅ 動作確認</h5>
+<ol>
+<li>開発サーバーを起動（<code>npm run dev</code>）</li>
+<li><code>http://localhost:3000/login</code> にアクセス</li>
+<li>サインアップでアカウントを作成</li>
+<li>ログインしてダッシュボードに遷移することを確認</li>
+</ol>
+</div>
+
+<h4 id="step3-認証ガード実装15分">Step 3: 認証ガード実装（15分）</h4>
+
+<p><strong>認証ガード</strong>とは、ログインしていないユーザーが特定のページにアクセスできないようにする仕組みです。</p>
+
+<pre><code class="language-bash">Claude Code「ダッシュボードページに認証ガードを追加して。
+ログインしていないユーザーはログインページにリダイレクトして」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li><strong>認証ガードコンポーネントを作成</strong>
+<pre style="margin-top: 8px;"><code>// components/AuthGuard.jsx
+import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabase'
+import { useRouter } from 'next/router'
+
+export default function AuthGuard({ children }) {
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
+  const router = useRouter()
+
+  useEffect(() => {
+    // 現在のユーザーを取得
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+      setLoading(false)
+
+      // ログインしていなければログインページへ
+      if (!user) {
+        router.push('/login')
+      }
+    }
+
+    checkUser()
+
+    // 認証状態の変更を監視
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user || null)
+        if (!session?.user) {
+          router.push('/login')
+        }
+      }
+    )
+
+    return () => {
+      authListener?.subscription?.unsubscribe()
+    }
+  }, [router])
+
+  if (loading) {
+    return &lt;div&gt;読み込み中...&lt;/div&gt;
+  }
+
+  if (!user) {
+    return null
+  }
+
+  return &lt;&gt;{children}&lt;/&gt;
+}</code></pre>
+</li>
+<li><strong>ダッシュボードページで認証ガードを使用</strong>
+<pre style="margin-top: 8px;"><code>// pages/dashboard.jsx
+import AuthGuard from '../components/AuthGuard'
+
+export default function Dashboard() {
+  return (
+    &lt;AuthGuard&gt;
+      &lt;div&gt;
+        &lt;h1&gt;ダッシュボード&lt;/h1&gt;
+        &lt;p&gt;ログイン済みユーザーだけが見られるページ&lt;/p&gt;
+        {/* 作業時間トラッカーのUIなど */}
+      &lt;/div&gt;
+    &lt;/AuthGuard&gt;
+  )
+}</code></pre>
+</li>
+</ol>
+</div>
+
+<div style="background: rgba(245, 158, 11, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
+<h5>💡 認証ガードの仕組み</h5>
+<p>認証ガードは以下の流れで動作します：</p>
+<ol>
+<li><strong>ページアクセス時</strong>: ユーザーが認証されているかチェック</li>
+<li><strong>未認証の場合</strong>: ログインページにリダイレクト</li>
+<li><strong>認証済みの場合</strong>: ページコンテンツを表示</li>
+<li><strong>監視</strong>: ログアウトしたら即座にリダイレクト</li>
+</ol>
+<p>これにより、URLを直接入力してもログインしていなければアクセスできなくなります。</p>
+</div>
+
+<h4 id="step4-ユーザー情報表示10分">Step 4: ユーザー情報表示（10分）</h4>
+
+<p>最後に、ログインしているユーザーの情報を表示し、ログアウト機能を追加します。</p>
+
+<pre><code class="language-bash">Claude Code「ダッシュボードにユーザー情報とログアウトボタンを追加して。
+メールアドレスを表示して」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li><strong>ユーザー情報コンポーネントを作成</strong>
+<pre style="margin-top: 8px;"><code>// components/UserInfo.jsx
+import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabase'
+import { useRouter } from 'next/router'
+
+export default function UserInfo() {
+  const [user, setUser] = useState(null)
+  const router = useRouter()
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    }
+    getUser()
+  }, [])
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    router.push('/login')
+  }
+
+  if (!user) return null
+
+  return (
+    &lt;div className="flex items-center gap-4 p-4 bg-white rounded shadow"&gt;
+      &lt;div&gt;
+        &lt;p className="text-sm text-gray-600"&gt;ログイン中&lt;/p&gt;
+        &lt;p className="font-medium"&gt;{user.email}&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;button
+        onClick={handleLogout}
+        className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+      &gt;
+        ログアウト
+      &lt;/button&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+</li>
+<li><strong>ダッシュボードに追加</strong>
+<pre style="margin-top: 8px;"><code>// pages/dashboard.jsx
+import AuthGuard from '../components/AuthGuard'
+import UserInfo from '../components/UserInfo'
+
+export default function Dashboard() {
+  return (
+    &lt;AuthGuard&gt;
+      &lt;div className="min-h-screen bg-gray-50 p-8"&gt;
+        &lt;UserInfo /&gt;
+        &lt;h1 className="text-3xl font-bold mt-8"&gt;ダッシュボード&lt;/h1&gt;
+        {/* 作業時間トラッカーのUIなど */}
+      &lt;/div&gt;
+    &lt;/AuthGuard&gt;
+  )
+}</code></pre>
+</li>
+</ol>
+</div>
+
+<h4 id="完成次のステップへ">完成：次のステップへ</h4>
+
+<p>これで、作業時間トラッカーに本格的な認証機能が追加されました！</p>
+
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h5>✅ 達成したこと</h5>
+<ul>
+<li>✅ Supabase Authのメール認証をセットアップ</li>
+<li>✅ ログイン・サインアップUIを実装</li>
+<li>✅ 認証ガードで保護されたページを作成</li>
+<li>✅ ユーザー情報の表示とログアウト機能を実装</li>
+</ul>
+
+<h5>🚀 次に学ぶこと</h5>
+<ul>
+<li><strong>RLSとの連携</strong>: 7章で設定したRLSが、この認証機能により初めて機能します。ユーザーごとにタスクデータが分離されることを確認しましょう。</li>
+<li><strong>ソーシャルログイン</strong>: Google、GitHubなどのOAuth連携を追加してユーザー体験を向上</li>
+<li><strong>パスワードリセット</strong>: ユーザーがパスワードを忘れた際の復旧フロー</li>
+<li><strong>プロフィール管理</strong>: ユーザー名、アバター画像などの追加情報を管理</li>
+</ul>
+</div>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
+<h5>💡 セキュリティのベストプラクティス</h5>
+<ul>
+<li><strong>パスワードの強度</strong>: Supabaseは自動的に最低6文字を要求しますが、本番環境では8文字以上、英数字+記号を推奨</li>
+<li><strong>メール確認</strong>: 本番環境では必ず有効化して、なりすまし登録を防ぐ</li>
+<li><strong>HTTPSの使用</strong>: 本番環境では必ずHTTPSを使用（Netlifyは自動対応）</li>
+<li><strong>セッション管理</strong>: Supabaseが自動的にトークンをリフレッシュするため、手動管理は不要</li>
+<li><strong>RLSの併用</strong>: 認証だけでなく、RLSでデータベースレベルのセキュリティも確保</li>
+</ul>
+</div>
+
 <hr>
 <h2 id="9-企業導入のためのsdd組織変革ガイド"><strong>9. 企業導入の<br>ためのSDD組織変革ガイド</strong></h2>
 <hr>

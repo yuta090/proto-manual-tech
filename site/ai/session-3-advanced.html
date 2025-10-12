@@ -169,232 +169,625 @@
 <h3 id="まとめ-4">まとめ</h3>
 <p>たったこれだけのステップで、あなたのアイデアが具体的な形になりました。プログラミングの知識がなくても、AIにうまくお願いするだけで、Webページやアプリケーションを作ることができたのです。</p>
 <p>このマニュアルでは、この「魔法」をさらに強力にし、もっと複雑で面白いアプリを自由に作れるようになるための方法を、ステップバイステップで学んでいきます。最初の感動を忘れずに、次の章へ進みましょう！</p>
+
+<h3 id="113-実践ハンズオンplaywright-mcpで自動テスト60分">11.3 実践ハンズオン：Playwright MCPで自動テスト（60分）</h3>
+
+<p style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1)); padding: 20px; border-radius: 12px; border-left: 4px solid #A855F7; margin: 24px 0;">
+<strong>⏱️ 所要時間</strong>: 60分（座学15分 + 実装45分）<br>
+<strong>🎯 目標</strong>: Playwright MCPを使って、作業時間トラッカーのE2Eテストを自動化します。<br>
+<strong>📚 前提知識</strong>: 7-8章でSupabase認証まで実装済み
+</p>
+
+<h4 id="座学e2eテストとplaywright-mcpとは15分">座学：E2EテストとPlaywright MCPとは（15分）</h4>
+
+<p><strong>E2E（End-to-End）テスト</strong>とは、ユーザーが実際にアプリを使うときの流れ全体をテストすることです。</p>
+
+<div style="background: rgba(168, 85, 247, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h5>E2Eテストとは？</h5>
+<p>従来のテストとE2Eテストの違い：</p>
+<ul>
+<li><strong>ユニットテスト</strong>: 関数やメソッド単体をテスト（例: 「合計計算関数が正しく動くか」）</li>
+<li><strong>統合テスト</strong>: 複数のコンポーネントの連携をテスト（例: 「ボタンをクリックしたら関数が呼ばれるか」）</li>
+<li><strong>E2Eテスト</strong>: <strong>ユーザーの視点</strong>で全体の流れをテスト（例: 「ログイン → タスク作成 → 作業開始 → 停止 → ログアウト」）</li>
+</ul>
+
+<h5>なぜE2Eテストが重要なのか？</h5>
+<ul>
+<li><strong>実際のユーザー体験を保証</strong>: 個々の機能が動いても、全体の流れで問題が起きることがあります</li>
+<li><strong>リグレッションの防止</strong>: 新機能追加時に既存機能が壊れていないか確認</li>
+<li><strong>手動テストからの解放</strong>: 毎回ブラウザで手動確認する手間が不要に</li>
+<li><strong>自信を持ってデプロイ</strong>: 自動テストが通れば、本番環境にデプロイしても安心</li>
+</ul>
+</div>
+
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h5>Playwright MCPとは？</h5>
+<p><strong>Playwright</strong>は、Microsoftが開発した最新のE2Eテストツールで、Claude Codeに<strong>MCP（Model Context Protocol）</strong>として統合されています。</p>
+
+<h5>Playwright MCPの主な機能</h5>
+<ul>
+<li><strong>ブラウザ自動操作</strong>: Chrome、Firefox、Safariを自動で操作</li>
+<li><strong>スクリーンショット撮影</strong>: テスト実行中の画面を自動キャプチャ</li>
+<li><strong>ネットワーク監視</strong>: API呼び出しやレスポンスを確認</li>
+<li><strong>待機処理の自動化</strong>: ページ読み込みやAPI完了を自動で待つ</li>
+<li><strong>並列実行</strong>: 複数のテストを同時に実行して高速化</li>
+</ul>
+
+<h5>従来のテストツールとの違い</h5>
+<ul>
+<li><strong>Selenium</strong>: 古い技術、セットアップが複雑、遅い</li>
+<li><strong>Cypress</strong>: JavaScriptのみ、一部ブラウザ非対応</li>
+<li><strong>Playwright</strong>: <strong>高速</strong>、<strong>最新</strong>、<strong>全ブラウザ対応</strong>、Claude Codeと統合済み</li>
+</ul>
+</div>
+
+<div style="background: rgba(245, 158, 11, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
+<h5>💡 MCPとしてのPlaywright</h5>
+<p>Claude CodeにPlaywright MCPが統合されていることで、以下が可能になります：</p>
+<ul>
+<li><strong>自然言語でテスト作成</strong>: 「ログインしてダッシュボードに遷移することを確認して」と指示するだけ</li>
+<li><strong>テストコード自動生成</strong>: Claude Codeが適切なテストコードを生成</li>
+<li><strong>エラー時の自動修正</strong>: テスト失敗時にClaude Codeが原因を分析して修正案を提示</li>
+</ul>
+</div>
+
+<h4 id="step1-playwright-mcpセットアップ10分">Step 1: Playwright MCPセットアップ（10分）</h4>
+
+<p>Playwright MCPは、Claude Codeに標準で統合されています。初回実行時に自動的にセットアップされます。</p>
+
+<pre><code class="language-bash">Claude Code「Playwright MCPのセットアップ状態を確認して。
+必要に応じてインストールして」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li><strong>Playwright MCPの状態を確認</strong>
+<ul>
+<li>既にインストール済みの場合: そのまま使用</li>
+<li>未インストールの場合: 自動的にインストール</li>
+</ul>
+</li>
+<li><strong>ブラウザのインストール</strong>
+<pre style="margin-top: 8px;"><code># Chrome、Firefox、Safariの3つをインストール
+npx playwright install</code></pre>
+<p style="margin-top: 8px;">これにより、テスト実行に必要なブラウザがすべてインストールされます。</p>
+</li>
+<li><strong>設定ファイルの確認</strong>
+<pre style="margin-top: 8px;"><code>// playwright.config.js が自動生成される
+module.exports = {
+  testDir: './e2e',
+  use: {
+    baseURL: 'http://localhost:3000',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+  },
+}</code></pre>
+</li>
+</ol>
+</div>
+
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
+<h5>✅ 確認項目</h5>
+<ul>
+<li>Playwright MCPが有効になっている（Claude Codeのステータスで確認）</li>
+<li><code>playwright.config.js</code> が生成されている</li>
+<li>ブラウザがインストールされている（<code>npx playwright --version</code>で確認）</li>
+</ul>
+</div>
+
+<h4 id="step2-ログインテストシナリオ作成15分">Step 2: ログインテストシナリオ作成（15分）</h4>
+
+<p>まず、最も基本的な「ログイン → ダッシュボード表示」のテストを作成します。</p>
+
+<pre><code class="language-bash">Claude Code「作業時間トラッカーのログインテストを作成して。
+以下のシナリオをテストして：
+
+1. ログインページにアクセス
+2. メールアドレス「test@example.com」を入力
+3. パスワード「testpass123」を入力
+4. ログインボタンをクリック
+5. ダッシュボードに遷移することを確認
+6. ユーザー情報が表示されることを確認」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li><strong>テストファイルを生成</strong>
+<pre style="margin-top: 8px;"><code>// e2e/login.spec.js
+import { test, expect } from '@playwright/test'
+
+test('ログインフローのテスト', async ({ page }) => {
+  // ログインページにアクセス
+  await page.goto('http://localhost:3000/login')
+
+  // メールアドレスを入力
+  await page.fill('input[type="email"]', 'test@example.com')
+
+  // パスワードを入力
+  await page.fill('input[type="password"]', 'testpass123')
+
+  // ログインボタンをクリック
+  await page.click('button[type="submit"]')
+
+  // ダッシュボードに遷移することを確認
+  await expect(page).toHaveURL('http://localhost:3000/dashboard')
+
+  // ユーザー情報が表示されることを確認
+  await expect(page.locator('text=test@example.com')).toBeVisible()
+})</code></pre>
+</li>
+<li><strong>テストのポイント</strong>
+<ul>
+<li><code>page.goto()</code>: ページ遷移</li>
+<li><code>page.fill()</code>: フォーム入力</li>
+<li><code>page.click()</code>: クリック操作</li>
+<li><code>expect().toHaveURL()</code>: URL確認</li>
+<li><code>expect().toBeVisible()</code>: 要素の表示確認</li>
+</ul>
+</li>
+</ol>
+</div>
+
+<div style="background: rgba(245, 158, 11, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
+<h5>💡 セレクターの指定方法</h5>
+<p>Playwrightでは、要素を指定する方法がいくつかあります：</p>
+<ul>
+<li><code>input[type="email"]</code>: CSS セレクター</li>
+<li><code>text=ログイン</code>: テキストで検索</li>
+<li><code>data-testid=login-button</code>: テスト用ID（推奨）</li>
+<li><code>role=button</code>: アクセシビリティロール</li>
+</ul>
+<p><strong>推奨</strong>: HTMLに <code>data-testid</code> 属性を追加しておくと、テストが壊れにくくなります。</p>
+</div>
+
+<h4 id="step3-テスト実行と結果確認10分">Step 3: テスト実行と結果確認（10分）</h4>
+
+<p>作成したテストを実行して、結果を確認します。</p>
+
+<pre><code class="language-bash">Claude Code「作成したログインテストを実行して。
+開発サーバーが起動していない場合は先に起動して」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li><strong>開発サーバーを起動</strong>（未起動の場合）
+<pre style="margin-top: 8px;"><code>npm run dev</code></pre>
+</li>
+<li><strong>テストを実行</strong>
+<pre style="margin-top: 8px;"><code>npx playwright test</code></pre>
+</li>
+<li><strong>テスト結果を表示</strong>
+<pre style="margin-top: 8px;"><code>Running 1 test using 1 worker
+
+  ✓ e2e/login.spec.js:3:1 › ログインフローのテスト (2.5s)
+
+  1 passed (3.2s)</code></pre>
+</li>
+<li><strong>失敗時の対応</strong>
+<p style="margin-top: 8px;">テストが失敗した場合、Claude Codeが：</p>
+<ul>
+<li>スクリーンショットを撮影</li>
+<li>エラー原因を分析</li>
+<li>修正案を提示</li>
+</ul>
+</li>
+</ol>
+</div>
+
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
+<h5>✅ テスト結果の確認方法</h5>
+<ul>
+<li><strong>コンソール出力</strong>: テストの成功/失敗が表示される</li>
+<li><strong>HTMLレポート</strong>: <code>npx playwright show-report</code> で詳細レポートを確認</li>
+<li><strong>スクリーンショット</strong>: <code>test-results/</code> ディレクトリに保存される</li>
+<li><strong>動画</strong>: テスト実行の様子を動画で確認可能</li>
+</ul>
+</div>
+
+<h4 id="step4-cicd統合10分">Step 4: CI/CD統合（10分）</h4>
+
+<p>最後に、GitHub Actionsと統合して、プッシュ時に自動でテストが実行されるようにします。</p>
+
+<pre><code class="language-bash">Claude Code「GitHub ActionsでPlaywrightテストを自動実行する設定を作成して。
+mainブランチへのpush時とpull request作成時にテストを実行して」
+</code><button class="code-copy-btn">コピー</button></pre>
+
+<p>Claude Codeが自動的に：</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ol>
+<li><strong>GitHub Actionsワークフローを作成</strong>
+<pre style="margin-top: 8px;"><code># .github/workflows/playwright.yml
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: Run tests
+        run: npx playwright test
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report/</code></pre>
+</li>
+<li><strong>環境変数の設定</strong>
+<p style="margin-top: 8px;">GitHubリポジトリの Settings → Secrets に以下を追加：</p>
+<ul>
+<li><code>SUPABASE_URL</code></li>
+<li><code>SUPABASE_ANON_KEY</code></li>
+</ul>
+</li>
+</ol>
+</div>
+
+<h4 id="完成次のステップへ-2">完成：次のステップへ</h4>
+
+<p>これで、作業時間トラッカーに自動E2Eテストが追加されました！</p>
+
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h5>✅ 達成したこと</h5>
+<ul>
+<li>✅ Playwright MCPのセットアップ完了</li>
+<li>✅ ログインフローのE2Eテスト作成</li>
+<li>✅ テスト実行と結果確認</li>
+<li>✅ CI/CDパイプラインへの統合</li>
+</ul>
+
+<h5>🚀 次に追加すべきテスト</h5>
+<ul>
+<li><strong>タスク管理テスト</strong>: タスク作成 → 開始 → 停止 → 削除のフロー</li>
+<li><strong>エラーハンドリング</strong>: 不正なログイン情報でのエラー表示確認</li>
+<li><strong>レスポンシブ</strong>: モバイル画面でのテスト</li>
+<li><strong>複数ブラウザ</strong>: Chrome、Firefox、Safariでのクロスブラウザテスト</li>
+</ul>
+</div>
+
+<div style="background: rgba(168, 85, 247, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
+<h5>💡 E2Eテストのベストプラクティス</h5>
+<ul>
+<li><strong>重要なフローに絞る</strong>: すべてをテストするのではなく、ユーザーが最もよく使う機能を優先</li>
+<li><strong>テストの独立性</strong>: 各テストは他のテストに依存せず、単独で実行可能にする</li>
+<li><strong>待機処理</strong>: Playwrightは自動で待機しますが、必要に応じて明示的な待機も追加</li>
+<li><strong>定期実行</strong>: CI/CDで自動実行し、問題を早期発見</li>
+<li><strong>テストデータ管理</strong>: テスト用のユーザーアカウントやデータを準備</li>
+</ul>
+</div>
+
 <hr>
-<h2 id="11-データダッシュボードを作る"><strong>11. データダッシュボードを作る</strong></h2>
+<h2 id="11-データダッシュボードを作る"><strong>11. 統計ダッシュボードで生産性を可視化する</strong></h2>
 <hr>
 
-<p>⏱️ <strong>所要時間</strong>: 実践60分</p>
+<p>⏱️ <strong>所要時間</strong>: 実践90分</p>
 
 <h3 id="📋-この章の目標">📋 この章の目標</h3>
 
 <ul>
-<li>これまでの全スキルを統合して使える</li>
-<li>高度なアプリケーションを構築できる</li>
-<li>データ可視化の実装ができる</li>
+<li>これまで構築してきた作業時間トラッカーに統計・分析機能を追加</li>
+<li>Chart.jsを使った高度なデータ可視化を習得</li>
+<li>生産性分析の実装ができる</li>
+<li>2-10章の全スキルを統合して使える</li>
 </ul>
 
 <hr>
 
 <h3 id="🎯-今回作るもの">🎯 今回作るもの</h3>
 
-<p><strong>データダッシュボード</strong> - 経費精算データを可視化・分析するアプリ</p>
+<p><strong>作業時間トラッカー統計ダッシュボード</strong> - これまで構築してきたアプリに、統計・分析・可視化機能を追加</p>
 
-<h4>主な機能</h4>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h4>これまでの構築内容（5-10章の成果）</h4>
 <ul>
-<li>📊 月次・カテゴリ別グラフ表示</li>
-<li>📈 トレンド分析</li>
-<li>🎨 インタラクティブチャート</li>
-<li>📱 レスポンシブデザイン</li>
-<li>💾 データインポート/エクスポート</li>
+<li>✅ <strong>5章</strong>: 基本的な作業時間トラッカー（localStorage保存）</li>
+<li>✅ <strong>6章</strong>: GitHub連携と自動デプロイ</li>
+<li>✅ <strong>7章</strong>: Supabaseでデータ永続化</li>
+<li>✅ <strong>8章</strong>: Supabase認証機能の実装</li>
+<li>✅ <strong>10章</strong>: Playwright MCPで自動E2Eテスト</li>
+</ul>
+</div>
+
+<h4>今回追加する機能</h4>
+<ul>
+<li>📊 <strong>タスク完了率の可視化</strong>: 完了/未完了のドーナツチャート</li>
+<li>📈 <strong>作業時間の日次・週次グラフ</strong>: 折れ線グラフで時系列推移を表示</li>
+<li>🎯 <strong>生産性分析機能</strong>: 平均作業時間、最も生産性の高い時間帯、タスク別の時間配分</li>
+<li>🔍 <strong>フィルタリング機能</strong>: 期間指定、タスク別、完了/未完了の切り替え</li>
+<li>📱 <strong>レスポンシブダッシュボード</strong>: モバイルでも見やすいグラフ表示</li>
 </ul>
 
 <h4>使用技術</h4>
 <ul>
 <li>Chart.js（グラフライブラリ）</li>
-<li>Bootstrap 5（UIフレームワーク）</li>
-<li>localStorage（データ永続化）</li>
+<li>Supabase（既存のデータベース）</li>
+<li>Supabase Auth（既存の認証機能）</li>
+<li>Tailwind CSS（既存のスタイリング）</li>
 </ul>
 
 <h4>使用する全スキル</h4>
 <ul>
-<li>✅ 基本操作（2章）</li>
 <li>✅ 仕様駆動開発（3-4章）</li>
-<li>✅ プロンプト設計（5章）</li>
-<li>✅ 実践開発（6章）</li>
-<li>✅ コードレビュー（7-8章）</li>
-<li>✅ テスト自動生成（9-10章）</li>
-<li>✅ リファクタリング（11章）</li>
+<li>✅ /sc:design での設計（5章）</li>
+<li>✅ /sc:implement での実装（6章）</li>
+<li>✅ /sc:analyze でのコードレビュー（7-8章）</li>
+<li>✅ /sc:test でのテスト自動生成（9-10章）</li>
+<li>✅ /sc:improve でのリファクタリング（11章）</li>
 </ul>
 
 <hr>
 
-<h3 id="🚀-ハンズオン（60分）">🚀 ハンズオン（60分）</h3>
+<h3 id="🚀-ハンズオン（90分）">🚀 ハンズオン（90分）</h3>
 
-<h4>ステップ1: 仕様書作成（10分）</h4>
+<h4>ステップ1: 統計ダッシュボードの仕様設計（15分）</h4>
 
-<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<pre><code class="language-bash">mkdir expense-dashboard
-cd expense-dashboard
-claude</code></pre>
-</div>
-
-<p>まず、今回も仕様駆動で進めます：</p>
+<p>まず、追加する統計ダッシュボードの仕様を設計します。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「経費精算データダッシュボードの仕様書を作成してください。</p>
+<p>💬 「/sc:design 作業時間トラッカーに統計ダッシュボード機能を追加してください。</p>
 
-<pre><code># 経費精算データダッシュボード
+<pre><code># 統計ダッシュボード機能仕様
 
 ## 概要
-経費精算データを可視化・分析するダッシュボードアプリケーション。
-月次推移、カテゴリ別分析、統計情報をグラフで表示。
-
-## 機能一覧
-1. データインポート
-   - CSV/JSONファイルのインポート
-   - 6章の経費精算アプリからのデータ移行
-2. ダッシュボード表示
-   - 月次推移グラフ（折れ線グラフ）
-   - カテゴリ別円グラフ
-   - 統計サマリー（合計、平均、最大・最小）
-3. フィルタリング
-   - 期間指定（開始日〜終了日）
-   - カテゴリ選択
-   - 金額範囲指定
-4. データエクスポート
-   - グラフ画像のダウンロード
-   - フィルタ済みデータのCSV出力
+既存の作業時間トラッカーに、ユーザーの生産性を可視化する統計ダッシュボード機能を追加。
 
 ## 画面構成
-- ヘッダー: タイトル、期間選択
-- サイドバー: フィルタ設定
-- メインエリア: グラフ表示エリア
-- フッター: 統計サマリー
+### ダッシュボードページ (/dashboard/stats)
+- ヘッダー: ページタイトル「生産性分析」、期間選択フィルタ
+- メインエリア:
+  1. サマリーカード（3列）
+     - 総作業時間（今週）
+     - タスク完了数
+     - 平均作業時間/タスク
+  2. グラフエリア（2列）
+     - 左: 日次作業時間の折れ線グラフ（過去7日間）
+     - 右: タスク完了率のドーナツチャート
+  3. 詳細分析エリア
+     - タスク別作業時間ランキング（横棒グラフ）
+     - 時間帯別生産性（24時間ヒートマップ風）
+
+## 機能要件
+1. データ集計
+   - Supabaseから作業ログを取得
+   - 日別、週別、月別の集計
+   - タスク別の作業時間集計
+   - 時間帯別の作業時間集計
+2. グラフ描画
+   - Chart.jsを使用
+   - 折れ線グラフ（時系列推移）
+   - ドーナツチャート（完了率）
+   - 横棒グラフ（ランキング）
+3. フィルタリング
+   - 期間選択（今週、先週、今月、先月、カスタム）
+   - タスクステータス（全て、完了、未完了）
+   - タスク種別の選択
+4. リアルタイム更新
+   - データ追加時に自動でグラフ更新
+   - Supabaseのリアルタイムサブスクリプション活用
 
 ## 技術要件
-- フロントエンド: HTML, CSS, JavaScript
-- グラフ: Chart.js
-- UI: Bootstrap 5
-- データ保存: localStorage
+- Supabase: 既存のwork_logsテーブルを使用
+- Chart.js: CDN経由で読み込み
+- Tailwind CSS: 既存のスタイリング
+- Next.js: App Routerで新規ページ追加
 
 ## 非機能要件
-- レスポンシブ対応（スマホ・タブレット）
+- レスポンシブ対応（モバイル時はグラフを縦積み）
 - グラフのアニメーション
-- データ更新の即時反映
+- データ取得時のローディング表示
 - 最大1000件のデータを快適に表示
 
 spec.mdとして保存してください。」</code><button class="code-copy-btn">コピー</button></pre>
 </div>
 
-<h4>ステップ2: プロジェクト構築（15分）</h4>
+<p><strong>確認ポイント</strong>:</p>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
+<ul>
+<li>既存のwork_logsテーブル構造を理解したか</li>
+<li>Supabase認証で保護されたページとして設計されているか</li>
+<li>Chart.jsの使用方法を理解したか</li>
+</ul>
+</div>
 
-<p>仕様書をもとに実装を依頼：</p>
+<h4>ステップ2: 統計ダッシュボードの実装（30分）</h4>
+
+<p>仕様書に基づいて、統計ダッシュボードを実装します。段階的に進めましょう。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「spec.mdの仕様に基づいて、経費精算データダッシュボードを実装してください。</p>
-
-<p><strong>実装の制約:</strong></p>
-<ul>
-<li>1ファイル構成（index.html）</li>
-<li>Chart.jsはCDN経由で読み込み</li>
-<li>Bootstrap 5はCDN経由で読み込み</li>
-<li>サンプルデータを10件程度含める</li>
-</ul>
+<p>💬 「/sc:implement spec.mdに基づいて、統計ダッシュボード機能を実装してください。</p>
 
 <p><strong>実装の優先順位:</strong></p>
 <ul>
-<li>Phase 1: 基本構造とサンプルデータ表示</li>
-<li>Phase 2: グラフ表示（月次推移・カテゴリ別）</li>
-<li>Phase 3: フィルタリング機能</li>
-<li>Phase 4: インポート/エクスポート機能</li>
+<li><strong>Phase 1（10分）</strong>: ダッシュボードページの基本構造
+<ul>
+<li>/dashboard/statsページの作成</li>
+<li>AuthGuardの適用</li>
+<li>サマリーカードの実装</li>
+<li>Supabaseからのデータ取得ロジック</li>
+</ul>
+</li>
+<li><strong>Phase 2（10分）</strong>: Chart.jsグラフの実装
+<ul>
+<li>日次作業時間の折れ線グラフ</li>
+<li>タスク完了率のドーナツチャート</li>
+<li>タスク別ランキングの横棒グラフ</li>
+</ul>
+</li>
+<li><strong>Phase 3（10分）</strong>: フィルタ機能と詳細分析
+<ul>
+<li>期間選択フィルタの実装</li>
+<li>時間帯別生産性の表示</li>
+<li>リアルタイム更新機能</li>
+</ul>
+</li>
 </ul>
 
-<p>まずPhase 1から実装してください。」</p>
+<p>まずPhase 1から実装し、動作確認してから次に進んでください。」</p>
+</div>
+
+<p><strong>実装例のポイント</strong>:</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h5>Chart.jsの基本的な使い方</h5>
+<pre><code>// 日次作業時間の折れ線グラフ
+const ctx = document.getElementById('dailyChart').getContext('2d')
+const dailyChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['月', '火', '水', '木', '金', '土', '日'],
+    datasets: [{
+      label: '作業時間（時間）',
+      data: [3.5, 4.2, 2.8, 5.1, 4.5, 2.0, 1.5],
+      borderColor: '#3B82F6',
+      backgroundColor: 'rgba(59, 130, 246, 0.1)',
+      tension: 0.4
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: true },
+      tooltip: { enabled: true }
+    }
+  }
+})</code></pre>
+
+<h5>Supabaseからのデータ集計</h5>
+<pre><code>// 過去7日間の作業ログを取得
+const { data: logs } = await supabase
+  .from('work_logs')
+  .select('*')
+  .gte('created_at', sevenDaysAgo)
+  .eq('user_id', user.id)
+  .order('created_at', { ascending: true })
+
+// 日別に集計
+const dailyData = logs.reduce((acc, log) => {
+  const date = log.created_at.split('T')[0]
+  acc[date] = (acc[date] || 0) + log.duration_minutes / 60
+  return acc
+}, {})</code></pre>
 </div>
 
 <p><strong>確認</strong>:</p>
 <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<pre><code class="language-bash">open index.html</code></pre>
+<pre><code class="language-bash">npm run dev
+# http://localhost:3000/dashboard/stats にアクセス
+# グラフが正しく表示されることを確認</code></pre>
 </div>
 
-<h4>ステップ3: コードレビューと改善（10分）</h4>
+<h4>ステップ3: コードレビューと品質改善（15分）</h4>
 
-<p><strong>セキュリティ・パフォーマンスチェック</strong>:</p>
+<p>実装したコードをレビューし、品質を向上させます。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「実装したコードをレビューしてください。</p>
+<p>💬 「/sc:analyze 統計ダッシュボードのコードをレビューしてください。</p>
 
-<p><strong>チェック項目:</strong></p>
+<p><strong>レビュー観点:</strong></p>
 <ul>
-<li><strong>セキュリティ</strong>
-<ul>
-<li>XSS対策（ユーザー入力のエスケープ）</li>
-<li>CSVインジェクション対策</li>
-</ul>
-</li>
 <li><strong>パフォーマンス</strong>
 <ul>
-<li>大量データ（1000件）の処理速度</li>
+<li>大量データ（1000件）の集計処理速度</li>
 <li>グラフ描画の最適化</li>
+<li>不要な再レンダリングの防止</li>
 </ul>
 </li>
-<li>エラーハンドリング
+<li><strong>データ整合性</strong>
 <ul>
-<li>ファイル読み込み失敗時</li>
-<li>不正なデータ形式時</li>
-<li>localStorage容量超過時</li>
+<li>集計ロジックの正確性</li>
+<li>タイムゾーン処理</li>
+<li>null/undefined処理</li>
 </ul>
 </li>
-<li>アクセシビリティ
+<li><strong>ユーザビリティ</strong>
 <ul>
+<li>ローディング状態の表示</li>
+<li>エラーハンドリング</li>
+<li>空データ時の表示</li>
+</ul>
+</li>
+<li><strong>アクセシビリティ</strong>
+<ul>
+<li>グラフの代替テキスト</li>
+<li>色覚多様性への配慮</li>
 <li>キーボード操作対応</li>
-<li>スクリーンリーダー対応</li>
-<li>カラーコントラスト</li>
 </ul>
 </li>
 </ul>
 
-<p>各項目について改善点を指摘し、修正案を提示してください。」</p>
+<p>各観点で改善点があれば、優先度をつけて指摘し、修正案を提示してください。」</p>
 </div>
 
-<p><strong>レビュー結果に基づいて改善</strong>:</p>
+<p><strong>レビュー結果に基づく改善</strong>:</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「指摘された問題点をすべて修正してください。<br>
-特にパフォーマンスとアクセシビリティを重点的に。」</p>
+<p>💬 「/sc:improve レビューで指摘された問題点を修正してください。<br>
+特にパフォーマンスとデータ整合性を重点的に改善してください。」</p>
 </div>
 
-<h4>ステップ4: テスト追加（15分）</h4>
+<h4>ステップ4: テスト実装（20分）</h4>
 
-<p><strong>ユニットテストと統合テスト</strong>:</p>
+<p>統計ダッシュボードの動作を保証するテストを作成します。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「ダッシュボードアプリのテストを作成してください。</p>
-
-<p><strong>テスト環境:</strong></p>
-<ul>
-<li>Jest + jsdom</li>
-</ul>
+<p>💬 「/sc:test 統計ダッシュボードのテストを作成してください。</p>
 
 <p><strong>テストファイル構成:</strong></p>
 <ul>
-<li><strong>dataProcessing.test.js</strong>
+<li><strong>dataAggregation.test.js</strong>（ユニットテスト）
 <ul>
-<li>月次集計関数のテスト</li>
-<li>カテゴリ集計関数のテスト</li>
-<li>フィルタリング関数のテスト</li>
+<li>日別集計関数のテスト</li>
+<li>週別集計関数のテスト</li>
+<li>タスク別集計関数のテスト</li>
+<li>完了率計算のテスト</li>
 </ul>
 </li>
-<li><strong>chartRendering.test.js</strong>
+<li><strong>chartGeneration.test.js</strong>（ユニットテスト）
 <ul>
-<li>グラフデータ生成のテスト</li>
-<li>オプション設定のテスト</li>
+<li>Chart.jsデータ生成のテスト</li>
+<li>グラフオプション設定のテスト</li>
+<li>空データ時の処理テスト</li>
 </ul>
 </li>
-<li><strong>dataImportExport.test.js</strong>
+<li><strong>dashboard.spec.js</strong>（E2Eテスト - Playwright）
 <ul>
-<li>CSVパースのテスト</li>
-<li>JSONパースのテスト</li>
-<li>データバリデーションのテスト</li>
+<li>ダッシュボードページへのアクセス</li>
+<li>グラフの表示確認</li>
+<li>フィルタ機能の動作確認</li>
+<li>リアルタイム更新の確認</li>
 </ul>
 </li>
-<li><strong>integration.test.js</strong>
-<ul>
-<li>データインポート → 表示のフロー</li>
-<li>フィルタ適用 → グラフ更新のフロー</li>
-<li>エクスポート機能のフロー</li>
 </ul>
-</li>
+
+<p><strong>テストデータ:</strong></p>
+<ul>
+<li>7日分の作業ログサンプルデータ</li>
+<li>完了/未完了のタスクデータ</li>
+<li>境界値テスト用のデータ（0件、1000件）</li>
 </ul>
 
 <p>各テストで正常系・異常系・境界値をカバーしてください。」</p>
@@ -402,61 +795,63 @@ spec.mdとして保存してください。」</code><button class="code-copy-bt
 
 <p><strong>テスト実行</strong>:</p>
 <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<pre><code class="language-bash">npm test
+<pre><code class="language-bash"># ユニットテスト
+npm test
+
+# E2Eテスト
+npx playwright test dashboard.spec.js
+
+# カバレッジ確認
 npm test -- --coverage</code></pre>
 </div>
 
 <p><strong>カバレッジ目標</strong>: 80%以上</p>
 
-<h4>ステップ5: リファクタリング（10分）</h4>
+<h4>ステップ5: リファクタリングとドキュメント作成（10分）</h4>
 
-<p><strong>コード品質向上</strong>:</p>
+<p>コードをリファクタリングし、保守性を向上させます。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「実装したコードをリファクタリングしてください。</p>
+<p>💬 「/sc:improve 統計ダッシュボードのコードをリファクタリングしてください。</p>
 
 <p><strong>改善ポイント:</strong></p>
 <ul>
-<li><strong>関数の分割</strong>
+<li><strong>関数の責任分離</strong>
 <ul>
-<li>100行を超える関数を小さく分割</li>
-<li>単一責任の原則に従う</li>
+<li>データ取得、集計、グラフ生成を分離</li>
+<li>カスタムフックの作成（useWorkStats）</li>
 </ul>
 </li>
-<li><strong>重複コードの削除</strong>
+<li><strong>共通処理の抽出</strong>
 <ul>
-<li>共通処理を関数化</li>
-<li>ユーティリティ関数の作成</li>
+<li>日付フォーマット処理</li>
+<li>時間計算処理</li>
+<li>Chart.jsの共通設定</li>
 </ul>
 </li>
-<li><strong>命名の改善</strong>
+<li><strong>型定義の追加</strong>（TypeScript使用時）
 <ul>
-<li>変数名を説明的に</li>
-<li>関数名を動詞で開始</li>
+<li>WorkLog型</li>
+<li>StatsData型</li>
+<li>ChartData型</li>
 </ul>
 </li>
-<li><strong>ES6+記法の適用</strong>
+<li><strong>エラーハンドリングの統一</strong>
 <ul>
-<li>アロー関数</li>
-<li>分割代入</li>
-<li>テンプレート文字列</li>
-<li>オプショナルチェイニング</li>
-</ul>
-</li>
-<li><strong>定数の整理</strong>
-<ul>
-<li>マジックナンバーを定数化</li>
-<li>設定値を一箇所に集約</li>
+<li>try-catchの統一的な実装</li>
+<li>エラーメッセージの一元管理</li>
 </ul>
 </li>
 </ul>
 
-<p>すべての改善後、テストが通ることを確認してください。」</p>
+<p>リファクタリング後、全テストが通ることを確認してください。」</p>
 </div>
 
-<p><strong>リファクタリング後のテスト</strong>:</p>
+<p><strong>リファクタリング後の確認</strong>:</p>
 <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<pre><code class="language-bash">npm test</code></pre>
+<pre><code class="language-bash">npm test
+npm run build
+npm run lint</code></pre>
 </div>
 
 <hr>
@@ -464,11 +859,24 @@ npm test -- --coverage</code></pre>
 <h3 id="✅-この章のまとめ">✅ この章のまとめ</h3>
 
 <ul>
-<li><strong>全スキル統合</strong>: 2-11章の全スキルを実践適用</li>
-<li><strong>高度な実装</strong>: データ可視化・分析アプリの構築</li>
+<li><strong>統計機能の実装</strong>: Chart.jsを使った高度なデータ可視化を習得</li>
+<li><strong>データ集計ロジック</strong>: Supabaseからのデータ取得と集計処理を実装</li>
+<li><strong>全スキル統合</strong>: 2-10章の全スキルを実践適用</li>
 <li><strong>品質保証</strong>: レビュー・テスト・リファクタリングの完遂</li>
-<li><strong>実務レベル</strong>: 副業・転職で使えるポートフォリオ完成</li>
+<li><strong>実務レベル</strong>: ユーザーに価値を提供する完全なアプリケーション</li>
 </ul>
+
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h4>🎯 達成したスキル</h4>
+<ul>
+<li>✅ データ可視化（Chart.js）</li>
+<li>✅ 集計ロジックの実装</li>
+<li>✅ パフォーマンス最適化</li>
+<li>✅ E2Eテストの作成</li>
+<li>✅ リアルタイム更新機能</li>
+<li>✅ レスポンシブダッシュボード</li>
+</ul>
+</div>
 
 <hr>
 
@@ -477,131 +885,357 @@ npm test -- --coverage</code></pre>
 <p>この章を終えたら、以下を確認してください：</p>
 
 <ul>
-<li>仕様書からアプリを完成させられた</li>
-<li>Chart.jsでグラフを実装できた</li>
-<li>コードレビュー・テスト・リファクタリングを実施できた</li>
+<li>統計ダッシュボードが正常に動作する</li>
+<li>Chart.jsで3種類のグラフを実装できた</li>
+<li>データ集計ロジックが正確に動作する</li>
+<li>E2Eテストが通過する</li>
+<li>コードレビュー・リファクタリングを実施できた</li>
 <li>これまでの全スキルを統合して使えた</li>
 </ul>
 
-<p><strong>すべてチェックできたら、次は13章で総合実践です！</strong></p>
+<p><strong>すべてチェックできたら、次は12章で総合実践（卒業制作）です！</strong></p>
 
 <hr>
-<h2 id="12-総合実践ガイド"><strong>12. 総合実践ガイド</strong></h2>
+<h2 id="12-総合実践ガイド"><strong>12. 卒業制作：作業時間トラッカー完全版</strong></h2>
 <hr>
 
-<p>⏱️ <strong>所要時間</strong>: 実践60分</p>
+<p>⏱️ <strong>所要時間</strong>: 実践120分</p>
 
 <h3 id="📋-この章の目標-13">📋 この章の目標</h3>
 
 <ul>
-<li>実務を想定した開発フローを体験する</li>
-<li>プロジェクト全体のライフサイクルを理解する</li>
+<li>5-11章で構築してきた作業時間トラッカーを完成させる</li>
+<li>全ツール（GitHub、Supabase、認証、E2Eテスト、統計分析）を統合</li>
+<li>オリジナルのカスタム機能を追加して個性を出す</li>
+<li>実務レベルのポートフォリオ作品を完成させる</li>
 <li>自立してAI開発ができる状態になる</li>
 </ul>
 
 <hr>
 
-<h3 id="🎯-この章でやること">🎯 この章でやること</h3>
+<h3 id="🎯-卒業制作の内容">🎯 卒業制作の内容</h3>
 
-<p>これまで学んだすべてのスキルを使って、<strong>実務レベルのプロジェクト</strong>を一から完成させます。</p>
+<p><strong>作業時間トラッカー完全版</strong> - これまでの学習の集大成として、実務レベルの完全なアプリケーションを完成させます。</p>
+
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h4>これまでの構築内容（5-11章の成果）</h4>
+<ul>
+<li>✅ <strong>5章</strong>: 基本的な作業時間トラッカー（localStorage）</li>
+<li>✅ <strong>6章</strong>: GitHub連携と自動デプロイ（Netlify）</li>
+<li>✅ <strong>7章</strong>: Supabaseでデータ永続化</li>
+<li>✅ <strong>8章</strong>: Supabase認証機能の実装</li>
+<li>✅ <strong>10章</strong>: Playwright MCPで自動E2Eテスト</li>
+<li>✅ <strong>11章</strong>: 統計ダッシュボードで生産性可視化</li>
+</ul>
+</div>
+
+<h4>今回追加する内容（卒業制作）</h4>
+<ul>
+<li>🎨 <strong>オリジナル機能の企画と実装</strong>: あなた独自のアイデアを追加</li>
+<li>📱 <strong>モバイル最適化</strong>: レスポンシブデザインの完成</li>
+<li>🚀 <strong>パフォーマンス最適化</strong>: 大量データ対応、ローディング改善</li>
+<li>🔔 <strong>通知機能</strong>: 作業時間リマインダー、目標達成通知</li>
+<li>📤 <strong>データエクスポート</strong>: CSV/PDF形式でのレポート出力</li>
+<li>🎯 <strong>目標設定機能</strong>: 週次・月次の作業時間目標管理</li>
+</ul>
 
 <h4>開発フロー全体</h4>
 <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<pre><code>企画 → 仕様作成 → 実装 → レビュー → テスト → リファクタリング → デプロイ → 保守</code></pre>
+<pre><code>企画 → 仕様作成 → 実装 → テスト → レビュー → デプロイ → 運用</code></pre>
 </div>
-
-<h4>今回作るもの</h4>
-<p><strong>タスク管理＋経費精算の統合アプリ</strong> - 実務でよくある「既存システムの拡張」を体験</p>
 
 <hr>
 
-<h3 id="🚀-実践プロジェクト（60分）-13">🚀 実践プロジェクト（60分）</h3>
+<h3 id="🚀-卒業制作ハンズオン（120分）">🚀 卒業制作ハンズオン（120分）</h3>
 
-<h4>Phase 1: プロジェクト企画（10分）</h4>
+<h4>Phase 1: オリジナル機能の企画（20分）</h4>
+
+<p>まず、あなた独自のカスタム機能を企画します。ポートフォリオとして差別化するための重要なステップです。</p>
 
 <div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p><strong>状況設定</strong>:</p>
-<p>あなたは小規模チームのエンジニア。<br>
-現在、タスク管理アプリと経費精算アプリが別々に存在。<br>
-これらを統合して、生産性向上ツールとして一本化する依頼を受けた。</p>
-</div>
-
-<p><strong>要件定義</strong>: AIに以下のプロンプトを送信</p>
-
-<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「以下の要件から、統合アプリの仕様書を作成してください。</p>
-<p><strong>背景</strong>: タスク管理アプリと経費精算アプリが別々に存在し、管理が非効率</p>
-<p><strong>目的</strong>: タスクと経費を統合管理し、プロジェクトごとの工数・コストを可視化</p>
-<p><strong>主要機能</strong>:</p>
+<p><strong>💡 カスタム機能のアイデア例</strong>:</p>
 <ul>
-<li>プロジェクト管理（作成・編集・削除、ステータス管理）</li>
-<li>タスク管理の拡張（プロジェクト紐付け、工数入力）</li>
-<li>経費管理の拡張（プロジェクト紐付け、承認ワークフロー）</li>
-<li>ダッシュボード（工数・コスト集計、予算vs実績）</li>
-<li>レポート出力（PDF/CSV、月次レポート）</li>
+<li><strong>AIレポート生成</strong>: Claude APIを使って週次レポートを自動生成</li>
+<li><strong>ポモドーロタイマー統合</strong>: 25分作業+5分休憩の自動管理</li>
+<li><strong>チーム機能</strong>: 複数ユーザーでプロジェクトを共有</li>
+<li><strong>タグ管理</strong>: タスクにタグを付けて横断的に管理</li>
+<li><strong>通知システム</strong>: 作業時間の目標達成やリマインダー</li>
+<li><strong>カレンダー統合</strong>: Googleカレンダーとの連携</li>
+<li><strong>モチベーショングラフ</strong>: 作業習慣の可視化と励まし機能</li>
 </ul>
-<p><strong>技術要件</strong>: SPA、Bootstrap 5 + Chart.js、localStorage</p>
-<p><strong>制約</strong>: 開発期間1週間、既存データの移行パス提供、段階的リリース</p>
-<p>spec.mdとして詳細な仕様書を作成してください。」</p>
 </div>
 
-<h4>Phase 2: MVP実装（15分）</h4>
-
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「MVPスコープに基づいて実装してください。</p>
+<p>💬 「/sc:brainstorm 作業時間トラッカーに追加する独自機能を一緒に考えてください。</p>
 
-<pre><code>実装順序:
-1. プロジェクト管理機能
-2. タスク管理との統合
-3. 経費管理との統合
-4. 基本ダッシュボード
+<pre><code># カスタム機能のブレインストーミング
 
-各ステップ完了後、動作確認してから次に進んでください。
-1ファイル構成（index.html）で実装してください。」</code><button class="code-copy-btn">コピー</button></pre>
+## 現在の機能
+- 作業時間の記録と管理
+- Supabaseでのデータ永続化
+- 認証機能
+- 統計ダッシュボード（Chart.js）
+- 自動デプロイ（Netlify）
+- E2Eテスト（Playwright）
+
+## 目標
+実務で使える、ポートフォリオとして魅力的な独自機能を1-2個追加したい。
+
+## 制約
+- 実装時間: 30-40分程度
+- 技術スタック: Next.js、Supabase、Tailwind CSS
+- 既存機能との統合が必要
+
+一緒に実現可能で魅力的な機能を考えてください。
+選択肢を3つ提案し、それぞれの実装難易度と効果を教えてください。」</code><button class="code-copy-btn">コピー</button></pre>
 </div>
 
-<h4>Phase 3: コードレビュー（10分）</h4>
+<p><strong>機能決定後の仕様書作成</strong>:</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「実装したコードを総合レビューしてください。</p>
-<p><strong>レビュー観点</strong>:</p>
+<p>💬 「/sc:design 選んだカスタム機能の詳細仕様書を作成してください。</p>
+
+<pre><code># [機能名]の仕様書
+
+## 概要
+[機能の説明]
+
+## 画面・UI設計
+- [画面構成]
+- [ユーザーフロー]
+
+## データベース設計
+- [必要なテーブル・カラム]
+- [既存テーブルとの関連]
+
+## 実装計画
+1. Phase 1: [基本機能]
+2. Phase 2: [連携機能]
+3. Phase 3: [テスト・品質保証]
+
+spec-custom.mdとして保存してください。」</code><button class="code-copy-btn">コピー</button></pre>
+</div>
+
+<h4>Phase 2: フルスタック実装（40分）</h4>
+
+<p>既存の作業時間トラッカーにカスタム機能を統合します。段階的に実装していきます。</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「/sc:implement spec-custom.mdに基づいて、カスタム機能を実装してください。</p>
+
+<p><strong>実装の優先順位</strong>:</p>
 <ul>
-<li>🔒 セキュリティ（XSS対策、データバリデーション）</li>
-<li>⚡ パフォーマンス（DOM操作、データ構造）</li>
-<li>📖 可読性（コード構造、命名規則）</li>
-<li>🧪 テスタビリティ（関数の独立性）</li>
-<li>♿ アクセシビリティ（キーボード操作、ARIA）</li>
-<li>🏗️ 保守性（拡張性、依存関係）</li>
-</ul>
-<p>各観点で問題があれば、優先度をつけて指摘してください。」</p>
-</div>
-
-<h4>Phase 4: テスト実装（15分）</h4>
-
-<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「統合アプリのテスト戦略を策定してください。</p>
-<p><strong>テストレベル</strong>:</p>
+<li><strong>Phase 1（15分）</strong>: データベース設計と基本UI
 <ul>
-<li>ユニットテスト（70%）: データ操作関数、集計・計算ロジック</li>
-<li>統合テスト（20%）: プロジェクト作成→タスク追加フロー</li>
-<li>E2Eテスト（10%）: 主要なユーザーシナリオ</li>
+<li>Supabaseのテーブル作成/修正</li>
+<li>新機能のページまたはコンポーネント作成</li>
+<li>基本的なCRUD操作</li>
 </ul>
-<p>カバレッジ目標: 80%以上</p>
+</li>
+<li><strong>Phase 2（15分）</strong>: 既存機能との統合
+<ul>
+<li>作業時間トラッカーとの連携</li>
+<li>統計ダッシュボードへの反映</li>
+<li>認証ガードの適用</li>
+</ul>
+</li>
+<li><strong>Phase 3（10分）</strong>: UI/UXの洗練
+<ul>
+<li>Tailwind CSSでのスタイリング</li>
+<li>ローディング状態の実装</li>
+<li>エラーハンドリング</li>
+</ul>
+</li>
+</ul>
+
+<p>各Phaseの完了後、動作確認してから次に進んでください。」</p>
 </div>
 
-<h4>Phase 5: リファクタリング（10分）</h4>
+<p><strong>実装のポイント</strong>:</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h5>既存コードとの統合例</h5>
+<pre><code>// 既存のwork_logsテーブルに新しいカラムを追加する場合
+-- Supabase SQL Editor
+ALTER TABLE work_logs
+ADD COLUMN tags TEXT[],
+ADD COLUMN priority INTEGER DEFAULT 0;
+
+// 既存のダッシュボードに新しいグラフを追加
+// app/dashboard/stats/page.jsx
+export default function StatsPage() {
+  // 既存のグラフ
+  const taskCompletionChart = ...
+  const dailyWorkChart = ...
+
+  // 新しいカスタム機能のグラフ
+  const customFeatureChart = ...
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {taskCompletionChart}
+      {dailyWorkChart}
+      {customFeatureChart}
+    </div>
+  )
+}</code></pre>
+</div>
+
+<p><strong>確認</strong>:</p>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<pre><code class="language-bash">npm run dev
+# カスタム機能が正しく動作することを確認
+# 既存機能との統合が問題ないことを確認</code></pre>
+</div>
+
+<h4>Phase 3: カスタム機能の追加とUI改善（30分）</h4>
+
+<p>実装したカスタム機能をさらに洗練させ、追加の改善を行います。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「実装したコードをリファクタリングしてください。</p>
+<p>💬 「/sc:improve カスタム機能とアプリ全体のUI/UXを改善してください。</p>
 
-<pre><code>改善ポイント:
-1. 関数の責任分離（100行以上の関数を分割）
-2. データ構造の最適化
-3. 共通処理の集約
-4. エラーハンドリングの統一
-5. ES6+記法の適用
+<p><strong>改善項目</strong>:</p>
+<ul>
+<li><strong>モバイル最適化</strong>
+<ul>
+<li>タッチ操作の改善</li>
+<li>モバイル画面でのレイアウト調整</li>
+<li>スワイプジェスチャーの追加（オプション）</li>
+</ul>
+</li>
+<li><strong>パフォーマンス最適化</strong>
+<ul>
+<li>大量データ（1000件以上）の処理速度改善</li>
+<li>不要な再レンダリングの削減</li>
+<li>画像の遅延読み込み</li>
+</ul>
+</li>
+<li><strong>アクセシビリティ</strong>
+<ul>
+<li>キーボードナビゲーションの改善</li>
+<li>スクリーンリーダー対応</li>
+<li>カラーコントラストの確認</li>
+</ul>
+</li>
+<li><strong>エクスポート機能</strong>
+<ul>
+<li>CSV形式でのデータエクスポート</li>
+<li>統計レポートのPDF出力（オプション）</li>
+</ul>
+</li>
+</ul>
+</div>
 
-リファクタリング後、全テストが通ることを確認してください。」</code><button class="code-copy-btn">コピー</button></pre>
+<p><strong>追加実装例</strong>:</p>
+<div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h5>データエクスポート機能</h5>
+<pre><code>// CSV エクスポート
+async function exportToCSV() {
+  const { data: logs } = await supabase
+    .from('work_logs')
+    .select('*')
+    .order('created_at', { ascending: false })
+
+  const csv = [
+    ['日付', 'タスク名', '作業時間', 'ステータス'],
+    ...logs.map(log => [
+      log.created_at.split('T')[0],
+      log.task_name,
+      `${log.duration_minutes}分`,
+      log.completed ? '完了' : '未完了'
+    ])
+  ].map(row => row.join(',')).join('\n')
+
+  const blob = new Blob([csv], { type: 'text/csv' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `work-logs-${new Date().toISOString().split('T')[0]}.csv`
+  a.click()
+}</code></pre>
+</div>
+
+<h4>Phase 4: 統合テストとE2E検証（20分）</h4>
+
+<p>カスタム機能を含む全体のテストを実装します。</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「/sc:test 卒業制作アプリの包括的なテストを作成してください。</p>
+
+<p><strong>テスト範囲</strong>:</p>
+<ul>
+<li><strong>既存機能のテスト</strong>
+<ul>
+<li>作業時間の記録・編集・削除</li>
+<li>認証フロー（ログイン・ログアウト）</li>
+<li>統計ダッシュボードの表示</li>
+</ul>
+</li>
+<li><strong>カスタム機能のテスト</strong>
+<ul>
+<li>新機能の基本操作</li>
+<li>既存機能との連携</li>
+<li>エラーハンドリング</li>
+</ul>
+</li>
+<li><strong>E2Eシナリオテスト（Playwright）</strong>
+<ul>
+<li>ログイン → 作業記録 → 統計確認 → カスタム機能利用 → ログアウト</li>
+<li>データエクスポート機能の動作確認</li>
+<li>モバイルビューでの動作確認</li>
+</ul>
+</li>
+</ul>
+
+<p>カバレッジ目標: 全体で75%以上</p>
+</div>
+
+<p><strong>テスト実行</strong>:</p>
+<div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<pre><code class="language-bash"># ユニットテスト
+npm test
+
+# E2Eテスト
+npx playwright test
+
+# カバレッジ確認
+npm test -- --coverage
+
+# 全テスト実行
+npm run test:all</code></pre>
+</div>
+
+<h4>Phase 5: デプロイと最終確認（10分）</h4>
+
+<p>完成したアプリをデプロイし、本番環境での動作を確認します。</p>
+
+<div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<p>💬 「/sc:git 卒業制作の完成版をGitHubにプッシュして、本番環境にデプロイしてください。</p>
+
+<pre><code>コミットメッセージ:
+feat: 卒業制作完成 - 作業時間トラッカー完全版
+
+- カスタム機能: [あなたの実装した機能名]
+- モバイル最適化完了
+- 統合テスト実装
+- データエクスポート機能追加
+- パフォーマンス最適化
+
+すべてのテストが通過することを確認してからプッシュしてください。」</code><button class="code-copy-btn">コピー</button></pre>
+</div>
+
+<p><strong>最終確認チェックリスト</strong>:</p>
+<div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<ul>
+<li>✅ すべてのテストが通過している</li>
+<li>✅ 本番環境（Netlify）で正常に動作している</li>
+<li>✅ モバイルで正常に表示される</li>
+<li>✅ カスタム機能が意図通り動作する</li>
+<li>✅ 統計ダッシュボードが正確に集計されている</li>
+<li>✅ 認証機能が正常に機能している</li>
+<li>✅ データエクスポートが動作する</li>
+<li>✅ GitHubにコードが公開されている</li>
+</ul>
 </div>
 
 <hr>
@@ -609,11 +1243,25 @@ npm test -- --coverage</code></pre>
 <h3 id="✅-この章のまとめ-13">✅ この章のまとめ</h3>
 
 <ul>
-<li><strong>実務フロー</strong>: 企画から保守までの全工程を体験</li>
-<li><strong>品質保証</strong>: レビュー・テスト・リファクタリングの重要性</li>
-<li><strong>自立力</strong>: 一人で完結できる開発スキルの獲得</li>
-<li><strong>応用力</strong>: 様々な案件・プロジェクトに対応可能</li>
+<li><strong>完全統合</strong>: 5-11章の全機能を統合した完全版アプリ</li>
+<li><strong>独自性</strong>: オリジナルのカスタム機能で差別化</li>
+<li><strong>実務レベル</strong>: ポートフォリオとして提示できる品質</li>
+<li><strong>自立開発力</strong>: 一人で完結できる開発スキルの獲得</li>
+<li><strong>テスト・品質保証</strong>: 包括的なテストによる品質担保</li>
 </ul>
+
+<div style="background: rgba(168, 85, 247, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h4>🎯 卒業時点で身につけたスキル</h4>
+<ul>
+<li>✅ Next.js App Routerでのフルスタック開発</li>
+<li>✅ Supabaseでのバックエンド構築（DB設計、認証、RLS）</li>
+<li>✅ Tailwind CSSでのモダンUIデザイン</li>
+<li>✅ Chart.jsでのデータ可視化</li>
+<li>✅ Playwright MCPでのE2Eテスト</li>
+<li>✅ GitHubとNetlifyでのCI/CD</li>
+<li>✅ 企画から運用までの完全フロー</li>
+</ul>
+</div>
 
 <hr>
 
@@ -622,15 +1270,43 @@ npm test -- --coverage</code></pre>
 <p>この章を終えたら、以下を確認してください：</p>
 
 <ul>
-<li>要件定義から実装まで一貫して行えた</li>
-<li>レビュー・テスト・リファクタリングを完遂できた</li>
-<li>実務レベルのプロジェクトを完成させられた</li>
-<li>自立してAI開発ができる自信がついた</li>
+<li>作業時間トラッカー完全版が動作している</li>
+<li>カスタム機能が正常に動作している</li>
+<li>全テストが通過している</li>
+<li>本番環境にデプロイされている</li>
+<li>GitHubにコードが公開されている</li>
+<li>モバイルで正常に動作している</li>
+<li>ポートフォリオとして提示できる品質になっている</li>
 </ul>
 
-<p><strong>すべてチェックできたら、セッション3完了です！</strong></p>
+<div style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1)); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+<h4>🚀 卒業後のロードマップ</h4>
 
-<p><strong>次は14章で、これまで使ってきた技術の裏側を理解します。</strong></p>
+<h5>短期（1ヶ月）</h5>
+<ul>
+<li>このアプリをポートフォリオとして磨き上げる</li>
+<li>README.mdを充実させ、デモ動画を作成</li>
+<li>LinkedInやTwitterでアプリを公開</li>
+</ul>
+
+<h5>中期（3ヶ月）</h5>
+<ul>
+<li>このアプリをベースに副業案件を受注</li>
+<li>学んだスキルを活かして別のアプリを開発</li>
+<li>TypeScript、テスト、パフォーマンス最適化を深掘り</li>
+</ul>
+
+<h5>長期（6ヶ月〜）</h5>
+<ul>
+<li>実務レベルのフリーランス案件に挑戦</li>
+<li>フルスタックエンジニアとして転職活動</li>
+<li>自分のSaaS製品を開発・公開</li>
+</ul>
+</div>
+
+<p><strong>すべてチェックできたら、セッション3完了です！おめでとうございます！🎉</strong></p>
+
+<p><strong>次は13章で、これまで使ってきた技術の裏側を理解します。</strong></p>
 
 <hr>
 <h2 id="13-裏側の技術-mcp"><strong>13. 裏側の技術 - MCP</strong></h2>

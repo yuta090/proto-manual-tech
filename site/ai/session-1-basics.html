@@ -70,11 +70,12 @@
       <nav class="toc" aria-label="目次"><h2>Quick Links</h2>
 <ol class="toc-list">
 <li><a href="#目次"><strong>目次</strong></a></li>
+<li><a href="#0-最初の30分で体験するai開発の魔法"><strong>0. 最初の30分で体験するAI開発の魔法</strong></a></li>
 <li><a href="#1-aiでできることあなたができるようになること"><strong>1. AIでできること・あなたができるようになること</strong></a></li>
 <li><a href="#2-ai開発ロードマップ学習の進め方"><strong>2. AI開発ロードマップ：学習の進め方</strong></a></li>
-<li><a href="#3-aiにうまくお願いするコツ-計画的な進め方"><strong>3. AIに"うまく"お願いするコツ ～計画的な進め方～</strong></a></li>
+<li><a href="#3-aiにうまくお願いするコツ-計画的な進め方"><strong>3. AIにうまくお願いするコツ</strong></a></li>
 <li><a href="#4-最低限の準備ai開発の相棒を迎えよう"><strong>4. 最低限の準備：AI開発の相棒を迎えよう</strong></a></li>
-<li><a href="#5-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>5. AIと作ろう！"あなただけ"のオリジナルWebアプリ開発</strong></a></li>
+<li><a href="#5-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>5. AIと作ろう！あなただけのオリジナルWebアプリ開発</strong></a></li>
 </ol></nav>
     </aside>
     <main class="manual-content">
@@ -250,7 +251,8 @@
   </ul>
 
   <div style="background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.3);">
-    <p style="margin: 0; color: #78350f; line-height: 1.7;"><strong>💡 ポイント</strong>：アカウントを持っていなくても大丈夫！スクリプトが適切なタイミングで登録ページを開いてくれるので、その場で登録できます。</p>
+    <p style="margin: 0 0 8px 0; color: #78350f; line-height: 1.7;"><strong>💡 ポイント</strong>：アカウントを持っていなくても大丈夫！スクリプトが適切なタイミングで登録ページを開いてくれるので、その場で登録できます。</p>
+    <p style="margin: 0; color: #78350f; line-height: 1.7;"><strong>🔑 登録方法</strong>：多くのサービスは<strong>Googleアカウント</strong>で簡単に登録できます（「Continue with Google」ボタンをクリックするだけ）。</p>
   </div>
 </div>
 
@@ -1399,49 +1401,39 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 <hr>
 <h2 id="4-最低限の準備ai開発の相棒を迎えよう"><strong>4. 最低限の準備：<br>AI開発の相棒を迎えよう</strong></h2>
 <hr>
-<p>この章は、自動セットアップスクリプトで全てのツール（Node.js、Git、GitHub CLI、Claude Code、Super Claude、Cursor IDE、Codex CLI）が既にインストールされていることを前提としています。</p>
+<p>この章では、既にインストール済みのCursor IDEとClaude Codeの基本的な使い方を学びます。開発環境は0章の自動セットアップスクリプトで準備完了しているので、すぐに使い始められます。</p>
 
-<p>これらのツールは、<strong>Chapter 0の自動セットアップスクリプト</strong>で一括インストール済みです。各ツールの詳しい使い方については、以下の章を参照してください：</p>
+<h3 id="41-cursorの画面構成">4.1 Cursorの画面構成</h3>
+<p>Cursorを起動すると、VSCodeに似た画面が表示されます。主要な領域は以下の3つです：</p>
+<ul>
+<li><strong>エクスプローラー</strong>（左側）：ファイルやフォルダを管理</li>
+<li><strong>エディター</strong>（中央）：コードを書く場所</li>
+<li><strong>ターミナル</strong>（下部）：コマンドを実行する場所</li>
+</ul>
+<p>右側にある<strong>Chatパネル</strong>では、Claude Codeと会話しながらコードを書けます。</p>
 
+<h3 id="42-必須ショートカットキー">4.2 必須ショートカットキー</h3>
+<p>最初に覚えるべき3つのショートカット：</p>
 <ul>
-<li><strong>Super Claude</strong>: Chapter 5（MCP完全活用ガイド）、Chapter 6（Webアプリ開発ハンズオン）</li>
-<li><strong>Cursor IDE</strong>: Chapter 8（モダン技術スタック）</li>
-<li><strong>Git/GitHub</strong>: Chapter 7（GitHub連携）</li>
+<li><strong>Cmd + K</strong>：AI編集モード（選択したコードを修正）</li>
+<li><strong>Cmd + L</strong>：Chatパネルを開く（Claude Codeと会話）</li>
+<li><strong>Cmd + S</strong>：ファイルを保存</li>
 </ul>
+<p>これだけで、ほとんどの開発作業ができます。</p>
 
-<h3 id="44-openai-codex-cliの導入と利用">4.4 OpenAI Codex CLIの基本的な利用方法（オプション）</h3>
-<p>OpenAI Codex CLIは、ローカル環境で動作するコーディングエージェントであり、ターミナルからコードの読み込み、変更、実行が可能です。Rustで構築されており、高速かつ効率的な動作が特徴です。Super Claudeと連携させることで、より高度なコード生成や既存コードの解析に利用できます。</p>
-<h4 id="-codex-cliのインストール">✅ Codex CLIのインストール</h4>
-<p>Codex CLIは、macOSとLinuxを公式にサポートしています。Windows環境では、WSL (Windows Subsystem for Linux) での実行が推奨されます。以下のいずれかの方法でインストールしてください。</p>
+<h3 id="43-claude-codeの基本コマンド">4.3 Claude Codeの基本コマンド</h3>
+<p>Claude Codeには、開発を効率化する特別なコマンドがあります：</p>
 <ul>
-<li>
-<strong>npm (Node.jsユーザー向け)</strong>:
-</li>
-<li>
-<strong>Homebrew (macOSユーザー向け)</strong>:
-<p>インストール後、ターミナルで <code>codex</code> と入力して起動します。</p>
-</li>
+<li><strong>/sc:brainstorm</strong>：アイデアを整理して要件を明確にする</li>
+<li><strong>/sc:design</strong>：システム設計を行う</li>
+<li><strong>/sc:implement</strong>：コードを実装する</li>
 </ul>
-<div class="auth-setup-section"><h4 id="-認証設定-2">✅ 認証設定</h4>
-<p>Codex CLIを初めて実行する際、認証を求められます。ChatGPT Plus、Pro、Team、Edu、Enterpriseプランのいずれかをお持ちの場合は、ChatGPTアカウントでサインインすることを推奨します。これにより、Codexの機能を最大限に活用できます。</p>
-<p>APIキーを使用してCodexを利用することも可能ですが、追加の設定が必要です。詳細については、<a href="https://openai.com/pricing" target="_blank" rel="noopener noreferrer">OpenAIの料金ページ</a>をご確認ください。</p>
-</div><h4 id="-codex-cliの基本的な利用方法">✅ Codex CLIの基本的な利用方法</h4>
-<p>Codex CLIはインタラクティブなターミナルUIで動作し、コードベースを読み込み、編集し、コマンドを実行できます。プロンプトや画像入力を使ってCodexをガイドできます。</p>
-<ul>
-<li>
-<strong>プロンプトを直接与える</strong>:
-</li>
-<li>
-<strong>非対話型での実行</strong>:
-</li>
-<li>
-<strong>モデルと推論レベルの変更</strong>: デフォルトではGPT-5が実行されますが、<code>/model</code> コマンドでGPT-5-Codexに切り替えることができます。また、推論レベルも変更可能です。
-</li>
-<li>
-<strong>承認モードの設定</strong>: <code>/approvals</code> コマンドで、Codexが作業ディレクトリ外のファイルにアクセスしたり、ネットワークにアクセスしたりする際の承認モードを設定できます。
-<p>Codex CLIのより詳細なドキュメントは、<a href="https://github.com/openai/codex" target="_blank" rel="noopener noreferrer">GitHubリポジトリ</a>で確認できます。</p>
-</li>
-</ul>
+<p>詳しい使い方は次の5章で、実際にアプリを作りながら学びます。</p>
+
+<div style="background: rgba(59, 130, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.3); margin: 24px 0;">
+  <p style="margin: 0; color: #1e40af; line-height: 1.7;"><strong>💡 まとめ</strong>：Cursorの基本的な使い方と、Claude Codeの特別なコマンドを覚えました。次の章では、これらを使って実際にWebアプリを作ります。</p>
+</div>
+
 <hr>
 <h2 id="5-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>5. AIと作ろう！"あなただけ"の<br>オリジナルWebアプリ開発</strong></h2>
 <hr>
@@ -1712,122 +1704,107 @@ AIがブラウザを自動で開く
 </li>
 </ul>
 </div>
-<h3 id="67-実践プロジェクトタスク管理アプリケーションを開発しよう">6.7 実践プロジェクト：<br>タスク管理アプリケーションを開発しよう！</h3>
-<p>このセクションでは、Super Claudeの全コマンドを連携させ、より実践的なWebアプリケーション開発を体験します。目標は、ユーザーがタスクを作成、管理、完了できるシンプルな<strong>タスク管理アプリケーション</strong>を開発することです。</p>
+<h3 id="67-実践プロジェクト作業時間トラッカーを開発しよう">6.7 実践プロジェクト：<br>作業時間トラッカーを開発しよう！</h3>
+<p>このセクションでは、Super Claudeの全コマンドを連携させ、より実践的なWebアプリケーション開発を体験します。目標は、タスクごとの作業時間を計測・記録できる<strong>作業時間トラッカー</strong>を開発することです。仕事でも使える実用的なツールを作ります。</p>
 <h4 id="プロジェクト概要">プロジェクト概要</h4>
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
-<strong>アプリケーション名</strong>: Simple Task Manager
+<strong>アプリケーション名</strong>: Work Time Tracker
 </li>
 <li>
-<strong>主要機能</strong>: タスクの追加、一覧表示、完了マーク、削除
+<strong>主要機能</strong>: タスクの追加・削除、作業開始/終了ボタン、時間計測、累計時間表示
 </li>
 <li>
-<strong>技術スタック</strong>: フロントエンド（HTML/CSS/JavaScript）、バックエンド（Node.js + Express）、データベース（SQLite）
+<strong>技術スタック</strong>: HTML/CSS/JavaScript、localStorage（データ保存）
+</li>
+<li>
+<strong>設計ポイント</strong>: ボタンの状態管理、タイマー処理、データ構造の設計
 </li>
 </ul>
 </div>
 <h4 id="step-1-アイデアの壁打ちと要件定義-brainstorm">Step 1: アイデアの壁打ちと要件定義 (<code>brainstorm</code>)</h4>
-<p>まずは、タスク管理アプリの基本的な要件をAIと一緒に洗い出します。プロジェクトフォルダでSuper Claudeを起動し、以下のコマンドを実行してください。</p>
-<pre><code class="language-bash">sc brainstorm --focus "タスク管理アプリケーション"
+<p>まずは、作業時間トラッカーの要件をAIと一緒に洗い出します。Cursorで新しいプロジェクトフォルダを開き、Claude Codeに以下のように話しかけてください。</p>
+<pre><code class="language-bash">/sc:brainstorm 作業時間を計測できるタスク管理アプリを作りたい。各タスクに「作業開始」ボタンがあって、押すと「作業終了」ボタンに変わり、時間を計測する機能が欲しい。
 </code><button class="code-copy-btn">コピー</button></pre>
-<p>AIとの対話を通じて、以下のような要件を明確にしていきます。</p>
+<p>AIとの対話を通じて、以下のような要件を明確にしていきます：</p>
 <div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
-<li>
-タスクには「タイトル」「説明」「期日」「完了ステータス」が必要。
-</li>
-<li>
-ユーザーはタスクを一覧で確認でき、新しいタスクを追加できる。
-</li>
-<li>
-既存のタスクを完了済みにしたり、削除したりできる。
-</li>
+<li>タスクには「タスク名」「累計作業時間」「現在の作業状態（作業中/停止中）」が必要</li>
+<li>新しいタスクを追加・削除できる</li>
+<li>各タスクに「開始」ボタン → クリックで「終了」ボタンに切り替わる</li>
+<li>作業中はリアルタイムでタイマーが動く</li>
+<li>作業終了時に累計時間に加算される</li>
+<li>ブラウザを閉じても、localStorageでデータが保存される</li>
 </ul>
 </div>
 <h4 id="step-2-設計図の作成-design">Step 2: 設計図の作成 (<code>design</code>)</h4>
-<p>要件が固まったら、次にアプリケーションの設計を行います。データベースのスキーマ、APIエンドポイント、基本的なUI構成などをAIに提案させましょう。</p>
-<pre><code class="language-bash">sc design --focus "タスク管理アプリケーションの設計"
+<p>要件が固まったら、次にアプリケーションの設計を行います。データ構造、状態管理、UI構成などをAIに提案させましょう。</p>
+<pre><code class="language-bash">/sc:design 作業時間トラッカーのデータ構造と画面設計をして
 </code><button class="code-copy-btn">コピー</button></pre>
-<p>AIは、例えば以下のような設計を提案するでしょう。</p>
+<p>AIは、例えば以下のような設計を提案するでしょう：</p>
 <div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
-<li>
-<strong>データベーススキーマ</strong>: <code>tasks</code>テーブル（<code>id</code>, <code>title</code>, <code>description</code>, <code>due_date</code>, <code>completed</code>）
+<li><strong>データ構造（localStorage）</strong>:
+<pre style="margin-top: 8px;"><code>{
+  id: "task-1",
+  name: "資料作成",
+  totalTime: 3600,  // 累計秒数
+  isRunning: false,
+  startTime: null   // 開始時刻（作業中のみ）
+}</code></pre>
 </li>
-<li>
-<strong>APIエンドポイント</strong>: <code>/api/tasks</code> (GET, POST), <code>/api/tasks/:id</code> (PUT, DELETE)
-</li>
-<li>
-<strong>UI構成</strong>: タスク一覧表示、タスク追加フォーム、各タスクの完了/削除ボタン
-</li>
+<li><strong>状態管理</strong>: ボタンの切り替え（開始⇔終了）、タイマーの更新（1秒ごと）</li>
+<li><strong>UI構成</strong>: タスク入力フォーム、タスク一覧、各タスクに開始/終了ボタン、累計時間表示</li>
 </ul>
 </div>
 <h4 id="step-3-実装計画の策定-workflow">Step 3: 実装計画の策定 (<code>workflow</code>)</h4>
 <p>設計に基づいて、具体的な実装タスクを洗い出し、効率的な開発順序を計画します。</p>
-<pre><code class="language-bash">sc workflow --focus "タスク管理アプリケーションの実装計画"
+<pre><code class="language-bash">/sc:workflow 作業時間トラッカーの実装計画を立てて
 </code><button class="code-copy-btn">コピー</button></pre>
-<p>AIは、以下のようなタスクリストを生成するはずです。</p>
+<p>AIは、以下のようなタスクリストを生成するはずです：</p>
 <ol>
-<li>
-ExpressサーバーのセットアップとSQLiteデータベースの初期化
-</li>
-<li>
-タスクモデルの定義とCRUD操作（作成、読み取り、更新、削除）APIの実装
-</li>
-<li>
-フロントエンドのHTML構造とCSSスタイルの作成
-</li>
-<li>
-JavaScriptによるタスク一覧表示機能の実装
-</li>
-<li>
-JavaScriptによるタスク追加機能の実装
-</li>
-<li>
-JavaScriptによるタスク完了/削除機能の実装
-</li>
+<li>HTML構造とCSSスタイルの作成（タスク入力フォーム、タスク一覧表示エリア）</li>
+<li>localStorageの読み込み・保存機能の実装</li>
+<li>タスク追加・削除機能の実装</li>
+<li>開始/終了ボタンの状態切り替え機能</li>
+<li>タイマー処理（1秒ごとの更新、累計時間の計算）</li>
+<li>リロード時のデータ復元と、作業中タスクの時間継続</li>
 </ol>
 <h4 id="step-4-コーディング開始-implement">Step 4: コーディング開始 (<code>implement</code>)</h4>
-<p>計画に従って、各タスクのコードをAIに生成してもらいます。まずは、バックエンドのセットアップとAPIの実装から始めましょう。</p>
-<pre><code class="language-bash"># 1. ExpressサーバーのセットアップとSQLiteデータベースの初期化
-sc implement --focus "ExpressサーバーとSQLiteデータベースの初期設定"
+<p>計画に従って、各機能のコードをAIに生成してもらいます。Claude Codeに具体的な実装を依頼していきましょう。</p>
+<pre><code class="language-bash"># 1. HTMLとCSSの作成
+/sc:implement 作業時間トラッカーのHTMLとCSSを作成して。タスク入力フォーム、タスク一覧、開始/終了ボタン、累計時間を表示。
 
-# 2. タスクモデルの定義とCRUD操作APIの実装
-sc implement --focus "タスクのCRUD APIを実装してください。GET /api/tasks, POST /api/tasks, PUT /api/tasks/:id, DELETE /api/tasks/:id"
+# 2. タスク管理機能（追加・削除・localStorage保存）
+/sc:implement タスクの追加・削除機能と、localStorageへの保存・読み込み機能を実装して。
+
+# 3. タイマー機能（開始/終了ボタンの切り替え、時間計測）
+/sc:implement 開始ボタンを押すと終了ボタンに変わり、タイマーが動く機能を実装して。終了ボタンを押すと累計時間に加算される。
 </code><button class="code-copy-btn">コピー</button></pre>
-<p>次に、フロントエンドのコードを生成します。</p>
-<pre><code class="language-bash"># 3. フロントエンドのHTML構造とCSSスタイルの作成
-sc implement --focus "タスク管理アプリの基本的なHTML構造とCSSスタイル"
-
-# 4. JavaScriptによるタスク一覧表示機能の実装
-sc implement --focus "JavaScriptでAPIからタスクを取得し、一覧表示する機能"
-
-# 5. JavaScriptによるタスク追加機能の実装
-sc implement --focus "JavaScriptでタスク追加フォームとAPI連携機能"
-
-# 6. JavaScriptによるタスク完了/削除機能の実装
-sc implement --focus "JavaScriptでタスクの完了マークと削除ボタンの機能"
-</code><button class="code-copy-btn">コピー</button></pre>
-<p>各<code>implement</code>コマンドの実行後には、生成されたコードを確認し、必要に応じて手動で調整したり、AIにさらに改善を依頼したりしてください。この反復的なプロセスが、AI開発の醍醐味です。</p>
-<h4 id="step-5-問題解決と改善-troubleshoot-analyze-improve">Step 5: 問題解決と改善 (<code>troubleshoot</code>, <code>analyze</code>, <code>improve</code>)</h4>
-<p>開発中にエラーが発生したり、機能の改善が必要になったりした場合は、以下のコマンドを活用します。</p>
+<p>各コマンドの実行後には、ブラウザで実際に動作を確認しましょう。「開始」ボタンを押して、タイマーが動くか、「終了」ボタンで累計時間が更新されるかをチェックします。</p>
+<div style="background: rgba(251, 191, 36, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.3); margin: 16px 0;">
+  <p style="margin: 0; color: #78350f; line-height: 1.7;"><strong>💡 ポイント</strong>：うまく動かない場合は、「開始ボタンが反応しない」「時間が正しく表示されない」など、具体的な症状をClaude Codeに伝えて修正してもらいましょう。</p>
+</div>
+<h4 id="step-5-問題解決と改善-troubleshoot-analyze-improve">Step 5: 問題解決と改善 (<code>troubleshoot</code>, <code>improve</code>)</h4>
+<p>アプリが完成したら、さらに使いやすくするために改善していきましょう。</p>
 <div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
-<li>
-<strong>エラーが発生した場合</strong>: <code>sc troubleshoot "[エラーメッセージ]"</code>
+<li><strong>エラーが発生した場合</strong>:
+<pre style="margin-top: 8px;"><code>/sc:troubleshoot ボタンをクリックしてもタイマーが動かない</code></pre>
 </li>
-<li>
-<strong>コードの品質を向上させたい場合</strong>: <code>sc improve --type quality --focus "[ファイル名またはコードスニペット]"</code>
+<li><strong>機能を改善したい場合</strong>:
+<pre style="margin-top: 8px;"><code>/sc:improve 累計時間を「〇時間〇分」の形式で表示したい</code></pre>
 </li>
-<li>
-<strong>パフォーマンスを分析したい場合</strong>: <code>sc analyze --focus performance --focus "[ファイル名または機能]"</code>
+<li><strong>デザインを改善したい場合</strong>:
+<pre style="margin-top: 8px;"><code>/sc:improve ボタンのデザインをもっとかっこよくして</code></pre>
 </li>
 </ul>
 </div>
+
 <h3 id="まとめ-2">まとめ</h3>
-<p>おめでとうございます！ あなたは今、AIを相棒にして、自分だけのオリジナルアプリ開発の第一歩を踏み出しました。この章で体験したように、<code>brainstorm</code>で夢を語り、<code>design</code>で形にし、<code>workflow</code>で計画を立て、<code>implement</code>で実現する、というサイクルを回すことで、どんなアイデアもプログラムにすることができます。この楽しさを忘れずに、次の章でさらなるステップアップを目指しましょう！</p>
+<p>おめでとうございます！ あなたは今、AIを相棒にして、<strong>仕事でも使える実用的なアプリ</strong>を作り上げました。この章で体験したように、<code>/sc:brainstorm</code>でアイデアを整理し、<code>/sc:design</code>で設計し、<code>/sc:workflow</code>で計画を立て、<code>/sc:implement</code>で実現する、というサイクルを回すことで、どんなアイデアもプログラムにすることができます。</p>
+<p>作った作業時間トラッカーは、実際の仕事で使ってみてください。次の章では、GitHubに保存して、世界中に公開する方法を学びます！</p>
 <hr>
 </main>
   </div>
