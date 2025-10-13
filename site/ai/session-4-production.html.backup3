@@ -1920,13 +1920,13 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 <div style="background: linear-gradient(135deg, rgba(251, 146, 60, 0.1), rgba(249, 115, 22, 0.05)); backdrop-filter: blur(10px); border: 2px solid rgba(251, 146, 60, 0.3); border-radius: 16px; padding: 32px; margin: 32px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
   <h3 style="margin-top: 0; color: #9a3412; display: flex; align-items: center; gap: 0.5rem;">
     <span style="font-size: 2rem;">🎯</span>
-    3つのハンズオンから選択できます
+    2つのハンズオンから選択できます
   </h3>
   <p style="color: #78350f; line-height: 1.8; margin-bottom: 24px;">
-    この章では、<strong>実務で即使える実践的なアプリケーション</strong>を開発します。あなたの興味や業務ニーズに合わせて、以下の<strong>3つのオプションからどれか1つを選んで実装</strong>してください。
+    この章では、<strong>実務で即使える実践的なアプリケーション</strong>を開発します。あなたの興味や業務ニーズに合わせて、以下の2つのオプションから<strong>どちらか1つを選んで実装</strong>してください。
   </p>
 
-  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 24px;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;">
     <!-- Option B（推奨・左） -->
     <div style="background: rgba(255, 255, 255, 0.9); padding: 24px; border-radius: 12px; border: 3px solid #8b5cf6; box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2); position: relative;">
       <div style="position: absolute; top: -12px; right: 12px; background: #8b5cf6; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.85em; font-weight: 700;">⭐ 推奨</div>
@@ -1963,29 +1963,11 @@ Google Analyticsにカスタムイベント「add_task」を送信する
         Option Aを選ぶ →
       </a>
     </div>
-
-    <!-- Option C（右） -->
-    <div style="background: rgba(255, 255, 255, 0.9); padding: 24px; border-radius: 12px; border: 3px solid #f59e0b; box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);">
-      <h4 style="margin-top: 0; color: #92400e; font-size: 1.3em;">📅 Option C: シフト管理アプリ</h4>
-      <p style="color: #92400e; line-height: 1.7; margin: 12px 0;">
-        飲食・小売向けの<strong>希望シフト提出〜確定</strong>までを管理するアプリ（要件定義から学ぶ）
-      </p>
-      <div style="background: rgba(245, 158, 11, 0.1); padding: 12px; border-radius: 8px; margin: 12px 0;">
-        <p style="margin: 0; color: #92400e; font-size: 0.9em; line-height: 1.6;">
-          <strong>📐 構成</strong>: Next.js + Supabase + Netlify（Webアプリ単体）<br>
-          <strong>🎯 こんな人におすすめ</strong>: 要件定義・設計力を学びたい、実務志向<br>
-          <strong>⏱️ 所要時間</strong>: 約150分（設計重視）
-        </p>
-      </div>
-      <a href="#option-c-start" style="display: inline-block; background: #f59e0b; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 8px;">
-        Option Cを選ぶ →
-      </a>
-    </div>
   </div>
 
   <div style="background: rgba(251, 146, 60, 0.1); padding: 16px; border-radius: 8px; margin-top: 24px; border-left: 4px solid #f59e0b;">
     <p style="margin: 0; color: #92400e; line-height: 1.7;">
-      <strong>💡 ヒント</strong>: 時間がある方は、複数のオプションを実装してポートフォリオを充実させましょう！Option Cは設計力を深く学べます。
+      <strong>💡 ヒント</strong>: 時間がある方は、両方のオプションを実装してポートフォリオを充実させましょう！どちらも約90分で完成します。
     </p>
   </div>
 </div>
@@ -2471,6 +2453,44 @@ Google Analyticsにカスタムイベント「add_task」を送信する
   </ul>
 </div>
 
+<h3 id="まとめ-18章">まとめ</h3>
+
+<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin: 24px 0;">
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>🎉 おめでとうございます！</strong> この章では、<strong>2つの実践的なアプリケーション</strong>から1つを選んで実装しました：</p>
+
+  <div style="margin: 16px 0;">
+    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">🤖 Option B: 社内AI活用プラットフォームを選んだ方（⭐推奨）</p>
+    <ul style="color: #047857; line-height: 1.8; margin: 0 0 16px 0;">
+      <li><strong>Webアプリ</strong>: Next.js + Supabase + Netlifyで完結する社内ツール</li>
+      <li><strong>ソーシャル機能</strong>: いいね・ブックマーク・検索・フィルター機能の実装</li>
+      <li><strong>習得したスキル</strong>: ナレッジ共有プラットフォーム、ソーシャル機能、データ集計</li>
+    </ul>
+
+    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">📱 Option A: SNS自動投稿システムを選んだ方</p>
+    <ul style="color: #047857; line-height: 1.8; margin: 0;">
+      <li><strong>Webアプリ</strong>: Netlifyにデプロイし、Supabase認証でログイン → 投稿内容を管理</li>
+      <li><strong>ローカルスクリプト</strong>: node post-to-sns.js で単体実行 → Playwright MCPでブラウザ自動操作</li>
+      <li><strong>習得したスキル</strong>: 分離型アーキテクチャ、ブラウザ自動化、複数SNS連携</li>
+    </ul>
+  </div>
+
+  <p style="margin: 16px 0 0 0; color: #047857; line-height: 1.7;">どちらのオプションも、<strong>Session 1〜4で学んだすべてのスキルの統合</strong>です：</p>
+  <ul style="color: #047857; line-height: 1.8; margin: 12px 0;">
+    <li>✅ <strong>Session 1-2</strong>: Next.js, Tailwind, Supabase Auth, Netlifyデプロイ</li>
+    <li>✅ <strong>Session 3</strong>: Playwright MCP（10章）によるブラウザ自動化 / データベース設計</li>
+    <li>✅ <strong>Session 4</strong>: 環境変数管理（15章）、本番運用の知識</li>
+  </ul>
+
+  <div style="background: rgba(251, 146, 60, 0.15); padding: 12px; border-radius: 8px; margin-top: 16px;">
+    <p style="margin: 0; color: #92400e; line-height: 1.7;">
+      <strong>💡 さらに学びたい方へ</strong>: 時間があれば、もう一方のOptionにも挑戦してみましょう！両方実装することで、<strong>分離型アーキテクチャとモノリシックアーキテクチャの違い</strong>、<strong>ブラウザ自動化とソーシャル機能の実装</strong>の両方を体験できます。
+    </p>
+  </div>
+
+  <p style="margin: 16px 0 0 0; color: #047857; line-height: 1.7; font-weight: 600;"><strong>🏆 Session 4の全18章を修了しました！</strong> あなたは、独自ドメイン、セキュリティ、CI/CD、運用監視、そして実務で即使える自動化ツールの開発まで、<strong>プロフェッショナルな本番運用に必要なすべてのスキル</strong>を習得しました。次は修了証を受け取りましょう！</p>
+</div>
+<hr style="border: none; border-top: 2px solid rgba(139, 92, 246, 0.2); margin: 60px 0;">
+
 <!-- Option A 開始 -->
 <div id="option-a-start"></div>
 <div style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(56, 189, 248, 0.05)); backdrop-filter: blur(10px); border: 2px solid rgba(14, 165, 233, 0.4); border-radius: 16px; padding: 24px; margin: 24px 0;">
@@ -2884,449 +2904,6 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
     <li><strong>複数アカウント対応</strong>（30分）: 個人アカウント、ビジネスアカウントを切り替え可能に</li>
     <li><strong>投稿予約キュー</strong>（40分）: 複数投稿を一度に登録し、順番に自動投稿</li>
   </ul>
-</div>
-
-<hr style="border: none; border-top: 2px solid rgba(245, 158, 11, 0.2); margin: 60px 0;">
-
-<!-- Option C 開始 -->
-<div id="option-c-start"></div>
-<div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(251, 191, 36, 0.05)); backdrop-filter: blur(10px); border: 2px solid rgba(245, 158, 11, 0.4); border-radius: 16px; padding: 24px; margin: 24px 0;">
-  <h3 style="margin-top: 0; color: #92400e; font-size: 2em; display: flex; align-items: center; gap: 0.75rem;">
-    <span style="font-size: 2.5rem;">📅</span>
-    Option C: シフト管理アプリ
-  </h3>
-  <p style="color: #92400e; line-height: 1.8; font-size: 1.1em; margin: 0;">
-    飲食・小売業界で使える希望シフト提出〜確定までを管理するアプリを、<strong>要件定義・競合調査・設計から学びながら</strong>実装します。
-  </p>
-</div>
-
-<h3 id="181c-シフト管理の課題とビジネス要件">18.1c シフト管理の課題とビジネス要件</h3>
-
-<p>飲食店や小売店では、アルバイトのシフト管理に以下のような課題があります：</p>
-
-<div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border-left: 4px solid #dc2626; margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #991b1b;">❌ 手動シフト管理の課題</h4>
-  <ul style="color: #7f1d1d; line-height: 1.8; margin: 0;">
-    <li><strong>希望シフトの収集が大変</strong>: LINEやメールで個別に希望を聞き、Excelに手入力</li>
-    <li><strong>シフト調整に時間がかかる</strong>: 人数不足・過多の調整、希望の重複解消で2-3時間</li>
-    <li><strong>確定シフトの共有が遅い</strong>: PDF作成 → LINE送信 → 見てもらえない</li>
-    <li><strong>シフト変更が面倒</strong>: 変更のたびに全員に連絡、最新版が分からなくなる</li>
-    <li><strong>既存ツールは高額</strong>: ジョブカン（月額3,000円〜）、シフオプ（月額5,000円〜）</li>
-  </ul>
-</div>
-
-<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border-left: 4px solid #10b981; margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #065f46;">✅ シフト管理アプリのメリット</h4>
-  <ul style="color: #047857; line-height: 1.8; margin: 0;">
-    <li><strong>希望シフトの一元管理</strong>: アルバイトがスマホから直接提出 → 自動集計</li>
-    <li><strong>管理者の負担軽減</strong>: 希望一覧を見ながら、クリック操作でシフト確定</li>
-    <li><strong>リアルタイム共有</strong>: 確定シフトを即座に全員が閲覧可能</li>
-    <li><strong>完全無料</strong>: 独自開発なら月額費用ゼロ、Supabase無料枠で運用可能</li>
-    <li><strong>カスタマイズ可能</strong>: 店舗独自のルールに合わせて機能追加できる</li>
-  </ul>
-</div>
-
-<div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border-left: 4px solid #6366f1; margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #4338ca;">🎯 このハンズオンで学ぶこと</h4>
-  <ul style="color: #4f46e5; line-height: 1.8; margin: 0;">
-    <li><strong>要件定義力</strong>: ゼロから顧客ニーズを整理し、MVP（必要最小限の機能）を決める</li>
-    <li><strong>競合調査</strong>: 既存サービスを分析し、実装難易度と価値を判断する</li>
-    <li><strong>データベース設計</strong>: 複雑なビジネスロジックをテーブル構成に落とし込む</li>
-    <li><strong>実装とのバランス</strong>: 限られた時間で何を実装し、何を諦めるか決断する</li>
-  </ul>
-</div>
-
-<div style="background: rgba(251, 146, 60, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border-left: 4px solid #f59e0b; margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #92400e;">⚠️ Option C の特徴（重要）</h4>
-  <p style="color: #92400e; margin: 0 0 12px 0;">このオプションは、<strong>Option A/B とは異なり、詳細な実装手順を提示しません</strong>。</p>
-  <ul style="color: #92400e; line-height: 1.8; margin: 0;">
-    <li><strong>自分で考える</strong>: どんな機能が必要か、どう実装するか、自分で決める</li>
-    <li><strong>設計に時間をかける</strong>: 競合調査30分 + 設計30-40分 = 実装前に1時間以上</li>
-    <li><strong>実務に近い体験</strong>: 「仕様書がない」「顧客の要望が曖昧」という現実を体験</li>
-    <li><strong>所要時間: 150分</strong>（Option A/Bの90分より長い）</li>
-  </ul>
-</div>
-
-<h3 id="182c-競合調査ハンズオン30分">18.2c 競合調査ハンズオン（30分）</h3>
-
-<p>まず、<strong>既存のシフト管理サービス</strong>を調査し、どんな機能があるのか、実装難易度はどうかを理解しましょう。</p>
-
-<div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(99, 102, 241, 0.3); margin: 24px 0;">
-  <h4 style="margin-top: 0; color: #4338ca; display: flex; align-items: center; gap: 0.5rem;">
-    <span style="font-size: 1.5rem;">🔍</span>
-    競合調査の実施方法
-  </h4>
-
-  <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #6366f1;">
-    <p style="margin: 0 0 12px 0; color: #4338ca; font-weight: 600;">📋 ステップ1: ChatGPT/Gemini Deep Research を使う</p>
-    <p style="margin: 0 0 8px 0; color: #4f46e5;">以下のプロンプトをChatGPT（GPT-4）またはGemini（Deep Research）に入力してください：</p>
-    <div style="background: rgba(17, 24, 39, 0.95); padding: 16px; border-radius: 8px; margin: 12px 0; font-family: 'Courier New', monospace; color: #e5e7eb; line-height: 1.6; overflow-x: auto;">
-「日本国内のシフト管理サービス（ジョブカン、シフオプ、Airシフト、らくしふ、REIWA、など）の
-機能比較表を作成してください。
-
-比較項目：
-- サービス名
-- 主要機能一覧（希望シフト提出、自動調整、通知機能、給与計算連携など）
-- 月額料金
-- 対象業種
-- 各機能の実装難易度（簡単/普通/難しい）
-
-回答形式：Markdown形式のテーブルで返してください。」
-    </div>
-  </div>
-
-  <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #10b981;">
-    <p style="margin: 0 0 12px 0; color: #047857; font-weight: 600;">📊 ステップ2: 結果をスプレッドシートにまとめる</p>
-    <ul style="color: #047857; line-height: 1.8; margin: 0;">
-      <li>Google SpreadsheetまたはExcelに、取得した機能比較表を転記</li>
-      <li>各機能に対して、<strong>「自分が実装したいか」</strong>を◎○△で評価</li>
-      <li>実装難易度と価値のバランスを考慮</li>
-    </ul>
-  </div>
-
-  <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #f59e0b;">
-    <p style="margin: 0 0 12px 0; color: #92400e; font-weight: 600;">💡 ステップ3: MVPを決める準備</p>
-    <p style="margin: 0; color: #92400e; line-height: 1.7;">調査結果をもとに、次のセクション（18.3c MVP設計）で、<strong>「絶対に必要な機能」</strong>を3つに絞ります。</p>
-  </div>
-</div>
-
-<div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px;">
-  <h4 style="margin-top: 0; color: #0c4a6e;">💡 調査のポイント</h4>
-  <ul style="color: #075985; line-height: 1.8; margin: 0;">
-    <li><strong>完璧を目指さない</strong>: すべての機能を実装する必要はない！MVPで十分</li>
-    <li><strong>実装難易度を意識</strong>: 「簡単」な機能から優先的に選ぶ</li>
-    <li><strong>時間制限を忘れずに</strong>: 残り120分で実装できる範囲に絞る</li>
-  </ul>
-</div>
-
-<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了目標！</strong> 競合サービスの機能一覧表が完成し、「どんな機能があるのか」「実装難易度はどうか」が理解できたら次のステップへ進みましょう。</p>
-</div>
-
-<h3 id="183c-mvp設計ハンズオン30-40分">18.3c MVP設計ハンズオン（30-40分）</h3>
-
-<p>競合調査の結果をもとに、<strong>自分が実装するMVP（Minimum Viable Product = 必要最小限の機能）</strong>を設計します。</p>
-
-<div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(99, 102, 241, 0.3); margin: 24px 0;">
-  <h4 style="margin-top: 0; color: #4338ca; display: flex; align-items: center; gap: 0.5rem;">
-    <span style="font-size: 1.5rem;">📐</span>
-    MVP設計の実施方法
-  </h4>
-
-  <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #6366f1;">
-    <p style="margin: 0 0 12px 0; color: #4338ca; font-weight: 600;">✅ ステップ1: 絶対に必要な機能を3つ選ぶ</p>
-    <p style="margin: 0 0 8px 0; color: #4f46e5;">競合調査の結果から、<strong>「これがないとシフト管理できない」</strong>機能を3つ選んでください。</p>
-    <p style="margin: 0; color: #4f46e5; line-height: 1.7; font-size: 0.95em;">例: ①希望シフト提出機能、②管理者による確定シフト作成、③確定シフトの閲覧</p>
-  </div>
-
-  <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #8b5cf6;">
-    <p style="margin: 0 0 12px 0; color: #6b21a8; font-weight: 600;">🎁 ステップ2: あったら嬉しい機能を3つ選ぶ</p>
-    <p style="margin: 0; color: #6b21a8; line-height: 1.7;">MVP完成後、時間があれば追加したい機能を3つ選びます。例: ①通知機能、②シフト交換機能、③給与計算連携</p>
-  </div>
-
-  <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #f59e0b;">
-    <p style="margin: 0 0 12px 0; color: #92400e; font-weight: 600;">⚖️ ステップ3: 実装時間を見積もる</p>
-    <p style="margin: 0 0 8px 0; color: #92400e;">各機能の実装時間を見積もり、合計120分以内に収まるか確認してください。</p>
-    <ul style="color: #92400e; line-height: 1.8; margin: 8px 0 0 0;">
-      <li>認証機能（Supabase Auth）: 20分</li>
-      <li>希望シフト提出: 25分</li>
-      <li>管理者画面・確定機能: 30分</li>
-      <li>カレンダー表示: 25分</li>
-      <li>合計: 100分 → ✅ 120分以内！</li>
-    </ul>
-  </div>
-
-  <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #10b981;">
-    <p style="margin: 0 0 12px 0; color: #047857; font-weight: 600;">🗄️ ステップ4: データベース設計</p>
-    <p style="margin: 0 0 8px 0; color: #047857;">MVPに必要なテーブル構成を設計してください。</p>
-    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">最低限のテーブル案（例）:</p>
-    <ul style="color: #047857; line-height: 1.8; margin: 0;">
-      <li><strong>users</strong>: id, email, role (admin / staff), name</li>
-      <li><strong>shift_requests</strong>: id, user_id, date, time_slot, status (pending / approved / rejected)</li>
-      <li><strong>shifts</strong>: id, user_id, date, time_slot, created_at</li>
-    </ul>
-    <p style="margin: 12px 0 0 0; color: #047857;">💡 ヒント: Claude Code に「このMVPに必要なテーブル構成を提案して」と聞いてもOKです！</p>
-  </div>
-</div>
-
-<div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px;">
-  <h4 style="margin-top: 0; color: #0c4a6e;">💡 設計のポイント</h4>
-  <ul style="color: #075985; line-height: 1.8; margin: 0;">
-    <li><strong>シンプルに始める</strong>: 最初から完璧を目指さない。動くものを作ってから改善</li>
-    <li><strong>スコープを守る</strong>: 設計中に「あれも欲しい、これも欲しい」と膨らませない</li>
-    <li><strong>データベース設計が肝心</strong>: テーブル構成を間違えると後で大変。ここに時間をかける価値あり</li>
-    <li><strong>Claude Codeと対話する</strong>: 「この設計で足りないものはある？」と確認</li>
-  </ul>
-</div>
-
-<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了目標！</strong> MVP機能リスト（3つ）、データベーステーブル設計が完成したら、いよいよ実装フェーズへ進みましょう。</p>
-</div>
-
-<h3 id="184c-実装ハンズオン70-90分">18.4c 実装ハンズオン（70-90分）</h3>
-
-<p>設計したMVPを、<strong>Claude Code に指示を出して実装</strong>します。詳細な手順は書きません。<strong>自分で要件を整理し、Claude Code に伝えてください。</strong></p>
-
-<div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(99, 102, 241, 0.3); margin: 24px 0;">
-  <h4 style="margin-top: 0; color: #4338ca; display: flex; align-items: center; gap: 0.5rem;">
-    <span style="font-size: 1.5rem;">💡</span>
-    実装ヒント（最小限）
-  </h4>
-
-  <details style="margin-top: 16px;">
-    <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🏗️ プロジェクトセットアップ
-    </summary>
-    <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #0ea5e9;">
-      <p style="color: #075985; margin: 0 0 8px 0;">Claude Code に以下のように指示してください：</p>
-      <ul style="color: #075985; line-height: 1.8; margin: 0;">
-        <li>「Next.js 14 (App Router) + TypeScript + Tailwind CSS でプロジェクトを作成して」</li>
-        <li>「Supabase Auth でメール/パスワード認証を実装して」</li>
-        <li>「管理者（admin）とスタッフ（staff）のロールを分けて」</li>
-      </ul>
-    </div>
-  </details>
-
-  <details style="margin-top: 12px;">
-    <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📅 希望シフト提出機能（スタッフ側）
-    </summary>
-    <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #8b5cf6;">
-      <p style="color: #6b21a8; margin: 0 0 8px 0;"><strong>実装すべきもの</strong>:</p>
-      <ul style="color: #6b21a8; line-height: 1.8; margin: 0;">
-        <li>日付選択（カレンダーUI）</li>
-        <li>時間帯選択（例: 9-12, 12-18, 18-22）</li>
-        <li>提出ボタン → shift_requests テーブルに保存</li>
-        <li>提出済みの希望シフト一覧表示</li>
-      </ul>
-      <p style="color: #6b21a8; margin: 12px 0 0 0;">💡 Claude に「希望シフト提出フォームを作って。日付と時間帯を選択して、Supabaseに保存する機能」と指示</p>
-    </div>
-  </details>
-
-  <details style="margin-top: 12px;">
-    <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      💼 管理者画面（希望シフト一覧・確定機能）
-    </summary>
-    <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #10b981;">
-      <p style="color: #047857; margin: 0 0 8px 0;"><strong>実装すべきもの</strong>:</p>
-      <ul style="color: #047857; line-height: 1.8; margin: 0;">
-        <li>全スタッフの希望シフト一覧（日付・時間帯・名前）</li>
-        <li>「確定」ボタン → shifts テーブルに保存</li>
-        <li>確定済みシフトの一覧表示</li>
-      </ul>
-      <p style="color: #047857; margin: 12px 0 0 0;">💡 Claude に「管理者用画面を作って。全スタッフの希望シフトを一覧表示し、確定ボタンでshiftsテーブルに保存」と指示</p>
-    </div>
-  </details>
-
-  <details style="margin-top: 12px;">
-    <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📆 確定シフト表示（カレンダー）
-    </summary>
-    <div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #f59e0b;">
-      <p style="color: #92400e; margin: 0 0 8px 0;"><strong>実装すべきもの</strong>:</p>
-      <ul style="color: #92400e; line-height: 1.8; margin: 0;">
-        <li>確定シフトをカレンダー形式で表示</li>
-        <li>スタッフは自分のシフトのみ、管理者は全員のシフトを表示</li>
-        <li>ライブラリ: react-big-calendar または FullCalendar.js</li>
-      </ul>
-      <p style="color: #92400e; margin: 12px 0 0 0;">💡 Claude に「react-big-calendarを使って、確定シフトをカレンダー表示して」と指示</p>
-    </div>
-  </details>
-
-  <details style="margin-top: 12px;">
-    <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🗄️ Supabase テーブル作成
-    </summary>
-    <div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #dc2626;">
-      <p style="color: #7f1d1d; margin: 0 0 8px 0;">Supabase ダッシュボードの Table Editor で、18.3c で設計したテーブルを作成してください。</p>
-      <p style="color: #7f1d1d; margin: 8px 0 0 0;"><strong>RLS ポリシー</strong>: スタッフは自分のデータのみ、管理者は全データにアクセス可能に設定</p>
-    </div>
-  </details>
-
-  <details style="margin-top: 12px;">
-    <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🚀 追加機能の実装案（時間があれば）
-    </summary>
-    <div style="background: rgba(168, 85, 247, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #a855f7;">
-      <p style="color: #7c3aed; margin: 0 0 12px 0;"><strong>MVP完成後、以下の機能を追加できます：</strong></p>
-
-      <div style="margin-bottom: 16px;">
-        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">📧 通知機能（30分）</p>
-        <ul style="color: #7c3aed; line-height: 1.8; margin: 0 0 12px 0;">
-          <li>シフト確定時にメール通知（Resend統合）</li>
-          <li>実装: Resend APIでメール送信、確定時にトリガー</li>
-        </ul>
-      </div>
-
-      <div style="margin-bottom: 16px;">
-        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">🔄 シフト交換機能（40分）</p>
-        <ul style="color: #7c3aed; line-height: 1.8; margin: 0 0 12px 0;">
-          <li>スタッフ同士でシフトを交換できる機能</li>
-          <li>実装: shift_exchanges テーブル、申請・承認フロー</li>
-        </ul>
-      </div>
-
-      <div style="margin-bottom: 16px;">
-        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">✏️ シフト変更リクエスト（30分）</p>
-        <ul style="color: #7c3aed; line-height: 1.8; margin: 0 0 12px 0;">
-          <li>確定後にスタッフが変更希望を出せる機能</li>
-          <li>実装: shift_change_requests テーブル、管理者承認機能</li>
-        </ul>
-      </div>
-
-      <div style="margin-bottom: 16px;">
-        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">⏰ リマインド機能（20分）</p>
-        <ul style="color: #7c3aed; line-height: 1.8; margin: 0 0 12px 0;">
-          <li>希望シフト提出期限をリマインド</li>
-          <li>実装: Supabase Edge Functions + Cron、メール送信</li>
-        </ul>
-      </div>
-
-      <div style="margin-bottom: 16px;">
-        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">💰 給与計算連携（60分）</p>
-        <ul style="color: #7c3aed; line-height: 1.8; margin: 0 0 12px 0;">
-          <li>確定シフトから自動で給与計算</li>
-          <li>実装: 時給設定、労働時間集計、CSV出力</li>
-        </ul>
-      </div>
-
-      <div style="margin-bottom: 0;">
-        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">🤖 シフト自動調整（90分）</p>
-        <ul style="color: #7c3aed; line-height: 1.8; margin: 0;">
-          <li>希望シフトから自動でバランス良く割り当て</li>
-          <li>実装: アルゴリズム実装（制約充足問題）、最適化ロジック</li>
-        </ul>
-      </div>
-    </div>
-  </details>
-</div>
-
-<div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px;">
-  <h4 style="margin-top: 0; color: #0c4a6e;">💡 実装のポイント</h4>
-  <ul style="color: #075985; line-height: 1.8; margin: 0;">
-    <li><strong>自分で要件を整理する</strong>: Claude Code に丸投げせず、「何を作りたいか」を明確に伝える</li>
-    <li><strong>/sc:implement の活用</strong>: SuperClaude フレームワークで構造化された実装が可能</li>
-    <li><strong>段階的に実装</strong>: 認証 → 希望シフト → 管理者画面 → カレンダーの順で、1つずつ完成させる</li>
-    <li><strong>動作確認を忘れずに</strong>: 各機能を実装したら、必ず動作確認してから次へ</li>
-    <li><strong>完璧を目指さない</strong>: MVPなので、シンプルな実装でOK。デザインは後回し</li>
-  </ul>
-</div>
-
-<div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了目標！</strong> 希望シフト提出 → 管理者が確定 → カレンダーで閲覧、という一連の流れが動作したら完成です！Netlifyにデプロイして、実際に使ってみましょう。</p>
-</div>
-
-<h3 id="185c-振り返りと追加機能アイデア">18.5c 振り返りと追加機能アイデア</h3>
-
-<p>実装が完了したら、<strong>設計と実装のプロセスを振り返り</strong>ましょう。</p>
-
-<div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(99, 102, 241, 0.3); margin: 24px 0;">
-  <h4 style="margin-top: 0; color: #4338ca;">📝 振り返りの質問</h4>
-
-  <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0;">
-    <p style="margin: 0 0 8px 0; color: #4338ca; font-weight: 600;">1. 競合調査で学んだこと</p>
-    <ul style="color: #4f46e5; line-height: 1.8; margin: 0;">
-      <li>既存サービスにはどんな機能があったか？</li>
-      <li>「実装が簡単そう」「難しそう」と感じた機能は？</li>
-    </ul>
-  </div>
-
-  <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0;">
-    <p style="margin: 0 0 8px 0; color: #4338ca; font-weight: 600;">2. MVP設計で学んだこと</p>
-    <ul style="color: #4f46e5; line-height: 1.8; margin: 0;">
-      <li>「絶対に必要な機能」を3つに絞ることは難しかったか？</li>
-      <li>データベース設計で迷ったポイントは？</li>
-      <li>設計に時間をかけることの重要性を感じたか？</li>
-    </ul>
-  </div>
-
-  <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0;">
-    <p style="margin: 0 0 8px 0; color: #4338ca; font-weight: 600;">3. 実装で学んだこと</p>
-    <ul style="color: #4f46e5; line-height: 1.8; margin: 0;">
-      <li>Claude Code への指示は明確に伝えられたか？</li>
-      <li>実装中に「設計を変更したい」と思った瞬間はあったか？</li>
-      <li>時間内に完成できたか？できなかった場合、何が原因か？</li>
-    </ul>
-  </div>
-
-  <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0;">
-    <p style="margin: 0 0 8px 0; color: #4338ca; font-weight: 600;">4. 実務で役立ちそうなスキル</p>
-    <ul style="color: #4f46e5; line-height: 1.8; margin: 0;">
-      <li>「顧客の要望が曖昧」な状態から、具体的な仕様を作る難しさを実感したか？</li>
-      <li>「完璧を目指さず、MVPで出す」という判断の重要性を理解したか？</li>
-    </ul>
-  </div>
-</div>
-
-<div style="background: rgba(168, 85, 247, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.3); margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #6b21a8;">🚀 追加機能アイデア（時間があれば）</h4>
-  <ul style="color: #7c3aed; line-height: 1.8; margin: 0;">
-    <li><strong>シフト交換機能</strong>（40分）: スタッフ同士でシフトを交換できる機能</li>
-    <li><strong>通知機能</strong>（30分）: シフト確定時にメール通知（Resend統合）</li>
-    <li><strong>シフト変更リクエスト</strong>（30分）: 確定後にスタッフが変更希望を出せる</li>
-    <li><strong>給与計算連携</strong>（60分）: 確定シフトから自動で給与計算</li>
-    <li><strong>シフト自動調整</strong>（90分）: 希望シフトから自動でバランス良く割り当て（アルゴリズム実装）</li>
-    <li><strong>リマインド機能</strong>（20分）: 希望シフト提出期限をリマインド</li>
-  </ul>
-</div>
-
-<div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #0c4a6e;">🎓 Option C で学んだこと（まとめ）</h4>
-  <ul style="color: #075985; line-height: 1.8; margin: 0;">
-    <li><strong>要件定義力</strong>: ゼロから「何を作るか」を決める力</li>
-    <li><strong>競合調査</strong>: 既存サービスを分析し、実装難易度を判断する力</li>
-    <li><strong>設計力</strong>: ビジネスロジックをデータベース設計に落とし込む力</li>
-    <li><strong>スコープ管理</strong>: 限られた時間で「何を実装し、何を諦めるか」決断する力</li>
-    <li><strong>実務に近い体験</strong>: 「仕様書がない」状態から、動くものを作る体験</li>
-  </ul>
-  <p style="margin: 16px 0 0 0; color: #075985; line-height: 1.7;">
-    <strong>実務では、コードを書く時間は全体の30%</strong>。残りの70%は要件ヒアリング、設計、調整です。Option C では、その「70%」を体験しました。これが、実務で最も重要なスキルです。
-  </p>
-</div>
-
-
-<h3 id="まとめ-18章">まとめ</h3>
-
-<div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin: 24px 0;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>🎉 おめでとうございます！</strong> この章では、<strong>3つの実践的なアプリケーション</strong>から1つを選んで実装しました：</p>
-
-  <div style="margin: 16px 0;">
-    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">🤖 Option B: 社内AI活用プラットフォームを選んだ方（⭐推奨）</p>
-    <ul style="color: #047857; line-height: 1.8; margin: 0 0 16px 0;">
-      <li><strong>Webアプリ</strong>: Next.js + Supabase + Netlifyで完結する社内ツール</li>
-      <li><strong>ソーシャル機能</strong>: いいね・ブックマーク・検索・フィルター機能の実装</li>
-      <li><strong>習得したスキル</strong>: ナレッジ共有プラットフォーム、ソーシャル機能、データ集計</li>
-    </ul>
-
-    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">📱 Option A: SNS自動投稿システムを選んだ方</p>
-    <ul style="color: #047857; line-height: 1.8; margin: 0 0 16px 0;">
-      <li><strong>Webアプリ</strong>: Netlifyにデプロイし、Supabase認証でログイン → 投稿内容を管理</li>
-      <li><strong>ローカルスクリプト</strong>: node post-to-sns.js で単体実行 → Playwright MCPでブラウザ自動操作</li>
-      <li><strong>習得したスキル</strong>: 分離型アーキテクチャ、ブラウザ自動化、複数SNS連携</li>
-    </ul>
-
-    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">📅 Option C: シフト管理アプリを選んだ方</p>
-    <ul style="color: #047857; line-height: 1.8; margin: 0;">
-      <li><strong>要件定義</strong>: 競合調査からMVP設計まで、ゼロから仕様を決定</li>
-      <li><strong>実装</strong>: 希望シフト提出〜確定〜カレンダー表示の一連の流れ</li>
-      <li><strong>習得したスキル</strong>: 要件定義力、設計力、スコープ管理、実務的な判断力</li>
-    </ul>
-  </div>
-
-  <p style="margin: 16px 0 0 0; color: #047857; line-height: 1.7;">どのオプションも、<strong>Session 1〜4で学んだすべてのスキルの統合</strong>です：</p>
-  <ul style="color: #047857; line-height: 1.8; margin: 12px 0;">
-    <li>✅ <strong>Session 1-2</strong>: Next.js, Tailwind, Supabase Auth, Netlifyデプロイ</li>
-    <li>✅ <strong>Session 3</strong>: Playwright MCP（10章）によるブラウザ自動化 / データベース設計</li>
-    <li>✅ <strong>Session 4</strong>: 環境変数管理（15章）、本番運用の知識</li>
-  </ul>
-
-  <div style="background: rgba(251, 146, 60, 0.15); padding: 12px; border-radius: 8px; margin-top: 16px;">
-    <p style="margin: 0; color: #92400e; line-height: 1.7;">
-      <strong>💡 さらに学びたい方へ</strong>: 時間があれば、他のOptionにも挑戦してみましょう！3つすべて実装することで、<strong>分離型アーキテクチャ・モノリシックアーキテクチャの違い</strong>、<strong>ブラウザ自動化・ソーシャル機能・要件定義の実装</strong>のすべてを体験できます。
-    </p>
-  </div>
-
-  <p style="margin: 16px 0 0 0; color: #047857; line-height: 1.7; font-weight: 600;"><strong>🏆 Session 4の全18章を修了しました！</strong> あなたは、独自ドメイン、セキュリティ、CI/CD、運用監視、そして実務で即使える自動化ツールの開発まで、<strong>プロフェッショナルな本番運用に必要なすべてのスキル</strong>を習得しました。次は修了証を受け取りましょう！</p>
 </div>
 
 <hr>

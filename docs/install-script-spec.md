@@ -18,10 +18,14 @@
 AI開発に必要な以下のツールを自動でインストールし、セットアップする:
 - Node.js 18+
 - Git
+- GitHub CLI
+- Netlify CLI
 - Claude Code
-- Super Claude
+- Supabase CLI
+- Resend CLI
+- Super Claude (MCP Server統合)
+- Playwright MCP (E2Eテスト)
 - Cursor IDE
-- OpenAI Codex CLI
 
 ### 設計原則
 1. **冪等性**: 何度実行しても安全（既にインストール済みのソフトはスキップ）
@@ -99,10 +103,13 @@ install-ai-dev-tools-{mac,win}.{sh,ps1}
 ├── Installation Functions
 │   ├── install_nodejs()
 │   ├── install_git()
+│   ├── install_github_cli()
+│   ├── install_netlify_cli()
 │   ├── install_claude_code()
+│   ├── install_supabase_cli()
 │   ├── install_super_claude()
-│   ├── install_cursor()
-│   └── install_codex()
+│   ├── install_playwright_mcp()
+│   └── install_cursor()
 │
 ├── Utility Functions
 │   ├── show_spinner()
@@ -131,20 +138,34 @@ install-ai-dev-tools-{mac,win}.{sh,ps1}
     "configured": false,
     "ssh_key": false
   },
+  "github_cli": {
+    "installed": false,
+    "authenticated": false
+  },
+  "netlify_cli": {
+    "installed": false,
+    "authenticated": false
+  },
   "claude_code": {
     "installed": false,
     "authenticated": false
+  },
+  "supabase_cli": {
+    "installed": false,
+    "authenticated": false
+  },
+  "resend_cli": {
+    "installed": false
   },
   "super_claude": {
     "installed": false,
     "mcp_servers_installed": false
   },
-  "cursor": {
+  "playwright_mcp": {
     "installed": false
   },
-  "codex": {
-    "installed": false,
-    "authenticated": false
+  "cursor": {
+    "installed": false
   }
 }
 ```
@@ -271,11 +292,47 @@ Start
   └─ Update state
   │
   ▼
-[Claude Code]
+[GitHub CLI]
+  ├─ Check if installed
+  ├─ Install via Homebrew/Winget
+  ├─ Check for GitHub account
+  ├─ PROMPT: Open https://github.com/signup if no account
+  ├─ PAUSE: Wait for account creation (Sign up with Google)
+  ├─ Run `gh auth login` (browser authentication)
+  └─ Update state
+  │
+  ▼
+[Netlify CLI]
   ├─ Check if installed
   ├─ Install via npm (global)
-  ├─ PAUSE: Wait for user authentication
-  ├─ Verify authentication with `claude-code --version`
+  ├─ Check for Netlify account
+  ├─ PROMPT: Open https://app.netlify.com/signup if no account
+  ├─ PAUSE: Wait for account creation (Sign up with GitHub)
+  ├─ Run `netlify login` (browser authentication)
+  └─ Update state
+  │
+  ▼
+[Claude Code]
+  ├─ Check if installed
+  ├─ Install via official installer (`curl -fsSL https://claude.ai/install.sh | sh`)
+  ├─ Verify authentication with `claude doctor`
+  └─ Update state
+  │
+  ▼
+[Supabase CLI]
+  ├─ Check if installed
+  ├─ Install via npm (global)
+  ├─ Check for Supabase account
+  ├─ PROMPT: Open https://supabase.com if no account
+  ├─ PAUSE: Wait for account creation (Continue with GitHub)
+  ├─ Run `npx supabase login` (browser authentication)
+  └─ Update state
+  │
+  ▼
+[Resend CLI]
+  ├─ Check if installed
+  ├─ Install via npm (global)
+  ├─ Verify installation
   └─ Update state
   │
   ▼
@@ -283,6 +340,14 @@ Start
   ├─ Check if installed
   ├─ Install via pipx
   ├─ Install with --force --yes flags
+  ├─ Install MCP servers (Context7, Sequential, etc.)
+  └─ Update state
+  │
+  ▼
+[Playwright MCP]
+  ├─ Check if installed
+  ├─ Install via Super Claude MCP system
+  ├─ Install Playwright browsers (Chrome, Firefox, Safari)
   ├─ Verify installation
   └─ Update state
   │
@@ -294,17 +359,10 @@ Start
   └─ Update state
   │
   ▼
-[OpenAI Codex CLI]
-  ├─ Check if installed
-  ├─ Install via npm (global)
-  ├─ PAUSE: Wait for user authentication
-  ├─ Verify authentication with `codex --version`
-  └─ Update state
-  │
-  ▼
 [Completion]
   ├─ Display summary
   ├─ Show installed versions
+  ├─ Confirm all accounts created (GitHub, Netlify, Supabase)
   └─ Provide next steps
   │
 End
@@ -401,53 +459,417 @@ install_git() {
 }
 ```
 
-#### 3. Claude Code (認証あり)
+#### 3. GitHub CLI (認証あり)
+
+**macOS**:
+```bash
+install_github_cli() {
+    if [[ $(get_state github_cli installed) == "True" ]]; then
+        print_info "GitHub CLI は既にインストールされています (スキップ)"
+    else
+        print_section "GitHub CLI のインストール"
+        brew install gh
+        update_state github_cli installed True
+        print_success "GitHub CLI インストール完了"
+    fi
+
+    # GitHubアカウント確認と作成促進
+    if [[ $(get_state github_cli account_prompted) == "False" ]]; then
+        print_section "GitHub アカウント確認"
+        echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+        echo -e "${CYAN}GitHubアカウントをお持ちですか？${RESET}"
+        echo -e "${CYAN}  Y: はい（認証に進む）${RESET}"
+        echo -e "${CYAN}  N: いいえ（アカウント作成ページを開く）${RESET}"
+        echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+
+        echo -ne "\n${CYAN}選択してください (Y/N): ${RESET}"
+        read has_account
+
+        if [[ "$has_account" != "Y" && "$has_account" != "y" ]]; then
+            print_info "GitHubアカウント作成ページを開きます..."
+            open "https://github.com/signup"  # macOS
+            echo -e "\n${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+            echo -e "${CYAN}1. ブラウザで GitHub にアクセスします${RESET}"
+            echo -e "${CYAN}2. 「Sign up with Google」ボタンをクリック${RESET}"
+            echo -e "${CYAN}3. Googleアカウントでサインアップしてください${RESET}"
+            echo -e "${CYAN}4. アカウント作成が完了したら Enter を押してください${RESET}"
+            echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+            read
+        fi
+
+        update_state github_cli account_prompted True
+    fi
+
+    # GitHub CLI 認証
+    if [[ $(get_state github_cli authenticated) == "True" ]]; then
+        print_info "GitHub CLI 認証済み (スキップ)"
+        return
+    fi
+
+    print_section "GitHub CLI 認証"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+    echo -e "${CYAN}ブラウザで GitHub 認証を行います${RESET}"
+    echo -e "${CYAN}認証が完了したら、このターミナルに戻ってください${RESET}"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+
+    gh auth login
+
+    if gh auth status &> /dev/null; then
+        print_success "GitHub CLI 認証成功！"
+        update_state github_cli authenticated True
+    else
+        print_error "認証に失敗しました。もう一度実行してください。"
+    fi
+}
+```
+
+**Windows**:
+```powershell
+function Install-GitHubCLI {
+    if ((Get-State github_cli installed) -eq $true) {
+        Write-Info "GitHub CLI は既にインストールされています (スキップ)"
+    } else {
+        Write-Section "GitHub CLI のインストール"
+        winget install GitHub.cli --silent
+
+        # パスのリフレッシュ
+        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+        Update-State github_cli installed $true
+        Write-Success "GitHub CLI インストール完了"
+    }
+
+    # GitHubアカウント確認と作成促進
+    if (-not (Get-State github_cli account_prompted)) {
+        Write-Section "GitHub アカウント確認"
+        Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+        Write-Host "GitHubアカウントをお持ちですか？" -ForegroundColor Cyan
+        Write-Host "  Y: はい（認証に進む）" -ForegroundColor Cyan
+        Write-Host "  N: いいえ（アカウント作成ページを開く）" -ForegroundColor Cyan
+        Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+
+        $has_account = Read-Host "`n選択してください (Y/N)"
+
+        if ($has_account -ne "Y" -and $has_account -ne "y") {
+            Write-Info "GitHubアカウント作成ページを開きます..."
+            Start-Process "https://github.com/signup"
+            Write-Host "`n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+            Write-Host "1. ブラウザで GitHub にアクセスします" -ForegroundColor Cyan
+            Write-Host "2. 「Sign up with Google」ボタンをクリック" -ForegroundColor Cyan
+            Write-Host "3. Googleアカウントでサインアップしてください" -ForegroundColor Cyan
+            Write-Host "4. アカウント作成が完了したら Enter を押してください" -ForegroundColor Cyan
+            Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+            Read-Host
+        }
+
+        Update-State github_cli account_prompted $true
+    }
+
+    # GitHub CLI 認証
+    if ((Get-State github_cli authenticated) -eq $true) {
+        Write-Info "GitHub CLI 認証済み (スキップ)"
+        return
+    }
+
+    Write-Section "GitHub CLI 認証"
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+    Write-Host "ブラウザで GitHub 認証を行います" -ForegroundColor Cyan
+    Write-Host "認証が完了したら、このターミナルに戻ってください" -ForegroundColor Cyan
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+
+    gh auth login
+
+    if (gh auth status 2>$null) {
+        Write-Success "GitHub CLI 認証成功！"
+        Update-State github_cli authenticated $true
+    } else {
+        Write-Error "認証に失敗しました。もう一度実行してください。"
+    }
+}
+```
+
+#### 4. Netlify CLI (認証あり)
+
+**macOS**:
+```bash
+install_netlify_cli() {
+    if [[ $(get_state netlify_cli installed) == "True" ]] && [[ $(get_state netlify_cli authenticated) == "True" ]]; then
+        print_info "Netlify CLI は既にインストール・認証済みです (スキップ)"
+        return
+    fi
+
+    print_section "Netlify CLI のインストール"
+
+    # インストール確認
+    if [[ $(get_state netlify_cli installed) == "False" ]]; then
+        if command -v netlify &> /dev/null; then
+            print_info "Netlify CLI は既にインストールされています"
+            update_state netlify_cli installed True
+        else
+            npm install -g netlify-cli
+            update_state netlify_cli installed True
+            print_success "Netlify CLI インストール完了"
+        fi
+    fi
+
+    # アカウント作成促進と認証
+    if [[ $(get_state netlify_cli authenticated) == "False" ]]; then
+        echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+        echo -e "${CYAN}Netlify は自動デプロイに使用します${RESET}"
+        echo -e "${CYAN}CLI経由でGitHub連携を設定します${RESET}"
+        echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+
+        read -p "Netlify アカウントをお持ちですか？ (y/n): " has_account
+
+        if [[ "$has_account" != "y" ]]; then
+            print_warning "Netlify アカウントが必要です。ブラウザでサインアップページを開きます..."
+            echo -e "${CYAN}推奨: 「Sign up with GitHub」ボタンで GitHub アカウントを使用してください${RESET}"
+            open "https://app.netlify.com/signup"
+            echo ""
+            read -p "アカウント作成が完了したら Enter キーを押してください..."
+        fi
+
+        # 認証
+        print_info "Netlify CLI の認証を開始します..."
+        if netlify login; then
+            update_state netlify_cli authenticated True
+            print_success "Netlify CLI 認証完了"
+        else
+            print_error "Netlify CLI の認証に失敗しました"
+            exit 1
+        fi
+    fi
+}
+```
+
+**Windows**:
+```powershell
+function Install-NetlifyCLI {
+    if ((Get-InstallState -Tool "netlify_cli" -Key "installed") -and (Get-InstallState -Tool "netlify_cli" -Key "authenticated")) {
+        Write-Info "Netlify CLI は既にインストール・認証済みです (スキップ)"
+        return
+    }
+
+    Write-Section "Netlify CLI のインストール"
+
+    # インストール確認
+    if (-not (Get-InstallState -Tool "netlify_cli" -Key "installed")) {
+        if (Get-Command netlify -ErrorAction SilentlyContinue) {
+            Write-Info "Netlify CLI は既にインストールされています"
+            Update-InstallState -Tool "netlify_cli" -Key "installed" -Value $true
+        } else {
+            npm install -g netlify-cli
+            Update-InstallState -Tool "netlify_cli" -Key "installed" -Value $true
+            Write-Success "Netlify CLI インストール完了"
+        }
+    }
+
+    # アカウント作成促進と認証
+    if (-not (Get-InstallState -Tool "netlify_cli" -Key "authenticated")) {
+        Write-Host "============================================================" -ForegroundColor Yellow
+        Write-Host "Netlify は自動デプロイに使用します" -ForegroundColor Cyan
+        Write-Host "CLI経由でGitHub連携を設定します" -ForegroundColor Cyan
+        Write-Host "============================================================" -ForegroundColor Yellow
+
+        $hasAccount = Read-Host "Netlify アカウントをお持ちですか？ (y/n)"
+
+        if ($hasAccount -ne "y") {
+            Write-Warn "Netlify アカウントが必要です。ブラウザでサインアップページを開きます..."
+            Write-Host "推奨: 「Sign up with GitHub」ボタンで GitHub アカウントを使用してください" -ForegroundColor Cyan
+            Start-Process "https://app.netlify.com/signup"
+            $confirm = Read-Host "`nアカウント作成が完了したら Enter キーを押してください"
+        }
+
+        # 認証
+        Write-Info "Netlify CLI の認証を開始します..."
+        try {
+            netlify login
+            Update-InstallState -Tool "netlify_cli" -Key "authenticated" -Value $true
+            Write-Success "Netlify CLI 認証完了"
+        } catch {
+            Write-Err "Netlify CLI の認証に失敗しました"
+            exit 1
+        }
+    }
+}
+```
+
+#### 5. Claude Code (認証あり)
 
 **macOS**:
 ```bash
 install_claude_code() {
-    if [[ $(get_state claude_code installed) == "True" ]]; then
-        print_info "Claude Code は既にインストールされています (スキップ)"
-    else
-        print_section "Claude Code のインストール"
-        npm install -g @anthropic/claude-code
-        update_state claude_code installed True
-        print_success "Claude Code インストール完了"
-    fi
-
-    if [[ $(get_state claude_code authenticated) == "True" ]]; then
-        print_info "Claude Code 認証済み (スキップ)"
+    if [[ $(get_state claude_code installed) == "True" ]] && [[ $(get_state claude_code authenticated) == "True" ]]; then
+        print_info "Claude Code は既にインストール・認証済みです (スキップ)"
         return
     fi
 
-    # 認証プロセス
-    print_section "Claude Code 認証"
-    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-    echo -e "${CYAN}1. ブラウザが自動で開きます${RESET}"
-    echo -e "${CYAN}2. Claude Pro アカウントでログインしてください${RESET}"
-    echo -e "${CYAN}3. 認証が完了したら、このターミナルに戻ってください${RESET}"
-    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+    print_section "Claude Code のインストール"
 
-    # 認証コマンド実行（バックグラウンド）
-    claude-code login &
-
-    # 認証完了待ち
-    while true; do
-        echo -ne "\n${CYAN}認証が完了したら Enter を押してください...${RESET}"
-        read
-
-        if claude-code --version &> /dev/null; then
-            print_success "認証成功！"
-            update_state claude_code authenticated True
-            break
+    # インストール確認
+    if [[ $(get_state claude_code installed) == "False" ]]; then
+        if command -v claude &> /dev/null; then
+            print_info "Claude Code は既にインストールされています"
+            update_state claude_code installed True
         else
-            print_error "認証が確認できませんでした。もう一度お試しください。"
+            print_info "Claude Code の公式インストーラーを実行します..."
+            if curl -fsSL https://claude.ai/install.sh | sh; then
+                update_state claude_code installed True
+                print_success "Claude Code インストール完了"
+            else
+                print_error "Claude Code のインストールに失敗しました"
+                print_warning "手動でインストールしてください: https://claude.ai/install.sh"
+                exit 1
+            fi
         fi
-    done
+    fi
+
+    # 認証確認（インストーラでブラウザインタラクションが求められる想定）
+    if [[ $(get_state claude_code authenticated) == "False" ]]; then
+        print_info "Claude Code の認証状態を確認します..."
+        echo -e "${CYAN}Claude Pro アカウントが必要です${RESET}"
+
+        if claude doctor &> /dev/null; then
+            update_state claude_code authenticated True
+            print_success "Claude Code 認証完了"
+        else
+            print_warning "Claude Code の認証を完了してください"
+            echo -e "${CYAN}コマンド: claude doctor${RESET}"
+        fi
+    fi
 }
 ```
 
-#### 4. Super Claude
+#### 6. Supabase CLI (認証あり)
+
+**macOS**:
+```bash
+install_supabase_cli() {
+    if [[ $(get_state supabase_cli installed) == "True" ]]; then
+        print_info "Supabase CLI は既にインストールされています (スキップ)"
+    else
+        print_section "Supabase CLI のインストール"
+        npm install -g supabase
+        update_state supabase_cli installed True
+        print_success "Supabase CLI インストール完了"
+    fi
+
+    # Supabaseアカウント確認と作成促進
+    if [[ $(get_state supabase_cli account_prompted) == "False" ]]; then
+        print_section "Supabase アカウント確認"
+        echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+        echo -e "${CYAN}Supabaseアカウントをお持ちですか？${RESET}"
+        echo -e "${CYAN}  Y: はい（認証に進む）${RESET}"
+        echo -e "${CYAN}  N: いいえ（アカウント作成ページを開く）${RESET}"
+        echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+
+        echo -ne "\n${CYAN}選択してください (Y/N): ${RESET}"
+        read has_account
+
+        if [[ "$has_account" != "Y" && "$has_account" != "y" ]]; then
+            print_info "Supabaseアカウント作成ページを開きます..."
+            open "https://supabase.com"
+            echo -e "\n${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+            echo -e "${CYAN}1. ブラウザで Supabase にアクセスします${RESET}"
+            echo -e "${CYAN}2. 「Continue with GitHub」ボタンをクリック${RESET}"
+            echo -e "${CYAN}3. GitHubアカウントで連携してください${RESET}"
+            echo -e "${CYAN}4. アカウント作成が完了したら Enter を押してください${RESET}"
+            echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+            read
+        fi
+
+        update_state supabase_cli account_prompted True
+    fi
+
+    # Supabase CLI 認証
+    if [[ $(get_state supabase_cli authenticated) == "True" ]]; then
+        print_info "Supabase CLI 認証済み (スキップ)"
+        return
+    fi
+
+    print_section "Supabase CLI 認証"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+    echo -e "${CYAN}ブラウザで Supabase 認証を行います${RESET}"
+    echo -e "${CYAN}認証が完了したら、このターミナルに戻ってください${RESET}"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+
+    npx supabase login
+
+    if npx supabase projects list &> /dev/null; then
+        print_success "Supabase CLI 認証成功！"
+        update_state supabase_cli authenticated True
+    else
+        print_error "認証に失敗しました。もう一度実行してください。"
+    fi
+}
+```
+
+**Windows**:
+```powershell
+function Install-SupabaseCLI {
+    if ((Get-State supabase_cli installed) -eq $true) {
+        Write-Info "Supabase CLI は既にインストールされています (スキップ)"
+    } else {
+        Write-Section "Supabase CLI のインストール"
+        npm install -g supabase
+
+        # パスのリフレッシュ
+        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+        Update-State supabase_cli installed $true
+        Write-Success "Supabase CLI インストール完了"
+    }
+
+    # Supabaseアカウント確認と作成促進
+    if (-not (Get-State supabase_cli account_prompted)) {
+        Write-Section "Supabase アカウント確認"
+        Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+        Write-Host "Supabaseアカウントをお持ちですか？" -ForegroundColor Cyan
+        Write-Host "  Y: はい（認証に進む）" -ForegroundColor Cyan
+        Write-Host "  N: いいえ（アカウント作成ページを開く）" -ForegroundColor Cyan
+        Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+
+        $has_account = Read-Host "`n選択してください (Y/N)"
+
+        if ($has_account -ne "Y" -and $has_account -ne "y") {
+            Write-Info "Supabaseアカウント作成ページを開きます..."
+            Start-Process "https://supabase.com"
+            Write-Host "`n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+            Write-Host "1. ブラウザで Supabase にアクセスします" -ForegroundColor Cyan
+            Write-Host "2. 「Continue with GitHub」ボタンをクリック" -ForegroundColor Cyan
+            Write-Host "3. GitHubアカウントで連携してください" -ForegroundColor Cyan
+            Write-Host "4. アカウント作成が完了したら Enter を押してください" -ForegroundColor Cyan
+            Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+            Read-Host
+        }
+
+        Update-State supabase_cli account_prompted $true
+    }
+
+    # Supabase CLI 認証
+    if ((Get-State supabase_cli authenticated) -eq $true) {
+        Write-Info "Supabase CLI 認証済み (スキップ)"
+        return
+    }
+
+    Write-Section "Supabase CLI 認証"
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+    Write-Host "ブラウザで Supabase 認証を行います" -ForegroundColor Cyan
+    Write-Host "認証が完了したら、このターミナルに戻ってください" -ForegroundColor Cyan
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+
+    npx supabase login
+
+    if (npx supabase projects list 2>$null) {
+        Write-Success "Supabase CLI 認証成功！"
+        Update-State supabase_cli authenticated $true
+    } else {
+        Write-Error "認証に失敗しました。もう一度実行してください。"
+    }
+}
+```
+
+#### 7. Super Claude (MCP Server統合)
 
 **macOS**:
 ```bash
@@ -471,10 +893,140 @@ install_super_claude() {
 
     update_state super_claude installed True
     print_success "Super Claude インストール完了"
+
+    # MCP Servers インストール
+    if [[ $(get_state super_claude mcp_servers_installed) == "True" ]]; then
+        print_info "MCP Servers は既にインストールされています (スキップ)"
+        return
+    fi
+
+    print_section "MCP Servers のインストール"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+    echo -e "${CYAN}以下の MCP Servers をインストールします:${RESET}"
+    echo -e "${CYAN}  - Context7 (ライブラリドキュメント)${RESET}"
+    echo -e "${CYAN}  - Sequential Thinking (複雑な推論)${RESET}"
+    echo -e "${CYAN}  - Magic (UI コンポーネント)${RESET}"
+    echo -e "${CYAN}  - Morphllm (パターンベース編集)${RESET}"
+    echo -e "${CYAN}  - Serena (プロジェクトメモリ)${RESET}"
+    echo -e "${CYAN}  - Tavily (Web検索)${RESET}"
+    echo -e "${CYAN}  - Chrome DevTools (ブラウザ自動化)${RESET}"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+
+    # MCPサーバーを自動インストール
+    SuperClaude mcp install-all
+
+    update_state super_claude mcp_servers_installed True
+    print_success "MCP Servers インストール完了"
 }
 ```
 
-#### 5. Cursor IDE
+**Windows**:
+```powershell
+function Install-SuperClaude {
+    if ((Get-State super_claude installed) -eq $true) {
+        Write-Info "Super Claude は既にインストールされています (スキップ)"
+        return
+    }
+
+    Write-Section "Super Claude のインストール"
+
+    # pipx がインストールされているか確認
+    if (-not (Get-Command pipx -ErrorAction SilentlyContinue)) {
+        Write-Info "pipx をインストールしています..."
+        pip install pipx
+        pipx ensurepath
+    }
+
+    # パスのリフレッシュ
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+    # Super Claude インストール (非対話モード)
+    SuperClaude install --force --yes
+
+    Update-State super_claude installed $true
+    Write-Success "Super Claude インストール完了"
+
+    # MCP Servers インストール
+    if ((Get-State super_claude mcp_servers_installed) -eq $true) {
+        Write-Info "MCP Servers は既にインストールされています (スキップ)"
+        return
+    }
+
+    Write-Section "MCP Servers のインストール"
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+    Write-Host "以下の MCP Servers をインストールします:" -ForegroundColor Cyan
+    Write-Host "  - Context7 (ライブラリドキュメント)" -ForegroundColor Cyan
+    Write-Host "  - Sequential Thinking (複雑な推論)" -ForegroundColor Cyan
+    Write-Host "  - Magic (UI コンポーネント)" -ForegroundColor Cyan
+    Write-Host "  - Morphllm (パターンベース編集)" -ForegroundColor Cyan
+    Write-Host "  - Serena (プロジェクトメモリ)" -ForegroundColor Cyan
+    Write-Host "  - Tavily (Web検索)" -ForegroundColor Cyan
+    Write-Host "  - Chrome DevTools (ブラウザ自動化)" -ForegroundColor Cyan
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+
+    # MCPサーバーを自動インストール
+    SuperClaude mcp install-all
+
+    Update-State super_claude mcp_servers_installed $true
+    Write-Success "MCP Servers インストール完了"
+}
+```
+
+#### 8. Playwright MCP (E2Eテスト)
+
+**macOS**:
+```bash
+install_playwright_mcp() {
+    if [[ $(get_state playwright_mcp installed) == "True" ]]; then
+        print_info "Playwright MCP は既にインストールされています (スキップ)"
+        return
+    fi
+
+    print_section "Playwright MCP のインストール"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+    echo -e "${CYAN}Playwright MCP を Super Claude 経由でインストールします${RESET}"
+    echo -e "${CYAN}ブラウザ (Chromium, Firefox, WebKit) も自動インストールされます${RESET}"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+
+    # Super Claude 経由で Playwright MCP をインストール
+    SuperClaude mcp install playwright
+
+    # Playwright ブラウザのインストール
+    print_info "Playwright ブラウザをインストールしています..."
+    npx playwright install
+
+    update_state playwright_mcp installed True
+    print_success "Playwright MCP インストール完了"
+}
+```
+
+**Windows**:
+```powershell
+function Install-PlaywrightMCP {
+    if ((Get-State playwright_mcp installed) -eq $true) {
+        Write-Info "Playwright MCP は既にインストールされています (スキップ)"
+        return
+    }
+
+    Write-Section "Playwright MCP のインストール"
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+    Write-Host "Playwright MCP を Super Claude 経由でインストールします" -ForegroundColor Cyan
+    Write-Host "ブラウザ (Chromium, Firefox, WebKit) も自動インストールされます" -ForegroundColor Cyan
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
+
+    # Super Claude 経由で Playwright MCP をインストール
+    SuperClaude mcp install playwright
+
+    # Playwright ブラウザのインストール
+    Write-Info "Playwright ブラウザをインストールしています..."
+    npx playwright install
+
+    Update-State playwright_mcp installed $true
+    Write-Success "Playwright MCP インストール完了"
+}
+```
+
+#### 9. Cursor IDE
 
 **macOS**:
 ```bash
@@ -514,74 +1066,85 @@ function Install-Cursor {
 }
 ```
 
-#### 6. OpenAI Codex CLI (認証あり)
-
-**macOS**:
-```bash
-install_codex() {
-    if [[ $(get_state codex installed) == "True" ]]; then
-        print_info "OpenAI Codex CLI は既にインストールされています (スキップ)"
-    else
-        print_section "OpenAI Codex CLI のインストール"
-        npm install -g @openai/codex
-        update_state codex installed True
-        print_success "OpenAI Codex CLI インストール完了"
-    fi
-
-    if [[ $(get_state codex authenticated) == "True" ]]; then
-        print_info "Codex CLI 認証済み (スキップ)"
-        return
-    fi
-
-    # 認証プロセス
-    print_section "Codex CLI 認証"
-    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-    echo -e "${CYAN}1. ターミナルで 'codex' コマンドを実行します${RESET}"
-    echo -e "${CYAN}2. ChatGPT Plus/Pro アカウントでサインインしてください${RESET}"
-    echo -e "${CYAN}3. 認証が完了したら、このターミナルに戻ってください${RESET}"
-    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-
-    # 認証コマンド実行
-    codex login &
-
-    # 認証完了待ち
-    while true; do
-        echo -ne "\n${CYAN}認証が完了したら Enter を押してください...${RESET}"
-        read
-
-        if codex --version &> /dev/null; then
-            print_success "認証成功！"
-            update_state codex authenticated True
-            break
-        else
-            print_error "認証が確認できませんでした。もう一度お試しください。"
-        fi
-    done
-}
-```
-
 ---
 
 ## 認証メカニズム
 
 ### 認証が必要なツール
-1. **Claude Code**: Claude Pro アカウントが必要
-2. **OpenAI Codex CLI**: ChatGPT Plus/Pro アカウントが必要
+1. **GitHub CLI**: GitHub アカウントが必要（Googleアカウントで登録推奨）
+2. **Netlify CLI**: Netlify アカウントが必要（GitHubアカウントで登録推奨）
+3. **Claude Code**: Claude Pro アカウントが必要
+4. **Supabase CLI**: Supabase アカウントが必要（GitHubアカウントで登録推奨）
 
-### 認証フロー
+### アカウント登録フロー
+
+```
+[GitHub アカウント]
+     │
+     ├─ Y/N確認
+     │
+     ▼ (Nの場合)
+     │
+[ブラウザでサインアップページ]
+     │
+     ├─ https://github.com/signup
+     ├─ 「Sign up with Google」ボタン
+     │
+     ▼
+[Googleアカウントで登録]
+     │
+     ▼
+[GitHub CLI 認証: gh auth login]
+
+[Netlify アカウント]
+     │
+     ├─ Y/N確認
+     │
+     ▼ (Nの場合)
+     │
+[ブラウザでサインアップページ]
+     │
+     ├─ https://app.netlify.com/signup
+     ├─ 「Sign up with GitHub」ボタン
+     │
+     ▼
+[GitHubアカウントで連携]
+     │
+     ▼
+[Netlify CLI 認証: netlify login]
+
+[Supabase アカウント]
+     │
+     ├─ Y/N確認
+     │
+     ▼ (Nの場合)
+     │
+[ブラウザでサインアップページ]
+     │
+     ├─ https://supabase.com
+     ├─ 「Continue with GitHub」ボタン
+     │
+     ▼
+[GitHubアカウントで登録]
+     │
+     ▼
+[Supabase CLI 認証: npx supabase login]
+```
+
+### CLI 認証フロー
 
 ```
 [インストール完了]
      │
      ▼
 [認証コマンド実行]
-  (バックグラウンド)
+  (バックグラウンドまたは対話式)
      │
      ▼
 [スクリプト一時停止]
      │
      ├─ ユーザーへガイド表示
-     ├─ ブラウザ/ターミナルで認証実行
+     ├─ ブラウザで認証実行
      │
      ▼
 [Enter待機ループ]
@@ -590,7 +1153,7 @@ install_codex() {
      │
      ▼
 [認証検証]
-  (--version コマンド)
+  (コマンド実行で確認)
      │
      ├─ 成功 → 状態更新 → 次へ進む
      └─ 失敗 → 再度Enter待機
@@ -600,8 +1163,10 @@ install_codex() {
 
 | ツール | 検証コマンド | 成功条件 |
 |--------|--------------|----------|
-| Claude Code | `claude-code --version` | 終了コード 0 |
-| Codex CLI | `codex --version` | 終了コード 0 |
+| GitHub CLI | `gh auth status` | 終了コード 0 |
+| Netlify CLI | `netlify status` | 終了コード 0 |
+| Claude Code | `claude doctor` | 終了コード 0 |
+| Supabase CLI | `npx supabase projects list` | 終了コード 0 |
 
 ---
 
@@ -782,13 +1347,19 @@ fi
 
 **インストールコマンド**:
 ```bash
-brew install node          # Node.js
-brew install git           # Git
-npm install -g @anthropic/claude-code  # Claude Code
-brew install pipx          # pipx
-pipx install SuperClaude   # Super Claude
-brew install --cask cursor # Cursor IDE
-npm install -g @openai/codex  # Codex CLI
+brew install node                       # Node.js
+brew install git                        # Git
+brew install gh                         # GitHub CLI
+npm install -g netlify-cli              # Netlify CLI
+curl -fsSL https://claude.ai/install.sh | sh   # Claude Code
+npm install -g supabase                 # Supabase CLI
+npm install -g resend                   # Resend CLI
+brew install pipx                       # pipx
+pipx install SuperClaude                # Super Claude
+SuperClaude mcp install-all             # MCP Servers
+SuperClaude mcp install playwright      # Playwright MCP
+npx playwright install                  # Playwright ブラウザ
+brew install --cask cursor              # Cursor IDE
 ```
 
 ### Windows (PowerShell)
@@ -810,13 +1381,19 @@ if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
 
 **インストールコマンド**:
 ```powershell
-winget install OpenJS.NodeJS --silent  # Node.js
-winget install Git.Git --silent        # Git
-npm install -g @anthropic/claude-code  # Claude Code
-pip install pipx                       # pipx
-pipx install SuperClaude               # Super Claude
+winget install OpenJS.NodeJS --silent   # Node.js
+winget install Git.Git --silent         # Git
+winget install --id GitHub.CLI --silent # GitHub CLI
+npm install -g netlify-cli              # Netlify CLI
+Invoke-RestMethod https://claude.ai/install.ps1 | Invoke-Expression   # Claude Code
+npm install -g supabase                 # Supabase CLI
+npm install -g resend                   # Resend CLI
+pip install pipx                        # pipx
+pipx install SuperClaude                # Super Claude
+SuperClaude mcp install-all             # MCP Servers
+SuperClaude mcp install playwright      # Playwright MCP
+npx playwright install                  # Playwright ブラウザ
 # Cursor IDE: 手動ダウンロード（https://cursor.sh）
-npm install -g @openai/codex           # Codex CLI
 ```
 
 **パスのリフレッシュ**:

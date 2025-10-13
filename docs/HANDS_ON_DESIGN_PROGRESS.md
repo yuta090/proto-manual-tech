@@ -109,6 +109,20 @@
 - ✅ CSVエクスポート、モバイル最適化、目標設定機能
 - ✅ ポートフォリオ開発ガイダンスと卒業後ロードマップ
 
+### 13. インストールスクリプト仕様書とスクリプト本体の作成（完了）
+- ✅ install-script-spec.md の全面改訂
+- ✅ GitHub CLI追加（アカウント作成促進フロー付き）
+- ✅ Netlify アカウント作成促進（CLI不要、GitHub連携）
+- ✅ Supabase CLI追加（アカウント作成促進フロー付き）
+- ✅ Super Claude + MCP Servers セクション追加（7つのMCPサーバー）
+- ✅ Playwright MCP セクション追加
+- ✅ Codex CLI セクション削除
+- ✅ 認証メカニズムセクション全面更新
+- ✅ プラットフォーム別実装コマンド更新（macOS / Windows）
+- ✅ 状態管理JSONスキーマ定義
+- ✅ macOS Bash スクリプト作成（install-ai-dev-tools-mac.sh）
+- ✅ Windows PowerShell スクリプト作成（install-ai-dev-tools-win.ps1）
+
 ---
 
 ## 🔄 現在作業中
@@ -125,15 +139,23 @@
 
 ---
 
-### Phase 2: install-script-spec.mdの修正
+### Phase 2: install-script-spec.mdとインストールスクリプトの作成（完了✅）
 
 **ファイル**: `/Users/takahashiyuuta/Documents/scripts/proto-manual-tech/docs/install-script-spec.md`
 
 **作業内容**:
-- [ ] Supabase CLI追加
-- [ ] Playwright MCP追加
-- [ ] GitHubアカウント作成促進セクション追加
-- [ ] Netlify MCP/CLI削除
+- ✅ GitHub CLI追加（アカウント作成促進機能付き）
+- ✅ Netlify アカウント作成促進（CLI不要）
+- ✅ Supabase CLI追加（アカウント作成促進機能付き）
+- ✅ Super Claude MCP Servers 追加
+- ✅ Playwright MCP追加
+- ✅ Codex CLI削除
+- ✅ 認証メカニズムセクション更新
+- ✅ プラットフォーム別コマンド更新
+
+**作成ファイル**:
+- ✅ `scripts/install-ai-dev-tools-mac.sh` (macOS Bash スクリプト)
+- ✅ `scripts/install-ai-dev-tools-win.ps1` (Windows PowerShell スクリプト)
 
 ---
 
@@ -190,9 +212,9 @@ Read tool（修正後の確認）:
 - [x] 10章修正: 100%
 - [x] 11章修正: 100%
 - [x] 12章修正: 100%
-- [ ] install-script修正: 0%
+- [x] install-script修正: 100%
 
-**総合進捗**: 約90% 🎉
+**総合進捗**: 100% 🎉🎊
 
 ---
 
@@ -252,7 +274,11 @@ URLで確認
 | 2025-10-12 | 10章HTML修正（Playwright MCP自動テストハンズオン追加） | ✅ |
 | 2025-10-12 | 11章HTML修正（統計ダッシュボードハンズオン：60分→90分に強化） | ✅ |
 | 2025-10-12 | 12章HTML修正（卒業制作ハンズオン：60分→120分に強化） | ✅ |
+| 2025-10-12 | install-script-spec.md 修正完了（GitHub CLI、Supabase CLI、Playwright MCP追加、Codex CLI削除） | ✅ |
+| 2025-10-12 | インストールスクリプト作成完了（macOS Bash / Windows PowerShell） | ✅ |
 
 ---
 
-**次のステップ**: Phase 2: install-script-spec.md の修正（Supabase CLI、Playwright MCP追加）
+**プロジェクト完了！** 🎉
+
+全ての作業が完了しました。次のステップは、実際のマニュアルを使用した動作確認とテストです。
