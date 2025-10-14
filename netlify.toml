@@ -7,15 +7,23 @@
   # 公開ディレクトリ
   publish = "site"
 
-# リダイレクト設定（オプション）
+# リダイレクト設定
+# トップページを /ai/ にリダイレクト
+[[redirects]]
+  from = "/"
+  to = "/ai/"
+  status = 301
+
+# /ai へのアクセスを /ai/ にリダイレクト
 [[redirects]]
   from = "/ai"
-  to = "/ai/index.html"
-  status = 200
+  to = "/ai/"
+  status = 301
 
+# その他のパスはそのまま表示
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/:splat"
   status = 200
 
 # ヘッダー設定（セキュリティ・パフォーマンス最適化）
