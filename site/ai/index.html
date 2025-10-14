@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI開発ツール完全活用マニュアル - トップページ</title>
+  <link rel="stylesheet" href="../assets/manual.css" />
+  <style>
+    .landing-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .hero-section {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      margin-bottom: 3rem;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: #64748b;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .hero-description {
+      font-size: 1rem;
+      color: #475569;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      line-height: 1.8;
+    }
+
+    .session-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .session-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .session-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    .session-card-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .session-card-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1e40af;
+    }
+
+    .session-card-subtitle {
+      font-size: 1rem;
+      color: #64748b;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .session-card-description {
+      font-size: 0.95rem;
+      color: #475569;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .session-card-chapters {
+      font-size: 0.85rem;
+      color: #64748b;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .session-card-time {
+      display: inline-block;
+      background: rgba(59, 130, 246, 0.1);
+      color: #1e40af;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    .info-section {
+      background: rgba(254, 243, 199, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .info-section h2 {
+      font-size: 1.5rem;
+      color: #78350f;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-section ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .info-section li {
+      padding: 0.5rem 0;
+      color: #78350f;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .info-section li::before {
+      content: "✓";
+      color: #15803d;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 1.8rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .session-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="manual-header">
+    <div class="header-text">
+      <h1>AI開発ツール完全活用マニュアル</h1>
+      <p style="font-size: 1rem; margin-top: 0.5rem; color: rgba(255, 255, 255, 0.8);">Claude Code、Super Claude、そして各種AI開発ツールを最大限に活用する実践的ガイド</p>
+    </div>
+  </header>
+
+  <div class="landing-container">
+    <section class="hero-section">
+      <h2 class="hero-title">🚀 AI開発の世界へようこそ</h2>
+      <p class="hero-subtitle">仕様駆動開発とバイブコーディングによる次世代開発戦略</p>
+      <p class="hero-description">
+        このマニュアルでは、プログラミング初心者からでもAIツールを活用して、
+        自分だけのWebアプリケーションを開発できるようになるまでの道のりを、
+        段階的に学ぶことができます。全4セッション、13章で構成された実践的なカリキュラムです。
+      </p>
+    </section>
+
+    <section class="session-grid">
+      <a href="session-1-basics.html" class="session-card">
+        <div class="session-card-icon">📘</div>
+        <h3 class="session-card-title">Session 1: 基礎編</h3>
+        <p class="session-card-subtitle">体験と実践で学ぶAI開発の基本</p>
+        <p class="session-card-description">
+          AI開発の魔法を体験し、基本的なツールの使い方をマスター。
+          最初のWebアプリを作成して、AI開発の流れを理解します。
+        </p>
+        <div class="session-card-chapters">
+          <strong>収録内容:</strong> 0章-5章<br>
+          0章: 30分体験 / 1章: できること / 2章: ロードマップ / 3章: お願いのコツ / 4章: 準備 / 5章: Webアプリ開発
+        </div>
+        <span class="session-card-time">⏱️ 推定学習時間: 6-8時間</span>
+      </a>
+
+      <a href="session-2-quality.html" class="session-card">
+        <div class="session-card-icon">📗</div>
+        <h3 class="session-card-title">Session 2: 品質編</h3>
+        <p class="session-card-subtitle">プロフェッショナルな開発スキル</p>
+        <p class="session-card-description">
+          コード品質の向上、バージョン管理、デプロイ自動化など、
+          実務で必要となる開発技術を習得します。
+        </p>
+        <div class="session-card-chapters">
+          <strong>収録内容:</strong> 6章-9章<br>
+          6章: GitHub連携 / 7章: MCP / 8章: Webアプリ公開 / 9章: データベース連携
+        </div>
+        <span class="session-card-time">⏱️ 推定学習時間: 8-10時間</span>
+      </a>
+
+      <a href="session-3-advanced.html" class="session-card">
+        <div class="session-card-icon">📕</div>
+        <h3 class="session-card-title">Session 3: 応用編</h3>
+        <p class="session-card-subtitle">本格的なアプリケーション開発</p>
+        <p class="session-card-description">
+          認証機能、自動テスト、データ分析など、
+          より高度な機能を実装し、実用的なアプリを完成させます。
+        </p>
+        <div class="session-card-chapters">
+          <strong>収録内容:</strong> 10章-13章<br>
+          10章: 自動テスト / 11章: 統計ダッシュボード / 12章: 卒業制作 / 13章: 次のステップ
+        </div>
+        <span class="session-card-time">⏱️ 推定学習時間: 10-12時間</span>
+      </a>
+
+      <a href="session-4-production.html" class="session-card">
+        <div class="session-card-icon">📙</div>
+        <h3 class="session-card-title">Session 4: 本番運用編</h3>
+        <p class="session-card-subtitle">実運用とスケーリング（準備中）</p>
+        <p class="session-card-description">
+          本番環境への移行、監視、セキュリティ、パフォーマンス最適化など、
+          サービスを継続的に運用するための技術を学びます。
+        </p>
+        <div class="session-card-chapters">
+          <strong>収録内容:</strong> 14章-17章（準備中）<br>
+          14章: 本番環境 / 15章: 監視 / 16章: セキュリティ / 17章: スケーリング
+        </div>
+        <span class="session-card-time">⏱️ 推定学習時間: Coming Soon</span>
+      </a>
+    </section>
+
+    <section class="info-section">
+      <h2>💡 このマニュアルの特徴</h2>
+      <ul>
+        <li><strong>実践重視:</strong> 全章にハンズオン演習を用意。手を動かしながら学べます</li>
+        <li><strong>段階的学習:</strong> 初心者から上級者まで、ステップバイステップで学習可能</li>
+        <li><strong>自動化スクリプト:</strong> 環境構築は自動化スクリプトで30分で完了</li>
+        <li><strong>実用的な内容:</strong> 実際のプロジェクトで使える技術とベストプラクティス</li>
+        <li><strong>無料で始められる:</strong> 多くのツールは無料プランで利用可能（Claude ProとCursorは有料）</li>
+      </ul>
+    </section>
+
+    <section class="cta-section">
+      <h2 style="font-size: 1.8rem; margin-bottom: 1rem; color: #1e40af;">🎯 今すぐ始めよう</h2>
+      <p style="font-size: 1.1rem; color: #475569; margin-bottom: 2rem;">
+        まずはSession 1の0章から始めて、30分でAI開発を体験してみましょう！
+      </p>
+      <a href="session-1-basics.html#0-最初の30分で体験するai開発の魔法" class="cta-button">
+        📘 Session 1をスタート
+      </a>
+    </section>
+
+    <footer style="text-align: center; padding: 2rem 0; color: #64748b; font-size: 0.9rem; border-top: 1px solid rgba(59, 130, 246, 0.2); margin-top: 3rem;">
+      <p>AI開発ツール完全活用マニュアル | 最終更新: 2025-10-14</p>
+      <p style="margin-top: 0.5rem;">Created with ❤️ for aspiring AI developers</p>
+    </footer>
+  </div>
+</body>
+</html>
