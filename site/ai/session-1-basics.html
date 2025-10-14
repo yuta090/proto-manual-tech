@@ -590,6 +590,24 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
           </ol>
           <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 8px; overflow-x: auto;"><code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></pre>
           <p style="margin-top: 8px;">確認メッセージで「Y」を入力</p>
+
+          <div style="background: rgba(251, 191, 36, 0.1); border-left: 4px solid #f59e0b; padding: 12px; margin-top: 16px; border-radius: 4px;">
+            <p style="margin: 0; font-weight: bold; color: #92400e;">💡 補足：「ファイルがデジタル署名されていない」エラーが出る場合</p>
+            <p style="margin: 8px 0 0 0; color: #78350f;">以下のコマンドで一時的に実行ポリシーをBypassにしてください：</p>
+            <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 8px; overflow-x: auto;"><code>Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force</code></pre>
+            <p style="margin: 8px 0 0 0; color: #78350f; font-size: 0.9em;">このコマンドは現在のPowerShellセッション中だけ有効で、ウィンドウを閉じれば元に戻ります。</p>
+          </div>
+
+          <div style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #dc2626; padding: 12px; margin-top: 16px; border-radius: 4px;">
+            <p style="margin: 0; font-weight: bold; color: #991b1b;">⚠️ 構文エラーが大量に出る場合</p>
+            <p style="margin: 8px 0 0 0; color: #7f1d1d;">スクリプトファイルが破損している可能性があります。以下の手順で再ダウンロードしてください：</p>
+            <ol style="margin: 8px 0 0 20px; color: #7f1d1d;">
+              <li>既存のスクリプトファイルを削除</li>
+              <li><a href="/install-ai-dev-tools-win.ps1" download style="color: #dc2626; text-decoration: underline;">こちらから最新版をダウンロード</a></li>
+              <li>ダウンロード後、以下のコマンドでブロックを解除：</li>
+            </ol>
+            <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 8px; overflow-x: auto;"><code>Unblock-File -Path "ダウンロードしたスクリプトのパス"</code></pre>
+          </div>
         </div>
       </details>
 
