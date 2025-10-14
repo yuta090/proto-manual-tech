@@ -19,6 +19,49 @@
   --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
 }
 
+/* ダークモード */
+body.dark-mode {
+  --background: #0f172a;
+  --surface: #1e293b;
+  --accent: #60a5fa;
+  --accent-secondary: #a78bfa;
+  --accent-tertiary: #22d3ee;
+  --accent-success: #34d399;
+  --accent-warning: #fbbf24;
+  --accent-soft: rgba(96, 165, 250, 0.15);
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  --code-bg: #0d1117;
+  --code-text: #f1f5f9;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --gradient-primary: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+  --gradient-accent: linear-gradient(135deg, #f472b6 0%, #fb7185 100%);
+  --gradient-success: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+}
+
+body.dark-mode {
+  background: linear-gradient(160deg, #0f172a 0%, #1e293b 30%, #1e293b 100%);
+}
+
+body.dark-mode .manual-header {
+  background: radial-gradient(circle at top right, rgba(96, 165, 250, 0.1), transparent 60%),
+    radial-gradient(circle at bottom left, rgba(34, 211, 238, 0.12), transparent 55%),
+    var(--surface);
+  border-bottom-color: rgba(71, 85, 105, 0.4);
+}
+
+body.dark-mode .manual-nav {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: var(--border);
+}
+
+body.dark-mode .manual-content {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -203,6 +246,61 @@ body {
 
 .nav-toggle.active {
   left: 280px;
+}
+
+/* ダークモード切り替えボタン */
+.dark-mode-toggle {
+  position: fixed;
+  top: 1.5rem;
+  left: 5rem;
+  z-index: 1000;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.65rem 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  line-height: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode-toggle:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  transform: scale(1.05);
+}
+
+.dark-mode-toggle .light-icon,
+.dark-mode-toggle .dark-icon {
+  position: absolute;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dark-mode-toggle .light-icon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.dark-mode-toggle .dark-icon {
+  opacity: 0;
+  transform: rotate(-180deg) scale(0);
+}
+
+body.dark-mode .dark-mode-toggle .light-icon {
+  opacity: 0;
+  transform: rotate(180deg) scale(0);
+}
+
+body.dark-mode .dark-mode-toggle .dark-icon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
 }
 
 .manual-nav {

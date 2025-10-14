@@ -65,6 +65,10 @@
     </div>
   </header>
   <button class="nav-toggle" id="navToggle" aria-label="目次を開閉">☰</button>
+  <button class="dark-mode-toggle" id="darkModeToggle" aria-label="ダークモード切り替え">
+    <span class="light-icon">☀️</span>
+    <span class="dark-icon">🌙</span>
+  </button>
   <div class="manual-layout" id="manualLayout">
     <aside class="manual-nav" id="manualNav">
       <nav class="toc" aria-label="目次"><h2>Quick Links</h2>
@@ -2306,5 +2310,61 @@ source ~/.bash_profile</code></pre>
     <p>このドキュメントは自動生成されました。元ファイルを更新した際は <code>python tools/build_manual.py</code> を再実行してください。</p>
   </footer>
 
+  <script>
+    // ダークモード切り替え機能
+    (function() {
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const body = document.body;
+
+      // システムのダークモード設定を検知
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+      // 保存された設定を読み込み、なければシステム設定を使用
+      function loadDarkMode() {
+        const savedMode = localStorage.getItem('darkMode');
+
+        if (savedMode === 'enabled') {
+          body.classList.add('dark-mode');
+        } else if (savedMode === 'disabled') {
+          body.classList.remove('dark-mode');
+        } else {
+          // 保存設定がない場合はシステム設定に従う
+          if (prefersDark.matches) {
+            body.classList.add('dark-mode');
+          }
+        }
+      }
+
+      // ダークモード切り替え
+      function toggleDarkMode() {
+        if (body.classList.contains('dark-mode')) {
+          body.classList.remove('dark-mode');
+          localStorage.setItem('darkMode', 'disabled');
+        } else {
+          body.classList.add('dark-mode');
+          localStorage.setItem('darkMode', 'enabled');
+        }
+      }
+
+      // システム設定が変更された時の処理
+      prefersDark.addEventListener('change', (e) => {
+        // ユーザーが手動で設定していない場合のみ自動追従
+        const savedMode = localStorage.getItem('darkMode');
+        if (!savedMode) {
+          if (e.matches) {
+            body.classList.add('dark-mode');
+          } else {
+            body.classList.remove('dark-mode');
+          }
+        }
+      });
+
+      // 初期化
+      loadDarkMode();
+
+      // ボタンクリックイベント
+      darkModeToggle.addEventListener('click', toggleDarkMode);
+    })();
+  </script>
 
 </body></html>
