@@ -255,12 +255,6 @@
       <div style="font-size: 0.85em; color: #6366f1;">統合開発環境</div>
     </div>
 
-    <div style="background: linear-gradient(135deg, rgba(254, 226, 226, 0.6) 0%, rgba(254, 202, 202, 0.4) 100%); backdrop-filter: blur(10px); padding: 14px; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.3);">
-      <div style="font-size: 1.8em; margin-bottom: 6px;">🎯</div>
-      <div style="font-weight: bold; color: #7f1d1d; margin-bottom: 4px;">Codex CLI</div>
-      <div style="font-size: 0.85em; color: #ef4444;">オプション</div>
-    </div>
-
     <div style="background: linear-gradient(135deg, rgba(209, 250, 229, 0.6) 0%, rgba(167, 243, 208, 0.4) 100%); backdrop-filter: blur(10px); padding: 14px; border-radius: 12px; border: 1px solid rgba(5, 150, 105, 0.3);">
       <div style="font-size: 1.8em; margin-bottom: 6px;">🗄️</div>
       <div style="font-weight: bold; color: #064e3b; margin-bottom: 4px;">Supabase CLI</div>
@@ -278,6 +272,63 @@
       <div style="font-weight: bold; color: #78350f; margin-bottom: 4px;">Resend CLI</div>
       <div style="font-size: 0.85em; color: #fb923c;">メール送信</div>
     </div>
+  </div>
+</div>
+
+<!-- Troubleshooting Table - Soft Guidance -->
+<div style="background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 20px; padding: 28px; margin: 24px 0; box-shadow: 0 12px 32px rgba(59, 130, 246, 0.12);">
+  <h5 style="margin: 0 0 16px 0; color: #1d4ed8; display: flex; align-items: center; gap: 10px; font-size: 1.15em;">
+    <span style="font-size: 1.4em;">💡</span>
+    <span>困ったときのやさしい直し方</span>
+  </h5>
+  <p style="margin: 0 0 16px 0; color: #1e40af; line-height: 1.6;">エラーが出ても大丈夫。よくあるつまずきをまとめました。</p>
+  <div style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
+      <thead>
+        <tr style="background: rgba(59, 130, 246, 0.08);">
+          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">こんなとき</th>
+          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">まずはこれを試す</th>
+          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">たぶんこうです</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
+          <td style="padding: 12px; vertical-align: top;">Claude のインストールが途中で止まる／エラーになる</td>
+          <td style="padding: 12px; vertical-align: top;">1分待ってもう一度。できなければ、家のWi‑Fiやスマホのテザリングで試す。むずかしければ先生（管理者）に相談。</td>
+          <td style="padding: 12px; vertical-align: top;">インターネットが不安定、または学校・会社のネットで止められている</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
+          <td style="padding: 12px; vertical-align: top;">`npm install -g ...` で「permission denied」と出る</td>
+          <td style="padding: 12px; vertical-align: top;">一度ターミナルを閉じて開き直し、もう一度実行。まだダメなら、Node を入れ直す（MacはHomebrewで入れると直ることが多い）か、先生に手伝ってもらう。</td>
+          <td style="padding: 12px; vertical-align: top;">パソコンが「ここに入れていいよ」と言っていない（許可がない）</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
+          <td style="padding: 12px; vertical-align: top;">`pipx install SuperClaude` のあと `SuperClaude` が使えない</td>
+          <td style="padding: 12px; vertical-align: top;">ターミナルを閉じて開き直す。ダメなら `pipx ensurepath` を打って、もう一度ターミナルを開き直す。</td>
+          <td style="padding: 12px; vertical-align: top;">新しいコマンドの「道」がまだ通っていない</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
+          <td style="padding: 12px; vertical-align: top;">`winget` が見つからない（Windows）</td>
+          <td style="padding: 12px; vertical-align: top;">Microsoft Store で「アプリ インストーラー」を入れる。終わったら PowerShell を閉じて、もう一度開く。</td>
+          <td style="padding: 12px; vertical-align: top;">Winget がまだ入っていない</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
+          <td style="padding: 12px; vertical-align: top;">`gh auth login` が進まない</td>
+          <td style="padding: 12px; vertical-align: top;">開いたブラウザでログインしてから、ターミナルに戻って Enter。うまくいかないときは、もう一度 `gh auth login`。</td>
+          <td style="padding: 12px; vertical-align: top;">ブラウザでのログインがまだ</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px; vertical-align: top;">`claude doctor` に「ログインしてください」と出る</td>
+          <td style="padding: 12px; vertical-align: top;">`claude doctor` を打つ → 開いたページでログイン → もう一度 `claude doctor` を打って確認。</td>
+          <td style="padding: 12px; vertical-align: top;">まだ Claude にログインしていない</td>
+        </tr>
+        <tr style="border-top: 1px solid rgba(148, 163, 184, 0.15);">
+          <td style="padding: 12px; vertical-align: top;">Claude Code に <strong>sc:</strong> が出ない</td>
+          <td style="padding: 12px; vertical-align: top;">PowerShell を開き直す → <code>pipx ensurepath</code> → もう一度開き直す → <code>claude doctor</code> でログイン確認 → <code>SuperClaude install --force --yes</code> → <code>SuperClaude mcp install-all</code> → Claude Code を再起動</td>
+          <td style="padding: 12px; vertical-align: top;">Claude Code のインストールが一度失敗して連携が未完了、または PATH がまだ反映されていない</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
@@ -357,20 +408,39 @@ chmod +x install-ai-dev-tools-mac.sh
     </div>
 
     <div style="background: rgba(224, 231, 255, 0.4); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 12px; padding: 20px;">
-      <p style="margin: 0 0 12px 0; font-weight: bold; color: #4338ca;">▶️ ステップ2: PowerShellで実行</p>
-      <ol style="margin: 0 0 16px 0; padding-left: 20px; color: #4f46e5; line-height: 1.8;">
-        <li>Windowsキーを押して「<strong>PowerShell</strong>」と検索</li>
-        <li><strong>「Windows PowerShell」を右クリック</strong> → <strong>「管理者として実行」</strong>を選択</li>
-        <li>青い画面が開いたら、以下のコマンドをコピー&amp;ペーストして<strong>Enter</strong>を押す：</li>
+      <p style="margin: 0 0 12px 0; font-weight: bold; color: #4338ca;">▶️ ステップ2: PowerShell を管理者権限で起動</p>
+
+      <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid #dc2626; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+        <p style="margin: 0 0 8px 0; font-weight: bold; color: #dc2626; font-size: 1.05em;">🚨 超重要：必ず「管理者として実行」してください！</p>
+        <p style="margin: 0; color: #991b1b; font-size: 0.95em;">通常の PowerShell では権限不足でインストールが失敗します。必ず以下の手順で管理者権限で起動してください。</p>
+      </div>
+
+      <ol style="margin: 0 0 16px 0; padding-left: 20px; color: #4f46e5; line-height: 2;">
+        <li><strong>Windowsキー</strong>を押して「<strong>PowerShell</strong>」と検索</li>
+        <li><strong>「Windows PowerShell」を右クリック</strong>（またはタッチ長押し）</li>
+        <li>メニューから<strong>「管理者として実行」</strong>を選択
+          <div style="background: rgba(59, 130, 246, 0.1); border-left: 3px solid #3b82f6; padding: 8px 12px; margin-top: 8px; border-radius: 4px;">
+            <p style="margin: 0; font-size: 0.9em; color: #1e40af;">💡 ウィンドウのタイトルバーに「管理者: Windows PowerShell」と表示されていればOK！</p>
+          </div>
+        </li>
+        <li>青い画面（PowerShell）が開いたら、以下のコマンドを<strong>3行まとめて</strong>コピー&amp;ペーストして<strong>Enter</strong>を押す：</li>
       </ol>
       <pre style="background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 8px; padding: 14px; overflow-x: auto; margin: 0 0 12px 0;"><code class="language-powershell" style="color: #1e1b4b; font-weight: 600;">cd $HOME\Desktop
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
 .\install-ai-dev-tools-win.ps1</code><button class="code-copy-btn">コピー</button></pre>
-      <p style="margin: 0; font-size: 0.9em; color: #6366f1;">💡 <strong>説明</strong>：1行目でデスクトップに移動、2行目でスクリプト実行を許可、3行目で実行します</p>
+      <p style="margin: 0; font-size: 0.9em; color: #6366f1; line-height: 1.6;">💡 <strong>各行の説明</strong>：<br>
+      1行目：デスクトップに移動<br>
+      2行目：スクリプト実行を一時的に許可<br>
+      3行目：インストールスクリプトを実行</p>
     </div>
 
-    <div style="background: rgba(254, 243, 199, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 12px; margin-top: 12px;">
-      <p style="margin: 0; font-size: 0.9em; color: #78350f;">⚠️ <strong>重要</strong>：PowerShellは<strong>必ず管理者権限で起動</strong>してください。権限がないとインストールが失敗します。</p>
+    <div style="background: rgba(254, 243, 199, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 16px; margin-top: 12px;">
+      <p style="margin: 0 0 8px 0; font-weight: bold; color: #78350f;">⚠️ よくある失敗パターン</p>
+      <ul style="margin: 0; padding-left: 20px; color: #78350f; line-height: 1.7;">
+        <li><strong>普通にPowerShellを起動してしまった</strong> → 管理者権限がないとインストール失敗</li>
+        <li><strong>コマンドプロンプト（cmd）で実行した</strong> → PowerShell専用です。必ずPowerShellを使用</li>
+        <li><strong>スクリプトファイルをダブルクリックした</strong> → 管理者権限にならないため推奨しません</li>
+      </ul>
     </div>
   </div>
 </div>
@@ -1927,6 +1997,125 @@ AIがブラウザを自動で開く
           <strong style="color: #c2410c; font-size: 1.1em;">📙 Session 4: 本番運用編 →</strong><br>
           <small style="color: #9a3412; font-weight: 600;">14-17章 | 所要時間: 4-5時間</small>
         </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- よくある質問（FAQ）セクション -->
+  <div id="faq" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%); backdrop-filter: blur(10px); border: 2px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 40px; margin: 48px 0;">
+    <h2 style="color: #3b82f6; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
+      <span style="font-size: 2em;">❓</span>
+      <span>よくある質問（FAQ）</span>
+    </h2>
+
+    <div style="background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      <h3 style="color: #1e40af; margin-bottom: 16px;">💡 セットアップ全般</h3>
+
+      <details style="margin-bottom: 16px; padding: 16px; background: rgba(59, 130, 246, 0.05); border-radius: 8px; cursor: pointer;">
+        <summary style="font-weight: bold; color: #3b82f6; cursor: pointer;">Q1. Windows に PowerShell は最初から入っていますか？</summary>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(59, 130, 246, 0.2); color: #4b5563;">
+          <p><strong>A:</strong> はい、Windows 10/11 には PowerShell 5.1 が標準でインストールされています。</p>
+          <p style="margin-top: 8px;"><strong>確認方法:</strong></p>
+          <ol style="margin-left: 20px;">
+            <li>スタートメニューで「PowerShell」と検索</li>
+            <li>「Windows PowerShell」が表示されればOK</li>
+          </ol>
+          <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 8px; overflow-x: auto;"><code>$PSVersionTable.PSVersion</code></pre>
+        </div>
+      </details>
+
+      <details style="margin-bottom: 16px; padding: 16px; background: rgba(59, 130, 246, 0.05); border-radius: 8px;">
+        <summary style="font-weight: bold; color: #3b82f6; cursor: pointer;">Q2. PowerShell で「このスクリプトの実行は無効になっています」と表示されます</summary>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(59, 130, 246, 0.2); color: #4b5563;">
+          <p><strong>A:</strong> 実行ポリシーを変更する必要があります。</p>
+          <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+          <ol style="margin-left: 20px;">
+            <li>PowerShell を<strong>管理者権限</strong>で起動</li>
+            <li>以下のコマンドを実行：</li>
+          </ol>
+          <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 8px; overflow-x: auto;"><code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></pre>
+          <p style="margin-top: 8px;">確認メッセージで「Y」を入力</p>
+        </div>
+      </details>
+
+      <details style="margin-bottom: 16px; padding: 16px; background: rgba(59, 130, 246, 0.05); border-radius: 8px;">
+        <summary style="font-weight: bold; color: #3b82f6; cursor: pointer;">Q3. セットアップにどのくらい時間がかかりますか？</summary>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(59, 130, 246, 0.2); color: #4b5563;">
+          <p><strong>A:</strong> 環境や回線速度にもよりますが、通常30分〜1時間程度です。</p>
+          <ul style="margin-left: 20px; margin-top: 8px;">
+            <li>スクリプト実行: 20-40分</li>
+            <li>アカウント作成・認証: 10-20分</li>
+          </ul>
+        </div>
+      </details>
+
+      <details style="margin-bottom: 16px; padding: 16px; background: rgba(59, 130, 246, 0.05); border-radius: 8px;">
+        <summary style="font-weight: bold; color: #3b82f6; cursor: pointer;">Q4. 有料サービスはどれが必須ですか？</summary>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(59, 130, 246, 0.2); color: #4b5563;">
+          <p><strong>A:</strong> 以下が必須です：</p>
+          <ul style="margin-left: 20px; margin-top: 8px;">
+            <li><strong>Claude Pro</strong> ($20/月) - AI開発アシスタント</li>
+            <li><strong>Cursor</strong> ($20/月) - 統合開発環境（2週間無料トライアルあり）</li>
+          </ul>
+          <p style="margin-top: 8px;">その他のサービス（GitHub, Netlify, Supabase, Resend）は無料プランで十分です。</p>
+        </div>
+      </details>
+    </div>
+
+    <div style="background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      <h3 style="color: #1e40af; margin-bottom: 16px;">🔧 トラブルシューティング</h3>
+
+      <details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+        <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q5. インストールが途中で止まってしまいます</summary>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+          <p><strong>A:</strong> 以下を確認してください：</p>
+          <ol style="margin-left: 20px; margin-top: 8px;">
+            <li>インターネット接続が安定しているか</li>
+            <li>ディスク容量が十分にあるか（最低10GB推奨）</li>
+            <li>ウイルス対策ソフトがインストールをブロックしていないか</li>
+          </ol>
+          <p style="margin-top: 12px;"><strong>解決策:</strong></p>
+          <ul style="margin-left: 20px;">
+            <li>Ctrl+C（Windows）または Command+C（Mac）でスクリプトを中断</li>
+            <li>スクリプトを再実行（進捗は保存されています）</li>
+          </ul>
+        </div>
+      </details>
+
+      <details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+        <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q6. `command not found` エラーが出ます</summary>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+          <p><strong>A:</strong> ツールのインストール後、PATH が更新されていない可能性があります。</p>
+          <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+          <ul style="margin-left: 20px;">
+            <li><strong>Windows:</strong> PowerShell を再起動</li>
+            <li><strong>macOS:</strong> ターミナルを再起動、または以下を実行：
+              <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 8px; overflow-x: auto;"><code>source ~/.zshrc
+# または
+source ~/.bash_profile</code></pre>
+            </li>
+          </ul>
+        </div>
+      </details>
+
+      <details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+        <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q7. Claude Code で「Claude Pro アカウントが必要です」と表示されます</summary>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+          <p><strong>A:</strong> Claude Code を使用するには Claude Pro サブスクリプション（$20/月）が必要です。</p>
+          <p style="margin-top: 8px;"><strong>サブスクリプション開始方法:</strong></p>
+          <ol style="margin-left: 20px;">
+            <li><a href="https://claude.ai/" target="_blank" rel="noopener noreferrer" style="color: #3b82f6; text-decoration: underline;">https://claude.ai/</a> にアクセス</li>
+            <li>ログイン後、アップグレードボタンをクリック</li>
+            <li>クレジットカードで支払い手続き</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <div style="text-align: center; padding: 24px; background: rgba(59, 130, 246, 0.1); border-radius: 12px;">
+      <p style="color: #1e40af; font-weight: bold; margin-bottom: 12px;">📖 さらに詳しいFAQは</p>
+      <a href="../FAQ.html" style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: transform 0.2s;">
+        完全版FAQを見る（30問以上）→
       </a>
     </div>
   </div>

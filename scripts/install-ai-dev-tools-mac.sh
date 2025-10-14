@@ -144,6 +144,27 @@ with open('$STATE_FILE', 'w') as f:
 # インストール関数
 ################################################################################
 
+# Python 3 のインストール（必要時のみ）
+install_python_runtime() {
+    if command -v python3 &> /dev/null; then
+        print_info "Python 3 は既にインストールされています (スキップ)"
+        return
+    fi
+
+    print_section "Python 3 のインストール"
+    print_info "Homebrew 経由で Python 3 をインストールします"
+
+    brew install python
+
+    if command -v python3 &> /dev/null; then
+        local pyv=$(python3 --version 2>/dev/null || echo "installed")
+        print_success "Python 3 インストール完了: $pyv"
+    else
+        print_error "Python 3 のインストールに失敗しました"
+        exit 1
+    fi
+}
+
 install_homebrew() {
     if command -v brew &> /dev/null; then
         print_info "Homebrew は既にインストールされています (スキップ)"
@@ -466,6 +487,21 @@ install_super_claude() {
         # Super Claude インストール
         pipx install SuperClaude --force
 
+        # Claude Code への統合（カスタムコマンド sc: の登録など）
+        print_info "Claude Code に SuperClaude を統合しています..."
+        if command -v SuperClaude &> /dev/null; then
+            if SuperClaude install --force --yes; then
+                print_success "SuperClaude の Claude Code 統合完了"
+            else
+                print_warning "SuperClaude の統合処理で警告が発生しました"
+                echo -e "${YELLOW}  後で手動実行してください: SuperClaude install --force --yes${RESET}"
+                echo -e "${CYAN}  統合後は /sc: コマンドが Claude Code で使用できます${RESET}"
+            fi
+        else
+            print_warning "SuperClaude コマンドが見つかりません"
+            echo -e "${YELLOW}  後で手動実行してください: SuperClaude install --force --yes${RESET}"
+        fi
+
         update_state super_claude installed True
         print_success "Super Claude インストール完了"
     fi
@@ -573,6 +609,7 @@ main() {
 
     # インストール実行
     install_homebrew
+    install_python_runtime
     install_node
     install_git
     install_github_cli
