@@ -381,7 +381,7 @@ body.dark-mode .manual-header::before {
 .manual-subtitle {
   margin: 1.25rem 0 1.5rem;
   font-size: 1.1rem;
-  color: var(--text-muted);
+  color: #475569;
   line-height: 1.6;
 }
 

@@ -28,6 +28,17 @@
 
 **重要**: Claude Pro（$20/月）の契約が必須です。
 
+#### 💡 よくあるトラブルとやさしい対処法
+
+| 状況 | 原因かもしれないこと | やってみてほしいこと |
+|------|----------------|----------------------|
+| `curl -fsSL https://claude.ai/install.sh | sh` でエラーになる | ネットワークが一時的に不安定、または会社のプロキシが通信を止めている | 1〜2分待ってからもう一度実行するか、別のネットワーク（テザリングなど）で再実行してください。プロキシ環境の場合は管理者さんに `https://claude.ai` へのアクセス許可を相談しましょう。 |
+| `npm install -g ...` で Permission denied と表示される | npm のグローバルインストール先への書き込み権限が不足している | まず `npm config get prefix` を確認し、`$HOME/.npm-global` などユーザー権限の場所を指定するか、macOS の場合は `sudo` を付けずに Homebrew で `node` を入れ直すと権限設定が整うことが多いです。 |
+| `pipx install SuperClaude` の後に `SuperClaude` コマンドが見つからない | `pipx ensurepath` がまだ反映されていない、またはシェルを再起動していない | ターミナルを一度閉じて開き直すか、`source ~/.bash_profile` などシェル設定を再読み込みしてください。それでもだめなら `pipx ensurepath` を再実行してみましょう。 |
+| `winget` コマンドが存在しない（Windows） | Windows Update が最新でなく、Winget が入っていない | Microsoft Store で「アプリ インストーラー」をインストールすると Winget が利用できるようになります。インストール後は PowerShell を再起動してください。 |
+| `gh auth login` が途中で止まってしまう | ブラウザ上の認証が完了していない、またはターミナルに戻って Enter を押していない | ブラウザ側で GitHub へのログインを完了したあと、ターミナルに戻って Enter を押してください。ウィンドウが閉じてしまった場合は `gh auth login` をもう一度実行すればやり直せます。 |
+| `claude doctor` で「ログインしてください」と出る | Claude Code のブラウザ認証がまだ済んでいない | `claude doctor` を実行するとブラウザが開きます。Claude Pro でログインし、画面の指示に沿って認証を完了したら、ターミナルに戻って再度 `claude doctor` を試してください。 |
+
 ---
 
 ### 1章: AI開発とは（15分）
