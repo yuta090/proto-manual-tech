@@ -489,11 +489,11 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
     </div>
 
     <div style="background: rgba(224, 231, 255, 0.4); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 12px; padding: 20px; margin-top: 16px;">
-      <p style="margin: 0 0 12px 0; font-weight: bold; color: #4338ca;">🔄 ステップ3: PowerShell 7へのアップグレード（推奨）</p>
+      <p style="margin: 0 0 12px 0; font-weight: bold; color: #4338ca;">🔄 ステップ3: PowerShell 7へのアップグレード（任意・推奨）</p>
 
-      <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid #dc2626; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
-        <p style="margin: 0 0 8px 0; font-weight: bold; color: #dc2626; font-size: 1.05em;">🚨 非常によく起こる問題です！</p>
-        <p style="margin: 0; color: #991b1b; font-size: 0.95em;">Windows標準のPowerShell 5.1では<strong>UTF-8エンコーディングエラー</strong>や<strong>構文エラー</strong>が頻発します。インストール前に<strong>PowerShell 7にアップグレード</strong>することを強く推奨します。</p>
+      <div style="background: rgba(59, 130, 246, 0.1); border: 2px solid #3b82f6; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+        <p style="margin: 0 0 8px 0; font-weight: bold; color: #1e40af; font-size: 1.05em;">✅ PowerShell 5.1でも動作します</p>
+        <p style="margin: 0; color: #1e3a8a; font-size: 0.95em;">このスクリプトは<strong>UTF-8 with BOM形式</strong>で作成されているため、Windows標準のPowerShell 5.1でも正常に動作します。ただし、<strong>より快適な開発環境</strong>のために、PowerShell 7へのアップグレードを推奨します。</p>
       </div>
 
       <ol style="margin: 0 0 16px 0; padding-left: 20px; color: #4f46e5; line-height: 2;">
@@ -505,12 +505,13 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
         <li>再度ステップ2のコマンドを実行</li>
       </ol>
 
-      <div style="background: rgba(59, 130, 246, 0.1); border-left: 3px solid #3b82f6; padding: 12px; margin-top: 12px; border-radius: 4px;">
-        <p style="margin: 0 0 6px 0; font-weight: bold; color: #1e40af; font-size: 0.95em;">💡 PowerShell 7の利点</p>
-        <ul style="margin: 0; padding-left: 20px; color: #1e40af; font-size: 0.9em; line-height: 1.6;">
-          <li><strong>UTF-8を正しく処理</strong>できるため、文字化けやエンコーディングエラーが発生しません</li>
+      <div style="background: rgba(168, 85, 247, 0.1); border-left: 3px solid #a855f7; padding: 12px; margin-top: 12px; border-radius: 4px;">
+        <p style="margin: 0 0 6px 0; font-weight: bold; color: #6b21a8; font-size: 0.95em;">💡 PowerShell 7にアップグレードするメリット</p>
+        <ul style="margin: 0; padding-left: 20px; color: #6b21a8; font-size: 0.9em; line-height: 1.6;">
+          <li><strong>より高速で安定</strong>したスクリプト実行</li>
+          <li><strong>最新のPowerShell機能</strong>とモダンなコマンドレットが利用可能</li>
           <li>従来のPowerShell 5.1と<strong>共存可能</strong>（両方インストールされていても問題なし）</li>
-          <li>より高速で、モダンなスクリプトにも対応</li>
+          <li>クロスプラットフォーム対応（将来的にMac/Linuxでも同じスクリプトが使える）</li>
         </ul>
       </div>
     </div>
