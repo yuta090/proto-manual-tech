@@ -435,6 +435,21 @@ chmod +x install-ai-dev-tools-mac.sh
         <li>上のボタンから <strong>install-ai-dev-tools-win.ps1</strong> をダウンロード</li>
         <li>ダウンロードしたファイルを<strong>デスクトップ</strong>に移動（どこでもOKですが、デスクトップが分かりやすいです）</li>
       </ol>
+
+      <div style="background: rgba(168, 85, 247, 0.1); border-left: 4px solid #a855f7; padding: 12px; margin-top: 16px; border-radius: 4px;">
+        <p style="margin: 0; font-weight: bold; color: #6b21a8;">🔓 重要：ダウンロード後にブロックを解除</p>
+        <p style="margin: 8px 0 0 0; color: #581c87; font-size: 0.95em;">インターネットからダウンロードしたスクリプトは、Windowsが自動的にブロックします。以下のいずれかの方法でブロックを解除してください：</p>
+
+        <p style="margin: 12px 0 4px 0; color: #581c87; font-weight: bold; font-size: 0.95em;">方法1：右クリックで解除（簡単）</p>
+        <ol style="margin: 4px 0 0 20px; color: #581c87; font-size: 0.9em; line-height: 1.6;">
+          <li>デスクトップのスクリプトファイルを<strong>右クリック</strong></li>
+          <li><strong>「プロパティ」</strong>を選択</li>
+          <li>下の方にある<strong>「ブロックの解除」</strong>にチェック → <strong>「OK」</strong></li>
+        </ol>
+
+        <p style="margin: 12px 0 4px 0; color: #581c87; font-weight: bold; font-size: 0.95em;">方法2：PowerShellコマンドで解除</p>
+        <pre style="background: #1e293b; color: #e2e8f0; padding: 10px; border-radius: 6px; margin: 4px 0 0 0; overflow-x: auto; font-size: 0.85em;"><code>Unblock-File -Path "$HOME\Desktop\install-ai-dev-tools-win.ps1"</code></pre>
+      </div>
     </div>
 
     <div style="background: rgba(224, 231, 255, 0.4); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 12px; padding: 20px;">
