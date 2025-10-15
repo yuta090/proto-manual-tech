@@ -45,6 +45,213 @@
           navToggle.classList.toggle('active');
         });
       }
+
+      // ダークモード切り替え機能
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const body = document.body;
+
+      // システムのダークモード設定を検知
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+      // ダークモードカラーマッピング（ライト→ダーク）
+      const colorMap = {
+        // 背景色
+        'background: #f9fafb': 'background: #1e293b',
+        'background: #f3f4f6': 'background: #334155',
+        'background: white': 'background: #334155',
+        'background: #ffffff': 'background: #334155',
+        'background-color: white': 'background-color: #334155',
+        'background-color: #ffffff': 'background-color: #334155',
+        'background: rgba(255, 255, 255, 0.5)': 'background: rgba(51, 65, 85, 0.7)',
+        'background: rgba(255, 255, 255, 0.6)': 'background: rgba(51, 65, 85, 0.75)',
+        'background: rgba(255, 255, 255': 'background: rgba(51, 65, 85',
+        'background: rgba(243, 232, 255, 0.4)': 'background: rgba(107, 33, 168, 0.25)',
+        'background: rgba(224, 231, 255, 0.4)': 'background: rgba(49, 46, 129, 0.25)',
+        'background: rgba(252, 231, 243, 0.4)': 'background: rgba(131, 24, 67, 0.25)',
+        'background: rgba(209, 250, 229, 0.4)': 'background: rgba(6, 78, 59, 0.25)',
+        'background: rgba(219, 234, 254, 0.4)': 'background: rgba(30, 58, 138, 0.25)',
+        'background: rgba(254, 243, 199, 0.4)': 'background: rgba(120, 53, 15, 0.25)',
+        'background: rgba(207, 250, 254, 0.4)': 'background: rgba(22, 78, 99, 0.25)',
+        'background: rgba(255, 255, 255, 0.8)': 'background: rgba(51, 65, 85, 0.8)',
+        'background: rgba(239, 68, 68, 0.05)': 'background: rgba(220, 38, 38, 0.15)',
+        'background: rgba(59, 130, 246, 0.1)': 'background: rgba(59, 130, 246, 0.2)',
+        'background: rgba(254, 226, 226, 0.8)': 'background: rgba(127, 29, 29, 0.3)',
+        'background: rgba(255, 255, 255, 0.1)': 'background: rgba(51, 65, 85, 0.2)',
+        'background: rgba(255, 255, 255, 0.4)': 'background: rgba(51, 65, 85, 0.5)',
+
+        // テキスト色（暗い色→明るい色）
+        'color: #1f2937': 'color: #f9fafb',
+        'color: #666': 'color: #d1d5db',
+        'color: #064e3b': 'color: #6ee7b7',
+        'color: #0c4a6e': 'color: #7dd3fc',
+        'color: #312e81': 'color: #c7d2fe',
+        'color: #c2410c': 'color: #fdba74',
+        'color: #9a3412': 'color: #fed7aa',
+        'color: #9333ea': 'color: #c4b5fd',
+        'color: #a855f7': 'color: #d8b4fe',
+        'color: #ec4899': 'color: #fbcfe8',
+        'color: #f59e0b': 'color: #fcd34d',
+        'color: #0891b2': 'color: #67e8f9',
+        'color: #374151': 'color: #f1f5f9',
+        'color: #4b5563': 'color: #cbd5e1',
+        'color: #6b7280': 'color: #d1d5db',
+        'color: #065f46': 'color: #6ee7b7',
+        'color: #047857': 'color: #6ee7b7',
+        'color: #059669': 'color: #34d399',
+        'color: #5b21b6': 'color: #e9d5ff',
+        'color: #581c87': 'color: #e9d5ff',
+        'color: #6b21a8': 'color: #d8b4fe',
+        'color: #7c3aed': 'color: #c4b5fd',
+        'color: #92400e': 'color: #fcd34d',
+        'color: #78350f': 'color: #fcd34d',
+        'color: #3730a3': 'color: #a5b4fc',
+        'color: #4338ca': 'color: #a5b4fc',
+        'color: #1e40af': 'color: #93c5fd',
+        'color: #1e3a8a': 'color: #93c5fd',
+        'color: #991b1b': 'color: #fca5a5',
+        'color: #b91c1c': 'color: #fca5a5',
+        'color: #7f1d1d': 'color: #fca5a5',
+        'color: #831843': 'color: #fbcfe8',
+        'color: #9f1239': 'color: #fbcfe8',
+        'color: #164e63': 'color: #a5f3fc',
+        'color: #155e75': 'color: #a5f3fc',
+        'color: #1e1b4b': 'color: #f9fafb',
+        'color: #b45309': 'color: #fbbf24',
+        'color: #6366f1': 'color: #c7d2fe',
+
+        // グラデーション背景
+        'linear-gradient(135deg, rgba(220, 252, 231': 'linear-gradient(135deg, rgba(16, 185, 129, 0.2',
+        'linear-gradient(135deg, rgba(147, 51, 234, 0.1)': 'linear-gradient(135deg, rgba(147, 51, 234, 0.25)',
+        'linear-gradient(180deg, #faf5ff': 'linear-gradient(180deg, #1e293b',
+        'linear-gradient(135deg, rgba(219, 234, 254, 0.6)': 'linear-gradient(135deg, rgba(30, 58, 138, 0.4)',
+        'linear-gradient(135deg, rgba(220, 252, 231, 0.6)': 'linear-gradient(135deg, rgba(5, 150, 105, 0.3)',
+        'linear-gradient(135deg, rgba(254, 243, 199, 0.6)': 'linear-gradient(135deg, rgba(30, 41, 59, 0.5)',
+        'linear-gradient(135deg, rgba(243, 232, 255, 0.6)': 'linear-gradient(135deg, rgba(107, 33, 168, 0.3)',
+        'linear-gradient(135deg, rgba(252, 231, 243, 0.6)': 'linear-gradient(135deg, rgba(131, 24, 67, 0.3)',
+        'linear-gradient(135deg, rgba(224, 231, 255, 0.6)': 'linear-gradient(135deg, rgba(49, 46, 129, 0.3)',
+        'linear-gradient(135deg, rgba(209, 250, 229, 0.6)': 'linear-gradient(135deg, rgba(6, 78, 59, 0.3)',
+        'linear-gradient(135deg, rgba(207, 250, 254, 0.6)': 'linear-gradient(135deg, rgba(22, 78, 99, 0.3)',
+        'background: linear-gradient(135deg, #fce7f3 0%, #f3e8ff 50%, #dbeafe 100%)': 'background: linear-gradient(135deg, #3f1f3f 0%, #2d1b4e 50%, #1e3a5f 100%)',
+        'rgba(191, 219, 254, 0.4)': 'rgba(30, 58, 138, 0.25)',
+        'rgba(187, 247, 208, 0.4)': 'rgba(5, 150, 105, 0.25)',
+        'rgba(253, 230, 138, 0.4)': 'rgba(30, 41, 59, 0.4)',
+        'rgba(233, 213, 255, 0.4)': 'rgba(107, 33, 168, 0.25)',
+        'rgba(251, 207, 232, 0.4)': 'rgba(131, 24, 67, 0.25)',
+        'rgba(199, 210, 254, 0.4)': 'rgba(49, 46, 129, 0.25)',
+        'rgba(167, 243, 208, 0.4)': 'rgba(6, 78, 59, 0.25)',
+        'rgba(165, 243, 252, 0.4)': 'rgba(22, 78, 99, 0.25)',
+        'rgba(253, 213, 134, 0.4)': 'rgba(30, 41, 59, 0.4)',
+        'linear-gradient(135deg, rgba(254, 243, 199, 0.8)': 'linear-gradient(135deg, rgba(30, 41, 59, 0.6)',
+        'linear-gradient(135deg, rgba(219, 234, 254, 0.8)': 'linear-gradient(135deg, rgba(30, 58, 138, 0.4)',
+        'rgba(191, 219, 254, 0.6)': 'rgba(30, 58, 138, 0.3)',
+        'rgba(254, 243, 199, 0.5)': 'rgba(30, 41, 59, 0.6)',
+        'rgba(253, 230, 138, 0.6)': 'rgba(51, 65, 85, 0.5)',
+        'radial-gradient(circle, rgba(255,255,255,0.3)': 'radial-gradient(circle, rgba(96, 165, 250, 0.15)',
+        'radial-gradient(circle, rgba(255, 255, 255, 0.3)': 'radial-gradient(circle, rgba(96, 165, 250, 0.15)',
+        'rgba(245, 158, 11, 0.4)': 'rgba(148, 163, 184, 0.3)',
+        'rgba(245, 158, 11, 0.15)': 'rgba(51, 65, 85, 0.2)',
+        'rgba(245, 158, 11, 0.3)': 'rgba(100, 116, 139, 0.3)',
+        'rgba(251, 191, 36, 0.3)': 'rgba(148, 163, 184, 0.25)',
+        'rgba(59, 130, 246, 0.4)': 'rgba(59, 130, 246, 0.5)',
+        'rgba(59, 130, 246, 0.2)': 'rgba(59, 130, 246, 0.3)',
+        'rgba(255, 255, 255, 0.9)': 'rgba(51, 65, 85, 0.9)',
+
+        // ボーダー色
+        'border-color: #d1d5db': 'border-color: #475569',
+        'border-color: #e5e7eb': 'border-color: #475569',
+        'border: 1px solid #d1d5db': 'border: 1px solid #475569',
+        'border: 1px solid #e5e7eb': 'border: 1px solid #475569',
+
+        // 淡い背景色を濃く（ダークモード視認性向上）
+        'rgba(139, 92, 246, 0.05)': 'rgba(139, 92, 246, 0.25)',
+        'rgba(139, 92, 246, 0.15)': 'rgba(139, 92, 246, 0.35)',
+        'rgba(16, 185, 129, 0.05)': 'rgba(16, 185, 129, 0.25)',
+        'rgba(168, 85, 247, 0.15)': 'rgba(168, 85, 247, 0.35)',
+        'rgba(251, 146, 60, 0.15)': 'rgba(251, 146, 60, 0.35)',
+        'rgba(245, 158, 11, 0.05)': 'rgba(245, 158, 11, 0.25)',
+        'rgba(59, 130, 246, 0.05)': 'rgba(59, 130, 246, 0.25)',
+        'rgba(59, 130, 246, 0.15)': 'rgba(59, 130, 246, 0.35)'
+      };
+
+      // インラインスタイルの色を更新する関数
+      function updateInlineStyles(isDarkMode) {
+        const allStyledElements = document.querySelectorAll('[style]');
+
+        allStyledElements.forEach(element => {
+          const originalStyle = element.getAttribute('data-original-style') || element.getAttribute('style');
+
+          if (!element.getAttribute('data-original-style')) {
+            element.setAttribute('data-original-style', originalStyle);
+          }
+
+          if (isDarkMode) {
+            let newStyle = originalStyle;
+            for (const [lightColor, darkColor] of Object.entries(colorMap)) {
+              const regex = new RegExp(lightColor.replace(/[()]/g, '\\$&'), 'gi');
+              newStyle = newStyle.replace(regex, darkColor);
+            }
+            element.setAttribute('style', newStyle);
+          } else {
+            element.setAttribute('style', originalStyle);
+          }
+        });
+      }
+
+      // 保存された設定を読み込み
+      function loadDarkMode() {
+        const savedMode = localStorage.getItem('darkMode');
+        let isDarkMode = false;
+
+        if (savedMode === 'enabled') {
+          body.classList.add('dark-mode');
+          isDarkMode = true;
+        } else if (savedMode === 'disabled') {
+          body.classList.remove('dark-mode');
+          isDarkMode = false;
+        } else {
+          if (prefersDark.matches) {
+            body.classList.add('dark-mode');
+            isDarkMode = true;
+          }
+        }
+
+        updateInlineStyles(isDarkMode);
+      }
+
+      // ダークモード切り替え
+      function toggleDarkMode() {
+        if (body.classList.contains('dark-mode')) {
+          body.classList.remove('dark-mode');
+          localStorage.setItem('darkMode', 'disabled');
+          updateInlineStyles(false);
+        } else {
+          body.classList.add('dark-mode');
+          localStorage.setItem('darkMode', 'enabled');
+          updateInlineStyles(true);
+        }
+      }
+
+      // システム設定が変更された時の処理
+      prefersDark.addEventListener('change', (e) => {
+        const savedMode = localStorage.getItem('darkMode');
+        if (!savedMode) {
+          if (e.matches) {
+            body.classList.add('dark-mode');
+            updateInlineStyles(true);
+          } else {
+            body.classList.remove('dark-mode');
+            updateInlineStyles(false);
+          }
+        }
+      });
+
+      // 初期化
+      loadDarkMode();
+
+      // ボタンクリックイベント
+      if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+      }
     });
   </script>
 </head>
@@ -2400,225 +2607,5 @@ AIがブラウザを自動で開く
   <footer class="manual-footer">
     <p>このドキュメントは自動生成されました。元ファイルを更新した際は <code>python tools/build_manual.py</code> を再実行してください。</p>
   </footer>
-
-  <script>
-    // ダークモード切り替え機能
-    (function() {
-      const darkModeToggle = document.getElementById('darkModeToggle');
-      const body = document.body;
-
-      // システムのダークモード設定を検知
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-      // 保存された設定を読み込み、なければシステム設定を使用
-      function loadDarkMode() {
-        const savedMode = localStorage.getItem('darkMode');
-        let isDarkMode = false;
-
-        if (savedMode === 'enabled') {
-          body.classList.add('dark-mode');
-          isDarkMode = true;
-        } else if (savedMode === 'disabled') {
-          body.classList.remove('dark-mode');
-          isDarkMode = false;
-        } else {
-          // 保存設定がない場合はシステム設定に従う
-          if (prefersDark.matches) {
-            body.classList.add('dark-mode');
-            isDarkMode = true;
-          }
-        }
-
-        // インラインスタイルを更新
-        updateInlineStyles(isDarkMode);
-      }
-
-      // ダークモードカラーマッピング（ライト→ダーク）
-      const colorMap = {
-        // 背景色
-        'background: #f9fafb': 'background: #1e293b',
-        'background: #f3f4f6': 'background: #334155',
-        'background: white': 'background: #334155',
-        'background: #ffffff': 'background: #334155',
-        'background-color: white': 'background-color: #334155',
-        'background-color: #ffffff': 'background-color: #334155',
-        'background: rgba(255, 255, 255, 0.5)': 'background: rgba(51, 65, 85, 0.7)',
-        'background: rgba(255, 255, 255, 0.6)': 'background: rgba(51, 65, 85, 0.75)',
-        'background: rgba(255, 255, 255': 'background: rgba(51, 65, 85',
-        'background: rgba(243, 232, 255, 0.4)': 'background: rgba(107, 33, 168, 0.25)',  // Purple box background
-        'background: rgba(224, 231, 255, 0.4)': 'background: rgba(49, 46, 129, 0.25)',  // Indigo box background
-        'background: rgba(252, 231, 243, 0.4)': 'background: rgba(131, 24, 67, 0.25)',  // Pink box background
-        'background: rgba(209, 250, 229, 0.4)': 'background: rgba(6, 78, 59, 0.25)',  // Green box background
-        'background: rgba(219, 234, 254, 0.4)': 'background: rgba(30, 58, 138, 0.25)',  // Blue box background
-        'background: rgba(254, 243, 199, 0.4)': 'background: rgba(120, 53, 15, 0.25)',  // Amber box background
-        'background: rgba(207, 250, 254, 0.4)': 'background: rgba(22, 78, 99, 0.25)',  // Cyan box background
-        'background: rgba(255, 255, 255, 0.8)': 'background: rgba(51, 65, 85, 0.8)',  // White box → dark slate
-        'background: rgba(239, 68, 68, 0.05)': 'background: rgba(220, 38, 38, 0.15)',  // Red error box
-        'background: rgba(59, 130, 246, 0.1)': 'background: rgba(59, 130, 246, 0.2)',  // Blue info box
-        'background: rgba(254, 226, 226, 0.8)': 'background: rgba(127, 29, 29, 0.3)',  // Red warning box
-        'background: rgba(255, 255, 255, 0.1)': 'background: rgba(51, 65, 85, 0.2)',  // Light gray box
-        'background: rgba(255, 255, 255, 0.4)': 'background: rgba(51, 65, 85, 0.5)',  // White translucent box
-
-        // テキスト色（暗い色→明るい色）
-        'color: #1f2937': 'color: #f9fafb',
-        'color: #666': 'color: #d1d5db',  // Subtitle text
-        'color: #064e3b': 'color: #6ee7b7',  // Very dark green → light green
-        'color: #0c4a6e': 'color: #7dd3fc',  // Very dark cyan → light cyan
-        'color: #312e81': 'color: #c7d2fe',  // Very dark indigo → light indigo
-        'color: #c2410c': 'color: #fdba74',  // Dark orange → light orange
-        'color: #9a3412': 'color: #fed7aa',  // Very dark orange → lighter orange
-        'color: #9333ea': 'color: #c4b5fd',  // Purple
-        'color: #a855f7': 'color: #d8b4fe',  // Light purple
-        'color: #ec4899': 'color: #fbcfe8',  // Pink
-        'color: #f59e0b': 'color: #fcd34d',  // Amber
-        'color: #0891b2': 'color: #67e8f9',  // Cyan
-        'color: #374151': 'color: #f1f5f9',
-        'color: #4b5563': 'color: #cbd5e1',
-        'color: #6b7280': 'color: #d1d5db',
-        'color: #065f46': 'color: #6ee7b7',
-        'color: #047857': 'color: #6ee7b7',
-        'color: #059669': 'color: #34d399',
-        'color: #5b21b6': 'color: #e9d5ff',
-        'color: #581c87': 'color: #e9d5ff',
-        'color: #6b21a8': 'color: #d8b4fe',
-        'color: #7c3aed': 'color: #c4b5fd',
-        'color: #92400e': 'color: #fcd34d',
-        'color: #78350f': 'color: #fcd34d',
-        'color: #3730a3': 'color: #a5b4fc',
-        'color: #4338ca': 'color: #a5b4fc',
-        'color: #1e40af': 'color: #93c5fd',
-        'color: #1e3a8a': 'color: #93c5fd',
-        'color: #991b1b': 'color: #fca5a5',
-        'color: #b91c1c': 'color: #fca5a5',
-        'color: #7f1d1d': 'color: #fca5a5',
-        'color: #831843': 'color: #fbcfe8',
-        'color: #9f1239': 'color: #fbcfe8',
-        'color: #164e63': 'color: #a5f3fc',
-        'color: #155e75': 'color: #a5f3fc',
-        'color: #1e1b4b': 'color: #f9fafb',
-        'color: #b45309': 'color: #fbbf24',
-        'color: #6366f1': 'color: #c7d2fe',
-        'color: #78350f': 'color: #fde68a',
-
-        // グラデーション背景
-        'linear-gradient(135deg, rgba(220, 252, 231': 'linear-gradient(135deg, rgba(16, 185, 129, 0.2',
-        'linear-gradient(135deg, rgba(147, 51, 234, 0.1)': 'linear-gradient(135deg, rgba(147, 51, 234, 0.25)',
-        'linear-gradient(180deg, #faf5ff': 'linear-gradient(180deg, #1e293b',
-        'linear-gradient(135deg, rgba(219, 234, 254, 0.6)': 'linear-gradient(135deg, rgba(30, 58, 138, 0.4)',
-        'linear-gradient(135deg, rgba(220, 252, 231, 0.6)': 'linear-gradient(135deg, rgba(5, 150, 105, 0.3)',
-        'linear-gradient(135deg, rgba(254, 243, 199, 0.6)': 'linear-gradient(135deg, rgba(30, 41, 59, 0.5)',
-        'linear-gradient(135deg, rgba(243, 232, 255, 0.6)': 'linear-gradient(135deg, rgba(107, 33, 168, 0.3)',
-        'linear-gradient(135deg, rgba(252, 231, 243, 0.6)': 'linear-gradient(135deg, rgba(131, 24, 67, 0.3)',
-        'linear-gradient(135deg, rgba(224, 231, 255, 0.6)': 'linear-gradient(135deg, rgba(49, 46, 129, 0.3)',
-        'linear-gradient(135deg, rgba(209, 250, 229, 0.6)': 'linear-gradient(135deg, rgba(6, 78, 59, 0.3)',
-        'linear-gradient(135deg, rgba(207, 250, 254, 0.6)': 'linear-gradient(135deg, rgba(22, 78, 99, 0.3)',
-        'background: linear-gradient(135deg, #fce7f3 0%, #f3e8ff 50%, #dbeafe 100%)': 'background: linear-gradient(135deg, #3f1f3f 0%, #2d1b4e 50%, #1e3a5f 100%)',  // Hero gradient background
-        'rgba(191, 219, 254, 0.4)': 'rgba(30, 58, 138, 0.25)',
-        'rgba(187, 247, 208, 0.4)': 'rgba(5, 150, 105, 0.25)',
-        'rgba(253, 230, 138, 0.4)': 'rgba(30, 41, 59, 0.4)',
-        'rgba(233, 213, 255, 0.4)': 'rgba(107, 33, 168, 0.25)',
-        'rgba(251, 207, 232, 0.4)': 'rgba(131, 24, 67, 0.25)',
-        'rgba(199, 210, 254, 0.4)': 'rgba(49, 46, 129, 0.25)',
-        'rgba(167, 243, 208, 0.4)': 'rgba(6, 78, 59, 0.25)',
-        'rgba(165, 243, 252, 0.4)': 'rgba(22, 78, 99, 0.25)',
-        'rgba(253, 213, 134, 0.4)': 'rgba(30, 41, 59, 0.4)',
-        'linear-gradient(135deg, rgba(254, 243, 199, 0.8)': 'linear-gradient(135deg, rgba(30, 41, 59, 0.6)',
-        'linear-gradient(135deg, rgba(219, 234, 254, 0.8)': 'linear-gradient(135deg, rgba(30, 58, 138, 0.4)',
-        'rgba(191, 219, 254, 0.6)': 'rgba(30, 58, 138, 0.3)',
-        'rgba(254, 243, 199, 0.5)': 'rgba(30, 41, 59, 0.6)',
-        'rgba(253, 230, 138, 0.6)': 'rgba(51, 65, 85, 0.5)',
-        'radial-gradient(circle, rgba(255,255,255,0.3)': 'radial-gradient(circle, rgba(96, 165, 250, 0.15)',
-        'radial-gradient(circle, rgba(255, 255, 255, 0.3)': 'radial-gradient(circle, rgba(96, 165, 250, 0.15)',
-        'rgba(245, 158, 11, 0.4)': 'rgba(148, 163, 184, 0.3)',
-        'rgba(245, 158, 11, 0.15)': 'rgba(51, 65, 85, 0.2)',
-        'rgba(245, 158, 11, 0.3)': 'rgba(100, 116, 139, 0.3)',
-        'rgba(251, 191, 36, 0.3)': 'rgba(148, 163, 184, 0.25)',
-        'rgba(59, 130, 246, 0.4)': 'rgba(59, 130, 246, 0.5)',
-        'rgba(59, 130, 246, 0.2)': 'rgba(59, 130, 246, 0.3)',
-        'rgba(255, 255, 255, 0.9)': 'rgba(51, 65, 85, 0.9)',
-
-        // ボーダー色
-        'border-color: #d1d5db': 'border-color: #475569',
-        'border-color: #e5e7eb': 'border-color: #475569',
-        'border: 1px solid #d1d5db': 'border: 1px solid #475569',
-        'border: 1px solid #e5e7eb': 'border: 1px solid #475569',
-
-        // 淡い背景色を濃く（ダークモード視認性向上）
-        'rgba(139, 92, 246, 0.05)': 'rgba(139, 92, 246, 0.25)',  // Purple 0.05→0.25
-        'rgba(139, 92, 246, 0.15)': 'rgba(139, 92, 246, 0.35)',  // Purple 0.15→0.35
-        'rgba(16, 185, 129, 0.05)': 'rgba(16, 185, 129, 0.25)',  // Green 0.05→0.25
-        'rgba(168, 85, 247, 0.15)': 'rgba(168, 85, 247, 0.35)',  // Light purple 0.15→0.35
-        'rgba(251, 146, 60, 0.15)': 'rgba(251, 146, 60, 0.35)',  // Orange 0.15→0.35
-        'rgba(245, 158, 11, 0.05)': 'rgba(245, 158, 11, 0.25)',  // Amber 0.05→0.25
-        'rgba(59, 130, 246, 0.05)': 'rgba(59, 130, 246, 0.25)',  // Blue 0.05→0.25
-        'rgba(59, 130, 246, 0.15)': 'rgba(59, 130, 246, 0.35)',  // Blue 0.15→0.35
-
-
-      // インラインスタイルの色を更新する関数（包括的アプローチ）
-      function updateInlineStyles(isDarkMode) {
-        // すべてのstyle属性を持つ要素を取得
-        const allStyledElements = document.querySelectorAll('[style]');
-
-        allStyledElements.forEach(element => {
-          const originalStyle = element.getAttribute('data-original-style') || element.getAttribute('style');
-
-          // 最初の実行時に元のスタイルを保存
-          if (!element.getAttribute('data-original-style')) {
-            element.setAttribute('data-original-style', originalStyle);
-          }
-
-          if (isDarkMode) {
-            let newStyle = originalStyle;
-
-            // カラーマッピングを適用
-            for (const [lightColor, darkColor] of Object.entries(colorMap)) {
-              // 正規表現を使用して、より柔軟にマッチング
-              const regex = new RegExp(lightColor.replace(/[()]/g, '\\$&'), 'gi');
-              newStyle = newStyle.replace(regex, darkColor);
-            }
-
-            element.setAttribute('style', newStyle);
-          } else {
-            // ライトモードに戻す（元のスタイルを復元）
-            element.setAttribute('style', originalStyle);
-          }
-        });
-      }
-
-      // ダークモード切り替え
-      function toggleDarkMode() {
-        if (body.classList.contains('dark-mode')) {
-          body.classList.remove('dark-mode');
-          localStorage.setItem('darkMode', 'disabled');
-          updateInlineStyles(false);
-        } else {
-          body.classList.add('dark-mode');
-          localStorage.setItem('darkMode', 'enabled');
-          updateInlineStyles(true);
-        }
-      }
-
-      // システム設定が変更された時の処理
-      prefersDark.addEventListener('change', (e) => {
-        // ユーザーが手動で設定していない場合のみ自動追従
-        const savedMode = localStorage.getItem('darkMode');
-        if (!savedMode) {
-          if (e.matches) {
-            body.classList.add('dark-mode');
-            updateInlineStyles(true);
-          } else {
-            body.classList.remove('dark-mode');
-            updateInlineStyles(false);
-          }
-        }
-      });
-
-      // 初期化
-      loadDarkMode();
-
-      // ボタンクリックイベント
-      darkModeToggle.addEventListener('click', toggleDarkMode);
-    })();
-  </script>
 
 </body></html>
