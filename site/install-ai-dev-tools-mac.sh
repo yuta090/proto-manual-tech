@@ -427,6 +427,13 @@ install_nodejs() {
         return 0
     fi
 
+    # Homebrewがインストールされていない場合はエラー
+    if ! check_command brew; then
+        print_error "Homebrew がインストールされていないため、Node.js をインストールできません"
+        print_info "先に Homebrew のインストールを完了してください"
+        exit 1
+    fi
+
     print_info "Node.js をインストール中..."
     brew install node &
     spinner $!
