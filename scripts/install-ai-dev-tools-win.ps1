@@ -419,10 +419,10 @@ function Install-SupabaseCLI {
         Write-Info "Supabase CLI の認証を開始します..."
 
         try {
-            npx supabase login
+            supabase login
 
             # 認証確認
-            $null = npx supabase projects list 2>&1
+            $null = supabase projects list 2>&1
             if ($LASTEXITCODE -eq 0) {
                 Update-InstallState -Tool "supabase_cli" -Key "authenticated" -Value $true
                 Write-Success "Supabase CLI 認証完了"
