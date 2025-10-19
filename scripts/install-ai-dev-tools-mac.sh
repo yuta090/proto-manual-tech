@@ -638,29 +638,19 @@ install_claude_code() {
 install_super_claude() {
     print_section 5 "Super Claude のインストール"
 
-    # pipx のインストール確認
-    if ! check_command pipx; then
-        print_info "pipx をインストール中..."
-        brew install pipx &
-        spinner $!
-        wait $!
-        pipx ensurepath &> /dev/null
-        print_success "pipx インストール完了"
-    fi
-
     if [[ "$(get_state super_claude installed)" == "True" ]]; then
         print_success "Super Claude は既にインストール済みです (スキップ)"
     else
-        if check_command SuperClaude; then
+        if check_command superclaude; then
             print_success "Super Claude が既にインストールされています"
             update_state super_claude installed True
         else
             print_info "Super Claude をインストール中..."
-            pipx install SuperClaude &
+            npm install -g @bifrost_inc/superclaude &
             spinner $!
             wait $!
 
-            if check_command SuperClaude; then
+            if check_command superclaude; then
                 print_success "Super Claude インストール完了"
                 update_state super_claude installed True
             else
@@ -674,10 +664,8 @@ install_super_claude() {
     if [[ "$(get_state super_claude mcp_configured)" != "True" ]]; then
         print_info "Super Claude フレームワークをインストール中..."
 
-        # 公式オプションを使用して非対話モードでインストール
-        # --quick: 推奨設定で高速インストール
-        # --yes: 全ての確認を自動承認
-        SuperClaude install --quick --yes &> /dev/null || true
+        # superclaude install コマンドで非対話モードでインストール
+        superclaude install &> /dev/null || true
 
         print_success "Super Claude フレームワーク設定完了"
         print_success "  ✓ Core framework"
@@ -963,7 +951,7 @@ EOF
     echo ""
     print_info "次のステップ:"
     echo -e "  ${YELLOW}•${RESET} Claude Code: ${GREEN}claude-code${RESET} コマンドで起動"
-    echo -e "  ${YELLOW}•${RESET} Super Claude: ${GREEN}SuperClaude --help${RESET} でコマンド確認"
+    echo -e "  ${YELLOW}•${RESET} Super Claude: ${GREEN}superclaude --help${RESET} でコマンド確認"
     echo -e "  ${YELLOW}•${RESET} Cursor IDE: アプリケーションフォルダから起動"
     echo -e "  ${YELLOW}•${RESET} Codex CLI: ${GREEN}codex${RESET} コマンドで起動"
     echo -e "  ${YELLOW}•${RESET} Supabase CLI: ${GREEN}supabase${RESET} コマンドで利用"

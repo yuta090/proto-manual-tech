@@ -140,40 +140,6 @@ function Update-InstallState {
 # インストール関数
 ################################################################################
 
-function Install-Python {
-    # 既に Python があればスキップ（python または py ランチャー）
-    if (Get-Command python -ErrorAction SilentlyContinue -or Get-Command py -ErrorAction SilentlyContinue) {
-        Write-Info "Python は既にインストールされています (スキップ)"
-        return
-    }
-
-    Write-Section "Python 3 のインストール"
-
-    try {
-        winget install --id Python.Python.3.11 --silent
-        # PATH の更新
-        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-
-        if (-not (Get-Command python -ErrorAction SilentlyContinue) -and -not (Get-Command py -ErrorAction SilentlyContinue)) {
-            Write-Err "Python のインストール確認に失敗しました"
-            exit 1
-        }
-
-        Write-Success "Python 3 インストール完了"
-
-        # pipx の導入（Super Claude で使用）
-        if (-not (Get-Command pipx -ErrorAction SilentlyContinue)) {
-            Write-Info "pipx をインストールしています..."
-            pip install pipx
-            pipx ensurepath
-            # PATH の更新
-            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-        }
-    } catch {
-        Write-Err "Python のインストールに失敗しました: $_"
-        exit 1
-    }
-}
 function Install-Winget {
     if (Get-Command winget -ErrorAction SilentlyContinue) {
         Write-Info "winget は既にインストールされています (スキップ)"
@@ -481,42 +447,23 @@ function Install-SuperClaude {
 
     # Super Claude インストール
     if (-not (Get-InstallState -Tool "super_claude" -Key "installed")) {
-        # pip がインストールされているか確認
-        if (-not (Get-Command pip -ErrorAction SilentlyContinue)) {
-            Write-Info "pip をインストールしています..."
-            # Python がインストールされていない場合
-            if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
-                winget install Python.Python.3.11 --silent
-                # PATH の更新
-                $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-            }
-        }
-
-        # pipx のインストール
-        if (-not (Get-Command pipx -ErrorAction SilentlyContinue)) {
-            Write-Info "pipx をインストールしています..."
-            pip install pipx
-            pipx ensurepath
-            # PATH の更新
-            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-        }
-
-        # Super Claude インストール
-        pipx install SuperClaude --force
+        # npm 経由で Super Claude をインストール
+        Write-Info "Super Claude をインストールしています..."
+        npm install -g @bifrost_inc/superclaude
 
         # Claude Code への統合（カスタムコマンド sc: の登録など）
         Write-Info "Claude Code に SuperClaude を統合しています..."
         try {
-            $integrationResult = SuperClaude install --force --yes 2>&1
+            $integrationResult = superclaude install 2>&1
             if ($LASTEXITCODE -eq 0) {
                 Write-Success "SuperClaude の Claude Code 統合完了"
             } else {
                 Write-Warn "SuperClaude の統合処理で警告が発生しました"
-                Write-Host "  後で手動実行してください: SuperClaude install --force --yes" -ForegroundColor Yellow
+                Write-Host "  後で手動実行してください: superclaude install" -ForegroundColor Yellow
             }
         } catch {
             Write-Warn "SuperClaude の統合処理に失敗しました"
-            Write-Host "  後で手動実行してください: SuperClaude install --force --yes" -ForegroundColor Yellow
+            Write-Host "  後で手動実行してください: superclaude install" -ForegroundColor Yellow
             Write-Host "  統合後は /sc: コマンドが Claude Code で使用できます" -ForegroundColor Cyan
         }
 
@@ -524,49 +471,27 @@ function Install-SuperClaude {
         Write-Success "Super Claude インストール完了"
     }
 
-    # MCP Servers インストール
-    if (-not (Get-InstallState -Tool "super_claude" -Key "mcp_servers_installed")) {
-        Write-Section "MCP Servers のインストール"
-        Write-Host "============================================================" -ForegroundColor Yellow
-        Write-Host "以下の MCP Servers をインストールします:" -ForegroundColor Cyan
-        Write-Host "  - Context7 (ライブラリドキュメント)" -ForegroundColor Cyan
-        Write-Host "  - Sequential Thinking (複雑な推論)" -ForegroundColor Cyan
-        Write-Host "  - Magic (UI コンポーネント)" -ForegroundColor Cyan
-        Write-Host "  - Morphllm (パターンベース編集)" -ForegroundColor Cyan
-        Write-Host "  - Serena (プロジェクトメモリ)" -ForegroundColor Cyan
-        Write-Host "  - Tavily (Web検索)" -ForegroundColor Cyan
-        Write-Host "  - Chrome DevTools (ブラウザ自動化)" -ForegroundColor Cyan
-        Write-Host "============================================================" -ForegroundColor Yellow
-
-        # MCPサーバーを自動インストール
-        SuperClaude mcp install-all
-
-        Update-InstallState -Tool "super_claude" -Key "mcp_servers_installed" -Value $true
-        Write-Success "MCP Servers インストール完了"
-    }
+    # MCP Servers は superclaude install コマンドで自動インストールされる
+    Update-InstallState -Tool "super_claude" -Key "mcp_servers_installed" -Value $true
 }
 
-function Install-PlaywrightMCP {
+function Install-PlaywrightBrowsers {
     if (Get-InstallState -Tool "playwright_mcp" -Key "installed") {
-        Write-Info "Playwright MCP は既にインストールされています (スキップ)"
+        Write-Info "Playwright ブラウザは既にインストールされています (スキップ)"
         return
     }
 
-    Write-Section "Playwright MCP のインストール"
+    Write-Section "Playwright ブラウザのインストール"
     Write-Host "============================================================" -ForegroundColor Yellow
-    Write-Host "Playwright MCP を Super Claude 経由でインストールします" -ForegroundColor Cyan
-    Write-Host "ブラウザ (Chromium, Firefox, WebKit) も自動インストールされます" -ForegroundColor Cyan
+    Write-Host "Playwright ブラウザ (Chromium, Firefox, WebKit) をインストールします" -ForegroundColor Cyan
     Write-Host "============================================================" -ForegroundColor Yellow
-
-    # Super Claude 経由で Playwright MCP をインストール
-    SuperClaude mcp install playwright
 
     # Playwright ブラウザのインストール
     Write-Info "Playwright ブラウザをインストールしています..."
     npx playwright install
 
     Update-InstallState -Tool "playwright_mcp" -Key "installed" -Value $true
-    Write-Success "Playwright MCP インストール完了"
+    Write-Success "Playwright ブラウザインストール完了"
 }
 
 function Install-CursorIDE {
@@ -596,16 +521,15 @@ function Main {
     Write-Section "AI開発環境自動セットアップ (Windows)"
     Write-Host "このスクリプトは以下のツールをインストールします:" -ForegroundColor Cyan
     Write-Host "  1. winget (パッケージマネージャー)" -ForegroundColor Cyan
-    Write-Host "  2. Python 3 + pipx (ランタイム)" -ForegroundColor Cyan
-    Write-Host "  3. Node.js (JavaScript実行環境)" -ForegroundColor Cyan
-    Write-Host "  4. Git (バージョン管理)" -ForegroundColor Cyan
-    Write-Host "  5. GitHub CLI (GitHub操作)" -ForegroundColor Cyan
-    Write-Host "  6. Netlify CLI (デプロイ)" -ForegroundColor Cyan
-    Write-Host "  7. Claude Code (AI開発ツール)" -ForegroundColor Cyan
-    Write-Host "  8. Supabase CLI (データベース)" -ForegroundColor Cyan
-    Write-Host "  9. Super Claude + MCP Servers (拡張機能)" -ForegroundColor Cyan
-    Write-Host " 10. Playwright MCP (E2Eテスト)" -ForegroundColor Cyan
-    Write-Host " 11. Cursor IDE (統合開発環境)" -ForegroundColor Cyan
+    Write-Host "  2. Node.js (JavaScript実行環境)" -ForegroundColor Cyan
+    Write-Host "  3. Git (バージョン管理)" -ForegroundColor Cyan
+    Write-Host "  4. GitHub CLI (GitHub操作)" -ForegroundColor Cyan
+    Write-Host "  5. Netlify CLI (デプロイ)" -ForegroundColor Cyan
+    Write-Host "  6. Claude Code (AI開発ツール)" -ForegroundColor Cyan
+    Write-Host "  7. Supabase CLI (データベース)" -ForegroundColor Cyan
+    Write-Host "  8. Super Claude + MCP Servers (拡張機能)" -ForegroundColor Cyan
+    Write-Host "  9. Playwright ブラウザ (E2Eテスト)" -ForegroundColor Cyan
+    Write-Host " 10. Cursor IDE (統合開発環境)" -ForegroundColor Cyan
     Write-Host ""
 
     $confirm = Read-Host "インストールを開始しますか？ (y/n)"
@@ -619,7 +543,6 @@ function Main {
 
     # インストール実行
     Install-Winget
-    Install-Python
     Install-Node
     Install-Git
     Install-GitHubCLI
@@ -627,11 +550,11 @@ function Main {
     Install-ClaudeCode
     Install-SupabaseCLI
     Install-SuperClaude
-    Install-PlaywrightMCP
+    Install-PlaywrightBrowsers
     Install-CursorIDE
 
     # 完了メッセージ
-    Write-Section "🎉 セットアップ完了！"
+    Write-Section "セットアップ完了！"
     Write-Success "すべてのツールのインストールが完了しました！"
     Write-Host ""
     Write-Host "次のステップ:" -ForegroundColor Cyan
