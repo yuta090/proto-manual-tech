@@ -1,4 +1,4 @@
-﻿# ============================================================================
+# ============================================================================
 # AI開発環境 自動セットアップスクリプト (Windows版)
 # ============================================================================
 # Node.js, Git, Claude Code, Super Claude, Cursor IDE, Codex CLI を
@@ -13,16 +13,6 @@ $ErrorActionPreference = "Stop"
 # カラー定義 & アニメーション関数
 # ============================================================================
 
-# 絵文字
-$ROCKET = [char]0x1F680
-$CHECK = [char]0x2705
-$CROSS = [char]0x274C
-$LOCK = [char]0x1F512
-$GEAR = [char]0x2699
-$SPARKLE = [char]0x2728
-$WARN = [char]0x26A0
-$PARTY = [char]0x1F389
-
 function Write-ColorOutput {
     param(
         [string]$Message,
@@ -33,25 +23,25 @@ function Write-ColorOutput {
 
 function Write-Success {
     param([string]$Message)
-    Write-Host "$CHECK " -ForegroundColor Green -NoNewline
+    Write-Host "[OK] " -ForegroundColor Green -NoNewline
     Write-Host $Message -ForegroundColor Green
 }
 
 function Write-Error-Custom {
     param([string]$Message)
-    Write-Host "$CROSS " -ForegroundColor Red -NoNewline
+    Write-Host "[ERROR] " -ForegroundColor Red -NoNewline
     Write-Host $Message -ForegroundColor Red
 }
 
 function Write-Warning-Custom {
     param([string]$Message)
-    Write-Host "$WARN " -ForegroundColor Yellow -NoNewline
+    Write-Host "[!] " -ForegroundColor Yellow -NoNewline
     Write-Host $Message -ForegroundColor Yellow
 }
 
 function Write-Info {
     param([string]$Message)
-    Write-Host "$GEAR " -ForegroundColor Cyan -NoNewline
+    Write-Host "[i] " -ForegroundColor Cyan -NoNewline
     Write-Host $Message -ForegroundColor Cyan
 }
 
@@ -222,7 +212,7 @@ function Register-ClaudePro {
     }
 
     Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Yellow
-    Write-Host "⚠️  重要: Claude Pro アカウントが必要です" -ForegroundColor Red
+    Write-Host "[!] 重要: Claude Pro アカウントが必要です" -ForegroundColor Red
     Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Yellow
     Write-Host ""
 
@@ -247,7 +237,7 @@ function Register-ClaudePro {
 
     Write-Host ""
     Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Cyan
-    Write-Host "📝 登録手順:" -ForegroundColor White
+    Write-Host "[手順] 登録方法:" -ForegroundColor White
     Write-Host ""
     Write-Host "  1. " -ForegroundColor Yellow -NoNewline
     Write-Host "「Continue with Google」" -ForegroundColor Green -NoNewline
@@ -315,7 +305,7 @@ function Register-GitHub {
 
     Write-Host ""
     Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Cyan
-    Write-Host "📝 登録手順:" -ForegroundColor White
+    Write-Host "[手順] 登録方法:" -ForegroundColor White
     Write-Host ""
     Write-Host "  1. メールアドレスを入力" -ForegroundColor Yellow
     Write-Host "  2. パスワードを作成" -ForegroundColor Yellow
@@ -368,7 +358,7 @@ function Register-ChatGPTPlus {
 
     Write-Host ""
     Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Cyan
-    Write-Host "📝 登録手順:" -ForegroundColor White
+    Write-Host "[手順] 登録方法:" -ForegroundColor White
     Write-Host ""
     Write-Host "  1. " -ForegroundColor Yellow -NoNewline
     Write-Host "「Continue with Google」" -ForegroundColor Green -NoNewline
@@ -523,7 +513,7 @@ function Install-GitHubCLI {
 
     # GitHub認証とSSH鍵の自動設定
     Write-Host ""
-    Write-Warning-Custom "$LOCK GitHub 認証が必要です"
+    Write-Warning-Custom "GitHub 認証が必要です"
     Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Cyan
     Write-ColorOutput "GitHub CLI が以下を自動で行います:" White
     Write-Host ""
@@ -596,9 +586,9 @@ function Install-ClaudeCode {
     # 認証チェック
     if (-not (Get-State "claude_code" "authenticated")) {
         Write-Host ""
-        Write-Warning-Custom "$LOCK Claude Code の認証が必要です"
+        Write-Warning-Custom "Claude Code の認証が必要です"
         Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Cyan
-        Write-Host "⚠️  注意: これから対話型セットアップが始まります" -ForegroundColor White
+        Write-Host "[!] 注意: これから対話型セットアップが始まります" -ForegroundColor White
         Write-Host ""
         Write-Host "  • 質問が表示されたら答えてください" -ForegroundColor Yellow
         Write-Host "  • ブラウザが開いたら Claude Pro でログインしてください" -ForegroundColor Yellow
@@ -770,7 +760,7 @@ function Install-Codex {
     # 認証チェック（オプション）
     if (-not (Get-State "codex" "authenticated")) {
         Write-Host ""
-        Write-Warning-Custom "$LOCK Codex CLI の認証（オプション）"
+        Write-Warning-Custom "Codex CLI の認証（オプション）"
         Write-ColorOutput "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" Cyan
         Write-ColorOutput "Codex CLI を使用するには ChatGPT Plus/Pro アカウントが必要です" White
         Write-Host ""
@@ -811,7 +801,7 @@ function Install-Codex {
 function Main {
     Show-Banner
 
-    Write-Info "$ROCKET AI開発環境のセットアップを開始します..."
+    Write-Info "AI開発環境のセットアップを開始します..."
     Write-Host ""
     Start-Sleep -Seconds 1
 
@@ -876,7 +866,7 @@ function Main {
     Write-Host ""
     Write-ColorOutput "    ╔═══════════════════════════════════════════════════════════╗" Green
     Write-ColorOutput "    ║                                                           ║" Green
-    Write-ColorOutput "    ║                $PARTY  セットアップ完了！  $PARTY                 ║" Green
+    Write-ColorOutput "    ║              *** セットアップ完了！ ***                    ║" Green
     Write-ColorOutput "    ║                                                           ║" Green
     Write-ColorOutput "    ╚═══════════════════════════════════════════════════════════╝" Green
     Write-Host ""
@@ -890,7 +880,7 @@ function Main {
     Write-Host "  • Codex CLI: codex コマンドで起動" -ForegroundColor Yellow
     Write-Host ""
 
-    Write-Info "$SPARKLE Happy Coding with AI! $SPARKLE"
+    Write-Info "Happy Coding with AI!"
     Write-Host ""
 }
 
