@@ -502,62 +502,6 @@
   </div>
 </div>
 
-<!-- Troubleshooting Table - Soft Guidance -->
-<div style="background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 20px; padding: 28px; margin: 24px 0; box-shadow: 0 12px 32px rgba(59, 130, 246, 0.12);">
-  <h5 style="margin: 0 0 16px 0; color: #1d4ed8; display: flex; align-items: center; gap: 10px; font-size: 1.15em;">
-    <span style="font-size: 1.4em;">💡</span>
-    <span>困ったときのやさしい直し方</span>
-  </h5>
-  <p style="margin: 0 0 16px 0; color: #1e40af; line-height: 1.6;">エラーが出ても大丈夫。よくあるつまずきをまとめました。</p>
-  <div style="overflow-x: auto;">
-    <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
-      <thead>
-        <tr style="background: rgba(59, 130, 246, 0.08);">
-          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">こんなとき</th>
-          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">まずはこれを試す</th>
-          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">たぶんこうです</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
-          <td style="padding: 12px; vertical-align: top;">Claude のインストールが途中で止まる／エラーになる</td>
-          <td style="padding: 12px; vertical-align: top;">1分待ってもう一度。できなければ、家のWi‑Fiやスマホのテザリングで試す。むずかしければ先生（管理者）に相談。</td>
-          <td style="padding: 12px; vertical-align: top;">インターネットが不安定、または学校・会社のネットで止められている</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
-          <td style="padding: 12px; vertical-align: top;">`npm install -g ...` で「permission denied」と出る</td>
-          <td style="padding: 12px; vertical-align: top;">一度ターミナルを閉じて開き直し、もう一度実行。まだダメなら、Node を入れ直す（MacはHomebrewで入れると直ることが多い）か、先生に手伝ってもらう。</td>
-          <td style="padding: 12px; vertical-align: top;">パソコンが「ここに入れていいよ」と言っていない（許可がない）</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
-          <td style="padding: 12px; vertical-align: top;">`pipx install SuperClaude` のあと `SuperClaude` が使えない</td>
-          <td style="padding: 12px; vertical-align: top;">ターミナルを閉じて開き直す。ダメなら `pipx ensurepath` を打って、もう一度ターミナルを開き直す。</td>
-          <td style="padding: 12px; vertical-align: top;">新しいコマンドの「道」がまだ通っていない</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
-          <td style="padding: 12px; vertical-align: top;">`winget` が見つからない（Windows）</td>
-          <td style="padding: 12px; vertical-align: top;">Microsoft Store で「アプリ インストーラー」を入れる。終わったら PowerShell を閉じて、もう一度開く。</td>
-          <td style="padding: 12px; vertical-align: top;">Winget がまだ入っていない</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
-          <td style="padding: 12px; vertical-align: top;">`gh auth login` が進まない</td>
-          <td style="padding: 12px; vertical-align: top;">開いたブラウザでログインしてから、ターミナルに戻って Enter。うまくいかないときは、もう一度 `gh auth login`。</td>
-          <td style="padding: 12px; vertical-align: top;">ブラウザでのログインがまだ</td>
-        </tr>
-        <tr>
-          <td style="padding: 12px; vertical-align: top;">`claude doctor` に「ログインしてください」と出る</td>
-          <td style="padding: 12px; vertical-align: top;">`claude doctor` を打つ → 開いたページでログイン → もう一度 `claude doctor` を打って確認。</td>
-          <td style="padding: 12px; vertical-align: top;">まだ Claude にログインしていない</td>
-        </tr>
-        <tr style="border-top: 1px solid rgba(148, 163, 184, 0.15);">
-          <td style="padding: 12px; vertical-align: top;">Claude Code に <strong>sc:</strong> が出ない</td>
-          <td style="padding: 12px; vertical-align: top;">PowerShell を開き直す → <code>pipx ensurepath</code> → もう一度開き直す → <code>claude doctor</code> でログイン確認 → <code>SuperClaude install --force --yes</code> → <code>SuperClaude mcp install-all</code> → Claude Code を再起動</td>
-          <td style="padding: 12px; vertical-align: top;">Claude Code のインストールが一度失敗して連携が未完了、または PATH がまだ反映されていない</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
 
 <!-- 必要なアカウント - グラスモーフィズム（アンバー系） -->
 <div style="background: linear-gradient(135deg, rgba(254, 243, 199, 0.8) 0%, rgba(253, 230, 138, 0.6) 100%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 20px; padding: 28px; margin: 24px 0; box-shadow: 0 10px 40px rgba(245, 158, 11, 0.15);">
@@ -910,6 +854,63 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
 
     <div style="background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
       <h3 style="color: #1e40af; margin-bottom: 16px;">🔧 トラブルシューティング</h3>
+
+<!-- Troubleshooting Table - Soft Guidance -->
+<div style="background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 20px; padding: 28px; margin: 24px 0; box-shadow: 0 12px 32px rgba(59, 130, 246, 0.12);">
+  <h5 style="margin: 0 0 16px 0; color: #1d4ed8; display: flex; align-items: center; gap: 10px; font-size: 1.15em;">
+    <span style="font-size: 1.4em;">💡</span>
+    <span>困ったときのやさしい直し方</span>
+  </h5>
+  <p style="margin: 0 0 16px 0; color: #1e40af; line-height: 1.6;">エラーが出ても大丈夫。よくあるつまずきをまとめました。</p>
+  <div style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
+      <thead>
+        <tr style="background: rgba(59, 130, 246, 0.08);">
+          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">こんなとき</th>
+          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">まずはこれを試す</th>
+          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">たぶんこうです</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
+          <td style="padding: 12px; vertical-align: top;">Claude のインストールが途中で止まる／エラーになる</td>
+          <td style="padding: 12px; vertical-align: top;">1分待ってもう一度。できなければ、家のWi‑Fiやスマホのテザリングで試す。むずかしければ先生（管理者）に相談。</td>
+          <td style="padding: 12px; vertical-align: top;">インターネットが不安定、または学校・会社のネットで止められている</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
+          <td style="padding: 12px; vertical-align: top;">`npm install -g ...` で「permission denied」と出る</td>
+          <td style="padding: 12px; vertical-align: top;">一度ターミナルを閉じて開き直し、もう一度実行。まだダメなら、Node を入れ直す（MacはHomebrewで入れると直ることが多い）か、先生に手伝ってもらう。</td>
+          <td style="padding: 12px; vertical-align: top;">パソコンが「ここに入れていいよ」と言っていない（許可がない）</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
+          <td style="padding: 12px; vertical-align: top;">`pipx install SuperClaude` のあと `SuperClaude` が使えない</td>
+          <td style="padding: 12px; vertical-align: top;">ターミナルを閉じて開き直す。ダメなら `pipx ensurepath` を打って、もう一度ターミナルを開き直す。</td>
+          <td style="padding: 12px; vertical-align: top;">新しいコマンドの「道」がまだ通っていない</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
+          <td style="padding: 12px; vertical-align: top;">`winget` が見つからない（Windows）</td>
+          <td style="padding: 12px; vertical-align: top;">Microsoft Store で「アプリ インストーラー」を入れる。終わったら PowerShell を閉じて、もう一度開く。</td>
+          <td style="padding: 12px; vertical-align: top;">Winget がまだ入っていない</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
+          <td style="padding: 12px; vertical-align: top;">`gh auth login` が進まない</td>
+          <td style="padding: 12px; vertical-align: top;">開いたブラウザでログインしてから、ターミナルに戻って Enter。うまくいかないときは、もう一度 `gh auth login`。</td>
+          <td style="padding: 12px; vertical-align: top;">ブラウザでのログインがまだ</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px; vertical-align: top;">`claude doctor` に「ログインしてください」と出る</td>
+          <td style="padding: 12px; vertical-align: top;">`claude doctor` を打つ → 開いたページでログイン → もう一度 `claude doctor` を打って確認。</td>
+          <td style="padding: 12px; vertical-align: top;">まだ Claude にログインしていない</td>
+        </tr>
+        <tr style="border-top: 1px solid rgba(148, 163, 184, 0.15);">
+          <td style="padding: 12px; vertical-align: top;">Claude Code に <strong>sc:</strong> が出ない</td>
+          <td style="padding: 12px; vertical-align: top;">PowerShell を開き直す → <code>pipx ensurepath</code> → もう一度開き直す → <code>claude doctor</code> でログイン確認 → <code>SuperClaude install --force --yes</code> → <code>SuperClaude mcp install-all</code> → Claude Code を再起動</td>
+          <td style="padding: 12px; vertical-align: top;">Claude Code のインストールが一度失敗して連携が未完了、または PATH がまだ反映されていない</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
       <details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
         <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q5. インストールが途中で止まってしまいます</summary>
