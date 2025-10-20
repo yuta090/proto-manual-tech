@@ -517,7 +517,7 @@ install_github_cli() {
 
     if ! check_command gh; then
         print_info "GitHub CLI をインストール中..."
-        brew install gh &
+        npm install -g @github/gh &
         spinner $!
         wait $!
 

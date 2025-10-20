@@ -230,7 +230,8 @@ function Install-GitHubCLI {
             Write-Info "GitHub CLI は既にインストールされています"
             Update-InstallState -Tool "github_cli" -Key "installed" -Value $true
         } else {
-            winget install --id GitHub.CLI --silent
+            Write-Info "GitHub CLI をインストール中..."
+            npm install -g @github/gh
 
             # PATH の更新
             $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
@@ -337,24 +338,24 @@ function Install-ClaudeCode {
             Write-Info "Claude Code は既にインストールされています"
             Update-InstallState -Tool "claude_code" -Key "installed" -Value $true
         } else {
-            Write-Info "Claude Code の認証を開始します..."
+            Write-Info "Claude Code をインストールします..."
             Write-Host "Claude Pro アカウントが必要です" -ForegroundColor Cyan
 
             try {
-                # 公式インストールスクリプトを実行
-                Invoke-RestMethod https://claude.ai/install.ps1 | Invoke-Expression
+                # npm経由でインストール
+                npm install -g claude-code
 
                 if ($LASTEXITCODE -eq 0) {
                     Update-InstallState -Tool "claude_code" -Key "installed" -Value $true
                     Write-Success "Claude Code インストール完了"
                 } else {
                     Write-Err "Claude Code のインストールに失敗しました"
-                    Write-Warn "手動でインストールしてください: https://claude.ai/install.ps1"
+                    Write-Warn "手動でインストールしてください: npm install -g claude-code"
                     exit 1
                 }
             } catch {
                 Write-Err "Claude Code のインストールに失敗しました: $_"
-                Write-Warn "手動でインストールしてください: https://claude.ai/install.ps1"
+                Write-Warn "手動でインストールしてください: npm install -g claude-code"
                 exit 1
             }
         }
