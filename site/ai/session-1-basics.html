@@ -2092,6 +2092,103 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 </ul>
 </div>
 
+<hr style="margin: 32px 0; border: none; border-top: 2px dashed rgba(59, 130, 246, 0.3);">
+
+<h4 style="color: #1e40af; margin: 24px 0 20px 0;">📚 基本原則の具体例</h4>
+
+<!-- 例1: 役割を明示する -->
+<div style="margin: 32px 0;">
+  <h5 style="color: #6b21a8; margin: 0 0 16px 0;">🎭 原則1: 役割を明示する</h5>
+  <p style="margin: 0 0 16px 0; color: #4b5563; line-height: 1.7;">AIに「どんな立場で答えてほしいか」を伝えると、より適切な回答が得られます。</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+    <!-- Before -->
+    <div style="background: rgba(239, 68, 68, 0.08); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(239, 68, 68, 0.3);">
+      <h6 style="color: #dc2626; margin: 0 0 12px 0; font-size: 1em;">❌ Before（悪い例）</h6>
+      <pre style="background: rgba(255, 255, 255, 0.9); padding: 14px; border-radius: 8px; margin: 0 0 12px 0; overflow-x: auto;"><code style="font-size: 0.85em; color: #1e3a8a;">「ログイン機能を作ってください」</code></pre>
+      <p style="font-size: 0.88em; color: #7f1d1d; margin: 0; line-height: 1.6;">
+        → 役割が不明確なため、AIがどのレベルの実装を返すべきか判断できない
+      </p>
+    </div>
+
+    <!-- After -->
+    <div style="background: rgba(16, 185, 129, 0.08); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(16, 185, 129, 0.3);">
+      <h6 style="color: #059669; margin: 0 0 12px 0; font-size: 1em;">✅ After（良い例）</h6>
+      <pre style="background: rgba(255, 255, 255, 0.9); padding: 14px; border-radius: 8px; margin: 0 0 12px 0; overflow-x: auto;"><code style="font-size: 0.85em; color: #1e3a8a;">「あなたはセキュリティに詳しいWebエンジニアです。
+初心者向けのログイン機能を作ってください。
+セキュリティのベストプラクティスに従い、
+分かりやすいコメントを付けてください。」</code></pre>
+      <p style="font-size: 0.88em; color: #065f46; margin: 0; line-height: 1.6;">
+        → 役割とレベル感が明確で、AIが適切な実装を返しやすい
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- 例2: 具体性を持たせる -->
+<div style="margin: 32px 0;">
+  <h5 style="color: #6b21a8; margin: 0 0 16px 0;">🎯 原則2: 具体的に指示する</h5>
+  <p style="margin: 0 0 16px 0; color: #4b5563; line-height: 1.7;">期待する出力の形式、含めるべき要素を詳細に伝えます。</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+    <!-- Before -->
+    <div style="background: rgba(239, 68, 68, 0.08); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(239, 68, 68, 0.3);">
+      <h6 style="color: #dc2626; margin: 0 0 12px 0; font-size: 1em;">❌ Before（悪い例）</h6>
+      <pre style="background: rgba(255, 255, 255, 0.9); padding: 14px; border-radius: 8px; margin: 0 0 12px 0; overflow-x: auto;"><code style="font-size: 0.85em; color: #1e3a8a;">「Todoアプリを作って」</code></pre>
+      <p style="font-size: 0.88em; color: #7f1d1d; margin: 0; line-height: 1.6;">
+        → 何を含めるべきか不明確
+      </p>
+    </div>
+
+    <!-- After -->
+    <div style="background: rgba(16, 185, 129, 0.08); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(16, 185, 129, 0.3);">
+      <h6 style="color: #059669; margin: 0 0 12px 0; font-size: 1em;">✅ After（良い例）</h6>
+      <pre style="background: rgba(255, 255, 255, 0.9); padding: 14px; border-radius: 8px; margin: 0 0 12px 0; overflow-x: auto;"><code style="font-size: 0.85em; color: #1e3a8a;">「シンプルなTodoアプリを作ってください。
+機能：
+- タスクの追加・削除・完了チェック
+- localStorageでデータ保存
+- レスポンシブデザイン（スマホ対応）
+技術：HTML/CSS/JavaScript（1ファイル）」</code></pre>
+      <p style="font-size: 0.88em; color: #065f46; margin: 0; line-height: 1.6;">
+        → 機能と技術要件が明確
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- 例3: 制約条件を明示する -->
+<div style="margin: 32px 0;">
+  <h5 style="color: #6b21a8; margin: 0 0 16px 0;">🚧 原則3: 制約条件を明示する</h5>
+  <p style="margin: 0 0 16px 0; color: #4b5563; line-height: 1.7;">不要な要素や制限を明確に伝えます。</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+    <!-- Before -->
+    <div style="background: rgba(239, 68, 68, 0.08); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(239, 68, 68, 0.3);">
+      <h6 style="color: #dc2626; margin: 0 0 12px 0; font-size: 1em;">❌ Before（悪い例）</h6>
+      <pre style="background: rgba(255, 255, 255, 0.9); padding: 14px; border-radius: 8px; margin: 0 0 12px 0; overflow-x: auto;"><code style="font-size: 0.85em; color: #1e3a8a;">「商品一覧ページを作って」</code></pre>
+      <p style="font-size: 0.88em; color: #7f1d1d; margin: 0; line-height: 1.6;">
+        → 制約がないため、複雑すぎる実装が返ってくる可能性
+      </p>
+    </div>
+
+    <!-- After -->
+    <div style="background: rgba(16, 185, 129, 0.08); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(16, 185, 129, 0.3);">
+      <h6 style="color: #059669; margin: 0 0 12px 0; font-size: 1em;">✅ After（良い例）</h6>
+      <pre style="background: rgba(255, 255, 255, 0.9); padding: 14px; border-radius: 8px; margin: 0 0 12px 0; overflow-x: auto;"><code style="font-size: 0.85em; color: #1e3a8a;">「商品一覧ページを作ってください。
+制約条件：
+- ライブラリ不使用（Vanilla JavaScript）
+- 5商品まで表示
+- 簡易的なCSSでOK（アニメーションなし）
+- 150行以内で実装」</code></pre>
+      <p style="font-size: 0.88em; color: #065f46; margin: 0; line-height: 1.6;">
+        → 制約が明確で、シンプルな実装が返ってくる
+      </p>
+    </div>
+  </div>
+</div>
+
+<hr style="margin: 32px 0; border: none; border-top: 2px dashed rgba(59, 130, 246, 0.3);">
+
 <h3 id="32-super-claudeにおけるプロンプトの設計">3.2 Super Claudeにおけるプロンプトの設計</h3>
 
 <div class="auth-setup-section">
