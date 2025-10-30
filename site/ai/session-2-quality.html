@@ -70,9 +70,11 @@
 <ol class="toc-list">
 <li><a href="#目次"><strong>目次</strong></a></li>
 <li><a href="#6-github連携"><strong>6. GitHub連携</strong></a></li>
-<li><a href="#7-モダン技術スタックの構築"><strong>7. モダン技術スタックの構築</strong></a></li>
-<li><a href="#8-あなたのアプリを進化させよう機能追加プロジェクト"><strong>8. あなたのアプリを進化させよう！機能追加プロジェクト</strong></a></li>
-<li><a href="#9-企業導入のためのsdd組織変革ガイド"><strong>9. 企業導入のためのSDD組織変革ガイド</strong></a></li>
+<li><a href="#7-ブランチとissueの基礎"><strong>7. ブランチとissueの基礎</strong></a></li>
+<li><a href="#8-プルリクエストとgithub連携"><strong>8. プルリクエストとGitHub連携</strong></a></li>
+<li><a href="#9-モダン技術スタックの構築"><strong>9. モダン技術スタックの構築</strong></a></li>
+<li><a href="#10-あなたのアプリを進化させよう機能追加プロジェクト"><strong>10. あなたのアプリを進化させよう！機能追加プロジェクト</strong></a></li>
+<li><a href="#11-企業導入のためのsdd組織変革ガイド"><strong>11. 企業導入のためのSDD組織変革ガイド</strong></a></li>
 </ol>
 <hr style="margin: 20px 0; border: none; border-top: 2px solid rgba(59, 130, 246, 0.3);">
 <h3 style="font-size: 1em; margin: 16px 0 12px 0; color: #1e40af;">📚 他のセッション</h3>
@@ -224,6 +226,42 @@
   <p style="margin: 0 0 12px 0; color: #7f1d1d;">最初は難しく感じるかもしれませんが、<strong>ゆっくり読み進めれば必ず理解できます</strong>。一つひとつの手順をAIと一緒に確認しながら進めましょう。</p>
   <p style="margin: 0; color: #7f1d1d;">💡 分からないところは、遠慮なくClaude Codeに質問してください！</p>
 </div>
+
+<hr>
+<h2 id="7-ブランチとissueの基礎"><strong>7. ブランチとissueの<br>基礎</strong></h2>
+
+<!-- 学習目標セクション - 7章 -->
+<div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
+  <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
+    <span style="font-size: 1.3em;">📚</span>
+    <span>この章で学べること</span>
+  </h3>
+  <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
+    <li>GitとGitHubの基本概念と使い方</li>
+    <li>なぜGitHubが必要か？AIバイブコーディングの安全網</li>
+    <li>開発スタイル別のGitHub活用法（個人・企業・チーム）</li>
+    <li>ブランチ、issue、プルリクエストの概念と使い方</li>
+  </ul>
+
+  <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
+    <span style="font-size: 1.3em;">🎯</span>
+    <span>この章が終わると...</span>
+  </h3>
+  <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
+    <li><strong>GitHubでコードを安全に管理できる</strong></li>
+    <li><strong>自分の開発スタイルに合った使い方が分かる</strong></li>
+    <li><strong>チーム開発の基本的な概念が理解できる</strong></li>
+  </ul>
+
+  <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%); padding: 16px 20px; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.3);">
+    <div style="display: flex; align-items: center; gap: 10px; color: #1e40af; font-weight: 600;">
+      <span style="font-size: 1.3em;">⏱️</span>
+      <span>所要時間: 約60分</span>
+    </div>
+  </div>
+</div>
+
+<hr>
 
 <h3 id="71-gitとgithubの基本">7.1 GitとGitHubの基本</h3>
 <p>バージョン管理システムGitと、そのホスティングサービスであるGitHubは、現代のソフトウェア開発において不可欠なツールです。コードの変更履歴を管理し、チームでの共同開発を効率的に進めるために利用されます。</p>
@@ -616,7 +654,44 @@ AIの変更を小さな単位で保存
 </ul>
 </li>
 </ol>
-<h3 id="75-super-claudeとgithubの連携">7.5 Super ClaudeとGitHubの連携</h3>
+
+<hr>
+<h2 id="8-プルリクエストとgithub連携"><strong>8. プルリクエストと<br>GitHub連携</strong></h2>
+
+<!-- 学習目標セクション - 8章 -->
+<div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
+  <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
+    <span style="font-size: 1.3em;">📚</span>
+    <span>この章で学べること</span>
+  </h3>
+  <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
+    <li>Super ClaudeとGitHubの連携方法</li>
+    <li>CI/CDパイプラインの基本と構築方法</li>
+    <li>GitHubとNetlifyの自動デプロイ体験</li>
+    <li>継続的デプロイ（CD）の実践</li>
+  </ul>
+
+  <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
+    <span style="font-size: 1.3em;">🎯</span>
+    <span>この章が終わると...</span>
+  </h3>
+  <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
+    <li><strong>GitHubへのpushからデプロイまでを自動化できる</strong></li>
+    <li><strong>プロフェッショナルな開発ワークフローを体験できる</strong></li>
+    <li><strong>継続的デプロイの便利さを実感できる</strong></li>
+  </ul>
+
+  <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%); padding: 16px 20px; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.3);">
+    <div style="display: flex; align-items: center; gap: 10px; color: #1e40af; font-weight: 600;">
+      <span style="font-size: 1.3em;">⏱️</span>
+      <span>所要時間: 約45分</span>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<h3 id="75-super-claudeとgithubの連携">8.1 Super ClaudeとGitHubの連携</h3>
 <p>Super Claudeは、GitHubとの連携を強化することで、開発ワークフローをさらにスムーズにします。AIが生成したコードを直接GitHubリポジトリにプッシュしたり、既存のリポジトリからコンテキストを読み込んだりすることが可能です。</p>
 <h4 id="-githubリポジトリの初期化と連携">✅ GitHubリポジトリの初期化と連携</h4>
 <p>Super Claudeで開発しているプロジェクトをGitHubに連携するには、まずローカルでGitリポジトリを初期化し、GitHubにリモートリポジトリを作成します。</p>
@@ -650,7 +725,7 @@ PRにはAIが生成した変更内容の説明が自動で記載される
 </li>
 </ul>
 </div>
-<h3 id="76-cicdパイプラインの構築">7.6 CI/CDパイプラインの構築</h3>
+<h3 id="82-cicdパイプラインの構築">8.2 CI/CDパイプラインの構築</h3>
 <p>CI/CD (継続的インテグレーション/継続的デリバリー) は、コードの変更を頻繁に統合し、自動的にテスト・デプロイするプラクティスです。Super Claudeは、CI/CDパイプラインの構築と最適化を支援します。</p>
 <h4 id="-aiによるcicd設定ファイルの生成">✅ AIによるCI/CD設定ファイルの生成</h4>
 <p>Super Claudeの<code>design</code>コマンドや<code>workflow</code>コマンドは、GitHub ActionsやCircleCIなどのCI/CDツール向けの設定ファイルを生成することができます。これにより、手動での設定ミスを減らし、迅速なパイプライン構築を支援します。</p>
@@ -666,7 +741,7 @@ sc test --integrate-ci
 sc deploy --target production
 </code><button class="code-copy-btn">コピー</button></pre>
 
-<h3 id="77-実践ハンズオンgithub連携と自動デプロイ">7.7 実践ハンズオン：GitHub連携と自動デプロイ</h3>
+<h3 id="83-実践ハンズオンgithub連携と自動デプロイ">8.3 実践ハンズオン：GitHub連携と自動デプロイ</h3>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0;">
   <p style="margin: 0 0 8px 0; font-size: 1.1em; font-weight: bold; color: #059669;">⏱️ 所要時間：30-45分</p>
@@ -747,9 +822,9 @@ Claude Code「変更をGitHubにpushして」
 <p>これで、あなたは<strong>プロの開発者と同じ開発フロー</strong>を体験しました。次の章では、Supabaseでデータベースを追加して、さらに本格的なアプリに進化させます！</p>
 
 <hr>
-<h2 id="7-モダン技術スタックの構築"><strong>7. モダン技術スタックの<br>構築</strong></h2>
+<h2 id="9-モダン技術スタックの構築"><strong>9. モダン技術スタックの<br>構築</strong></h2>
 
-<!-- 学習目標セクション - 7章 -->
+<!-- 学習目標セクション - 9章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
     <span style="font-size: 1.3em;">📚</span>
@@ -782,7 +857,7 @@ Claude Code「変更をGitHubにpushして」
 
 <hr>
 <p>この章では、Super Claudeを活用して、現代のWebアプリケーション開発で一般的に使用されるモダンな技術スタックを効率的に構築する方法を解説します。</p>
-<h3 id="81-フロントエンドフレームワークの選定と導入">8.1 フロントエンドフレームワークの選定と導入</h3>
+<h3 id="91-フロントエンドフレームワークの選定と導入">9.1 フロントエンドフレームワークの選定と導入</h3>
 <p>現代のWebアプリケーション開発では、React, Vue.js, Angularなどのフロントエンドフレームワークが広く利用されています。Super Claudeは、これらのフレームワークの選定から初期設定、コンポーネント生成までを支援します。</p>
 <h4 id="-フレームワークの選定とプロジェクト初期化">✅ フレームワークの選定とプロジェクト初期化</h4>
 <p><code>design</code>コマンドでプロジェクトの要件をAIに伝えることで、最適なフロントエンドフレームワークを提案させることができます。その後、<code>implement</code>コマンドでプロジェクトの初期設定を行います。</p>
@@ -792,7 +867,7 @@ sc design "ユーザー管理機能とデータ可視化機能を持つSPAを開
 # Reactプロジェクトの初期化
 sc implement "ReactプロジェクトをTypeScriptとTailwind CSSで初期化してください"
 </code><button class="code-copy-btn">コピー</button></pre>
-<h3 id="82-バックエンドフレームワークの選定と導入">8.2 バックエンドフレームワークの選定と導入</h3>
+<h3 id="92-バックエンドフレームワークの選定と導入">9.2 バックエンドフレームワークの選定と導入</h3>
 <p>バックエンドでは、Node.js (Express, NestJS), Python (Django, Flask), Ruby (Rails) などが人気です。Super Claudeは、フロントエンドと同様に、バックエンドフレームワークの選定とAPIエンドポイントの生成を支援します。</p>
 <h4 id="-バックエンドapiの設計と実装">✅ バックエンドAPIの設計と実装</h4>
 <p><code>design</code>コマンドでAPIの要件をAIに伝えることで、RESTful APIやGraphQL APIの設計を支援させることができます。その後、<code>implement</code>コマンドでAPIエンドポイントのコードを生成します。</p>
@@ -802,7 +877,7 @@ sc design "ユーザー認証と投稿管理のRESTful APIをNode.js (Express) �
 # ユーザー登録APIエンドポイントの実装
 sc implement "Expressでユーザー登録APIエンドポイントを実装してください。パスワードはハッシュ化し、JWTで認証を行います。"
 </code><button class="code-copy-btn">コピー</button></pre>
-<h3 id="83-データベースの選定とスキーマ設計">8.3 データベースの選定とスキーマ設計</h3>
+<h3 id="93-データベースの選定とスキーマ設計">9.3 データベースの選定とスキーマ設計</h3>
 <p>アプリケーションのデータ永続化には、リレーショナルデータベース（PostgreSQL, MySQL）やNoSQLデータベース（MongoDB, DynamoDB）が利用されます。Super Claudeは、要件に基づいたデータベースの選定とスキーマ設計を支援します。</p>
 <h4 id="-データベーススキーマの生成">✅ データベーススキーマの生成</h4>
 <p><code>design</code>コマンドでアプリケーションのデータモデルをAIに伝えることで、最適なデータベースとスキーマ設計を提案させることができます。<code>implement</code>コマンドでマイグレーションファイルやORMのモデル定義を生成します。</p>
@@ -812,7 +887,7 @@ sc design "勉強時間記録アプリのデータモデルを設計してくだ
 # PostgreSQL用のテーブル作成マイグレーションファイルを生成
 sc implement "PostgreSQLでユーザー、科目、記録テーブルを作成するマイグレーションファイルを生成してください"
 </code><button class="code-copy-btn">コピー</button></pre>
-<h3 id="84-クラウドインフラの活用とデプロイ">8.4 クラウドインフラの活用とデプロイ</h3>
+<h3 id="94-クラウドインフラの活用とデプロイ">9.4 クラウドインフラの活用とデプロイ</h3>
 <p>開発したアプリケーションを公開するには、AWS, GCP, Azureなどのクラウドプラットフォームを利用します。Super Claudeは、インフラのプロビジョニングやデプロイプロセスの自動化を支援します。</p>
 <h4 id="-インフラ設定ファイルの生成とデプロイ">✅ インフラ設定ファイルの生成とデプロイ</h4>
 <p><code>design</code>コマンドでデプロイ先のクラウドプラットフォームと要件をAIに伝えることで、TerraformやCloudFormationなどのIaC (Infrastructure as Code) 設定ファイルを生成させることができます。<code>deploy</code>コマンドでアプリケーションをクラウド環境にデプロイします。</p>
@@ -1067,9 +1142,9 @@ CREATE POLICY "Users can create their own tasks"
 <p>次の章では、ユーザー認証機能を追加して、さらに本格的なWebアプリに進化させます！</p>
 
 <hr>
-<h2 id="8-あなたのアプリを進化させよう機能追加プロジェクト"><strong>8. あなたのアプリを<br>進化させよう！機能追加プロジェクト</strong></h2>
+<h2 id="10-あなたのアプリを進化させよう機能追加プロジェクト"><strong>10. あなたのアプリを<br>進化させよう！機能追加プロジェクト</strong></h2>
 
-<!-- 学習目標セクション - 8章 -->
+<!-- 学習目標セクション - 10章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
     <span style="font-size: 1.3em;">📚</span>
@@ -1102,7 +1177,7 @@ CREATE POLICY "Users can create their own tasks"
 
 <hr>
 <p>この章では、6章で作成した<strong>学習者自身のオリジナルアプリ</strong>をベースに、さらに高度な機能を追加していくプロジェクトに取り組みます。継続的な開発の楽しさと、Super Claudeが提供する強力な機能拡張能力を体験しましょう。ここでは、Super Claudeのコマンドフローチャートにおける「品質向上」や「問題がある場合」のコマンドも活用し、既存コードの改善や機能追加を効率的に行います。</p>
-<h3 id="91-ユーザー認証機能の追加supabase連携">9.1 ユーザー認証機能の追加（Supabase連携）</h3>
+<h3 id="101-ユーザー認証機能の追加supabase連携">10.1 ユーザー認証機能の追加（Supabase連携）</h3>
 <h4 id="目的-2">目的</h4>
 <p>Webアプリケーションにユーザー認証機能を追加し、セキュリティとパーソナライゼーションを向上させます。ここでは、バックエンドサービスとしてSupabaseを活用します。Super Claudeの<code>implement</code>コマンドと<code>design</code>コマンドを駆使して、Supabaseとの連携をスムーズに行いましょう。</p>
 <h4 id="手順-2">手順</h4>
@@ -1127,7 +1202,7 @@ CREATE POLICY "Users can create their own tasks"
 <strong>既存ページへの認証ガードの追加</strong>
 </li>
 </ol>
-<h3 id="92-メール通知機能の追加resend連携">9.2 メール通知機能の追加（Resend連携）</h3>
+<h3 id="102-メール通知機能の追加resend連携">10.2 メール通知機能の追加（Resend連携）</h3>
 <h4 id="目的-3">目的</h4>
 <p>ユーザー登録時や特定のアクションが発生した際に、メールで通知を送信する機能を追加します。ここでは、メール送信サービスとしてResendを利用します。Super Claudeの<code>implement</code>コマンドで、Resend APIとの連携コードを生成しましょう。</p>
 <h4 id="手順-3">手順</h4>
@@ -1149,7 +1224,7 @@ CREATE POLICY "Users can create their own tasks"
 <strong>既存のイベントへの組み込み</strong>
 </li>
 </ol>
-<h3 id="93-コード品質の向上とテストの追加">9.3 コード品質の向上とテストの追加</h3>
+<h3 id="103-コード品質の向上とテストの追加">10.3 コード品質の向上とテストの追加</h3>
 <p>機能追加だけでなく、既存コードの品質向上も継続的な開発において重要です。Super Claudeの<code>improve</code>と<code>test</code>コマンドを活用しましょう。</p>
 <h4 id="手順-4">手順</h4>
 <ol>
@@ -1163,7 +1238,7 @@ CREATE POLICY "Users can create their own tasks"
 <h3 id="まとめ-3">まとめ</h3>
 <p>この章では、6章で作成したアプリに具体的な機能を追加し、さらに品質を向上させるプロセスを体験しました。Super Claudeの各コマンドを組み合わせることで、複雑な機能追加やコード改善も効率的に進められることが理解できたでしょう。あなたのアプリは、この「進化プロジェクト」を通じて、より堅牢で実用的なものへと成長していきます。</p>
 
-<h3 id="94-実践ハンズオン認証機能でセキュリティを強化75分">9.4 実践ハンズオン：認証機能でセキュリティを強化（75分）</h3>
+<h3 id="104-実践ハンズオン認証機能でセキュリティを強化75分">10.4 実践ハンズオン：認証機能でセキュリティを強化（75分）</h3>
 
 <p style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1)); padding: 20px; border-radius: 12px; border-left: 4px solid #8B5CF6; margin: 24px 0;">
 <strong>⏱️ 所要時間</strong>: 75分（座学15分 + 実装60分）<br>
@@ -1564,9 +1639,9 @@ export default function Dashboard() {
 </div>
 
 <hr>
-<h2 id="9-企業導入のためのsdd組織変革ガイド"><strong>9. 企業導入の<br>ためのSDD組織変革ガイド</strong></h2>
+<h2 id="11-企業導入のためのsdd組織変革ガイド"><strong>11. 企業導入の<br>ためのSDD組織変革ガイド</strong></h2>
 
-<!-- 学習目標セクション - 9章 -->
+<!-- 学習目標セクション - 11章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
     <span style="font-size: 1.3em;">📚</span>
@@ -1599,7 +1674,7 @@ export default function Dashboard() {
 
 <hr>
 <p>この章では、個人としてのスキルアップだけでなく、チームや組織全体で「仕様駆動開発に則ったバイブコーディング」を導入し、開発文化を変革していくための戦略的なアプローチを解説します。Super Claudeのコマンドフローチャートは、個人の開発効率を上げるだけでなく、チーム全体の開発プロセスを標準化し、品質を向上させるための共通言語としても機能します。</p>
-<h3 id="101-なぜ組織的な導入が必要か">10.1 なぜ組織的な導入が必要か？</h3>
+<h3 id="111-なぜ組織的な導入が必要か">11.1 なぜ組織的な導入が必要か？</h3>
 <p>個々の開発者がAIツールをバラバラに使用するだけでは、その効果は限定的です。組織として統一された開発プロセス（ワークフロー）を定義し、チーム全体でAIを活用することで、以下のような相乗効果が生まれます。</p>
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
@@ -1620,9 +1695,9 @@ export default function Dashboard() {
 </li>
 </ul>
 </div>
-<h3 id="102-super-claudeコマンドフローチャートを活用したチーム開発プロセス">10.2 Super Claudeコマンドフローチャートを活用したチーム開発プロセス</h3>
+<h3 id="112-super-claudeコマンドフローチャートを活用したチーム開発プロセス">11.2 Super Claudeコマンドフローチャートを活用したチーム開発プロセス</h3>
 <p>Super Claudeのコマンドフローチャートを、チームの共通言語として開発プロセスに組み込みます。これにより、どのフェーズでどのコマンドを使うべきかが明確になり、チームメンバー間のコミュニケーションが円滑になります。以下に、一般的な開発プロセスにおけるコマンドの活用例を示します。</p>
-<h3 id="103-導入のステップと成功の鍵">10.3 導入のステップと成功の鍵</h3>
+<h3 id="113-導入のステップと成功の鍵">11.3 導入のステップと成功の鍵</h3>
 <div class="table-wrapper">
 <table>
 <thead><tr>
@@ -1712,7 +1787,7 @@ AI導入の効果を定量的に測定するための評価指標（KPI）を設
 </li>
 </ul>
 </div>
-<h3 id="104-文化の変革aiとの協調と成長のマインドセット">10.4 文化の変革：<br>AIとの協調と成長のマインドセット</h3>
+<h3 id="114-文化の変革aiとの協調と成長のマインドセット">11.4 文化の変革：<br>AIとの協調と成長のマインドセット</h3>
 <p>AI開発ツールの導入は、単なるツール変更以上の「文化変革」です。AIが生成したコードが常に完璧であるとは限りません。重要なのは、AIを「完璧な答えをくれる魔法の箱」ではなく、「優秀なアシスタント」と捉え、AIとの対話を通じてより良い成果物を創り上げていくという<strong>協調と成長のマインドセット</strong>をチーム全体で共有することです。</p>
 <div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
