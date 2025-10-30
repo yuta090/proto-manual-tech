@@ -286,23 +286,14 @@
 
 <h4 id="座学e2eテストとplaywright-mcpとは15分">座学：E2EテストとPlaywright MCPとは（15分）</h4>
 
-<p><strong>E2E（End-to-End）テスト</strong>とは、ユーザーが実際にアプリを使うときの流れ全体をテストすることです。</p>
+<p><strong>E2E（End-to-End）テスト</strong>とは、ユーザーが実際にアプリを使うときの流れ全体を自動でテストすることです。例えば「ログイン → タスク作成 → 作業開始 → 停止 → ログアウト」という一連の流れを、ブラウザを自動操作して確認します。</p>
 
 <div style="background: rgba(168, 85, 247, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<h5>E2Eテストとは？</h5>
-<p>従来のテストとE2Eテストの違い：</p>
-<ul>
-<li><strong>ユニットテスト</strong>: 関数やメソッド単体をテスト（例: 「合計計算関数が正しく動くか」）</li>
-<li><strong>統合テスト</strong>: 複数のコンポーネントの連携をテスト（例: 「ボタンをクリックしたら関数が呼ばれるか」）</li>
-<li><strong>E2Eテスト</strong>: <strong>ユーザーの視点</strong>で全体の流れをテスト（例: 「ログイン → タスク作成 → 作業開始 → 停止 → ログアウト」）</li>
-</ul>
-
 <h5>なぜE2Eテストが重要なのか？</h5>
 <ul>
 <li><strong>実際のユーザー体験を保証</strong>: 個々の機能が動いても、全体の流れで問題が起きることがあります</li>
-<li><strong>リグレッションの防止</strong>: 新機能追加時に既存機能が壊れていないか確認</li>
+<li><strong>リグレッションの防止</strong>: 新機能追加時に既存機能が壊れていないか自動確認</li>
 <li><strong>手動テストからの解放</strong>: 毎回ブラウザで手動確認する手間が不要に</li>
-<li><strong>自信を持ってデプロイ</strong>: 自動テストが通れば、本番環境にデプロイしても安心</li>
 </ul>
 </div>
 
@@ -310,29 +301,10 @@
 <h5>Playwright MCPとは？</h5>
 <p><strong>Playwright</strong>は、Microsoftが開発した最新のE2Eテストツールで、Claude Codeに<strong>MCP（Model Context Protocol）</strong>として統合されています。</p>
 
-<h5>Playwright MCPの主な機能</h5>
+<p><strong>主な特徴</strong>：</p>
 <ul>
 <li><strong>ブラウザ自動操作</strong>: Chrome、Firefox、Safariを自動で操作</li>
-<li><strong>スクリーンショット撮影</strong>: テスト実行中の画面を自動キャプチャ</li>
-<li><strong>ネットワーク監視</strong>: API呼び出しやレスポンスを確認</li>
-<li><strong>待機処理の自動化</strong>: ページ読み込みやAPI完了を自動で待つ</li>
-<li><strong>並列実行</strong>: 複数のテストを同時に実行して高速化</li>
-</ul>
-
-<h5>従来のテストツールとの違い</h5>
-<ul>
-<li><strong>Selenium</strong>: 古い技術、セットアップが複雑、遅い</li>
-<li><strong>Cypress</strong>: JavaScriptのみ、一部ブラウザ非対応</li>
-<li><strong>Playwright</strong>: <strong>高速</strong>、<strong>最新</strong>、<strong>全ブラウザ対応</strong>、Claude Codeと統合済み</li>
-</ul>
-</div>
-
-<div style="background: rgba(245, 158, 11, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 20px; margin: 24px 0;">
-<h5>💡 MCPとしてのPlaywright</h5>
-<p>Claude CodeにPlaywright MCPが統合されていることで、以下が可能になります：</p>
-<ul>
-<li><strong>自然言語でテスト作成</strong>: 「ログインしてダッシュボードに遷移することを確認して」と指示するだけ</li>
-<li><strong>テストコード自動生成</strong>: Claude Codeが適切なテストコードを生成</li>
+<li><strong>自然言語でテスト作成</strong>: 「ログインして画面遷移を確認して」と指示するだけ</li>
 <li><strong>エラー時の自動修正</strong>: テスト失敗時にClaude Codeが原因を分析して修正案を提示</li>
 </ul>
 </div>
