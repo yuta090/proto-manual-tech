@@ -1269,6 +1269,61 @@ claude</code><button class="code-copy-btn">コピー</button></pre>
 </div>
 <!-- 体験セクション終了 -->
 
+<hr>
+
+<h3 id="07-よくあるエラーと対処法">0.7 よくあるエラーと対処法</h3>
+
+<div style="background: rgba(254, 226, 226, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 20px; padding: 28px; margin: 24px 0; box-shadow: 0 8px 32px rgba(239, 68, 68, 0.1);">
+  <h5 style="color: #991b1b; margin: 0 0 16px 0; font-size: 1.1em;">🚨 エラーが出ても焦らないで！</h5>
+  <p style="margin: 0 0 12px 0; color: #7f1d1d; line-height: 1.7;">初めて開発環境を構築するとき、エラーが出るのは<strong>とても普通のこと</strong>です。</p>
+  <p style="margin: 0; color: #7f1d1d; line-height: 1.7;">以下のよくあるエラーと対処法を参考にしてください。</p>
+</div>
+
+<details style="margin: 20px 0;">
+  <summary style="cursor: pointer; font-weight: 600; color: #dc2626; font-size: 1.05em; padding: 16px 20px; background: rgba(254, 226, 226, 0.3); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);"><strong>エラー1: 「権限がありません」「Permission denied」</strong></summary>
+  <div style="padding: 20px; background: rgba(254, 242, 242, 0.5); border-radius: 0 0 12px 12px; margin-top: -10px;">
+    <p style="margin: 0 0 12px 0; color: #7f1d1d;"><strong>原因</strong>: 管理者権限が必要なコマンドを実行しようとしている</p>
+    <p style="margin: 0 0 8px 0; color: #7f1d1d; font-weight: 600;">対処法:</p>
+    <ul style="color: #7f1d1d; line-height: 1.8; margin: 0;">
+      <li>macOS: コマンドの前に <code style="background: rgba(220, 38, 38, 0.1); padding: 2px 6px; border-radius: 4px;">sudo</code> を付ける（例: <code style="background: rgba(220, 38, 38, 0.1); padding: 2px 6px; border-radius: 4px;">sudo ./install-ai-dev-tools-mac.sh</code>）</li>
+      <li>Windows: PowerShellを「管理者として実行」で開き直す</li>
+    </ul>
+  </div>
+</details>
+
+<details style="margin: 20px 0;">
+  <summary style="cursor: pointer; font-weight: 600; color: #dc2626; font-size: 1.05em; padding: 16px 20px; background: rgba(254, 226, 226, 0.3); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);"><strong>エラー2: 「コマンドが見つかりません」「command not found」</strong></summary>
+  <div style="padding: 20px; background: rgba(254, 242, 242, 0.5); border-radius: 0 0 12px 12px; margin-top: -10px;">
+    <p style="margin: 0 0 12px 0; color: #7f1d1d;"><strong>原因</strong>: インストールしたツールがまだ認識されていない</p>
+    <p style="margin: 0 0 8px 0; color: #7f1d1d; font-weight: 600;">対処法:</p>
+    <ul style="color: #7f1d1d; line-height: 1.8; margin: 0;">
+      <li>ターミナル（PowerShell）を一度閉じて、再度開く</li>
+      <li>macOS: <code style="background: rgba(220, 38, 38, 0.1); padding: 2px 6px; border-radius: 4px;">source ~/.zshrc</code> を実行</li>
+      <li>Windows: PowerShellを再起動（環境変数の再読み込み）</li>
+    </ul>
+  </div>
+</details>
+
+<details style="margin: 20px 0;">
+  <summary style="cursor: pointer; font-weight: 600; color: #dc2626; font-size: 1.05em; padding: 16px 20px; background: rgba(254, 226, 226, 0.3); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);"><strong>エラー3: 「ネットワークエラー」「Network error」</strong></summary>
+  <div style="padding: 20px; background: rgba(254, 242, 242, 0.5); border-radius: 0 0 12px 12px; margin-top: -10px;">
+    <p style="margin: 0 0 12px 0; color: #7f1d1d;"><strong>原因</strong>: インターネット接続が不安定、またはファイアウォールがブロックしている</p>
+    <p style="margin: 0 0 8px 0; color: #7f1d1d; font-weight: 600;">対処法:</p>
+    <ul style="color: #7f1d1d; line-height: 1.8; margin: 0;">
+      <li>Wi-Fi接続を確認</li>
+      <li>企業のネットワークを使用している場合は、IT部門に相談</li>
+      <li>VPNを使用している場合は、一時的にオフにして試す</li>
+    </ul>
+  </div>
+</details>
+
+<div style="background: rgba(220, 252, 231, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 20px; padding: 28px; margin: 24px 0;">
+  <p style="margin: 0 0 16px 0; color: #065f46; font-weight: 600; font-size: 1.05em;">💡 それでも解決しない場合は？</p>
+  <p style="margin: 0 0 12px 0; color: #047857; line-height: 1.7;">Claude Codeに相談してみましょう！</p>
+  <pre style="margin: 0; background: rgba(255, 255, 255, 0.8); padding: 16px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3);"><code style="color: #065f46; font-size: 0.9em;">「インストールスクリプトで以下のエラーが出ました。対処法を教えてください。
+[エラーメッセージをコピー＆ペースト]」</code></pre>
+</div>
+
 <hr style="border: none; border-top: 3px solid #e5e7eb; margin: 48px 0;">
 <hr style="border: none; border-top: 1px solid #e5e7eb; margin: -40px 0 48px 0;">
 <h2 id="1-aiでできることあなたができるようになること"><strong>1. AIでできること・あなたができるようになること</strong></h2>
