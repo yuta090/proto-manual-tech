@@ -335,8 +335,132 @@
       }
     }
   </style>
+  <style>
+    /* アコーディオンスタイル */
+    .toc-accordion {
+      margin: 20px 0;
+    }
+
+    .toc-accordion-item {
+      margin-bottom: 8px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .toc-accordion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #1e40af;
+      background: rgba(219, 234, 254, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .toc-accordion-header:hover {
+      background: rgba(219, 234, 254, 0.5);
+    }
+
+    .toc-accordion-icon {
+      font-size: 0.8em;
+      transition: transform 0.3s ease;
+    }
+
+    .toc-accordion-item.active .toc-accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .toc-accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .toc-accordion-item.active .toc-accordion-content {
+      max-height: 2000px;
+    }
+
+    .toc-accordion-content ul {
+      padding: 12px 16px;
+      margin: 0;
+      list-style: none;
+    }
+
+    .toc-accordion-content li {
+      margin-bottom: 12px;
+    }
+
+    .toc-accordion-content a {
+      color: #1e40af;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .toc-accordion-content a:hover {
+      color: #3b82f6;
+      text-decoration: underline;
+    }
+
+    .toc-accordion-content span {
+      display: block;
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* ダークモード対応 */
+    body.dark-mode .toc-accordion-item {
+      background: rgba(51, 65, 85, 0.5);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    body.dark-mode .toc-accordion-header {
+      color: #93c5fd;
+      background: rgba(30, 58, 138, 0.3);
+    }
+
+    body.dark-mode .toc-accordion-header:hover {
+      background: rgba(30, 58, 138, 0.5);
+    }
+
+    body.dark-mode .toc-accordion-content a {
+      color: #93c5fd;
+    }
+
+    body.dark-mode .toc-accordion-content a:hover {
+      color: #bfdbfe;
+    }
+
+    body.dark-mode .toc-accordion-content span {
+      color: #d1d5db;
+    }
+  </style>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // アコーディオン機能
+      const accordionHeaders = document.querySelectorAll('.toc-accordion-header');
+      accordionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          const item = this.parentElement;
+          const wasActive = item.classList.contains('active');
+
+          // 全てのアコーディオンを閉じる（オプション：複数開きたい場合はこの部分を削除）
+          // document.querySelectorAll('.toc-accordion-item').forEach(i => i.classList.remove('active'));
+
+          // クリックされたアイテムをトグル
+          if (wasActive) {
+            item.classList.remove('active');
+          } else {
+            item.classList.add('active');
+          }
+        });
+      });
+
       // すべてのpreタグにコピーボタンを追加
       document.querySelectorAll('.manual-content pre').forEach(function(pre) {
         const button = document.createElement('button');
@@ -425,10 +549,10 @@
 
     </div>
   </header>
-  <button class="nav-toggle" id="navToggle" aria-label="目次を開閉">☰</button>
+  <button class="nav-toggle" id="navToggle" aria-label="目次を開閉"></button>
   <button class="dark-mode-toggle" id="darkModeToggle" aria-label="ダークモード切り替え">
-    <span class="light-icon">☀️</span>
-    <span class="dark-icon">🌙</span>
+    <span class="light-icon">️</span>
+    <span class="dark-icon"></span>
   </button>
 
   <div class="manual-layout" id="manualLayout">
@@ -443,18 +567,18 @@
 <li><a href="#18-sns自動投稿アプリで実務効率化"><strong>18. SNS自動投稿アプリで実務効率化</strong></a></li>
 </ol>
 <hr style="margin: 20px 0; border: none; border-top: 2px solid rgba(251, 146, 60, 0.3);">
-<h3 style="font-size: 1em; margin: 16px 0 12px 0; color: #c2410c;">📚 他のセッション</h3>
+<h3 style="font-size: 1em; margin: 16px 0 12px 0; color: #c2410c;">他のセッション</h3>
 <ul class="toc-list" style="list-style: none; padding-left: 0;">
-<li style="margin-bottom: 8px;"><a href="session-1-basics.html" style="color: #1e40af; font-weight: 600;">← 📘 Session 1: 基礎編</a></li>
-<li style="margin-bottom: 8px;"><a href="session-2-quality.html" style="color: #047857; font-weight: 600;">← 📗 Session 2: 品質編</a></li>
-<li style="margin-bottom: 8px;"><a href="session-3-advanced.html" style="color: #7c3aed; font-weight: 600;">← 📕 Session 3: 応用編</a></li>
+<li style="margin-bottom: 8px;"><a href="session-1-basics.html" style="color: #1e40af; font-weight: 600;">← Session 1: 基礎編</a></li>
+<li style="margin-bottom: 8px;"><a href="session-2-quality.html" style="color: #047857; font-weight: 600;">← Session 2: 品質編</a></li>
+<li style="margin-bottom: 8px;"><a href="session-3-advanced.html" style="color: #7c3aed; font-weight: 600;">← Session 3: 応用編</a></li>
 </ul>
 </nav>
     </aside>
     <main class="manual-content">
       <h2 id="目次"><strong>目次</strong></h2>
 <hr>
-<h3>🚀 Phase 5: 本番運用とプロフェッショナル化（14-18章）</h3>
+<h3>Phase 5: 本番運用とプロフェッショナル化（14-18章）</h3>
 <ul>
 <li>
 <a href="#14-カスタムドメインで本格サイトに"><strong>14. カスタムドメインで本格サイトに</strong></a><br>
@@ -478,7 +602,7 @@
 </li>
 </ul>
 <hr>
-<h3>📖 このセッションについて</h3>
+<h3>このセッションについて</h3>
 <p>Session 4では、これまでに作成したWebアプリを<strong>本番環境</strong>にデプロイし、プロフェッショナルなサービスとして運用するための知識とスキルを学びます。カスタムドメインの取得、セキュリティ強化、CI/CDパイプラインの構築、運用監視、そして実務で即使えるSNS自動投稿アプリの開発まで、実際のビジネスで必要となる実践的なテクニックを習得します。</p>
 
 <p><strong>💡 想定所要時間</strong>: 約6-7時間（各章60-90分）</p>
@@ -490,7 +614,7 @@
   <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); filter: blur(40px);"></div>
   <div style="position: relative; z-index: 1;">
     <h2 id="14-カスタムドメインで本格サイトに" style="color: #9a3412; margin: 0 0 16px 0; font-size: 2.2em; text-align: center; text-shadow: 0 2px 10px rgba(255,255,255,0.8);">
-      🌐 14章: カスタムドメインで<br>本格サイトに
+      14章: カスタムドメインで<br>本格サイトに
     </h2>
     <p style="margin: 0; text-align: center; font-size: 1.1em; color: #c2410c; font-weight: 500; background: rgba(255, 255, 255, 0.9); padding: 16px 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);">あなたのアプリに独自ドメインを設定して、プロフェッショナルなサービスとして世界に公開しよう</p>
   </div>
@@ -499,7 +623,7 @@
 <!-- 学習目標セクション - 14章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -511,7 +635,7 @@
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -532,7 +656,7 @@
 <!-- 目的セクション - グラスモーフィズム -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(249, 115, 22, 0.1);">
   <h3 id="目的" style="margin: 0 0 16px 0; color: #9a3412; display: flex; align-items: center; gap: 10px;">
-    <span style="font-size: 1.4em;">🎯</span>
+    <span style="font-size: 1.4em;"></span>
     <span>この章で学ぶこと</span>
   </h3>
   <p style="margin: 0; color: #78350f; line-height: 1.7;">これまでに作成したWebアプリは、Netlifyの自動生成されたURL（例: <code>random-name-12345.netlify.app</code>）で公開されていました。この章では、<strong>あなた独自のドメイン名</strong>（例: <code>myapp.com</code>）を取得し、プロフェッショナルなWebサービスとして運用するための設定方法を学びます。</p>
@@ -551,7 +675,7 @@
 <p>ドメインとは、インターネット上の「住所」のようなものです。</p>
 
 <div style="background: rgba(251, 146, 60, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(251, 146, 60, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(251, 146, 60, 0.1);">
-  <h4 style="color: #c2410c; margin-top: 0;">🏠 ドメインの構造</h4>
+  <h4 style="color: #c2410c; margin-top: 0;">ドメインの構造</h4>
   <p style="margin: 0;">例: <code style="background: rgba(255, 255, 255, 0.8); padding: 4px 8px; border-radius: 4px; color: #9a3412;">www.example.com</code></p>
   <ul style="margin-top: 16px;">
     <li><strong>www</strong>: サブドメイン（省略可能）</li>
@@ -560,7 +684,7 @@
   </ul>
 </div>
 
-<h4 style="color: #c2410c;">💰 ドメインの費用</h4>
+<h4 style="color: #c2410c;">ドメインの費用</h4>
 <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
   <thead>
     <tr style="background-color: #fff7ed;">
@@ -612,14 +736,14 @@
   </ul>
 </div>
 
-<h4 id="手順1-netlifyにログイン" style="color: #c2410c;">📋 手順1: Netlifyにログイン</h4>
+<h4 id="手順1-netlifyにログイン" style="color: #c2410c;">手順1: Netlifyにログイン</h4>
 
 <ol>
 <li><a href="https://app.netlify.com/" target="_blank" style="color: #ea580c; font-weight: 600;">Netlify</a>にアクセスし、ログインします</li>
 <li>デプロイ済みのサイトを選択します</li>
 </ol>
 
-<h4 id="手順2-ドメイン購入ページへアクセス" style="color: #c2410c;">📋 手順2: ドメイン購入ページへアクセス</h4>
+<h4 id="手順2-ドメイン購入ページへアクセス" style="color: #c2410c;">手順2: ドメイン購入ページへアクセス</h4>
 
 <ol>
 <li>サイトの管理画面で、<strong>「Domain management」</strong>タブをクリック</li>
@@ -628,10 +752,10 @@
 </ol>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 12px; border-left: 4px solid #f97316; margin: 24px 0;">
-  <p style="margin: 0; color: #9a3412; line-height: 1.7;"><strong>🖼️ スクリーンショット</strong>: この手順は、Netlifyの管理画面を操作しながら進めます。各ステップでボタンをクリックするだけなので、プログラミング知識は不要です。</p>
+  <p style="margin: 0; color: #9a3412; line-height: 1.7;"><strong>️ スクリーンショット</strong>: この手順は、Netlifyの管理画面を操作しながら進めます。各ステップでボタンをクリックするだけなので、プログラミング知識は不要です。</p>
 </div>
 
-<h4 id="手順3-ドメイン名を検索" style="color: #c2410c;">📋 手順3: ドメイン名を検索</h4>
+<h4 id="手順3-ドメイン名を検索" style="color: #c2410c;">手順3: ドメイン名を検索</h4>
 
 <ol>
 <li>検索ボックスに希望のドメイン名を入力します（例: <code>myapp</code>）</li>
@@ -639,7 +763,7 @@
 </ol>
 
 <div style="background: rgba(251, 146, 60, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(251, 146, 60, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0;">
-  <h5 style="color: #c2410c; margin-top: 0;">🔍 ドメイン名の選び方のコツ</h5>
+  <h5 style="color: #c2410c; margin-top: 0;">ドメイン名の選び方のコツ</h5>
   <ul style="margin-bottom: 0;">
     <li><strong>短くて覚えやすい</strong>: 5-10文字程度が理想</li>
     <li><strong>意味が明確</strong>: アプリの目的が分かりやすい</li>
@@ -654,7 +778,7 @@
 <li>❌ <strong>悪い例</strong>: <code>my-app-2024-v2.com</code>, <code>app123xyz.net</code></li>
 </ul>
 
-<h4 id="手順4-ドメインを購入" style="color: #c2410c;">📋 手順4: ドメインを購入</h4>
+<h4 id="手順4-ドメインを購入" style="color: #c2410c;">手順4: ドメインを購入</h4>
 
 <ol>
 <li>希望のドメインが利用可能であることを確認</li>
@@ -672,7 +796,7 @@
   </ul>
 </div>
 
-<h4 id="手順5-ドメインの設定完了" style="color: #c2410c;">📋 手順5: ドメインの設定完了</h4>
+<h4 id="手順5-ドメインの設定完了" style="color: #c2410c;">手順5: ドメインの設定完了</h4>
 
 <p>購入が完了すると、Netlifyが自動的に以下の設定を行います：</p>
 
@@ -683,7 +807,7 @@
 </ul>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了！</strong> 設定が完了すると、数分〜数時間で新しいドメインでアクセスできるようになります。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了！</strong> 設定が完了すると、数分〜数時間で新しいドメインでアクセスできるようになります。</p>
 </div>
 
 <h3 id="14-3-ssl証明書とhttps">14.3 SSL証明書とHTTPS</h3>
@@ -691,7 +815,7 @@
 <p>Netlifyでドメインを購入すると、<strong>SSL証明書</strong>が自動的に発行され、あなたのサイトは<strong>HTTPS</strong>で通信するようになります。</p>
 
 <div style="background: rgba(251, 146, 60, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(251, 146, 60, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(251, 146, 60, 0.1);">
-  <h4 style="color: #c2410c; margin-top: 0;">🔒 HTTPSとは？</h4>
+  <h4 style="color: #c2410c; margin-top: 0;">HTTPSとは？</h4>
   <p style="margin: 0;">HTTPSは、ウェブサイトとユーザーの間の通信を<strong>暗号化</strong>する仕組みです。これにより、第三者にデータを盗聴されるリスクが大幅に減少します。</p>
 
   <table style="width: 100%; margin-top: 16px; border-collapse: collapse;">
@@ -722,7 +846,7 @@
   </table>
 </div>
 
-<h4 style="color: #c2410c;">🔧 SSL証明書の確認方法</h4>
+<h4 style="color: #c2410c;">SSL証明書の確認方法</h4>
 
 <ol>
 <li>Netlifyの管理画面で、<strong>「Domain management」</strong>タブを開く</li>
@@ -738,7 +862,7 @@
 <h3 id="14-4-独自ドメインのメリット">14.4 独自ドメインのメリット</h3>
 
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(249, 115, 22, 0.1);">
-  <h4 style="color: #9a3412; margin-top: 0;">🎯 なぜ独自ドメインが重要なのか？</h4>
+  <h4 style="color: #9a3412; margin-top: 0;">なぜ独自ドメインが重要なのか？</h4>
 
   <ul style="margin: 0;">
     <li style="margin-bottom: 12px;">
@@ -800,7 +924,7 @@
 <h3 id="まとめ-14章">まとめ</h3>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin: 24px 0;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>🎉 おめでとうございます！</strong> この章では、Netlifyで独自ドメインを取得し、あなたのWebアプリをプロフェッショナルなサービスとして公開する方法を学びました。次の章では、環境変数とセキュリティについて深掘りします。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>おめでとうございます！</strong> この章では、Netlifyで独自ドメインを取得し、あなたのWebアプリをプロフェッショナルなサービスとして公開する方法を学びました。次の章では、環境変数とセキュリティについて深掘りします。</p>
 </div>
 
 <hr>
@@ -810,7 +934,7 @@
   <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); filter: blur(40px);"></div>
   <div style="position: relative; z-index: 1;">
     <h2 id="15-環境変数とセキュリティの深掘り" style="color: #78350f; margin: 0 0 16px 0; font-size: 2.2em; text-align: center; text-shadow: 0 2px 10px rgba(255,255,255,0.8);">
-      🔐 15章: 環境変数とClaudeCode統合
+      15章: 環境変数とClaudeCode統合
     </h2>
     <p style="margin: 0; text-align: center; font-size: 1.1em; color: #92400e; font-weight: 500; background: rgba(255, 255, 255, 0.9); padding: 16px 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(245, 158, 11, 0.15);">.envファイルとClaudeCodeで、環境変数を簡単かつ安全に管理しよう</p>
   </div>
@@ -819,7 +943,7 @@
 <!-- 学習目標セクション - 15章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -831,7 +955,7 @@
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -851,7 +975,7 @@
 
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
   <h3 style="margin: 0 0 16px 0; color: #78350f; display: flex; align-items: center; gap: 10px;">
-    <span style="font-size: 1.4em;">🎯</span>
+    <span style="font-size: 1.4em;"></span>
     <span>この章で学ぶこと</span>
   </h3>
   <p style="margin: 0; color: #92400e; line-height: 1.7;">Webアプリを作る時、<strong>「秘密にしておきたい情報」</strong>があります。例えば、データベースのパスワードやAPIキーなど。これらを<strong>コードに直接書いてしまう</strong>と、GitHubに公開した時に誰でも見られてしまいます。この章では、そうした大切な情報を安全に管理する方法を学びます。</p>
@@ -867,10 +991,10 @@
 <p>環境変数とは、<strong>プログラムの外側に保存する設定値</strong>のことです。</p>
 
 <div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
-  <h4 style="color: #92400e; margin-top: 0;">🏠 家の鍵に例えると</h4>
+  <h4 style="color: #92400e; margin-top: 0;">家の鍵に例えると</h4>
   <ul style="margin: 0;">
-    <li><strong>コードに直接書く</strong> = 家の鍵を玄関に貼り付ける（誰でも見られる😱）</li>
-    <li><strong>環境変数に保存</strong> = 鍵を自分のポケットに入れておく（安全🔐）</li>
+    <li><strong>コードに直接書く</strong> = 家の鍵を玄関に貼り付ける（誰でも見られる）</li>
+    <li><strong>環境変数に保存</strong> = 鍵を自分のポケットに入れておく（安全）</li>
   </ul>
 </div>
 
@@ -890,11 +1014,11 @@ const dbPassword = process.env.DB_PASSWORD;
 
 <p>.envファイルは、<strong>環境変数を保存するための専用ファイル</strong>です。このファイルに秘密の情報を書いておくと、プログラムから簡単に読み込めます。</p>
 
-<h4 style="color: #92400e;">📋 手順1: プロジェクトのルートに.envファイルを作成</h4>
+<h4 style="color: #92400e;">手順1: プロジェクトのルートに.envファイルを作成</h4>
 
 <p>プロジェクトのルートディレクトリ（package.jsonがある場所）に、<code>.env</code>という名前のファイルを作成します。</p>
 
-<h4 style="color: #92400e;">📋 手順2: 環境変数を書き込む</h4>
+<h4 style="color: #92400e;">手順2: 環境変数を書き込む</h4>
 
 <p>.envファイルに、以下の形式で環境変数を書き込みます：</p>
 
@@ -920,7 +1044,7 @@ API_KEY=sk_test_abc123xyz789
   </ul>
 </div>
 
-<h4 style="color: #92400e;">📋 手順3: .gitignoreに追加</h4>
+<h4 style="color: #92400e;">手順3: .gitignoreに追加</h4>
 
 <p><strong>重要:</strong> .envファイルは<strong>絶対にGitHubに公開してはいけません</strong>。.gitignoreファイルに追加して、Gitの管理対象から除外します。</p>
 
@@ -935,7 +1059,7 @@ API_KEY=sk_test_abc123xyz789
 <p>ClaudeCodeを使えば、<strong>環境変数の設定を自動化</strong>できます！手動で設定する必要はありません。</p>
 
 <div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);">
-  <h4 style="color: #4338ca; margin-top: 0;">🤖 ClaudeCodeへの依頼プロンプト例</h4>
+  <h4 style="color: #4338ca; margin-top: 0;">ClaudeCodeへの依頼プロンプト例</h4>
   <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">.envファイルを作成して、以下の環境変数を設定してください：
 
 - Supabase URL: [あなたのSupabase URL]
@@ -958,7 +1082,7 @@ API_KEY=sk_test_abc123xyz789
 
 <p>.envファイルに保存した環境変数は、<strong>Netlify CLIやSupabase CLIから自動的に読み込まれます</strong>。</p>
 
-<h4 style="color: #92400e;">📋 Netlify CLIでの使い方</h4>
+<h4 style="color: #92400e;">Netlify CLIでの使い方</h4>
 
 <p>Netlify CLIは、.envファイルを自動的に読み込んでくれます：</p>
 
@@ -969,7 +1093,7 @@ netlify deploy --prod
 netlify env:list
 </code></pre>
 
-<h4 style="color: #92400e;">📋 Supabase CLIでの使い方</h4>
+<h4 style="color: #92400e;">Supabase CLIでの使い方</h4>
 
 <p>Supabase CLIも同様に、.envファイルを自動的に読み込みます：</p>
 
@@ -981,7 +1105,7 @@ supabase start
 </code></pre>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ ポイント</strong>: .envファイルに一度書いておけば、NetlifyやSupabaseのCLIが自動的に読み込んでくれます！</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>ポイント</strong>: .envファイルに一度書いておけば、NetlifyやSupabaseのCLIが自動的に読み込んでくれます！</p>
 </div>
 
 <h3 id="15-5-コードで環境変数を使う">15.5 コードで環境変数を使う</h3>
@@ -1001,7 +1125,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 </code></pre>
 
 <div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);">
-  <h4 style="color: #4338ca; margin-top: 0;">🤖 ClaudeCodeへの依頼プロンプト例</h4>
+  <h4 style="color: #4338ca; margin-top: 0;">ClaudeCodeへの依頼プロンプト例</h4>
   <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">Supabaseに接続するコードを書いてください。
 環境変数（SUPABASE_URLとSUPABASE_KEY）を使って、
 createClientで接続してください。</code></pre>
@@ -1012,7 +1136,7 @@ createClientで接続してください。</code></pre>
 <h3 id="まとめ-15章">まとめ</h3>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin: 24px 0;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>🎉 お疲れさまでした！</strong> この章では、.envファイルで環境変数を管理する方法と、ClaudeCodeを使って自動設定する方法、そしてNetlify CLI/Supabase CLIで簡単に環境変数を読み込む方法を学びました。次の章では、Resendを使ったメール送信について学びます。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>お疲れさまでした！</strong> この章では、.envファイルで環境変数を管理する方法と、ClaudeCodeを使って自動設定する方法、そしてNetlify CLI/Supabase CLIで簡単に環境変数を読み込む方法を学びました。次の章では、Resendを使ったメール送信について学びます。</p>
 </div>
 
 <hr>
@@ -1022,7 +1146,7 @@ createClientで接続してください。</code></pre>
   <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); filter: blur(40px);"></div>
   <div style="position: relative; z-index: 1;">
     <h2 id="16-resendでメール送信機能を追加" style="color: #78350f; margin: 0 0 16px 0; font-size: 2.2em; text-align: center; text-shadow: 0 2px 10px rgba(255,255,255,0.8);">
-      ✉️ 16章: Resendでメール送信機能を追加
+      ️ 16章: Resendでメール送信機能を追加
     </h2>
     <p style="margin: 0; text-align: center; font-size: 1.1em; color: #92400e; font-weight: 500; background: rgba(255, 255, 255, 0.9); padding: 16px 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(245, 158, 11, 0.15);">独自ドメインから本格的なメールを送信。問い合わせフォームや通知機能を実装しよう</p>
   </div>
@@ -1031,7 +1155,7 @@ createClientで接続してください。</code></pre>
 <!-- 学習目標セクション - 16章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -1043,7 +1167,7 @@ createClientで接続してください。</code></pre>
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -1063,7 +1187,7 @@ createClientで接続してください。</code></pre>
 
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
   <h3 style="margin: 0 0 16px 0; color: #78350f; display: flex; align-items: center; gap: 10px;">
-    <span style="font-size: 1.4em;">🎯</span>
+    <span style="font-size: 1.4em;"></span>
     <span>この章で学ぶこと</span>
   </h3>
   <p style="margin: 0; color: #92400e; line-height: 1.7;"><strong>Resend</strong>は、開発者向けの<strong>モダンなメール配信サービス</strong>です。問い合わせフォームの送信、パスワードリセット、ユーザー通知など、Webアプリには欠かせないメール機能を簡単に実装できます。独自ドメインから送信することで、プロフェッショナルな印象を与えることができます。</p>
@@ -1079,7 +1203,7 @@ createClientで接続してください。</code></pre>
 <p>Resendは、<strong>開発者向けのモダンなメール配信サービス</strong>です。GmailやYahoo!メールとは違い、<strong>プログラムからメールを送信するための専用サービス</strong>です。</p>
 
 <div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
-  <h4 style="color: #92400e; margin-top: 0;">📧 Resendでできること</h4>
+  <h4 style="color: #92400e; margin-top: 0;">Resendでできること</h4>
   <ul style="margin: 0;">
     <li><strong>問い合わせフォームの送信</strong>: ユーザーからの問い合わせを自動で受信</li>
     <li><strong>パスワードリセット</strong>: リセットリンクをメールで送信</li>
@@ -1088,7 +1212,7 @@ createClientで接続してください。</code></pre>
   </ul>
 </div>
 
-<h4 style="color: #92400e;">🌟 Resendが選ばれる理由</h4>
+<h4 style="color: #92400e;">Resendが選ばれる理由</h4>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);">
   <ul style="margin: 0;">
@@ -1103,7 +1227,7 @@ createClientで接続してください。</code></pre>
 
 <p>まずはResendのアカウントを作成し、独自ドメインを設定します。<strong>初めての方も安心してください！画面を見ながら一緒に進めていきましょう。</strong></p>
 
-<h4 style="color: #92400e;">💰 Resend料金プラン</h4>
+<h4 style="color: #92400e;">Resend料金プラン</h4>
 
 <p>Resendは<strong>無料プランから始められます</strong>。開発やテスト、小規模アプリには無料プランで十分です！</p>
 
@@ -1119,7 +1243,7 @@ createClientで接続してください。</code></pre>
     </thead>
     <tbody>
       <tr style="background: rgba(16, 185, 129, 0.05);">
-        <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2);"><strong style="color: #047857;">Free</strong><br><span style="font-size: 0.85em; color: #059669;">👈 おすすめ</span></td>
+        <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2);"><strong style="color: #047857;">Free</strong><br><span style="font-size: 0.85em; color: #059669;">おすすめ</span></td>
         <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); color: #1f2937;"><strong>$0</strong></td>
         <td style="padding: 12px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); color: #1f2937;">
           <strong>月3,000通</strong><br>
@@ -1163,7 +1287,7 @@ createClientで接続してください。</code></pre>
 </div>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin: 16px 0;">
-  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">✨ 無料プランで十分なケース</p>
+  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">無料プランで十分なケース</p>
   <ul style="margin: 0; padding-left: 20px; color: #065f46; line-height: 1.7;">
     <li>個人プロジェクトや学習用アプリ</li>
     <li>問い合わせフォーム（1日10-20件程度）</li>
@@ -1173,7 +1297,7 @@ createClientで接続してください。</code></pre>
   <p style="margin: 12px 0 0 0; color: #047857; font-size: 0.9em;"><strong>💡 ポイント</strong>: 無料プランでも<strong>月3,000通</strong>送れるので、1日平均100通なら十分です。ビジネスが成長したらProプランにアップグレードしましょう。</p>
 </div>
 
-<h4 style="color: #92400e;">📋 手順1: Resendアカウントを作成（3分）</h4>
+<h4 style="color: #92400e;">手順1: Resendアカウントを作成（3分）</h4>
 
 <div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
   <ol style="margin: 0; padding-left: 20px;">
@@ -1188,7 +1312,7 @@ createClientで接続してください。</code></pre>
   <p style="margin: 0; color: #1e40af; line-height: 1.7;"><strong>💡 初学者向けポイント</strong>: 「ダッシュボード」とは、サービスの管理画面のことです。ここでメールの送信設定やAPIキーの管理を行います。まるでExcelのホーム画面のようなものです。</p>
 </div>
 
-<h4 style="color: #92400e;">📋 手順2: ドメインをResendに追加（5分）</h4>
+<h4 style="color: #92400e;">手順2: ドメインをResendに追加（5分）</h4>
 
 <p>独自ドメイン（例: myapp.com）からメールを送信するには、ドメインをResendに登録します。<strong>これは、あなたのドメインからメールを送る許可をResendに与える作業です。</strong></p>
 
@@ -1205,7 +1329,7 @@ createClientで接続してください。</code></pre>
     <li style="margin-bottom: 12px;"><strong>「Add Domain」</strong>ボタンをクリックして確定</li>
     <li>画面に表示される<strong>DNSレコード</strong>（SPF、DKIM、DMARC）をメモ帳にコピーして保存しておきます
       <div style="margin-top: 8px; padding: 12px; background: rgba(245, 158, 11, 0.1); border-radius: 6px;">
-        <p style="margin: 0; color: #92400e; font-weight: 600;">📝 次のステップで必要になります</p>
+        <p style="margin: 0; color: #92400e; font-weight: 600;">次のステップで必要になります</p>
         <p style="margin: 8px 0 0 0; color: #92400e; line-height: 1.7; font-size: 0.95em;">これらのDNSレコードは、次のステップでNetlifyに設定します。画面を閉じずに、そのまま次の作業に進みましょう。</p>
       </div>
     </li>
@@ -1213,16 +1337,16 @@ createClientで接続してください。</code></pre>
 </div>
 
 <div style="background: rgba(59, 130, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-top: 16px;">
-  <p style="margin: 0; color: #1e40af; line-height: 1.7;"><strong>🤔 「DNSレコード」って何？</strong></p>
+  <p style="margin: 0; color: #1e40af; line-height: 1.7;"><strong>「DNSレコード」って何？</strong></p>
   <p style="margin: 8px 0 0 0; color: #1e40af;">DNSレコードは、インターネット上で「このドメインから送られたメールは本物ですよ」と証明するための設定です。電子印鑑のようなものだと考えてください。これを設定しないと、あなたのメールが迷惑メールフォルダに入ってしまう可能性が高くなります。</p>
 </div>
 
-<h4 style="color: #92400e;">📋 手順3: NetlifyにDNSレコードを設定してResendと連携（15分）</h4>
+<h4 style="color: #92400e;">手順3: NetlifyにDNSレコードを設定してResendと連携（15分）</h4>
 
 <p>先ほどResendで表示されたDNSレコードを、Netlifyに登録します。<strong>これにより、Netlifyで管理しているドメインとResendが正式に連携され、そのドメインからメール送信できるようになります。</strong></p>
 
 <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #8b5cf6; margin: 16px 0;">
-  <p style="margin: 0 0 8px 0; color: #6d28d9; font-weight: 600;">🎯 この作業でできるようになること</p>
+  <p style="margin: 0 0 8px 0; color: #6d28d9; font-weight: 600;">この作業でできるようになること</p>
   <ul style="margin: 0; padding-left: 20px; color: #7c3aed; line-height: 1.7;">
     <li>Netlifyで管理している独自ドメイン（例: myapp.com）からメール送信</li>
     <li>送信元アドレスに独自ドメインを使用（例: noreply@myapp.com）</li>
@@ -1231,11 +1355,11 @@ createClientで接続してください。</code></pre>
 </div>
 
 <div style="background: rgba(59, 130, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 16px 0;">
-  <p style="margin: 0 0 8px 0; color: #1e40af; font-weight: 600;">📌 事前準備：Resendの画面を開いたままにしておく</p>
+  <p style="margin: 0 0 8px 0; color: #1e40af; font-weight: 600;">事前準備：Resendの画面を開いたままにしておく</p>
   <p style="margin: 0; color: #1e40af; line-height: 1.7;">手順2で表示されたResendのDNSレコード画面を<strong>閉じずに</strong>そのままにしておいてください。この画面を見ながらNetlifyに入力していきます。</p>
 </div>
 
-<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">🔧 ステップ3-1: NetlifyのDNS設定画面を開く</p>
+<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">ステップ3-1: NetlifyのDNS設定画面を開く</p>
 
 <div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
   <ol style="margin: 0; padding-left: 20px; line-height: 1.8;">
@@ -1270,7 +1394,7 @@ createClientで接続してください。</code></pre>
   <p style="margin: 12px 0 0 0; color: #991b1b; line-height: 1.7;"><strong>対処法</strong>: ドメインを購入したサービス（お名前.com、ムームードメイン、Cloudflare等）のDNS設定画面で、以下の手順と同様にレコードを追加してください。</p>
 </div>
 
-<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">📝 ステップ3-2: DNSレコードを1つずつ追加する</p>
+<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">ステップ3-2: DNSレコードを1つずつ追加する</p>
 
 <p>Resendで表示された3つのDNSレコード（SPF、DKIM、DMARC）を、Netlifyに順番に追加していきます。<strong>各レコードは必ず正確にコピー＆ペーストしてください。手入力すると間違えやすいです。</strong></p>
 
@@ -1278,7 +1402,7 @@ createClientで接続してください。</code></pre>
   <p style="margin: 0 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.05em;">1️⃣ SPFレコードの追加（メール送信元の認証）</p>
 
   <div style="background: rgba(245, 158, 11, 0.05); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
-    <p style="margin: 0 0 12px 0; color: #78350f; font-weight: 600;">📋 入力内容</p>
+    <p style="margin: 0 0 12px 0; color: #78350f; font-weight: 600;">入力内容</p>
     <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
       <tr style="background: rgba(245, 158, 11, 0.1);">
         <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 600; color: #92400e; width: 30%;">項目</td>
@@ -1321,7 +1445,7 @@ createClientで接続してください。</code></pre>
   <p style="margin: 0 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.05em;">2️⃣ DKIMレコードの追加（メール内容の改ざん防止）</p>
 
   <div style="background: rgba(245, 158, 11, 0.05); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
-    <p style="margin: 0 0 12px 0; color: #78350f; font-weight: 600;">📋 入力内容</p>
+    <p style="margin: 0 0 12px 0; color: #78350f; font-weight: 600;">入力内容</p>
     <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
       <tr style="background: rgba(245, 158, 11, 0.1);">
         <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 600; color: #92400e; width: 30%;">項目</td>
@@ -1365,7 +1489,7 @@ createClientで接続してください。</code></pre>
   <p style="margin: 0 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.05em;">3️⃣ DMARCレコードの追加（なりすましメール対策）</p>
 
   <div style="background: rgba(245, 158, 11, 0.05); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
-    <p style="margin: 0 0 12px 0; color: #78350f; font-weight: 600;">📋 入力内容</p>
+    <p style="margin: 0 0 12px 0; color: #78350f; font-weight: 600;">入力内容</p>
     <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
       <tr style="background: rgba(245, 158, 11, 0.1);">
         <td style="padding: 10px; border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 600; color: #92400e; width: 30%;">項目</td>
@@ -1405,7 +1529,7 @@ createClientで接続してください。</code></pre>
 </div>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 24px;">
-  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">🎉 DNSレコードの追加完了！</p>
+  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">DNSレコードの追加完了！</p>
   <p style="margin: 0; color: #047857; line-height: 1.7;">3つのDNSレコード（SPF、DKIM、DMARC）をすべて追加できました。次のステップでResend側から検証を行います。</p>
 </div>
 
@@ -1502,7 +1626,7 @@ createClientで接続してください。</code></pre>
   <p style="margin: 0 0 12px 0; color: #7c3aed; line-height: 1.7; font-size: 0.95em;">なぜResendがドメイン設定を直接できないのか、図で理解しましょう：</p>
 
   <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; margin: 12px 0; font-family: monospace; font-size: 0.9em; line-height: 1.8;">
-    <div style="color: #6d28d9; font-weight: 600; margin-bottom: 8px;">📊 DNS設定の流れ</div>
+    <div style="color: #6d28d9; font-weight: 600; margin-bottom: 8px;">DNS設定の流れ</div>
     <div style="color: #1f2937;">
       <div style="margin-bottom: 4px;">あなた → Resend: 「myapp.comでメール送りたい」</div>
       <div style="margin-bottom: 4px;">Resend → あなた: 「これらのDNSレコードを追加して」（指示のみ）</div>
@@ -1519,16 +1643,16 @@ createClientで接続してください。</code></pre>
   <p style="margin: 12px 0 0 0; color: #7c3aed; line-height: 1.7; font-size: 0.95em;"><strong>重要ポイント</strong>: Resendは「指示を出す」ことと「検証する」ことしかできません。実際のDNS設定は、ドメインを管理しているサービス（Netlify、お名前.com等）でしか行えません。</p>
 </div>
 
-<h4 style="color: #92400e;">📋 手順4: APIキーを取得してResend CLIに設定（10分）</h4>
+<h4 style="color: #92400e;">手順4: APIキーを取得してResend CLIに設定（10分）</h4>
 
 <p><strong>APIキーは、プログラムからResendを操作するための「パスワード」のようなものです。</strong>セキュリティ上の理由から、ダッシュボードで作成し、コマンドラインツール（Resend CLI）に安全に保存する必要があります。</p>
 
 <div style="background: rgba(59, 130, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 16px 0;">
-  <p style="margin: 0 0 8px 0; color: #1e40af; font-weight: 600;">🤔 なぜダッシュボードでAPIキーを作成する必要があるの？</p>
+  <p style="margin: 0 0 8px 0; color: #1e40af; font-weight: 600;">なぜダッシュボードでAPIキーを作成する必要があるの？</p>
   <p style="margin: 0; color: #1e40af; line-height: 1.7;">セキュリティのためです。APIキーはあなたのアカウントの「鍵」です。もし誰かがこの鍵を盗んで悪用したら、あなたの名前でスパムメールを大量送信されてしまう可能性があります。だから、ダッシュボードでログイン認証をした後にだけ作成できるようになっているのです。</p>
 </div>
 
-<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">🔑 ステップ4-1: ダッシュボードでAPIキーを作成</p>
+<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">ステップ4-1: ダッシュボードでAPIキーを作成</p>
 
 <div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
   <ol style="margin: 0; padding-left: 20px;">
@@ -1594,7 +1718,7 @@ createClientで接続してください。</code></pre>
   <p style="margin: 8px 0 0 0; color: #1e40af;">0章の自動セットアップスクリプトでResend CLIは既にインストールされています。次のステップでAPIキーを設定するだけでOKです！</p>
 </div>
 
-<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">🔐 ステップ4-2: APIキーをResend CLIに設定</p>
+<p style="margin: 24px 0 16px 0; font-weight: 600; color: #92400e; font-size: 1.1em;">ステップ4-2: APIキーをResend CLIに設定</p>
 
 <p>先ほどコピーしたAPIキーを、Resend CLIに保存します。この作業により、毎回APIキーを入力しなくても、安全にResendを利用できるようになります。</p>
 
@@ -1611,12 +1735,12 @@ createClientで接続してください。</code></pre>
 </div>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">✨ これで準備完了！</p>
+  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">これで準備完了！</p>
   <p style="margin: 0; color: #047857; line-height: 1.7;">これで、あなたのコンピューター上でResend CLIを使ってメール送信のテストや管理ができるようになりました。APIキーは暗号化されて安全に保存されています。</p>
 </div>
 
 <div style="background: rgba(59, 130, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-top: 16px;">
-  <p style="margin: 0 0 8px 0; color: #1e40af; font-weight: 600;">🧪 動作確認（オプション）</p>
+  <p style="margin: 0 0 8px 0; color: #1e40af; font-weight: 600;">動作確認（オプション）</p>
   <p style="margin: 0 0 8px 0; color: #1e40af; line-height: 1.7;">以下のコマンドでAPIキーが正しく設定されているか確認できます：</p>
   <pre style="background: rgba(30, 27, 75, 0.95); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 12px; overflow-x: auto; margin: 0;"><code style="color: #bfdbfe;">resend domains list</code></pre>
   <p style="margin: 8px 0 0 0; color: #1e40af; font-size: 0.9em;">先ほど登録したドメイン一覧が表示されれば成功です！</p>
@@ -1626,32 +1750,32 @@ createClientで接続してください。</code></pre>
 
 <p>ClaudeCodeを使えば、Resendの統合を簡単に自動化できます！<strong>メール送信のタイミングをしっかり設計してから実装すると、より良い機能になります。</strong></p>
 
-<h4 style="color: #92400e;">🎯 ステップ1: SuperClaudeで要件を整理（推奨）</h4>
+<h4 style="color: #92400e;">ステップ1: SuperClaudeで要件を整理（推奨）</h4>
 
 <p>実装前に、<strong>SuperClaudeのbrainstormコマンド</strong>を使って、「どんな時にメールを送りたいか」を整理しましょう。</p>
 
 <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.1);">
-  <h4 style="color: #6d28d9; margin-top: 0;">💭 SuperClaude Brainstorm例</h4>
+  <h4 style="color: #6d28d9; margin-top: 0;">SuperClaude Brainstorm例</h4>
   <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">/sc:brainstorm 作業時間トラッカーアプリにメール送信機能を追加したい。
 どんな時にメールを送ったら便利か、アイデアを一緒に考えたい。</code></pre>
 
   <p style="margin: 12px 0; color: #6d28d9; font-weight: 600;">SuperClaudeが質問してくれる例：</p>
   <ul style="margin: 0; color: #7c3aed; line-height: 1.7;">
-    <li>📧 誰にメールを送りますか？（本人、管理者、チームメンバー）</li>
+    <li>誰にメールを送りますか？（本人、管理者、チームメンバー）</li>
     <li>⏰ どんなタイミングで送りますか？（即座、定期的、条件付き）</li>
-    <li>📝 メールに何を含めますか？（データ、レポート、通知）</li>
-    <li>🎯 メールの目的は何ですか？（記録、通知、リマインド）</li>
+    <li>メールに何を含めますか？（データ、レポート、通知）</li>
+    <li>メールの目的は何ですか？（記録、通知、リマインド）</li>
   </ul>
 
   <p style="margin: 12px 0 0 0; color: #7c3aed; font-size: 0.9em;"><strong>💡 ポイント</strong>: brainstormで対話しながら要件を固めると、後で「あれも必要だった」となりにくいです！</p>
 </div>
 
-<h4 style="color: #92400e;">🎨 ステップ2: SuperClaudeで設計書を作成（推奨）</h4>
+<h4 style="color: #92400e;">ステップ2: SuperClaudeで設計書を作成（推奨）</h4>
 
 <p>要件が固まったら、<strong>SuperClaudeのdesignコマンド</strong>で詳細な設計書を作成します。</p>
 
 <div style="background: rgba(236, 72, 153, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(236, 72, 153, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(236, 72, 153, 0.1);">
-  <h4 style="color: #be185d; margin-top: 0;">📐 SuperClaude Design例</h4>
+  <h4 style="color: #be185d; margin-top: 0;">SuperClaude Design例</h4>
   <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">/sc:design Resendを使ったメール送信機能の設計書を作成してください。
 
 【メール送信タイミング】
@@ -1668,12 +1792,12 @@ createClientで接続してください。</code></pre>
   <p style="margin: 12px 0 0 0; color: #be185d; font-size: 0.9em;"><strong>💡 ポイント</strong>: designコマンドで作成した設計書を、そのままClaudeCodeに渡すと実装がスムーズです！</p>
 </div>
 
-<h4 style="color: #92400e;">💻 ステップ3: ClaudeCodeで実装</h4>
+<h4 style="color: #92400e;">ステップ3: ClaudeCodeで実装</h4>
 
 <p>設計書ができたら、ClaudeCodeに実装を依頼します。</p>
 
 <div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);">
-  <h4 style="color: #4338ca; margin-top: 0;">🤖 ClaudeCodeへの依頼プロンプト例</h4>
+  <h4 style="color: #4338ca; margin-top: 0;">ClaudeCodeへの依頼プロンプト例</h4>
 
   <p style="margin: 0 0 12px 0; color: #4338ca; font-weight: 600;">パターン1: 問い合わせフォーム（シンプル）</p>
   <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">Resend SDKをインストールして、問い合わせフォームからメールを送信する機能を実装してください。
@@ -1748,7 +1872,7 @@ createClientで接続してください。</code></pre>
 </div>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin: 16px 0;">
-  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">✨ プロンプトのコツ</p>
+  <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">プロンプトのコツ</p>
   <ul style="margin: 0; padding-left: 20px; color: #065f46; line-height: 1.7;">
     <li><strong>メール送信タイミング</strong>を明確に書く（いつ送るか）</li>
     <li><strong>送信内容</strong>を具体的に書く（送信元、送信先、件名、本文）</li>
@@ -1773,7 +1897,7 @@ createClientで接続してください。</code></pre>
 
 <p>ClaudeCodeが生成したコードを確認し、実際にメール送信をテストしましょう。</p>
 
-<h4 style="color: #92400e;">🧪 テスト手順</h4>
+<h4 style="color: #92400e;">テスト手順</h4>
 
 <ol>
   <li><strong>ローカルで動作確認</strong>: <code>netlify dev</code>でローカルサーバーを起動</li>
@@ -1783,10 +1907,10 @@ createClientで接続してください。</code></pre>
 </ol>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了！</strong> メールが届いたら成功です。Resendダッシュボードの「Emails」タブで送信履歴も確認できます。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了！</strong> メールが届いたら成功です。Resendダッシュボードの「Emails」タブで送信履歴も確認できます。</p>
 </div>
 
-<h4 style="color: #92400e;">🔍 トラブルシューティング</h4>
+<h4 style="color: #92400e;">トラブルシューティング</h4>
 
 <div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
   <ul style="margin: 0;">
@@ -1799,7 +1923,7 @@ createClientで接続してください。</code></pre>
 <h3 id="まとめ-16章">まとめ</h3>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin: 24px 0;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>🎉 素晴らしい！</strong> この章では、Resendを使ったメール送信機能の実装方法を学びました。独自ドメインからプロフェッショナルなメールを送信できるようになりました。ClaudeCodeを使えば、複雑な統合も簡単に実装できます。次の章では、Google AnalyticsとGA4 MCPを使った運用監視について学びます。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>素晴らしい！</strong> この章では、Resendを使ったメール送信機能の実装方法を学びました。独自ドメインからプロフェッショナルなメールを送信できるようになりました。ClaudeCodeを使えば、複雑な統合も簡単に実装できます。次の章では、Google AnalyticsとGA4 MCPを使った運用監視について学びます。</p>
 </div>
 
 <hr>
@@ -1809,7 +1933,7 @@ createClientで接続してください。</code></pre>
   <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); filter: blur(40px);"></div>
   <div style="position: relative; z-index: 1;">
     <h2 id="17-google-analyticsとga4-mcpで運用分析" style="color: #78350f; margin: 0 0 16px 0; font-size: 2.2em; text-align: center; text-shadow: 0 2px 10px rgba(255,255,255,0.8);">
-      📊 17章: Google AnalyticsとGA4 MCPで運用分析
+      17章: Google AnalyticsとGA4 MCPで運用分析
     </h2>
     <p style="margin: 0; text-align: center; font-size: 1.1em; color: #92400e; font-weight: 500; background: rgba(255, 255, 255, 0.9); padding: 16px 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);">Google AnalyticsとGA4 MCPで、ユーザーの行動を理解し、データ駆動の改善をしよう</p>
   </div>
@@ -1818,7 +1942,7 @@ createClientで接続してください。</code></pre>
 <!-- 学習目標セクション - 17章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -1830,7 +1954,7 @@ createClientで接続してください。</code></pre>
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -1850,7 +1974,7 @@ createClientで接続してください。</code></pre>
 
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(249, 115, 22, 0.1);">
   <h3 style="margin: 0 0 16px 0; color: #78350f; display: flex; align-items: center; gap: 10px;">
-    <span style="font-size: 1.4em;">🎯</span>
+    <span style="font-size: 1.4em;"></span>
     <span>この章で学ぶこと</span>
   </h3>
   <p style="margin: 0; color: #92400e; line-height: 1.7;">Webアプリを公開したら、<strong>「どのくらいの人が使っているのか」「どのページが人気なのか」</strong>を知りたいですよね。この章では、<strong>Google Analytics（GA4）</strong>でアクセス状況を分析する方法と、<strong>GA4 MCP</strong>を使ってClaudeCodeから簡単に質問したり、タグを埋め込んだりする方法を学びます。</p>
@@ -1866,7 +1990,7 @@ createClientで接続してください。</code></pre>
 <p>Google Analytics（GA4）は、<strong>無料で使える最強のアクセス解析ツール</strong>です。Webアプリの改善には、「何が起きているのか」を知ることが不可欠です。</p>
 
 <div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);">
-  <h4 style="color: #92400e; margin-top: 0;">📊 Google Analyticsで分かること</h4>
+  <h4 style="color: #92400e; margin-top: 0;">Google Analyticsで分かること</h4>
   <ul style="margin: 0;">
     <li><strong>訪問者数</strong>: リアルタイムで何人が来ているか</li>
     <li><strong>人気のページ</strong>: どのページがよく見られているか</li>
@@ -1876,7 +2000,7 @@ createClientで接続してください。</code></pre>
   </ul>
 </div>
 
-<h4 style="color: #92400e;">🌟 GA4（第4世代）の特徴</h4>
+<h4 style="color: #92400e;">GA4（第4世代）の特徴</h4>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);">
   <ul style="margin: 0;">
@@ -1891,7 +2015,7 @@ createClientで接続してください。</code></pre>
 
 <p>Google Analyticsのアカウントを作成し、Webアプリに測定タグを設置します。</p>
 
-<h4 style="color: #92400e;">📋 手順1: Google Analyticsアカウントを作成</h4>
+<h4 style="color: #92400e;">手順1: Google Analyticsアカウントを作成</h4>
 
 <ol>
   <li><a href="https://analytics.google.com/" target="_blank" style="color: #ea580c; font-weight: 600;">Google Analytics</a>にアクセス</li>
@@ -1901,7 +2025,7 @@ createClientで接続してください。</code></pre>
   <li>データ共有設定を確認して<strong>「次へ」</strong></li>
 </ol>
 
-<h4 style="color: #92400e;">📋 手順2: プロパティを作成</h4>
+<h4 style="color: #92400e;">手順2: プロパティを作成</h4>
 
 <ol>
   <li><strong>プロパティ名</strong>を入力（例: <code>Time Tracker App</code>）</li>
@@ -1910,7 +2034,7 @@ createClientで接続してください。</code></pre>
   <li><strong>「次へ」</strong>をクリック</li>
 </ol>
 
-<h4 style="color: #92400e;">📋 手順3: ビジネス情報を入力</h4>
+<h4 style="color: #92400e;">手順3: ビジネス情報を入力</h4>
 
 <ol>
   <li><strong>業種</strong>: 最も近いものを選択</li>
@@ -1920,7 +2044,7 @@ createClientで接続してください。</code></pre>
   <li>利用規約に同意</li>
 </ol>
 
-<h4 style="color: #92400e;">📋 手順4: データストリームを作成</h4>
+<h4 style="color: #92400e;">手順4: データストリームを作成</h4>
 
 <ol>
   <li>プラットフォームで<strong>「ウェブ」</strong>を選択</li>
@@ -1929,12 +2053,12 @@ createClientで接続してください。</code></pre>
   <li><strong>「ストリームを作成」</strong>をクリック</li>
 </ol>
 
-<h4 style="color: #92400e;">📋 手順5: 測定IDをコピー</h4>
+<h4 style="color: #92400e;">手順5: 測定IDをコピー</h4>
 
 <p>作成されたデータストリームの詳細画面で、<strong>測定ID</strong>（例: <code>G-XXXXXXXXXX</code>）をコピーします。</p>
 
 <div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.3); margin: 24px 0;">
-  <p style="margin: 0; font-weight: 600; color: #b91c1c;">📝 重要メモ</p>
+  <p style="margin: 0; font-weight: 600; color: #b91c1c;">重要メモ</p>
   <p style="margin: 8px 0 0 0; color: #991b1b;">測定IDは必ず安全な場所にメモしてください。後ほど使用します。</p>
 </div>
 
@@ -1943,7 +2067,7 @@ createClientで接続してください。</code></pre>
 <p><strong>GA4 MCP（Model Context Protocol）</strong>は、ClaudeCodeからGoogle Analyticsのデータに直接アクセスして、自然言語で質問できる強力なツールです。</p>
 
 <div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);">
-  <h4 style="color: #4338ca; margin-top: 0;">🤖 GA4 MCPでできること</h4>
+  <h4 style="color: #4338ca; margin-top: 0;">GA4 MCPでできること</h4>
   <ul style="margin: 0;">
     <li><strong>自然言語で質問</strong>: 「今日の訪問者数は？」「人気ページTop5は？」</li>
     <li><strong>複雑な分析</strong>: 「先週と今週の比較」「モバイルとデスクトップの比較」</li>
@@ -1952,11 +2076,11 @@ createClientで接続してください。</code></pre>
   </ul>
 </div>
 
-<h4 style="color: #92400e;">📋 GA4 MCPのセットアップ</h4>
+<h4 style="color: #92400e;">GA4 MCPのセットアップ</h4>
 
 <p>詳しいセットアップ方法は、<a href="https://www.ga4.guide/gamcp/" target="_blank" style="color: #ea580c; font-weight: 600;">GA4 MCP公式ガイド</a>を参照してください。</p>
 
-<h4 style="color: #92400e;">🔍 ClaudeCodeへの質問例</h4>
+<h4 style="color: #92400e;">ClaudeCodeへの質問例</h4>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 12px; border-left: 4px solid #6366f1; margin: 24px 0;">
   <pre style="margin: 0; color: #1f2937; overflow-x: auto;"><code>GA4 MCPを使って、以下を教えてください：
@@ -1974,7 +2098,7 @@ createClientで接続してください。</code></pre>
 <p>GA4 MCPを使えば、<strong>測定タグの埋め込みもClaudeCodeに任せられます</strong>。手動でコピペする必要はありません。</p>
 
 <div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);">
-  <h4 style="color: #4338ca; margin-top: 0;">🤖 ClaudeCodeへの依頼プロンプト例</h4>
+  <h4 style="color: #4338ca; margin-top: 0;">ClaudeCodeへの依頼プロンプト例</h4>
   <pre><code style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; display: block; color: #1f2937; overflow-x: auto;">Google Analytics（GA4）の測定タグをHTMLファイルに埋め込んでください。
 
 測定ID: G-XXXXXXXXXX
@@ -1992,7 +2116,7 @@ HTMLの<head>タグ内に、Google Tag Manager（gtag.js）のコードを追加
 
 <p>してくれます！</p>
 
-<h4 style="color: #92400e;">🔍 カスタムイベントの追跡</h4>
+<h4 style="color: #92400e;">カスタムイベントの追跡</h4>
 
 <p>GA4 MCPを使えば、カスタムイベント（ボタンクリック、フォーム送信など）の追跡コードも簡単に追加できます。</p>
 
@@ -2005,13 +2129,13 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 <p>ClaudeCodeがイベント追跡のコードを自動生成してくれます。データ駆動の改善が簡単に実現できます！</p>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了！</strong> GA4とGA4 MCPを使えば、データ収集から分析まで、すべてClaudeCodeと連携して行えます。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了！</strong> GA4とGA4 MCPを使えば、データ収集から分析まで、すべてClaudeCodeと連携して行えます。</p>
 </div>
 
 <h3 id="まとめ-17章">まとめ</h3>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin: 24px 0;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>🎉 おめでとうございます！</strong> この章では、Google Analytics（GA4）の設定方法と、GA4 MCPを使ってClaudeCodeから簡単にデータ分析や測定タグの埋め込みを行う方法を学びました。これで、あなたのWebアプリは<strong>データ駆動で成長する本格的なサービス</strong>になりました！</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>おめでとうございます！</strong> この章では、Google Analytics（GA4）の設定方法と、GA4 MCPを使ってClaudeCodeから簡単にデータ分析や測定タグの埋め込みを行う方法を学びました。これで、あなたのWebアプリは<strong>データ駆動で成長する本格的なサービス</strong>になりました！</p>
   <p style="margin: 16px 0 0 0; color: #047857; line-height: 1.7;">次は最終章で、<strong>Playwright MCPを活用したSNS自動投稿アプリ</strong>を開発します。実務で即使える実践的なツールを作りましょう！</p>
 </div>
 
@@ -2023,7 +2147,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
   <div style="position: absolute; bottom: -80px; left: -80px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(14, 165, 233, 0.2), transparent); border-radius: 50%;"></div>
   <div style="position: relative; z-index: 1;">
     <h2 id="18-sns自動投稿アプリで実務効率化" style="font-size: 2.5em; margin: 0 0 16px 0; color: #0c4a6e; font-weight: 900; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-      📱 18章: SNS自動投稿アプリで実務効率化
+      18章: SNS自動投稿アプリで実務効率化
     </h2>
     <p style="font-size: 1.3em; margin: 0; color: #075985; font-weight: 600; line-height: 1.6;">
       Playwright MCPで複数SNSへの一括投稿を自動化し、実務効率を劇的に向上させよう
@@ -2034,7 +2158,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 <!-- 学習目標セクション - 18章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -2046,7 +2170,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -2066,7 +2190,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
 <div style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(56, 189, 248, 0.05)); backdrop-filter: blur(10px); border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
   <h3 style="margin-top: 0; color: #0c4a6e; display: flex; align-items: center; gap: 0.5rem;">
-    <span style="font-size: 2rem;">🎯</span>
+    <span style="font-size: 2rem;"></span>
     この章で学ぶこと
   </h3>
   <p style="color: #075985; line-height: 1.8; margin-bottom: 12px;">
@@ -2075,15 +2199,15 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin-top: 16px;">
     <p style="margin: 0; color: #0c4a6e; line-height: 1.7;"><strong>⏱️ 所要時間：約90分</strong><br>
-    <strong>📐 アーキテクチャ</strong>: エディタ（Web） + 自動投稿スクリプト（ローカル）の分離型設計<br>
-    <strong>🔑 認証</strong>: Supabase Auth（メール/パスワード）でセキュアにログイン</p>
+    <strong>アーキテクチャ</strong>: エディタ（Web） + 自動投稿スクリプト（ローカル）の分離型設計<br>
+    <strong>認証</strong>: Supabase Auth（メール/パスワード）でセキュアにログイン</p>
   </div>
 </div>
 
 <!-- Option A/B 選択セクション -->
 <div style="background: linear-gradient(135deg, rgba(251, 146, 60, 0.1), rgba(249, 115, 22, 0.05)); backdrop-filter: blur(10px); border: 2px solid rgba(251, 146, 60, 0.3); border-radius: 16px; padding: 32px; margin: 32px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
   <h3 style="margin-top: 0; color: #9a3412; display: flex; align-items: center; gap: 0.5rem;">
-    <span style="font-size: 2rem;">🎯</span>
+    <span style="font-size: 2rem;"></span>
     3つのハンズオンから選択できます
   </h3>
   <p style="color: #78350f; line-height: 1.8; margin-bottom: 24px;">
@@ -2094,14 +2218,14 @@ Google Analyticsにカスタムイベント「add_task」を送信する
     <!-- Option B（推奨・左） -->
     <div style="background: rgba(255, 255, 255, 0.9); padding: 24px; border-radius: 12px; border: 3px solid #8b5cf6; box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2); position: relative;">
       <div style="position: absolute; top: -12px; right: 12px; background: #8b5cf6; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.85em; font-weight: 700;">⭐ 推奨</div>
-      <h4 style="margin-top: 0; color: #5b21b6; font-size: 1.3em;">🤖 Option B: 社内AI活用プラットフォーム</h4>
+      <h4 style="margin-top: 0; color: #5b21b6; font-size: 1.3em;">Option B: 社内AI活用プラットフォーム</h4>
       <p style="color: #6b21a8; line-height: 1.7; margin: 12px 0;">
         Gem/GPTs/プロンプトを<strong>社内で共有・管理</strong>し、AI活用を組織全体で促進するプラットフォーム
       </p>
       <div style="background: rgba(139, 92, 246, 0.1); padding: 12px; border-radius: 8px; margin: 12px 0;">
         <p style="margin: 0; color: #6b21a8; font-size: 0.9em; line-height: 1.6;">
-          <strong>📐 構成</strong>: Next.js + Supabase + Netlify（Webアプリ単体）<br>
-          <strong>🎯 こんな人におすすめ</strong>: 社内のAI活用を促進したい、ソーシャル機能を学びたい<br>
+          <strong>構成</strong>: Next.js + Supabase + Netlify（Webアプリ単体）<br>
+          <strong>こんな人におすすめ</strong>: 社内のAI活用を促進したい、ソーシャル機能を学びたい<br>
           <strong>⏱️ 所要時間</strong>: 約90分
         </p>
       </div>
@@ -2112,14 +2236,14 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
     <!-- Option A（右） -->
     <div style="background: rgba(255, 255, 255, 0.9); padding: 24px; border-radius: 12px; border: 3px solid #0ea5e9; box-shadow: 0 4px 16px rgba(14, 165, 233, 0.2);">
-      <h4 style="margin-top: 0; color: #0c4a6e; font-size: 1.3em;">📱 Option A: SNS自動投稿システム</h4>
+      <h4 style="margin-top: 0; color: #0c4a6e; font-size: 1.3em;">Option A: SNS自動投稿システム</h4>
       <p style="color: #075985; line-height: 1.7; margin: 12px 0;">
         X (Twitter)、Facebook、Instagramへの投稿を<strong>一元管理・自動化</strong>するシステム
       </p>
       <div style="background: rgba(14, 165, 233, 0.1); padding: 12px; border-radius: 8px; margin: 12px 0;">
         <p style="margin: 0; color: #075985; font-size: 0.9em; line-height: 1.6;">
-          <strong>📐 構成</strong>: Webエディタ（Netlify） + ローカルスクリプト（Playwright MCP）<br>
-          <strong>🎯 こんな人におすすめ</strong>: SNS運用を効率化したい、ブラウザ自動化を学びたい<br>
+          <strong>構成</strong>: Webエディタ（Netlify） + ローカルスクリプト（Playwright MCP）<br>
+          <strong>こんな人におすすめ</strong>: SNS運用を効率化したい、ブラウザ自動化を学びたい<br>
           <strong>⏱️ 所要時間</strong>: 約90分
         </p>
       </div>
@@ -2130,14 +2254,14 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
     <!-- Option C（右） -->
     <div style="background: rgba(255, 255, 255, 0.9); padding: 24px; border-radius: 12px; border: 3px solid #f59e0b; box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);">
-      <h4 style="margin-top: 0; color: #92400e; font-size: 1.3em;">📅 Option C: シフト管理アプリ</h4>
+      <h4 style="margin-top: 0; color: #92400e; font-size: 1.3em;">Option C: シフト管理アプリ</h4>
       <p style="color: #92400e; line-height: 1.7; margin: 12px 0;">
         飲食・小売向けの<strong>希望シフト提出〜確定</strong>までを管理するアプリ（要件定義から学ぶ）
       </p>
       <div style="background: rgba(245, 158, 11, 0.1); padding: 12px; border-radius: 8px; margin: 12px 0;">
         <p style="margin: 0; color: #92400e; font-size: 0.9em; line-height: 1.6;">
-          <strong>📐 構成</strong>: Next.js + Supabase + Netlify（Webアプリ単体）<br>
-          <strong>🎯 こんな人におすすめ</strong>: 要件定義・設計力を学びたい、実務志向<br>
+          <strong>構成</strong>: Next.js + Supabase + Netlify（Webアプリ単体）<br>
+          <strong>こんな人におすすめ</strong>: 要件定義・設計力を学びたい、実務志向<br>
           <strong>⏱️ 所要時間</strong>: 約150分（設計重視）
         </p>
       </div>
@@ -2160,7 +2284,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 <div id="option-b-start"></div>
 <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(167, 139, 250, 0.05)); backdrop-filter: blur(10px); border: 2px solid rgba(139, 92, 246, 0.4); border-radius: 16px; padding: 24px; margin: 24px 0;">
   <h3 style="margin-top: 0; color: #5b21b6; font-size: 2em; display: flex; align-items: center; gap: 0.75rem;">
-    <span style="font-size: 2.5rem;">🤖</span>
+    <span style="font-size: 2.5rem;"></span>
     Option B: 社内AI活用プラットフォーム
   </h3>
   <p style="color: #6b21a8; line-height: 1.8; font-size: 1.1em; margin: 0;">
@@ -2206,7 +2330,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 16px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🏗 システム全体構成
+      システム全体構成
     </summary>
     <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #8b5cf6;">
       <ul style="color: #6b21a8; line-height: 1.8; margin: 0;">
@@ -2221,7 +2345,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🗄️ データベーステーブル設計
+      ️ データベーステーブル設計
     </summary>
     <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #0ea5e9;">
       <p style="color: #075985; margin: 0 0 12px 0;"><strong>ai_toolsテーブル</strong>（AIツール情報）：</p>
@@ -2261,7 +2385,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🔄 動作フロー（全体の流れ）
+      動作フロー（全体の流れ）
     </summary>
     <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #10b981;">
       <ol style="color: #047857; line-height: 1.8; margin: 0;">
@@ -2305,7 +2429,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 16px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🔐 認証機能（Supabase Auth）
+      認証機能（Supabase Auth）
     </summary>
     <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #0ea5e9;">
       <ul style="color: #075985; line-height: 1.8; margin: 0;">
@@ -2320,7 +2444,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📝 AIツール登録フォーム
+      AIツール登録フォーム
     </summary>
     <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #8b5cf6;">
       <p style="color: #6b21a8; margin: 0 0 12px 0;"><strong>フォーム項目</strong>：</p>
@@ -2339,7 +2463,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🗄️ Supabaseテーブル作成
+      ️ Supabaseテーブル作成
     </summary>
     <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #10b981;">
       <p style="color: #047857; margin: 0 0 12px 0;">SupabaseダッシュボードのTable Editorで、<code>ai_tools</code>、<code>likes</code>、<code>bookmarks</code>テーブルを作成してください（18.2bの設計ヒント参照）。</p>
@@ -2349,7 +2473,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🚀 SuperClaude実装ヒント
+      SuperClaude実装ヒント
     </summary>
     <div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #f59e0b;">
       <p style="color: #92400e; margin: 0 0 12px 0;">ClaudeCodeに以下のように指示して実装を進めましょう：</p>
@@ -2375,7 +2499,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 </div>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了目標！</strong> 認証とAIツール登録機能が完成したら、実際に複数のGPTs/Gem/プロンプトを登録して、データがSupabaseに保存されることを確認しましょう。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了目標！</strong> 認証とAIツール登録機能が完成したら、実際に複数のGPTs/Gem/プロンプトを登録して、データがSupabaseに保存されることを確認しましょう。</p>
 </div>
 
 <h3 id="184b-実践ハンズオン一覧検索フィルター機能30分">18.4b 実践ハンズオン：一覧・検索・フィルター機能（30分）</h3>
@@ -2390,7 +2514,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 16px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📋 ツール一覧表示
+      ツール一覧表示
     </summary>
     <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #0ea5e9;">
       <ul style="color: #075985; line-height: 1.8; margin: 0;">
@@ -2405,7 +2529,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🔍 検索機能
+      検索機能
     </summary>
     <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #8b5cf6;">
       <ul style="color: #6b21a8; line-height: 1.8; margin: 0;">
@@ -2418,7 +2542,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🎯 フィルター機能
+      フィルター機能
     </summary>
     <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #10b981;">
       <ul style="color: #047857; line-height: 1.8; margin: 0;">
@@ -2432,7 +2556,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📄 ページネーション（オプション）
+      ページネーション（オプション）
     </summary>
     <div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #f59e0b;">
       <ul style="color: #92400e; line-height: 1.8; margin: 0;">
@@ -2455,7 +2579,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 </div>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了目標！</strong> 一覧ページで登録されたツールが表示され、検索バーやジャンルフィルターで絞り込みができることを確認しましょう。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了目標！</strong> 一覧ページで登録されたツールが表示され、検索バーやジャンルフィルターで絞り込みができることを確認しましょう。</p>
 </div>
 
 <h3 id="185b-実践ハンズオンいいねブックマーク機能30分">18.5b 実践ハンズオン：いいね・ブックマーク機能（30分）</h3>
@@ -2470,7 +2594,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 16px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      ❤️ いいね機能
+      ️ いいね機能
     </summary>
     <div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #ef4444;">
       <ul style="color: #991b1b; line-height: 1.8; margin: 0;">
@@ -2486,7 +2610,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🔖 ブックマーク機能
+      ブックマーク機能
     </summary>
     <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #0ea5e9;">
       <ul style="color: #075985; line-height: 1.8; margin: 0;">
@@ -2502,7 +2626,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📊 カウント更新の実装方法
+      カウント更新の実装方法
     </summary>
     <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #8b5cf6;">
       <p style="color: #6b21a8; margin: 0 0 12px 0;"><strong>方法1: Supabase RPC関数</strong></p>
@@ -2521,7 +2645,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📝 プロンプトコピー機能
+      プロンプトコピー機能
     </summary>
     <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #10b981;">
       <ul style="color: #047857; line-height: 1.8; margin: 0;">
@@ -2544,7 +2668,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 </div>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了！</strong> いいね・ブックマーク機能が完成し、プロンプトのコピー機能も実装できました。これで社内AI活用プラットフォームのMVPが完成です！</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了！</strong> いいね・ブックマーク機能が完成し、プロンプトのコピー機能も実装できました。これで社内AI活用プラットフォームのMVPが完成です！</p>
 </div>
 
 <h3 id="186b-オプション機能とアレンジメニュー">18.6b オプション機能とアレンジメニュー</h3>
@@ -2552,11 +2676,11 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 <p>時間に余裕がある方、またはさらに機能を拡張したい方は、以下のオプション機能やアレンジメニューにも挑戦してみてください。</p>
 
 <div style="background: rgba(168, 85, 247, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.3); margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #6b21a8;">🚀 オプション機能（アコーディオンヒント）</h4>
+  <h4 style="margin-top: 0; color: #6b21a8;">オプション機能（アコーディオンヒント）</h4>
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #5b21b6;">
-      🔔 新着ツール通知機能（30分）
+      新着ツール通知機能（30分）
     </summary>
     <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px;">
       <ul style="color: #6b21a8; line-height: 1.8; margin: 0;">
@@ -2570,7 +2694,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #5b21b6;">
-      📤 一括招待機能（20分）
+      一括招待機能（20分）
     </summary>
     <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px;">
       <ul style="color: #6b21a8; line-height: 1.8; margin: 0;">
@@ -2583,7 +2707,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #5b21b6;">
-      💬 コメント機能（45分）
+      コメント機能（45分）
     </summary>
     <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px;">
       <ul style="color: #6b21a8; line-height: 1.8; margin: 0;">
@@ -2597,7 +2721,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #5b21b6;">
-      📊 使用状況ダッシュボード（60分）
+      使用状況ダッシュボード（60分）
     </summary>
     <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px;">
       <ul style="color: #6b21a8; line-height: 1.8; margin: 0;">
@@ -2625,7 +2749,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 </div>
 
 <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #0c4a6e;">🎨 アレンジメニュー</h4>
+  <h4 style="margin-top: 0; color: #0c4a6e;">アレンジメニュー</h4>
   <ul style="color: #075985; line-height: 1.8; margin: 0;">
     <li><strong>マイページ機能</strong>（20分）: 自分が登録したツール、いいねしたツール、ブックマークしたツールを一覧表示</li>
     <li><strong>タグクラウド</strong>（15分）: よく使われるタグを大きく表示し、クリックでタグ検索</li>
@@ -2639,7 +2763,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 <div id="option-a-start"></div>
 <div style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(56, 189, 248, 0.05)); backdrop-filter: blur(10px); border: 2px solid rgba(14, 165, 233, 0.4); border-radius: 16px; padding: 24px; margin: 24px 0;">
   <h3 style="margin-top: 0; color: #0c4a6e; font-size: 2em; display: flex; align-items: center; gap: 0.75rem;">
-    <span style="font-size: 2.5rem;">📱</span>
+    <span style="font-size: 2.5rem;"></span>
     Option A: SNS自動投稿システム
   </h3>
   <p style="color: #075985; line-height: 1.8; font-size: 1.1em; margin: 0;">
@@ -2684,7 +2808,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 16px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🌐 コンポーネント①：投稿エディタWebアプリ
+      コンポーネント①：投稿エディタWebアプリ
     </summary>
     <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #0ea5e9;">
       <ul style="color: #075985; line-height: 1.8; margin: 0;">
@@ -2699,7 +2823,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      💻 コンポーネント②：ローカル実行スクリプト
+      コンポーネント②：ローカル実行スクリプト
     </summary>
     <div style="background: rgba(124, 58, 237, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #7c3aed;">
       <ul style="color: #6b21a8; line-height: 1.8; margin: 0;">
@@ -2715,7 +2839,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🔄 動作フロー（全体の流れ）
+      動作フロー（全体の流れ）
     </summary>
     <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #10b981;">
       <ol style="color: #047857; line-height: 1.8; margin: 0;">
@@ -2759,7 +2883,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 16px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🔐 認証機能（Supabase Auth）
+      認証機能（Supabase Auth）
     </summary>
     <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #0ea5e9;">
       <ul style="color: #075985; line-height: 1.8; margin: 0;">
@@ -2773,7 +2897,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      ✍️ 投稿エディタページ（/dashboard）
+      ️ 投稿エディタページ（/dashboard）
     </summary>
     <div style="background: rgba(124, 58, 237, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #7c3aed;">
       <ul style="color: #6b21a8; line-height: 1.8; margin: 0;">
@@ -2787,7 +2911,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📋 投稿履歴表示ページ（/history）
+      投稿履歴表示ページ（/history）
     </summary>
     <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #10b981;">
       <ul style="color: #047857; line-height: 1.8; margin: 0;">
@@ -2800,7 +2924,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🗄️ Supabaseテーブル設計
+      ️ Supabaseテーブル設計
     </summary>
     <div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #f59e0b;">
       <p style="color: #78350f; margin: 0 0 8px 0;"><strong>テーブル名</strong>: sns_posts</p>
@@ -2832,7 +2956,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 </div>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了目標！</strong> Webアプリが完成し、Netlifyにデプロイされたら、https://your-app.netlify.app でアクセスして動作確認してください。ログイン → 投稿作成 → 下書き保存の流れを確認しましょう。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了目標！</strong> Webアプリが完成し、Netlifyにデプロイされたら、https://your-app.netlify.app でアクセスして動作確認してください。ログイン → 投稿作成 → 下書き保存の流れを確認しましょう。</p>
 </div>
 
 <h3 id="184a-実践ハンズオンローカル実行スクリプト作成40分">18.4a 実践ハンズオン：ローカル実行スクリプト作成（40分）</h3>
@@ -2847,7 +2971,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 16px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📁 ディレクトリ構造
+      ディレクトリ構造
     </summary>
     <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #0ea5e9;">
       <pre style="color: #075985; line-height: 1.6; margin: 0; overflow-x: auto;"><code>sns-poster/
@@ -2866,7 +2990,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🔧 Supabaseデータ取得
+      Supabaseデータ取得
     </summary>
     <div style="background: rgba(124, 58, 237, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #7c3aed;">
       <ul style="color: #6b21a8; line-height: 1.8; margin: 0;">
@@ -2879,7 +3003,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🐦 X (Twitter)自動投稿
+      X (Twitter)自動投稿
     </summary>
     <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #10b981;">
       <ul style="color: #047857; line-height: 1.8; margin: 0;">
@@ -2909,7 +3033,7 @@ Google Analyticsにカスタムイベント「add_task」を送信する
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🔐 環境変数（.env）
+      環境変数（.env）
     </summary>
     <div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #dc2626;">
       <pre style="color: #7f1d1d; line-height: 1.6; margin: 0; overflow-x: auto;"><code># Supabase接続情報
@@ -2940,7 +3064,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 </div>
 
 <div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border-left: 4px solid #dc2626; margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #991b1b;">🚨 セキュリティ重要事項</h4>
+  <h4 style="margin-top: 0; color: #991b1b;">セキュリティ重要事項</h4>
   <ul style="color: #7f1d1d; line-height: 1.8; margin: 0;">
     <li><strong>.envファイルは絶対にGitHubにpushしない</strong></li>
     <li><strong>Supabase Service Key</strong>: ローカルのみで使用</li>
@@ -2950,7 +3074,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 </div>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了目標！</strong> ローカルPCで <code>node post-to-sns.js</code> を実行すると、ブラウザが自動で起動してSNSに投稿される様子を見ることができます。まるで魔法のようですね！</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了目標！</strong> ローカルPCで <code>node post-to-sns.js</code> を実行すると、ブラウザが自動で起動してSNSに投稿される様子を見ることができます。まるで魔法のようですね！</p>
 </div>
 
 <h3 id="185a-実践ハンズオン他sns対応20分">18.5a 実践ハンズオン：他SNS対応（20分）</h3>
@@ -2965,7 +3089,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 
   <details style="margin-top: 16px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📘 Facebook自動投稿
+      Facebook自動投稿
     </summary>
     <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #0ea5e9;">
       <p style="color: #075985; margin: 0 0 8px 0;"><strong>ファイル</strong>: lib/facebook-poster.js</p>
@@ -2980,7 +3104,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📷 Instagram自動投稿
+      Instagram自動投稿
     </summary>
     <div style="background: rgba(124, 58, 237, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #7c3aed;">
       <p style="color: #6b21a8; margin: 0 0 8px 0;"><strong>ファイル</strong>: lib/instagram-poster.js</p>
@@ -2996,7 +3120,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🔄 コードの再利用パターン
+      コードの再利用パターン
     </summary>
     <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #10b981;">
       <ul style="color: #047857; line-height: 1.8; margin: 0;">
@@ -3020,7 +3144,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 </div>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了！</strong> これで <strong>X (Twitter)、Facebook、Instagram</strong> の3つのSNSに自動投稿できるようになりました。1つのエディタで作成した投稿を、複数のSNSに一括配信できます！</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了！</strong> これで <strong>X (Twitter)、Facebook、Instagram</strong> の3つのSNSに自動投稿できるようになりました。1つのエディタで作成した投稿を、複数のSNSに一括配信できます！</p>
 </div>
 
 <h3 id="186a-オプション機能とアレンジメニュー">18.6a オプション機能とアレンジメニュー</h3>
@@ -3028,7 +3152,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 <p>時間に余裕がある方、またはさらに機能を拡張したい方は、以下のオプション機能やアレンジメニューにも挑戦してみてください。</p>
 
 <div style="background: rgba(168, 85, 247, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.3); margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #6b21a8;">🚀 拡張機能アイデア</h4>
+  <h4 style="margin-top: 0; color: #6b21a8;">拡張機能アイデア</h4>
   <ul style="color: #7c3aed; line-height: 1.8; margin: 0;">
     <li><strong>スケジュール投稿</strong>（30分）: cron や node-schedule で指定日時に自動投稿</li>
     <li><strong>画像の自動リサイズ</strong>（15分）: SNSごとの最適サイズ（Twitter 1200x675, Instagram 1080x1080）に自動調整</li>
@@ -3040,7 +3164,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 </div>
 
 <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #0c4a6e;">🎨 アレンジメニュー</h4>
+  <h4 style="margin-top: 0; color: #0c4a6e;">アレンジメニュー</h4>
   <ul style="color: #075985; line-height: 1.8; margin: 0;">
     <li><strong>完全ローカル版</strong>（30分）: WebアプリもElectronでデスクトップアプリ化（デプロイ不要）</li>
     <li><strong>CLI版</strong>（20分）: コマンドラインから投稿できる CLI ツール作成</li>
@@ -3056,7 +3180,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 <div id="option-c-start"></div>
 <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(251, 191, 36, 0.05)); backdrop-filter: blur(10px); border: 2px solid rgba(245, 158, 11, 0.4); border-radius: 16px; padding: 24px; margin: 24px 0;">
   <h3 style="margin-top: 0; color: #92400e; font-size: 2em; display: flex; align-items: center; gap: 0.75rem;">
-    <span style="font-size: 2.5rem;">📅</span>
+    <span style="font-size: 2.5rem;"></span>
     Option C: シフト管理アプリ
   </h3>
   <p style="color: #92400e; line-height: 1.8; font-size: 1.1em; margin: 0;">
@@ -3091,7 +3215,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 </div>
 
 <div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border-left: 4px solid #6366f1; margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #4338ca;">🎯 このハンズオンで学ぶこと</h4>
+  <h4 style="margin-top: 0; color: #4338ca;">このハンズオンで学ぶこと</h4>
   <ul style="color: #4f46e5; line-height: 1.8; margin: 0;">
     <li><strong>要件定義力</strong>: ゼロから顧客ニーズを整理し、MVP（必要最小限の機能）を決める</li>
     <li><strong>競合調査</strong>: 既存サービスを分析し、実装難易度と価値を判断する</li>
@@ -3117,12 +3241,12 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 
 <div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(99, 102, 241, 0.3); margin: 24px 0;">
   <h4 style="margin-top: 0; color: #4338ca; display: flex; align-items: center; gap: 0.5rem;">
-    <span style="font-size: 1.5rem;">🔍</span>
+    <span style="font-size: 1.5rem;"></span>
     競合調査の実施方法
   </h4>
 
   <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #6366f1;">
-    <p style="margin: 0 0 12px 0; color: #4338ca; font-weight: 600;">📋 ステップ1: ChatGPT/Gemini Deep Research を使う</p>
+    <p style="margin: 0 0 12px 0; color: #4338ca; font-weight: 600;">ステップ1: ChatGPT/Gemini Deep Research を使う</p>
     <p style="margin: 0 0 8px 0; color: #4f46e5;">以下のプロンプトをChatGPT（GPT-4）またはGemini（Deep Research）に入力してください：</p>
     <div style="background: rgba(17, 24, 39, 0.95); padding: 16px; border-radius: 8px; margin: 12px 0; font-family: 'Courier New', monospace; color: #e5e7eb; line-height: 1.6; overflow-x: auto;">
 「日本国内のシフト管理サービス（ジョブカン、シフオプ、Airシフト、らくしふ、REIWA、など）の
@@ -3140,7 +3264,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
   </div>
 
   <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #10b981;">
-    <p style="margin: 0 0 12px 0; color: #047857; font-weight: 600;">📊 ステップ2: 結果をスプレッドシートにまとめる</p>
+    <p style="margin: 0 0 12px 0; color: #047857; font-weight: 600;">ステップ2: 結果をスプレッドシートにまとめる</p>
     <ul style="color: #047857; line-height: 1.8; margin: 0;">
       <li>Google SpreadsheetまたはExcelに、取得した機能比較表を転記</li>
       <li>各機能に対して、<strong>「自分が実装したいか」</strong>を◎○△で評価</li>
@@ -3164,7 +3288,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 </div>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了目標！</strong> 競合サービスの機能一覧表が完成し、「どんな機能があるのか」「実装難易度はどうか」が理解できたら次のステップへ進みましょう。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了目標！</strong> 競合サービスの機能一覧表が完成し、「どんな機能があるのか」「実装難易度はどうか」が理解できたら次のステップへ進みましょう。</p>
 </div>
 
 <h3 id="183c-mvp設計ハンズオン30-40分">18.3c MVP設計ハンズオン（30-40分）</h3>
@@ -3173,7 +3297,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 
 <div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(99, 102, 241, 0.3); margin: 24px 0;">
   <h4 style="margin-top: 0; color: #4338ca; display: flex; align-items: center; gap: 0.5rem;">
-    <span style="font-size: 1.5rem;">📐</span>
+    <span style="font-size: 1.5rem;"></span>
     MVP設計の実施方法
   </h4>
 
@@ -3184,12 +3308,12 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
   </div>
 
   <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #8b5cf6;">
-    <p style="margin: 0 0 12px 0; color: #6b21a8; font-weight: 600;">🎁 ステップ2: あったら嬉しい機能を3つ選ぶ</p>
+    <p style="margin: 0 0 12px 0; color: #6b21a8; font-weight: 600;">ステップ2: あったら嬉しい機能を3つ選ぶ</p>
     <p style="margin: 0; color: #6b21a8; line-height: 1.7;">MVP完成後、時間があれば追加したい機能を3つ選びます。例: ①通知機能、②シフト交換機能、③給与計算連携</p>
   </div>
 
   <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #f59e0b;">
-    <p style="margin: 0 0 12px 0; color: #92400e; font-weight: 600;">⚖️ ステップ3: 実装時間を見積もる</p>
+    <p style="margin: 0 0 12px 0; color: #92400e; font-weight: 600;">️ ステップ3: 実装時間を見積もる</p>
     <p style="margin: 0 0 8px 0; color: #92400e;">各機能の実装時間を見積もり、合計120分以内に収まるか確認してください。</p>
     <ul style="color: #92400e; line-height: 1.8; margin: 8px 0 0 0;">
       <li>認証機能（Supabase Auth）: 20分</li>
@@ -3201,7 +3325,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
   </div>
 
   <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #10b981;">
-    <p style="margin: 0 0 12px 0; color: #047857; font-weight: 600;">🗄️ ステップ4: データベース設計</p>
+    <p style="margin: 0 0 12px 0; color: #047857; font-weight: 600;">️ ステップ4: データベース設計</p>
     <p style="margin: 0 0 8px 0; color: #047857;">MVPに必要なテーブル構成を設計してください。</p>
     <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">最低限のテーブル案（例）:</p>
     <ul style="color: #047857; line-height: 1.8; margin: 0;">
@@ -3224,7 +3348,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 </div>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了目標！</strong> MVP機能リスト（3つ）、データベーステーブル設計が完成したら、いよいよ実装フェーズへ進みましょう。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了目標！</strong> MVP機能リスト（3つ）、データベーステーブル設計が完成したら、いよいよ実装フェーズへ進みましょう。</p>
 </div>
 
 <h3 id="184c-実装ハンズオン70-90分">18.4c 実装ハンズオン（70-90分）</h3>
@@ -3239,7 +3363,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 
   <details style="margin-top: 16px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🏗️ プロジェクトセットアップ
+      ️ プロジェクトセットアップ
     </summary>
     <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #0ea5e9;">
       <p style="color: #075985; margin: 0 0 8px 0;">Claude Code に以下のように指示してください：</p>
@@ -3253,7 +3377,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📅 希望シフト提出機能（スタッフ側）
+      希望シフト提出機能（スタッフ側）
     </summary>
     <div style="background: rgba(139, 92, 246, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #8b5cf6;">
       <p style="color: #6b21a8; margin: 0 0 8px 0;"><strong>実装すべきもの</strong>:</p>
@@ -3269,7 +3393,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      💼 管理者画面（希望シフト一覧・確定機能）
+      管理者画面（希望シフト一覧・確定機能）
     </summary>
     <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #10b981;">
       <p style="color: #047857; margin: 0 0 8px 0;"><strong>実装すべきもの</strong>:</p>
@@ -3284,7 +3408,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      📆 確定シフト表示（カレンダー）
+      確定シフト表示（カレンダー）
     </summary>
     <div style="background: rgba(245, 158, 11, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #f59e0b;">
       <p style="color: #92400e; margin: 0 0 8px 0;"><strong>実装すべきもの</strong>:</p>
@@ -3299,7 +3423,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🗄️ Supabase テーブル作成
+      ️ Supabase テーブル作成
     </summary>
     <div style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #dc2626;">
       <p style="color: #7f1d1d; margin: 0 0 8px 0;">Supabase ダッシュボードの Table Editor で、18.3c で設計したテーブルを作成してください。</p>
@@ -3309,13 +3433,13 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 
   <details style="margin-top: 12px;">
     <summary style="cursor: pointer; padding: 12px; background: rgba(255, 255, 255, 0.5); border-radius: 8px; font-weight: 600; color: #312e81; list-style: none; user-select: none;">
-      🚀 追加機能の実装案（時間があれば）
+      追加機能の実装案（時間があれば）
     </summary>
     <div style="background: rgba(168, 85, 247, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 8px; margin-top: 12px; border-left: 4px solid #a855f7;">
       <p style="color: #7c3aed; margin: 0 0 12px 0;"><strong>MVP完成後、以下の機能を追加できます：</strong></p>
 
       <div style="margin-bottom: 16px;">
-        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">📧 通知機能（30分）</p>
+        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">通知機能（30分）</p>
         <ul style="color: #7c3aed; line-height: 1.8; margin: 0 0 12px 0;">
           <li>シフト確定時にメール通知（Resend統合）</li>
           <li>実装: Resend APIでメール送信、確定時にトリガー</li>
@@ -3323,7 +3447,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
       </div>
 
       <div style="margin-bottom: 16px;">
-        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">🔄 シフト交換機能（40分）</p>
+        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">シフト交換機能（40分）</p>
         <ul style="color: #7c3aed; line-height: 1.8; margin: 0 0 12px 0;">
           <li>スタッフ同士でシフトを交換できる機能</li>
           <li>実装: shift_exchanges テーブル、申請・承認フロー</li>
@@ -3331,7 +3455,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
       </div>
 
       <div style="margin-bottom: 16px;">
-        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">✏️ シフト変更リクエスト（30分）</p>
+        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">️ シフト変更リクエスト（30分）</p>
         <ul style="color: #7c3aed; line-height: 1.8; margin: 0 0 12px 0;">
           <li>確定後にスタッフが変更希望を出せる機能</li>
           <li>実装: shift_change_requests テーブル、管理者承認機能</li>
@@ -3347,7 +3471,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
       </div>
 
       <div style="margin-bottom: 16px;">
-        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">💰 給与計算連携（60分）</p>
+        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">給与計算連携（60分）</p>
         <ul style="color: #7c3aed; line-height: 1.8; margin: 0 0 12px 0;">
           <li>確定シフトから自動で給与計算</li>
           <li>実装: 時給設定、労働時間集計、CSV出力</li>
@@ -3355,7 +3479,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
       </div>
 
       <div style="margin-bottom: 0;">
-        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">🤖 シフト自動調整（90分）</p>
+        <p style="color: #7c3aed; margin: 0 0 8px 0; font-weight: 600;">シフト自動調整（90分）</p>
         <ul style="color: #7c3aed; line-height: 1.8; margin: 0;">
           <li>希望シフトから自動でバランス良く割り当て</li>
           <li>実装: アルゴリズム実装（制約充足問題）、最適化ロジック</li>
@@ -3377,7 +3501,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 </div>
 
 <div style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 16px;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>✨ 完了目標！</strong> 希望シフト提出 → 管理者が確定 → カレンダーで閲覧、という一連の流れが動作したら完成です！Netlifyにデプロイして、実際に使ってみましょう。</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>完了目標！</strong> 希望シフト提出 → 管理者が確定 → カレンダーで閲覧、という一連の流れが動作したら完成です！Netlifyにデプロイして、実際に使ってみましょう。</p>
 </div>
 
 <h3 id="185c-振り返りと追加機能アイデア">18.5c 振り返りと追加機能アイデア</h3>
@@ -3385,7 +3509,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 <p>実装が完了したら、<strong>設計と実装のプロセスを振り返り</strong>ましょう。</p>
 
 <div style="background: rgba(99, 102, 241, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 2px solid rgba(99, 102, 241, 0.3); margin: 24px 0;">
-  <h4 style="margin-top: 0; color: #4338ca;">📝 振り返りの質問</h4>
+  <h4 style="margin-top: 0; color: #4338ca;">振り返りの質問</h4>
 
   <div style="background: rgba(255, 255, 255, 0.7); padding: 16px; border-radius: 8px; margin: 16px 0;">
     <p style="margin: 0 0 8px 0; color: #4338ca; font-weight: 600;">1. 競合調査で学んだこと</p>
@@ -3423,7 +3547,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 </div>
 
 <div style="background: rgba(168, 85, 247, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.3); margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #6b21a8;">🚀 追加機能アイデア（時間があれば）</h4>
+  <h4 style="margin-top: 0; color: #6b21a8;">追加機能アイデア（時間があれば）</h4>
   <ul style="color: #7c3aed; line-height: 1.8; margin: 0;">
     <li><strong>シフト交換機能</strong>（40分）: スタッフ同士でシフトを交換できる機能</li>
     <li><strong>通知機能</strong>（30分）: シフト確定時にメール通知（Resend統合）</li>
@@ -3435,7 +3559,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 </div>
 
 <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); margin: 16px 0;">
-  <h4 style="margin-top: 0; color: #0c4a6e;">🎓 Option C で学んだこと（まとめ）</h4>
+  <h4 style="margin-top: 0; color: #0c4a6e;">Option C で学んだこと（まとめ）</h4>
   <ul style="color: #075985; line-height: 1.8; margin: 0;">
     <li><strong>要件定義力</strong>: ゼロから「何を作るか」を決める力</li>
     <li><strong>競合調査</strong>: 既存サービスを分析し、実装難易度を判断する力</li>
@@ -3452,24 +3576,24 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 <h3 id="まとめ-18章">まとめ</h3>
 
 <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin: 24px 0;">
-  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>🎉 おめでとうございます！</strong> この章では、<strong>3つの実践的なアプリケーション</strong>から1つを選んで実装しました：</p>
+  <p style="margin: 0; color: #047857; line-height: 1.7;"><strong>おめでとうございます！</strong> この章では、<strong>3つの実践的なアプリケーション</strong>から1つを選んで実装しました：</p>
 
   <div style="margin: 16px 0;">
-    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">🤖 Option B: 社内AI活用プラットフォームを選んだ方（⭐推奨）</p>
+    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">Option B: 社内AI活用プラットフォームを選んだ方（⭐推奨）</p>
     <ul style="color: #047857; line-height: 1.8; margin: 0 0 16px 0;">
       <li><strong>Webアプリ</strong>: Next.js + Supabase + Netlifyで完結する社内ツール</li>
       <li><strong>ソーシャル機能</strong>: いいね・ブックマーク・検索・フィルター機能の実装</li>
       <li><strong>習得したスキル</strong>: ナレッジ共有プラットフォーム、ソーシャル機能、データ集計</li>
     </ul>
 
-    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">📱 Option A: SNS自動投稿システムを選んだ方</p>
+    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">Option A: SNS自動投稿システムを選んだ方</p>
     <ul style="color: #047857; line-height: 1.8; margin: 0 0 16px 0;">
       <li><strong>Webアプリ</strong>: Netlifyにデプロイし、Supabase認証でログイン → 投稿内容を管理</li>
       <li><strong>ローカルスクリプト</strong>: node post-to-sns.js で単体実行 → Playwright MCPでブラウザ自動操作</li>
       <li><strong>習得したスキル</strong>: 分離型アーキテクチャ、ブラウザ自動化、複数SNS連携</li>
     </ul>
 
-    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">📅 Option C: シフト管理アプリを選んだ方</p>
+    <p style="margin: 0 0 8px 0; color: #047857; font-weight: 600;">Option C: シフト管理アプリを選んだ方</p>
     <ul style="color: #047857; line-height: 1.8; margin: 0;">
       <li><strong>要件定義</strong>: 競合調査からMVP設計まで、ゼロから仕様を決定</li>
       <li><strong>実装</strong>: 希望シフト提出〜確定〜カレンダー表示の一連の流れ</li>
@@ -3490,17 +3614,17 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
     </p>
   </div>
 
-  <p style="margin: 16px 0 0 0; color: #047857; line-height: 1.7; font-weight: 600;"><strong>🏆 Session 4の全18章を修了しました！</strong> あなたは、独自ドメイン、セキュリティ、CI/CD、運用監視、そして実務で即使える自動化ツールの開発まで、<strong>プロフェッショナルな本番運用に必要なすべてのスキル</strong>を習得しました。次は修了証を受け取りましょう！</p>
+  <p style="margin: 16px 0 0 0; color: #047857; line-height: 1.7; font-weight: 600;"><strong>Session 4の全18章を修了しました！</strong> あなたは、独自ドメイン、セキュリティ、CI/CD、運用監視、そして実務で即使える自動化ツールの開発まで、<strong>プロフェッショナルな本番運用に必要なすべてのスキル</strong>を習得しました。次は修了証を受け取りましょう！</p>
 </div>
 
 <hr>
 
 <!-- 修了証セクション -->
 <div style="text-align: center; margin: 60px 0;">
-  <h2 style="color: #9a3412; margin-bottom: 24px;">🎓 コース修了</h2>
+  <h2 style="color: #9a3412; margin-bottom: 24px;">コース修了</h2>
   <p style="font-size: 1.2em; color: #78350f; margin-bottom: 32px;">すべてのセッションを完了しました！<br>あなたの努力と成長を讃えます。</p>
   <button id="completionBtn" class="completion-button">
-    🏆 修了証を表示する
+    修了証を表示する
   </button>
 </div>
 
@@ -3508,7 +3632,7 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
 <div id="certificateModal" class="certificate-modal" role="dialog" aria-modal="true" aria-labelledby="certificateTitle">
   <div class="certificate-content">
     <button class="certificate-close" aria-label="閉じる">×</button>
-    <h2 id="certificateTitle" class="certificate-title">🎓<br>修了証</h2>
+    <h2 id="certificateTitle" class="certificate-title"><br>修了証</h2>
     <div class="certificate-body">
       <p>この証明書は、以下の方が</p>
       <p class="certificate-name">AI開発ツール完全活用マニュアル</p>
@@ -3524,33 +3648,33 @@ INSTAGRAM_PASSWORD=your-password</code></pre>
   </div>
 
   <div style="background: rgba(251, 146, 60, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(251, 146, 60, 0.3); border-radius: 16px; padding: 24px; margin: 24px auto; max-width: 1200px; text-align: center;">
-    <h3 style="margin-top: 0;">📚 セッションナビゲーション</h3>
+    <h3 style="margin-top: 0;">セッションナビゲーション</h3>
     <p style="margin-bottom: 20px;">このマニュアルは4つのセッションに分かれています</p>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; max-width: 1200px; margin: 0 auto;">
 
       <a href="session-1-basics.html" style="text-decoration: none;">
         <div style="background: rgba(59, 130, 246, 0.15); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 2px solid rgba(59, 130, 246, 0.4); transition: all 0.3s; cursor: pointer; height: 100%;">
-          <strong style="color: #1e40af; font-size: 1.1em;">← 📘 Session 1: 基礎編</strong><br>
+          <strong style="color: #1e40af; font-size: 1.1em;">← Session 1: 基礎編</strong><br>
           <small style="color: #1e3a8a; font-weight: 600;">0-5章 | 所要時間: 3-4時間</small>
         </div>
       </a>
 
       <a href="session-2-quality.html" style="text-decoration: none;">
         <div style="background: rgba(16, 185, 129, 0.15); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 2px solid rgba(16, 185, 129, 0.4); transition: all 0.3s; cursor: pointer; height: 100%;">
-          <strong style="color: #047857; font-size: 1.1em;">← 📗 Session 2: 品質編</strong><br>
+          <strong style="color: #047857; font-size: 1.1em;">← Session 2: 品質編</strong><br>
           <small style="color: #065f46; font-weight: 600;">6-9章 | 所要時間: 2-3時間</small>
         </div>
       </a>
 
       <a href="session-3-advanced.html" style="text-decoration: none;">
         <div style="background: rgba(168, 85, 247, 0.15); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 2px solid rgba(168, 85, 247, 0.4); transition: all 0.3s; cursor: pointer; height: 100%;">
-          <strong style="color: #7c3aed; font-size: 1.1em;">← 📕 Session 3: 応用編</strong><br>
+          <strong style="color: #7c3aed; font-size: 1.1em;">← Session 3: 応用編</strong><br>
           <small style="color: #6d28d9; font-weight: 600;">10-13章 | 所要時間: 3-4時間</small>
         </div>
       </a>
 
       <div style="background: rgba(251, 146, 60, 0.2); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 4px solid rgba(251, 146, 60, 0.5);">
-        <strong>📙 Session 4: 本番運用編（現在のページ）</strong><br>
+        <strong>Session 4: 本番運用編（現在のページ）</strong><br>
         <small>14-18章 | 所要時間: 6-7時間</small>
       </div>
 

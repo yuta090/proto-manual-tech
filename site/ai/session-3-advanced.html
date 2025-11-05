@@ -5,8 +5,132 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI開発ツール完全活用マニュアル</title>
   <link rel="stylesheet" href="../assets/manual.css" />
+  <style>
+    /* アコーディオンスタイル */
+    .toc-accordion {
+      margin: 20px 0;
+    }
+
+    .toc-accordion-item {
+      margin-bottom: 8px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .toc-accordion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #1e40af;
+      background: rgba(219, 234, 254, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .toc-accordion-header:hover {
+      background: rgba(219, 234, 254, 0.5);
+    }
+
+    .toc-accordion-icon {
+      font-size: 0.8em;
+      transition: transform 0.3s ease;
+    }
+
+    .toc-accordion-item.active .toc-accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .toc-accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .toc-accordion-item.active .toc-accordion-content {
+      max-height: 2000px;
+    }
+
+    .toc-accordion-content ul {
+      padding: 12px 16px;
+      margin: 0;
+      list-style: none;
+    }
+
+    .toc-accordion-content li {
+      margin-bottom: 12px;
+    }
+
+    .toc-accordion-content a {
+      color: #1e40af;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .toc-accordion-content a:hover {
+      color: #3b82f6;
+      text-decoration: underline;
+    }
+
+    .toc-accordion-content span {
+      display: block;
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* ダークモード対応 */
+    body.dark-mode .toc-accordion-item {
+      background: rgba(51, 65, 85, 0.5);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    body.dark-mode .toc-accordion-header {
+      color: #93c5fd;
+      background: rgba(30, 58, 138, 0.3);
+    }
+
+    body.dark-mode .toc-accordion-header:hover {
+      background: rgba(30, 58, 138, 0.5);
+    }
+
+    body.dark-mode .toc-accordion-content a {
+      color: #93c5fd;
+    }
+
+    body.dark-mode .toc-accordion-content a:hover {
+      color: #bfdbfe;
+    }
+
+    body.dark-mode .toc-accordion-content span {
+      color: #d1d5db;
+    }
+  </style>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // アコーディオン機能
+      const accordionHeaders = document.querySelectorAll('.toc-accordion-header');
+      accordionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          const item = this.parentElement;
+          const wasActive = item.classList.contains('active');
+
+          // 全てのアコーディオンを閉じる（オプション：複数開きたい場合はこの部分を削除）
+          // document.querySelectorAll('.toc-accordion-item').forEach(i => i.classList.remove('active'));
+
+          // クリックされたアイテムをトグル
+          if (wasActive) {
+            item.classList.remove('active');
+          } else {
+            item.classList.add('active');
+          }
+        });
+      });
+
       // すべてのpreタグにコピーボタンを追加
       document.querySelectorAll('.manual-content pre').forEach(function(pre) {
         const button = document.createElement('button');
@@ -58,10 +182,10 @@
 
     </div>
   </header>
-  <button class="nav-toggle" id="navToggle" aria-label="目次を開閉">☰</button>
+  <button class="nav-toggle" id="navToggle" aria-label="目次を開閉"></button>
   <button class="dark-mode-toggle" id="darkModeToggle" aria-label="ダークモード切り替え">
-    <span class="light-icon">☀️</span>
-    <span class="dark-icon">🌙</span>
+    <span class="light-icon">️</span>
+    <span class="dark-icon"></span>
   </button>
 
   <div class="manual-layout" id="manualLayout">
@@ -75,18 +199,18 @@
 <li><a href="#14-裏側の技術-mcp"><strong>14. 裏側の技術 - MCP</strong></a></li>
 </ol>
 <hr style="margin: 20px 0; border: none; border-top: 2px solid rgba(168, 85, 247, 0.3);">
-<h3 style="font-size: 1em; margin: 16px 0 12px 0; color: #7c3aed;">📚 他のセッション</h3>
+<h3 style="font-size: 1em; margin: 16px 0 12px 0; color: #7c3aed;">他のセッション</h3>
 <ul class="toc-list" style="list-style: none; padding-left: 0;">
-<li style="margin-bottom: 8px;"><a href="session-1-basics.html" style="color: #1e40af; font-weight: 600;">← 📘 Session 1: 基礎編</a></li>
-<li style="margin-bottom: 8px;"><a href="session-2-quality.html" style="color: #047857; font-weight: 600;">← 📗 Session 2: 品質編</a></li>
-<li style="margin-bottom: 8px;"><a href="session-4-production.html" style="color: #c2410c; font-weight: 600;">📙 Session 4: 本番運用編 →</a></li>
+<li style="margin-bottom: 8px;"><a href="session-1-basics.html" style="color: #1e40af; font-weight: 600;">← Session 1: 基礎編</a></li>
+<li style="margin-bottom: 8px;"><a href="session-2-quality.html" style="color: #047857; font-weight: 600;">← Session 2: 品質編</a></li>
+<li style="margin-bottom: 8px;"><a href="session-4-production.html" style="color: #c2410c; font-weight: 600;">Session 4: 本番運用編 →</a></li>
 </ul>
 </nav>
     </aside>
     <main class="manual-content">
       <h2 id="目次"><strong>目次</strong></h2>
 <hr>
-<h3>📚 Phase 1: 体験と基礎（0-3章）</h3>
+<h3>Phase 1: 体験と基礎（0-3章）</h3>
 <ul>
 <li>
 <a href="#0-%E6%9C%80%E5%88%9D%E3%81%AE30%E5%88%86%E3%81%A7%E4%BD%93%E9%A8%93%E3%81%99%E3%82%8Bai%E9%96%8B%E7%99%BA%E3%81%AE%E9%AD%94%E6%B3%95"><strong>0. 最初の30分で体験する「AI開発の魔法」</strong></a><br>
@@ -106,7 +230,7 @@
 </li>
 </ul>
 <hr>
-<h3>🚀 Phase 2: 実践プロジェクト（4-5章）</h3>
+<h3>Phase 2: 実践プロジェクト（4-5章）</h3>
 <ul>
 <li>
 <a href="session-1-basics.html#4-最低限の準備ai開発の相棒を迎えよう"><strong>4. 最低限の準備：AI開発の相棒を迎えよう</strong></a><br>
@@ -118,7 +242,7 @@
 </li>
 </ul>
 <hr>
-<h3>🌟 Phase 3: 機能拡張と深化（6-9章）</h3>
+<h3>Phase 3: 機能拡張と深化（6-9章）</h3>
 <ul>
 <li>
 <a href="session-2-quality.html#6-github連携"><strong>6. GitHub連携</strong></a><br>
@@ -138,7 +262,7 @@
 </li>
 </ul>
 <hr>
-<h3>🧠 Phase 4: 深い理解と自動化（10-13章）</h3>
+<h3>Phase 4: 深い理解と自動化（10-13章）</h3>
 <ul>
 <li>
 <a href="#10-トラブルシューティング"><strong>10. トラブルシューティング</strong></a><br>
@@ -158,7 +282,7 @@
 </li>
 </ul>
 <hr>
-<h3>🚀 Phase 5: 本番運用とプロフェッショナル化（14-17章）</h3>
+<h3>Phase 5: 本番運用とプロフェッショナル化（14-17章）</h3>
 <ul>
 <li>
 <a href="session-4-production.html#14-カスタムドメインで本格サイトに"><strong>14. カスタムドメインで本格サイトに</strong></a><br>
@@ -184,7 +308,7 @@
 <!-- 学習目標セクション - 11章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -195,7 +319,7 @@
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -280,8 +404,8 @@
 
 <p style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1)); padding: 20px; border-radius: 12px; border-left: 4px solid #A855F7; margin: 24px 0;">
 <strong>⏱️ 所要時間</strong>: 60分（座学15分 + 実装45分）<br>
-<strong>🎯 目標</strong>: Playwright MCPを使って、作業時間トラッカーのE2Eテストを自動化します。<br>
-<strong>📚 前提知識</strong>: 7-8章でSupabase認証まで実装済み
+<strong>目標</strong>: Playwright MCPを使って、作業時間トラッカーのE2Eテストを自動化します。<br>
+<strong>前提知識</strong>: 7-8章でSupabase認証まで実装済み
 </p>
 
 <h4 id="座学e2eテストとplaywright-mcpとは15分">座学：E2EテストとPlaywright MCPとは（15分）</h4>
@@ -539,7 +663,7 @@ jobs:
 <li>✅ CI/CDパイプラインへの統合</li>
 </ul>
 
-<h5>🚀 次に追加すべきテスト</h5>
+<h5>次に追加すべきテスト</h5>
 <ul>
 <li><strong>タスク管理テスト</strong>: タスク作成 → 開始 → 停止 → 削除のフロー</li>
 <li><strong>エラーハンドリング</strong>: 不正なログイン情報でのエラー表示確認</li>
@@ -565,7 +689,7 @@ jobs:
 <!-- 学習目標セクション - 12章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -576,7 +700,7 @@ jobs:
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -595,7 +719,7 @@ jobs:
 
 <hr>
 
-<h3 id="📋-この章の目標">📋 この章の目標</h3>
+<h3 id="-この章の目標">この章の目標</h3>
 
 <ul>
 <li>これまで構築してきた作業時間トラッカーに統計・分析機能を追加</li>
@@ -606,7 +730,7 @@ jobs:
 
 <hr>
 
-<h3 id="🎯-今回作るもの">🎯 今回作るもの</h3>
+<h3 id="-今回作るもの">今回作るもの</h3>
 
 <p><strong>作業時間トラッカー統計ダッシュボード</strong> - これまで構築してきたアプリに、統計・分析・可視化機能を追加</p>
 
@@ -623,11 +747,11 @@ jobs:
 
 <h4>今回追加する機能</h4>
 <ul>
-<li>📊 <strong>タスク完了率の可視化</strong>: 完了/未完了のドーナツチャート</li>
-<li>📈 <strong>作業時間の日次・週次グラフ</strong>: 折れ線グラフで時系列推移を表示</li>
-<li>🎯 <strong>生産性分析機能</strong>: 平均作業時間、最も生産性の高い時間帯、タスク別の時間配分</li>
-<li>🔍 <strong>フィルタリング機能</strong>: 期間指定、タスク別、完了/未完了の切り替え</li>
-<li>📱 <strong>レスポンシブダッシュボード</strong>: モバイルでも見やすいグラフ表示</li>
+<li><strong>タスク完了率の可視化</strong>: 完了/未完了のドーナツチャート</li>
+<li><strong>作業時間の日次・週次グラフ</strong>: 折れ線グラフで時系列推移を表示</li>
+<li><strong>生産性分析機能</strong>: 平均作業時間、最も生産性の高い時間帯、タスク別の時間配分</li>
+<li><strong>フィルタリング機能</strong>: 期間指定、タスク別、完了/未完了の切り替え</li>
+<li><strong>レスポンシブダッシュボード</strong>: モバイルでも見やすいグラフ表示</li>
 </ul>
 
 <h4>使用技術</h4>
@@ -650,14 +774,14 @@ jobs:
 
 <hr>
 
-<h3 id="🚀-ハンズオン（90分）">🚀 ハンズオン（90分）</h3>
+<h3 id="-ハンズオン（90分）">ハンズオン（90分）</h3>
 
 <h4>ステップ1: 統計ダッシュボードの仕様設計（15分）</h4>
 
 <p>まず、追加する統計ダッシュボードの仕様を設計します。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:design 作業時間トラッカーに統計ダッシュボード機能を追加してください。</p>
+<p>「/sc:design 作業時間トラッカーに統計ダッシュボード機能を追加してください。</p>
 
 <pre><code># 統計ダッシュボード機能仕様
 
@@ -727,7 +851,7 @@ spec.mdとして保存してください。」</code><button class="code-copy-bt
 <p>仕様書に基づいて、統計ダッシュボードを実装します。段階的に進めましょう。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:implement spec.mdに基づいて、統計ダッシュボード機能を実装してください。</p>
+<p>「/sc:implement spec.mdに基づいて、統計ダッシュボード機能を実装してください。</p>
 
 <p><strong>実装の優先順位:</strong></p>
 <ul>
@@ -813,7 +937,7 @@ const dailyData = logs.reduce((acc, log) => {
 <p>実装したコードをレビューし、品質を向上させます。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:analyze 統計ダッシュボードのコードをレビューしてください。</p>
+<p>「/sc:analyze 統計ダッシュボードのコードをレビューしてください。</p>
 
 <p><strong>レビュー観点:</strong></p>
 <ul>
@@ -853,7 +977,7 @@ const dailyData = logs.reduce((acc, log) => {
 <p><strong>レビュー結果に基づく改善</strong>:</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:improve レビューで指摘された問題点を修正してください。<br>
+<p>「/sc:improve レビューで指摘された問題点を修正してください。<br>
 特にパフォーマンスとデータ整合性を重点的に改善してください。」</p>
 </div>
 
@@ -862,7 +986,7 @@ const dailyData = logs.reduce((acc, log) => {
 <p>統計ダッシュボードの動作を保証するテストを作成します。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:test 統計ダッシュボードのテストを作成してください。</p>
+<p>「/sc:test 統計ダッシュボードのテストを作成してください。</p>
 
 <p><strong>テストファイル構成:</strong></p>
 <ul>
@@ -920,7 +1044,7 @@ npm test -- --coverage</code></pre>
 <p>コードをリファクタリングし、保守性を向上させます。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:improve 統計ダッシュボードのコードをリファクタリングしてください。</p>
+<p>「/sc:improve 統計ダッシュボードのコードをリファクタリングしてください。</p>
 
 <p><strong>改善ポイント:</strong></p>
 <ul>
@@ -975,7 +1099,7 @@ npm run lint</code></pre>
 </ul>
 
 <div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<h4>🎯 達成したスキル</h4>
+<h4>達成したスキル</h4>
 <ul>
 <li>✅ データ可視化（Chart.js）</li>
 <li>✅ 集計ロジックの実装</li>
@@ -988,7 +1112,7 @@ npm run lint</code></pre>
 
 <hr>
 
-<h3 id="🎉-完了チェック">🎉 完了チェック</h3>
+<h3 id="-完了チェック">完了チェック</h3>
 
 <p>この章を終えたら、以下を確認してください：</p>
 
@@ -1010,7 +1134,7 @@ npm run lint</code></pre>
 <!-- 学習目標セクション - 13章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -1022,7 +1146,7 @@ npm run lint</code></pre>
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -1040,7 +1164,7 @@ npm run lint</code></pre>
   </div>
 </div>
 
-<h3 id="📋-この章の目標-13">📋 この章の目標</h3>
+<h3 id="-この章の目標-13">この章の目標</h3>
 
 <ul>
 <li>5-11章で構築してきた作業時間トラッカーを完成させる</li>
@@ -1052,7 +1176,7 @@ npm run lint</code></pre>
 
 <hr>
 
-<h3 id="🎯-卒業制作の内容">🎯 卒業制作の内容</h3>
+<h3 id="-卒業制作の内容">卒業制作の内容</h3>
 
 <p><strong>作業時間トラッカー完全版</strong> - これまでの学習の集大成として、実務レベルの完全なアプリケーションを完成させます。</p>
 
@@ -1070,12 +1194,12 @@ npm run lint</code></pre>
 
 <h4>今回追加する内容（卒業制作）</h4>
 <ul>
-<li>🎨 <strong>オリジナル機能の企画と実装</strong>: あなた独自のアイデアを追加</li>
-<li>📱 <strong>モバイル最適化</strong>: レスポンシブデザインの完成</li>
-<li>🚀 <strong>パフォーマンス最適化</strong>: 大量データ対応、ローディング改善</li>
-<li>🔔 <strong>通知機能</strong>: 作業時間リマインダー、目標達成通知</li>
-<li>📤 <strong>データエクスポート</strong>: CSV/PDF形式でのレポート出力</li>
-<li>🎯 <strong>目標設定機能</strong>: 週次・月次の作業時間目標管理</li>
+<li><strong>オリジナル機能の企画と実装</strong>: あなた独自のアイデアを追加</li>
+<li><strong>モバイル最適化</strong>: レスポンシブデザインの完成</li>
+<li><strong>パフォーマンス最適化</strong>: 大量データ対応、ローディング改善</li>
+<li><strong>通知機能</strong>: 作業時間リマインダー、目標達成通知</li>
+<li><strong>データエクスポート</strong>: CSV/PDF形式でのレポート出力</li>
+<li><strong>目標設定機能</strong>: 週次・月次の作業時間目標管理</li>
 </ul>
 
 <h4>開発フロー全体</h4>
@@ -1085,7 +1209,7 @@ npm run lint</code></pre>
 
 <hr>
 
-<h3 id="🚀-卒業制作ハンズオン（120分）">🚀 卒業制作ハンズオン（120分）</h3>
+<h3 id="-卒業制作ハンズオン（120分）">卒業制作ハンズオン（120分）</h3>
 
 <h4>Phase 1: オリジナル機能の企画（20分）</h4>
 
@@ -1105,7 +1229,7 @@ npm run lint</code></pre>
 </div>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:brainstorm 作業時間トラッカーに追加する独自機能を一緒に考えてください。</p>
+<p>「/sc:brainstorm 作業時間トラッカーに追加する独自機能を一緒に考えてください。</p>
 
 <pre><code># カスタム機能のブレインストーミング
 
@@ -1132,7 +1256,7 @@ npm run lint</code></pre>
 <p><strong>機能決定後の仕様書作成</strong>:</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:design 選んだカスタム機能の詳細仕様書を作成してください。</p>
+<p>「/sc:design 選んだカスタム機能の詳細仕様書を作成してください。</p>
 
 <pre><code># [機能名]の仕様書
 
@@ -1160,7 +1284,7 @@ spec-custom.mdとして保存してください。」</code><button class="code-
 <p>既存の作業時間トラッカーにカスタム機能を統合します。段階的に実装していきます。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:implement spec-custom.mdに基づいて、カスタム機能を実装してください。</p>
+<p>「/sc:implement spec-custom.mdに基づいて、カスタム機能を実装してください。</p>
 
 <p><strong>実装の優先順位</strong>:</p>
 <ul>
@@ -1231,7 +1355,7 @@ export default function StatsPage() {
 <p>実装したカスタム機能をさらに洗練させ、追加の改善を行います。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:improve カスタム機能とアプリ全体のUI/UXを改善してください。</p>
+<p>「/sc:improve カスタム機能とアプリ全体のUI/UXを改善してください。</p>
 
 <p><strong>改善項目</strong>:</p>
 <ul>
@@ -1299,7 +1423,7 @@ async function exportToCSV() {
 <p>カスタム機能を含む全体のテストを実装します。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:test 卒業制作アプリの包括的なテストを作成してください。</p>
+<p>「/sc:test 卒業制作アプリの包括的なテストを作成してください。</p>
 
 <p><strong>テスト範囲</strong>:</p>
 <ul>
@@ -1349,7 +1473,7 @@ npm run test:all</code></pre>
 <p>完成したアプリをデプロイし、本番環境での動作を確認します。</p>
 
 <div style="background: rgba(139, 92, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<p>💬 「/sc:git 卒業制作の完成版をGitHubにプッシュして、本番環境にデプロイしてください。</p>
+<p>「/sc:git 卒業制作の完成版をGitHubにプッシュして、本番環境にデプロイしてください。</p>
 
 <pre><code>コミットメッセージ:
 feat: 卒業制作完成 - 作業時間トラッカー完全版
@@ -1390,7 +1514,7 @@ feat: 卒業制作完成 - 作業時間トラッカー完全版
 </ul>
 
 <div style="background: rgba(168, 85, 247, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<h4>🎯 卒業時点で身につけたスキル</h4>
+<h4>卒業時点で身につけたスキル</h4>
 <ul>
 <li>✅ Next.js App Routerでのフルスタック開発</li>
 <li>✅ Supabaseでのバックエンド構築（DB設計、認証、RLS）</li>
@@ -1404,7 +1528,7 @@ feat: 卒業制作完成 - 作業時間トラッカー完全版
 
 <hr>
 
-<h3 id="🎉-完了チェック-13">🎉 完了チェック</h3>
+<h3 id="-完了チェック-13">完了チェック</h3>
 
 <p>この章を終えたら、以下を確認してください：</p>
 
@@ -1419,7 +1543,7 @@ feat: 卒業制作完成 - 作業時間トラッカー完全版
 </ul>
 
 <div style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1)); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<h4>🚀 卒業後のロードマップ</h4>
+<h4>卒業後のロードマップ</h4>
 
 <h5>短期（1ヶ月）</h5>
 <ul>
@@ -1443,7 +1567,7 @@ feat: 卒業制作完成 - 作業時間トラッカー完全版
 </ul>
 </div>
 
-<p><strong>すべてチェックできたら、セッション3完了です！おめでとうございます！🎉</strong></p>
+<p><strong>すべてチェックできたら、セッション3完了です！おめでとうございます！</strong></p>
 
 <p><strong>次は13章で、これまで使ってきた技術の裏側を理解します。</strong></p>
 
@@ -1454,7 +1578,7 @@ feat: 卒業制作完成 - 作業時間トラッカー完全版
 <!-- 学習目標セクション - 14章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -1465,7 +1589,7 @@ feat: 卒業制作完成 - 作業時間トラッカー完全版
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -1482,7 +1606,7 @@ feat: 卒業制作完成 - 作業時間トラッカー完全版
   </div>
 </div>
 
-<h3 id="📋-この章の目標-14">📋 この章の目的</h3>
+<h3 id="-この章の目標-14">この章の目的</h3>
 
 <p>これまで5章と7章で実践的に使ってきた<strong>MCP（Model Context Protocol）</strong>について、全体像を把握し、どんなMCPが使えるかを知る。</p>
 
@@ -1493,13 +1617,13 @@ feat: 卒業制作完成 - 作業時間トラッカー完全版
 
 <hr>
 
-<h3 id="🎯-実用mcpカタログ">🎯 実用MCPカタログ</h3>
+<h3 id="-実用mcpカタログ">実用MCPカタログ</h3>
 
 <p>ここでは、実際の開発で役立つMCPを、用途別に紹介します。各MCPの<strong>「何ができるか」「いつ使うか」</strong>を中心に説明します。</p>
 
 <hr>
 
-<h4 id="📚-ドキュメント参照系">📚 ドキュメント参照系</h4>
+<h4 id="-ドキュメント参照系">ドキュメント参照系</h4>
 
 <h5 style="color: #10b981; margin-top: 16px;">Context7 MCP</h5>
 <div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 16px; margin: 16px 0;">
@@ -1521,7 +1645,7 @@ feat: 卒業制作完成 - 作業時間トラッカー完全版
 
 <hr>
 
-<h4 id="📝-プロジェクト管理系">📝 プロジェクト管理系</h4>
+<h4 id="-プロジェクト管理系">プロジェクト管理系</h4>
 
 <h5 style="color: #3b82f6; margin-top: 16px;">Notion MCP</h5>
 <div style="background: rgba(59, 130, 246, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 16px; margin: 16px 0;">
@@ -1539,7 +1663,7 @@ feat: 卒業制作完成 - 作業時間トラッカー完全版
 <p><strong>プロンプト例</strong>:</p>
 <pre><code>/sc:workflow タスク管理アプリの開発計画を作成し、
 Notionデータベースに保存してください。</code><button class="code-copy-btn">コピー</button></pre>
-<p><strong>⚙️ 設定要件</strong>: Notion APIキーの事前設定が必要</p>
+<p><strong>️ 設定要件</strong>: Notion APIキーの事前設定が必要</p>
 </div>
 
 <h5 style="color: #3b82f6; margin-top: 16px;">GitHub MCP</h5>
@@ -1564,7 +1688,7 @@ issue #42 に紐づいたブランチを作成し、実装後に自動でPRを�
 
 <hr>
 
-<h4 id="🧪-テスト・品質保証系">🧪 テスト・品質保証系</h4>
+<h4 id="-テスト・品質保証系">テスト・品質保証系</h4>
 
 <h5 style="color: #a855f7; margin-top: 16px;">Playwright MCP</h5>
 <div style="background: rgba(168, 85, 247, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 16px; margin: 16px 0;">
@@ -1588,7 +1712,7 @@ issue #42 に紐づいたブランチを作成し、実装後に自動でPRを�
 
 <hr>
 
-<h4 id="💾-データベース・バックエンド系">💾 データベース・バックエンド系</h4>
+<h4 id="-データベース・バックエンド系">データベース・バックエンド系</h4>
 
 <h5 style="color: #10b981; margin-top: 16px;">Supabase MCP</h5>
 <div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 16px; margin: 16px 0;">
@@ -1612,12 +1736,12 @@ issue #42 に紐づいたブランチを作成し、実装後に自動でPRを�
 
 <hr>
 
-<h3 id="🔗-mcpの組み合わせで最強の開発フロー">🔗 MCPの組み合わせで最強の開発フロー</h3>
+<h3 id="-mcpの組み合わせで最強の開発フロー">MCPの組み合わせで最強の開発フロー</h3>
 
 <p>複数のMCPを組み合わせることで、完全自動化された開発フローが実現します。</p>
 
 <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1)); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<h5 style="margin-top: 0;">🚀 完全自動化フローの例</h5>
+<h5 style="margin-top: 0;">完全自動化フローの例</h5>
 <p><strong>プロンプト</strong>:</p>
 <pre><code>/sc:implement issue #42 の決済システムを実装してください。
 実装後、E2Eテストを実行し、問題なければ自動でPRを作成してください。</code><button class="code-copy-btn">コピー</button></pre>
@@ -1637,7 +1761,7 @@ issue #42 に紐づいたブランチを作成し、実装後に自動でPRを�
 
 <hr>
 
-<h3 id="⚙️-mcp設定のヒント">⚙️ MCP設定のヒント</h3>
+<h3 id="️-mcp設定のヒント">️ MCP設定のヒント</h3>
 
 <p>多くのMCPは、APIキーや認証情報の設定が必要です。以下を参考に設定してください。</p>
 
@@ -1678,7 +1802,7 @@ issue #42 に紐づいたブランチを作成し、実装後に自動でPRを�
 </table>
 </div>
 
-<p><strong>📝 設定場所</strong>: Super Claudeの設定ファイル <code>~/.claude/config.json</code> または環境変数</p>
+<p><strong>設定場所</strong>: Super Claudeの設定ファイル <code>~/.claude/config.json</code> または環境変数</p>
 
 <hr>
 
@@ -1693,12 +1817,12 @@ issue #42 に紐づいたブランチを作成し、実装後に自動でPRを�
 
 <hr>
 
-<h3 id="🎉-全13章完了おめでとうございます">🎉 全13章完了おめでとうございます！</h3>
+<h3 id="-全13章完了おめでとうございます">全13章完了おめでとうございます！</h3>
 
 <p>これで、AI開発ツールを使った<strong>バイブコーディング</strong>の全スキルを習得しました。</p>
 
 <div style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1)); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-<h4 style="margin-top: 0;">🚀 卒業後のロードマップ</h4>
+<h4 style="margin-top: 0;">卒業後のロードマップ</h4>
 
 <h5>短期（1ヶ月）</h5>
 <ul>
@@ -1724,7 +1848,7 @@ issue #42 に紐づいたブランチを作成し、実装後に自動でPRを�
 
 <hr>
 
-<h3 id="🙏-終わりに">🙏 終わりに</h3>
+<h3 id="-終わりに">終わりに</h3>
 
 <p>このマニュアルで学んだスキルは、あなたの <strong>生涯のスキル</strong> です。</p>
 
@@ -1738,13 +1862,13 @@ issue #42 に紐づいたブランチを作成し、実装後に自動でPRを�
 
 <p>これらの原則を守れば、どんな技術にも対応できます。</p>
 
-<p><strong>さあ、バイブコーディングの世界へ飛び込みましょう！</strong> 🚀</p>
+<p><strong>さあ、バイブコーディングの世界へ飛び込みましょう！</strong> </p>
 
 <hr>
 
 <hr>
 
-<h3 id="🎉-完了チェック-14">🎉 完了チェック</h3>
+<h3 id="-完了チェック-14">完了チェック</h3>
 
 <p>この章を終えたら、以下を確認してください：</p>
 
@@ -1754,11 +1878,11 @@ issue #42 に紐づいたブランチを作成し、実装後に自動でPRを�
 <li>バイブコーディングの技術的背景を理解できた</li>
 </ul>
 
-<p><strong>全14章完了おめでとうございます！🎉</strong></p>
+<p><strong>全14章完了おめでとうございます！</strong></p>
 
 <hr>
 
-<h3 id="🚀-卒業後のロードマップ">🚀 卒業後のロードマップ</h3>
+<h3 id="-卒業後のロードマップ">卒業後のロードマップ</h3>
 
 <h4>短期（1ヶ月）</h4>
 <ul>
@@ -1783,7 +1907,7 @@ issue #42 に紐づいたブランチを作成し、実装後に自動でPRを�
 
 <hr>
 
-<h3 id="🙏-終わりに">🙏 終わりに</h3>
+<h3 id="-終わりに">終わりに</h3>
 
 <p>このマニュアルで学んだスキルは、あなたの <strong>生涯のスキル</strong> です。</p>
 
@@ -1797,39 +1921,39 @@ issue #42 に紐づいたブランチを作成し、実装後に自動でPRを�
 
 <p>これらの原則を守れば、どんな技術にも対応できます。</p>
 
-<p><strong>さあ、バイブコーディングの世界へ飛び込みましょう！</strong> 🚀</p>
+<p><strong>さあ、バイブコーディングの世界へ飛び込みましょう！</strong> </p>
 
 <hr>
 </main>
   </div>
 
   <div style="background: rgba(168, 85, 247, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 24px; margin: 24px auto; max-width: 1200px; text-align: center;">
-    <h3 style="margin-top: 0;">📚 セッションナビゲーション</h3>
+    <h3 style="margin-top: 0;">セッションナビゲーション</h3>
     <p style="margin-bottom: 20px;">このマニュアルは4つのセッションに分かれています</p>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; max-width: 1200px; margin: 0 auto;">
 
       <a href="session-1-basics.html" style="text-decoration: none;">
         <div style="background: rgba(59, 130, 246, 0.15); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 2px solid rgba(59, 130, 246, 0.4); transition: all 0.3s; cursor: pointer; height: 100%;">
-          <strong style="color: #1e40af; font-size: 1.1em;">← 📘 Session 1: 基礎編</strong><br>
+          <strong style="color: #1e40af; font-size: 1.1em;">← Session 1: 基礎編</strong><br>
           <small style="color: #1e3a8a; font-weight: 600;">0-5章 | 所要時間: 3-4時間</small>
         </div>
       </a>
 
       <a href="session-2-quality.html" style="text-decoration: none;">
         <div style="background: rgba(16, 185, 129, 0.15); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 2px solid rgba(16, 185, 129, 0.4); transition: all 0.3s; cursor: pointer; height: 100%;">
-          <strong style="color: #047857; font-size: 1.1em;">← 📗 Session 2: 品質編</strong><br>
+          <strong style="color: #047857; font-size: 1.1em;">← Session 2: 品質編</strong><br>
           <small style="color: #065f46; font-weight: 600;">6-9章 | 所要時間: 2-3時間</small>
         </div>
       </a>
 
       <div style="background: rgba(168, 85, 247, 0.2); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 4px solid rgba(168, 85, 247, 0.5);">
-        <strong>📕 Session 3: 応用編（現在のページ）</strong><br>
+        <strong>Session 3: 応用編（現在のページ）</strong><br>
         <small>10-13章 | 所要時間: 3-4時間</small>
       </div>
 
       <a href="session-4-production.html" style="text-decoration: none;">
         <div style="background: rgba(251, 146, 60, 0.15); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 2px solid rgba(251, 146, 60, 0.4); transition: all 0.3s; cursor: pointer; height: 100%;">
-          <strong style="color: #c2410c; font-size: 1.1em;">📙 Session 4: 本番運用編 →</strong><br>
+          <strong style="color: #c2410c; font-size: 1.1em;">Session 4: 本番運用編 →</strong><br>
           <small style="color: #9a3412; font-weight: 600;">14-17章 | 所要時間: 4-5時間</small>
         </div>
       </a>

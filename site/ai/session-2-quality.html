@@ -5,8 +5,132 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI開発ツール完全活用マニュアル</title>
   <link rel="stylesheet" href="../assets/manual.css" />
+  <style>
+    /* アコーディオンスタイル */
+    .toc-accordion {
+      margin: 20px 0;
+    }
+
+    .toc-accordion-item {
+      margin-bottom: 8px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .toc-accordion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #1e40af;
+      background: rgba(219, 234, 254, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .toc-accordion-header:hover {
+      background: rgba(219, 234, 254, 0.5);
+    }
+
+    .toc-accordion-icon {
+      font-size: 0.8em;
+      transition: transform 0.3s ease;
+    }
+
+    .toc-accordion-item.active .toc-accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .toc-accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .toc-accordion-item.active .toc-accordion-content {
+      max-height: 2000px;
+    }
+
+    .toc-accordion-content ul {
+      padding: 12px 16px;
+      margin: 0;
+      list-style: none;
+    }
+
+    .toc-accordion-content li {
+      margin-bottom: 12px;
+    }
+
+    .toc-accordion-content a {
+      color: #1e40af;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .toc-accordion-content a:hover {
+      color: #3b82f6;
+      text-decoration: underline;
+    }
+
+    .toc-accordion-content span {
+      display: block;
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* ダークモード対応 */
+    body.dark-mode .toc-accordion-item {
+      background: rgba(51, 65, 85, 0.5);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    body.dark-mode .toc-accordion-header {
+      color: #93c5fd;
+      background: rgba(30, 58, 138, 0.3);
+    }
+
+    body.dark-mode .toc-accordion-header:hover {
+      background: rgba(30, 58, 138, 0.5);
+    }
+
+    body.dark-mode .toc-accordion-content a {
+      color: #93c5fd;
+    }
+
+    body.dark-mode .toc-accordion-content a:hover {
+      color: #bfdbfe;
+    }
+
+    body.dark-mode .toc-accordion-content span {
+      color: #d1d5db;
+    }
+  </style>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // アコーディオン機能
+      const accordionHeaders = document.querySelectorAll('.toc-accordion-header');
+      accordionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          const item = this.parentElement;
+          const wasActive = item.classList.contains('active');
+
+          // 全てのアコーディオンを閉じる（オプション：複数開きたい場合はこの部分を削除）
+          // document.querySelectorAll('.toc-accordion-item').forEach(i => i.classList.remove('active'));
+
+          // クリックされたアイテムをトグル
+          if (wasActive) {
+            item.classList.remove('active');
+          } else {
+            item.classList.add('active');
+          }
+        });
+      });
+
       // すべてのpreタグにコピーボタンを追加
       document.querySelectorAll('.manual-content pre').forEach(function(pre) {
         const button = document.createElement('button');
@@ -58,10 +182,10 @@
 
     </div>
   </header>
-  <button class="nav-toggle" id="navToggle" aria-label="目次を開閉">☰</button>
+  <button class="nav-toggle" id="navToggle" aria-label="目次を開閉"></button>
   <button class="dark-mode-toggle" id="darkModeToggle" aria-label="ダークモード切り替え">
-    <span class="light-icon">☀️</span>
-    <span class="dark-icon">🌙</span>
+    <span class="light-icon">️</span>
+    <span class="dark-icon"></span>
   </button>
 
   <div class="manual-layout" id="manualLayout">
@@ -77,108 +201,152 @@
 <li><a href="#11-企業導入のためのsdd組織変革ガイド"><strong>11. 企業導入のためのSDD組織変革ガイド</strong></a></li>
 </ol>
 <hr style="margin: 20px 0; border: none; border-top: 2px solid rgba(59, 130, 246, 0.3);">
-<h3 style="font-size: 1em; margin: 16px 0 12px 0; color: #1e40af;">📚 他のセッション</h3>
+<h3 style="font-size: 1em; margin: 16px 0 12px 0; color: #1e40af;">他のセッション</h3>
 <ul class="toc-list" style="list-style: none; padding-left: 0;">
-<li style="margin-bottom: 8px;"><a href="session-1-basics.html" style="color: #1e40af; font-weight: 600;">← 📘 Session 1: 基礎編</a></li>
-<li style="margin-bottom: 8px;"><a href="session-3-advanced.html" style="color: #7c3aed; font-weight: 600;">📕 Session 3: 応用編 →</a></li>
-<li style="margin-bottom: 8px;"><a href="session-4-production.html" style="color: #c2410c; font-weight: 600;">📙 Session 4: 本番運用編 →</a></li>
+<li style="margin-bottom: 8px;"><a href="session-1-basics.html" style="color: #1e40af; font-weight: 600;">← Session 1: 基礎編</a></li>
+<li style="margin-bottom: 8px;"><a href="session-3-advanced.html" style="color: #7c3aed; font-weight: 600;">Session 3: 応用編 →</a></li>
+<li style="margin-bottom: 8px;"><a href="session-4-production.html" style="color: #c2410c; font-weight: 600;">Session 4: 本番運用編 →</a></li>
 </ul>
 </nav>
     </aside>
     <main class="manual-content">
       <h2 id="目次"><strong>目次</strong></h2>
 <hr>
-<h3>📚 Phase 1: 体験と基礎（0-3章）</h3>
-<ul>
-<li>
-<a href="#0-%E6%9C%80%E5%88%9D%E3%81%AE30%E5%88%86%E3%81%A7%E4%BD%93%E9%A8%93%E3%81%99%E3%82%8Bai%E9%96%8B%E7%99%BA%E3%81%AE%E9%AD%94%E6%B3%95"><strong>0. 最初の30分で体験する「AI開発の魔法」</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">まずは手を動かして、AI開発の驚きを体験しよう</span>
-</li>
-<li>
-<a href="#1-aiでできることあなたができるようになること"><strong>1. AIでできること・あなたができるようになること</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">マクロ経験者のあなたが、AI開発で実現できる未来</span>
-</li>
-<li>
-<a href="#2-ai開発ロードマップ学習の進め方"><strong>2. AI開発ロードマップ：学習の進め方</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">あなたに合った学習ルートと挫折しないコツ</span>
-</li>
-<li>
-<a href="#3-aiにうまくお願いするコツ-計画的な進め方"><strong>3. AIにうまくお願いするコツ</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">プロンプトエンジニアリングの基本と実践テクニック</span>
-</li>
-</ul>
-<hr>
-<h3>🚀 Phase 2: 実践プロジェクト（4-5章）</h3>
-<ul>
-<li>
-<a href="session-1-basics.html#4-最低限の準備ai開発の相棒を迎えよう"><strong>4. 最低限の準備：AI開発の相棒を迎えよう</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">Claude CodeとCursorの基本的な使い方をマスター</span>
-</li>
-<li>
-<a href="session-1-basics.html#5-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>5. AIと作ろう！"あなただけ"のオリジナルWebアプリ開発</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">あなたの最初の実用的なWebアプリケーションを作成</span>
-</li>
-</ul>
-<hr>
-<h3>🌟 Phase 3: 機能拡張と深化（6-9章）</h3>
-<ul>
-<li>
-<a href="#6-github連携"><strong>6. GitHub連携</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">バージョン管理とチーム開発の基礎を学ぶ</span>
-</li>
-<li>
-<a href="#7-モダン技術スタックの構築"><strong>7. モダン技術スタックの構築</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">最新技術を活用したプロダクション環境の構築</span>
-</li>
-<li>
-<a href="#8-あなたのアプリを進化させよう機能追加プロジェクト"><strong>8. あなたのアプリを進化させよう！</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">ユーザー認証、メール通知などエンタープライズ機能を追加</span>
-</li>
-<li>
-<a href="#9-企業導入のためのsdd組織変革ガイド"><strong>9. 企業導入のためのSDD組織変革ガイド</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">チームでAI開発を導入する戦略と実践</span>
-</li>
-</ul>
-<hr>
-<h3>🧠 Phase 4: 深い理解と自動化（10-13章）</h3>
-<ul>
-<li>
-<a href="session-3-advanced.html#10-トラブルシューティング"><strong>10. トラブルシューティング</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">よくある問題とその解決策</span>
-</li>
-<li>
-<a href="session-3-advanced.html#11-統計ダッシュボードで生産性を可視化する"><strong>11. 統計ダッシュボードで生産性を可視化する</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">Chart.jsで作業時間の統計と分析機能を実装</span>
-</li>
-<li>
-<a href="session-3-advanced.html#12-卒業制作作業時間トラッカー完全版"><strong>12. 卒業制作：作業時間トラッカー完全版</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">全機能を統合した完全版アプリの開発</span>
-</li>
-<li>
-<a href="session-3-advanced.html#13-裏側の技術mcpとは何だったのか"><strong>13. 裏側の技術：MCPとは何だったのか</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">あなたが体験してきた"魔法"の正体を明かす</span>
-</li>
-</ul>
-<hr>
-<h3>🚀 Phase 5: 本番運用とプロフェッショナル化（14-17章）</h3>
-<ul>
-<li>
-<a href="session-4-production.html#14-カスタムドメインで本格サイトに"><strong>14. カスタムドメインで本格サイトに</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">独自ドメイン取得とSSL証明書の自動発行</span>
-</li>
-<li>
-<a href="session-4-production.html#15-環境変数とセキュリティの深掘り"><strong>15. 環境変数とセキュリティの深掘り</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">APIキーの安全な管理とNetlify Functions導入</span>
-</li>
-<li>
-<a href="session-4-production.html#16-cicdと自動デプロイの仕組み"><strong>16. CI/CDと自動デプロイの仕組み</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">GitHub Actionsで自動テストとデプロイパイプライン構築</span>
-</li>
-<li>
-<a href="session-4-production.html#17-運用監視とユーザーフィードバック"><strong>17. 運用監視とユーザーフィードバック</strong></a><br>
-<span style="font-size: 0.9em; color: #666;">Sentryエラー監視とGoogle Analytics導入</span>
-</li>
-</ul>
+
+<div class="toc-accordion">
+  <!-- Phase 1 -->
+  <div class="toc-accordion-item">
+    <div class="toc-accordion-header">
+      <span>Phase 1: 体験と基礎（0-3章）</span>
+      <span class="toc-accordion-icon">▼</span>
+    </div>
+    <div class="toc-accordion-content">
+      <ul>
+        <li>
+          <a href="session-1-basics.html#0-%E6%9C%80%E5%88%9D%E3%81%AE30%E5%88%86%E3%81%A7%E4%BD%93%E9%A8%93%E3%81%99%E3%82%8Bai%E9%96%8B%E7%99%BA%E3%81%AE%E9%AD%94%E6%B3%95"><strong>0. 最初の30分で体験する「AI開発の魔法」</strong></a>
+          <span>まずは手を動かして、AI開発の驚きを体験しよう</span>
+        </li>
+        <li>
+          <a href="session-1-basics.html#1-aiでできることあなたができるようになること"><strong>1. AIでできること・あなたができるようになること</strong></a>
+          <span>マクロ経験者のあなたが、AI開発で実現できる未来</span>
+        </li>
+        <li>
+          <a href="session-1-basics.html#2-ai開発ロードマップ学習の進め方"><strong>2. AI開発ロードマップ：学習の進め方</strong></a>
+          <span>あなたに合った学習ルートと挫折しないコツ</span>
+        </li>
+        <li>
+          <a href="session-1-basics.html#3-aiにうまくお願いするコツ-計画的な進め方"><strong>3. AIにうまくお願いするコツ</strong></a>
+          <span>プロンプトエンジニアリングの基本と実践テクニック</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="toc-accordion-item">
+    <div class="toc-accordion-header">
+      <span>Phase 2: 実践プロジェクト（4-5章）</span>
+      <span class="toc-accordion-icon">▼</span>
+    </div>
+    <div class="toc-accordion-content">
+      <ul>
+        <li>
+          <a href="session-1-basics.html#4-最低限の準備ai開発の相棒を迎えよう"><strong>4. 最低限の準備：AI開発の相棒を迎えよう</strong></a>
+          <span>Claude CodeとCursorの基本的な使い方をマスター</span>
+        </li>
+        <li>
+          <a href="session-1-basics.html#5-aiと作ろうあなただけのオリジナルwebアプリ開発"><strong>5. AIと作ろう！"あなただけ"のオリジナルWebアプリ開発</strong></a>
+          <span>あなたの最初の実用的なWebアプリケーションを作成</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="toc-accordion-item active">
+    <div class="toc-accordion-header">
+      <span>Phase 3: 機能拡張と深化（6-9章）</span>
+      <span class="toc-accordion-icon">▼</span>
+    </div>
+    <div class="toc-accordion-content">
+      <ul>
+        <li>
+          <a href="#6-github連携"><strong>6. GitHub連携</strong></a>
+          <span>バージョン管理とチーム開発の基礎を学ぶ</span>
+        </li>
+        <li>
+          <a href="#7-モダン技術スタックの構築"><strong>7. モダン技術スタックの構築</strong></a>
+          <span>最新技術を活用したプロダクション環境の構築</span>
+        </li>
+        <li>
+          <a href="#8-あなたのアプリを進化させよう機能追加プロジェクト"><strong>8. あなたのアプリを進化させよう！</strong></a>
+          <span>ユーザー認証、メール通知などエンタープライズ機能を追加</span>
+        </li>
+        <li>
+          <a href="#9-企業導入のためのsdd組織変革ガイド"><strong>9. 企業導入のためのSDD組織変革ガイド</strong></a>
+          <span>チームでAI開発を導入する戦略と実践</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="toc-accordion-item">
+    <div class="toc-accordion-header">
+      <span>Phase 4: 深い理解と自動化（10-13章）</span>
+      <span class="toc-accordion-icon">▼</span>
+    </div>
+    <div class="toc-accordion-content">
+      <ul>
+        <li>
+          <a href="session-3-advanced.html#10-トラブルシューティング"><strong>10. トラブルシューティング</strong></a>
+          <span>よくある問題とその解決策</span>
+        </li>
+        <li>
+          <a href="session-3-advanced.html#11-統計ダッシュボードで生産性を可視化する"><strong>11. 統計ダッシュボードで生産性を可視化する</strong></a>
+          <span>Chart.jsで作業時間の統計と分析機能を実装</span>
+        </li>
+        <li>
+          <a href="session-3-advanced.html#12-卒業制作作業時間トラッカー完全版"><strong>12. 卒業制作：作業時間トラッカー完全版</strong></a>
+          <span>全機能を統合した完全版アプリの開発</span>
+        </li>
+        <li>
+          <a href="session-3-advanced.html#13-裏側の技術mcpとは何だったのか"><strong>13. 裏側の技術：MCPとは何だったのか</strong></a>
+          <span>あなたが体験してきた"魔法"の正体を明かす</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="toc-accordion-item">
+    <div class="toc-accordion-header">
+      <span>Phase 5: 本番運用とプロフェッショナル化（14-17章）</span>
+      <span class="toc-accordion-icon">▼</span>
+    </div>
+    <div class="toc-accordion-content">
+      <ul>
+        <li>
+          <a href="session-4-production.html#14-カスタムドメインで本格サイトに"><strong>14. カスタムドメインで本格サイトに</strong></a>
+          <span>独自ドメイン取得とSSL証明書の自動発行</span>
+        </li>
+        <li>
+          <a href="session-4-production.html#15-環境変数とセキュリティの深掘り"><strong>15. 環境変数とセキュリティの深掘り</strong></a>
+          <span>APIキーの安全な管理とNetlify Functions導入</span>
+        </li>
+        <li>
+          <a href="session-4-production.html#16-cicdと自動デプロイの仕組み"><strong>16. CI/CDと自動デプロイの仕組み</strong></a>
+          <span>GitHub Actionsで自動テストとデプロイパイプライン構築</span>
+        </li>
+        <li>
+          <a href="session-4-production.html#17-運用監視とユーザーフィードバック"><strong>17. 運用監視とユーザーフィードバック</strong></a>
+          <span>Sentryエラー監視とGoogle Analytics導入</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 <hr>
 
 <h2 id="6-github連携"><strong>6. GitHub連携</strong></h2>
@@ -186,7 +354,7 @@
 <!-- 学習目標セクション - 6章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -197,7 +365,7 @@
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -233,7 +401,7 @@
 <!-- 学習目標セクション - 7章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -244,7 +412,7 @@
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -279,13 +447,13 @@
 <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <ul>
 <li>
-💾 <strong>定期的にコミット</strong>: 作業の区切りでコードをGitHubに保存（コミット＆プッシュ）
+<strong>定期的にコミット</strong>: 作業の区切りでコードをGitHubに保存（コミット＆プッシュ）
 </li>
 <li>
 ⏮ <strong>いつでも元に戻せる</strong>: 問題が起きても、過去の正常な状態に一瞬で復元可能
 </li>
 <li>
-🛡 <strong>失敗を恐れない開発</strong>: AIの提案を安心して試せる（ダメなら戻せばいい）
+<strong>失敗を恐れない開発</strong>: AIの提案を安心して試せる（ダメなら戻せばいい）
 <p><strong>おすすめの習慣</strong>:</p>
 </li>
 </ul>
@@ -419,14 +587,14 @@ AIが生成したコードを直接 <code>main</code> にプッシュすると�
 <tr>
 <td><strong>タスク管理</strong></td>
 <td>ローカルtasks.md</td>
-<td><strong>GitHub issue</strong> 📊</td>
-<td><strong>GitHub issue</strong> 📊</td>
+<td><strong>GitHub issue</strong> </td>
+<td><strong>GitHub issue</strong> </td>
 </tr>
 <tr>
 <td><strong>ブランチ</strong></td>
 <td>mainで直接作業</td>
 <td>mainで直接作業</td>
-<td><strong>機能ブランチ必須</strong> 🌿</td>
+<td><strong>機能ブランチ必須</strong> </td>
 </tr>
 <tr>
 <td><strong>プルリクエスト</strong></td>
@@ -482,7 +650,7 @@ git checkout -b ai/refactor-auth
 <!-- ブランチの分岐とマージを視覚化するSVG図解 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h5 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.2em;">
-    <span style="font-size: 1.3em;">🌿</span>
+    <span style="font-size: 1.3em;"></span>
     <span>ブランチの仕組みを図で理解する</span>
   </h5>
 
@@ -621,7 +789,7 @@ AIが生成したコード問題の報告
 **スクリーンショット**:
 [ログイン画面のスクリーンショット]
 
-🤖 Generated with Claude Code
+Generated with Claude Code
 </code><button class="code-copy-btn">コピー</button></pre>
 <p><strong>AIとプルリクエストを組み合わせる</strong>:</p>
 <div style="background: rgba(16, 185, 129, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
@@ -641,7 +809,7 @@ AIの提案に問題があれば、PRのコメントで指摘
 <!-- issue → branch → PR → merge の全体フロー図解 -->
 <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(139, 92, 246, 0.3); padding: 32px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);">
   <h5 style="margin: 0 0 24px 0; color: #6d28d9; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.4em;">🔄</span>
+    <span style="font-size: 1.4em;"></span>
     <span>チーム開発の全体フロー</span>
   </h5>
 
@@ -689,7 +857,7 @@ AIの提案に問題があれば、PRのコメントで指摘
 
     <!-- チームレビューアイコン -->
     <circle cx="590" cy="260" r="30" fill="#ddd6fe" stroke="#7c3aed" stroke-width="3"/>
-    <text x="590" y="270" fill="#5b21b6" font-size="24" text-anchor="middle">👥</text>
+    <text x="590" y="270" fill="#5b21b6" font-size="24" text-anchor="middle"></text>
     <text x="590" y="310" fill="#6d28d9" font-size="15" font-weight="bold" text-anchor="middle">チームレビュー</text>
 
     <!-- 矢印 3→レビュー -->
@@ -817,7 +985,7 @@ PRにissue番号を記載（<code>Closes #23</code>）
 <strong>AIが生成したコードは必ずレビュー</strong>
 <ul>
 <li>
-プルリクエストで「🤖 AIが生成したコード」と明記
+プルリクエストで「AIが生成したコード」と明記
 </li>
 <li>
 チームメンバーによるダブルチェック
@@ -843,7 +1011,7 @@ AIの変更を小さな単位で保存
 <!-- 学習目標セクション - 8章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -854,7 +1022,7 @@ AIの変更を小さな単位で保存
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -1009,7 +1177,7 @@ Claude Code「変更をGitHubにpushして」
 <!-- 学習目標セクション - 9章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -1020,7 +1188,7 @@ Claude Code「変更をGitHubにpushして」
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -1083,7 +1251,7 @@ sc deploy --target aws-ecs
 <div style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1)); backdrop-filter: blur(10px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 24px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
 <p>モダンな技術スタックを構築したら、次は<strong>開発フローの自動化</strong>です。MCPを活用すれば、テストやGitHub連携といった重要なプロセスをSuper Claudeに任せることができます。</p>
 
-<h5 style="color: #A855F7; margin-top: 24px;">🎭 Playwright MCP - E2Eテストの自動実行</h5>
+<h5 style="color: #A855F7; margin-top: 24px;">Playwright MCP - E2Eテストの自動実行</h5>
 <p><strong>こんな時に便利：</strong></p>
 <ul>
 <li>フロントエンドのUIが正しく動作するか確認したい</li>
@@ -1108,7 +1276,7 @@ sc deploy --target aws-ecs
 <p style="margin: 0;"><strong>💡 ポイント：</strong> Playwright MCPは、5章で学んだ「目視確認→E2Eテスト」の2段階チェックの「E2Eテスト」部分を自動化します。複雑な操作フローや、複数ブラウザでのテストも一瞬で完了します。</p>
 </div>
 
-<h5 style="color: #3b82f6; margin-top: 32px;">🐙 GitHub MCP - ブランチ・PR管理の自動化</h5>
+<h5 style="color: #3b82f6; margin-top: 32px;">GitHub MCP - ブランチ・PR管理の自動化</h5>
 <p><strong>こんな時に便利：</strong></p>
 <ul>
 <li>新しい機能開発時に自動でブランチを作成したい</li>
@@ -1134,7 +1302,7 @@ issue #42 に紐づいたブランチを作成し、実装が完了したら自�
 <p style="margin: 0;"><strong>💡 ポイント：</strong> GitHub MCPを使えば、6章で学んだ「ブランチ作成→実装→PR作成→Issue紐付け」という一連の流れを全てAIに任せられます。チーム開発での作業が劇的に効率化されます。</p>
 </div>
 
-<h5 style="color: #10b981; margin-top: 32px;">🔗 組み合わせて使うと最強</h5>
+<h5 style="color: #10b981; margin-top: 32px;">組み合わせて使うと最強</h5>
 <p>これらのMCPを組み合わせることで、完全自動化された開発フローが実現します：</p>
 
 <pre><code>/sc:implement issue #42 の決済システムを実装してください。
@@ -1329,7 +1497,7 @@ CREATE POLICY "Users can create their own tasks"
 <!-- メインメッセージボックス -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 16px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.5em;">☕</span>
+    <span style="font-size: 1.5em;"></span>
     <span>ここまでお疲れさまでした！</span>
   </h3>
 
@@ -1343,7 +1511,7 @@ CREATE POLICY "Users can create their own tasks"
   </p>
 
   <h3 style="margin: 0 0 16px 0; color: #7c3aed; display: flex; align-items: center; gap: 10px; font-size: 1.2em;">
-    <span style="font-size: 1.5em;">🎮</span>
+    <span style="font-size: 1.5em;"></span>
     <span>ミニゲームを作って気分転換</span>
   </h3>
 
@@ -1388,7 +1556,7 @@ CREATE POLICY "Users can create their own tasks"
 <!-- 学習目標セクション - 10章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -1399,7 +1567,7 @@ CREATE POLICY "Users can create their own tasks"
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -1483,8 +1651,8 @@ CREATE POLICY "Users can create their own tasks"
 
 <p style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1)); padding: 20px; border-radius: 12px; border-left: 4px solid #8B5CF6; margin: 24px 0;">
 <strong>⏱️ 所要時間</strong>: 75分（座学15分 + 実装60分）<br>
-<strong>🎯 目標</strong>: Supabase Authを使って、作業時間トラッカーに本格的なユーザー認証機能を実装します。<br>
-<strong>📚 前提知識</strong>: 7章でSupabase CLIとデータベース操作を学習済み
+<strong>目標</strong>: Supabase Authを使って、作業時間トラッカーに本格的なユーザー認証機能を実装します。<br>
+<strong>前提知識</strong>: 7章でSupabase CLIとデータベース操作を学習済み
 </p>
 
 <h4 id="座学supabase-authとは15分">座学：Supabase Authとは（15分）</h4>
@@ -1859,7 +2027,7 @@ export default function Dashboard() {
 <li>✅ ユーザー情報の表示とログアウト機能を実装</li>
 </ul>
 
-<h5>🚀 次に学ぶこと</h5>
+<h5>次に学ぶこと</h5>
 <ul>
 <li><strong>RLSとの連携</strong>: 7章で設定したRLSが、この認証機能により初めて機能します。ユーザーごとにタスクデータが分離されることを確認しましょう。</li>
 <li><strong>ソーシャルログイン</strong>: Google、GitHubなどのOAuth連携を追加してユーザー体験を向上</li>
@@ -1885,7 +2053,7 @@ export default function Dashboard() {
 <!-- 学習目標セクション - 11章 -->
 <div style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 28px; border-radius: 20px; margin: 32px 0; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);">
   <h3 style="margin: 0 0 20px 0; color: #1e40af; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">📚</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章で学べること</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #1e3a8a; line-height: 2;">
@@ -1896,7 +2064,7 @@ export default function Dashboard() {
   </ul>
 
   <h3 style="margin: 0 0 20px 0; color: #059669; display: flex; align-items: center; gap: 10px; font-size: 1.3em;">
-    <span style="font-size: 1.3em;">🎯</span>
+    <span style="font-size: 1.3em;"></span>
     <span>この章が終わると...</span>
   </h3>
   <ul style="margin: 0 0 24px 0; padding-left: 24px; color: #065f46; line-height: 2;">
@@ -2049,28 +2217,28 @@ AI導入の効果を定量的に測定するための評価指標（KPI）を設
   </div>
 
   <div style="background: rgba(16, 185, 129, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px; margin: 24px auto; max-width: 1200px; text-align: center;">
-    <h3 style="margin-top: 0;">📚 セッションナビゲーション</h3>
+    <h3 style="margin-top: 0;">セッションナビゲーション</h3>
     <p style="margin-bottom: 20px;">このマニュアルは4つのセッションに分かれています</p>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; justify-content: center;">
       <a href="session-1-basics.html" style="text-decoration: none;">
         <div style="background: rgba(59, 130, 246, 0.15); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 2px solid rgba(59, 130, 246, 0.4); transition: all 0.3s; cursor: pointer; height: 100%;">
-          <strong style="color: #1e40af; font-size: 1.1em;">← 📘 Session 1: 基礎編</strong><br>
+          <strong style="color: #1e40af; font-size: 1.1em;">← Session 1: 基礎編</strong><br>
           <small style="color: #1e3a8a; font-weight: 600;">0-5章 | 所要時間: 3-4時間</small>
         </div>
       </a>
       <div style="background: rgba(16, 185, 129, 0.2); padding: 16px; border-radius: 12px; border: 2px solid rgba(16, 185, 129, 0.4);">
-        <strong>📗 Session 2: 品質編（現在のページ）</strong><br>
+        <strong>Session 2: 品質編（現在のページ）</strong><br>
         <small>6-9章 | 所要時間: 2-3時間</small>
       </div>
       <a href="session-3-advanced.html" style="text-decoration: none;">
         <div style="background: rgba(168, 85, 247, 0.15); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 2px solid rgba(168, 85, 247, 0.4); transition: all 0.3s; cursor: pointer; height: 100%;">
-          <strong style="color: #7c3aed; font-size: 1.1em;">📕 Session 3: 応用編 →</strong><br>
+          <strong style="color: #7c3aed; font-size: 1.1em;">Session 3: 応用編 →</strong><br>
           <small style="color: #6d28d9; font-weight: 600;">10-13章 | 所要時間: 3-4時間</small>
         </div>
       </a>
       <a href="session-4-production.html" style="text-decoration: none;">
         <div style="background: rgba(251, 146, 60, 0.15); backdrop-filter: blur(10px); padding: 16px; border-radius: 12px; border: 2px solid rgba(251, 146, 60, 0.4); transition: all 0.3s; cursor: pointer; height: 100%;">
-          <strong style="color: #c2410c; font-size: 1.1em;">📙 Session 4: 本番運用編 →</strong><br>
+          <strong style="color: #c2410c; font-size: 1.1em;">Session 4: 本番運用編 →</strong><br>
           <small style="color: #9a3412; font-weight: 600;">14-17章 | 所要時間: 4-5時間</small>
         </div>
       </a>
