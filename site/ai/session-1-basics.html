@@ -1071,70 +1071,114 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
     <div style="background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
       <h3 style="color: #1e40af; margin-bottom: 16px;">トラブルシューティング</h3>
 
-<!-- Troubleshooting Table - Soft Guidance -->
-<div style="background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 20px; padding: 28px; margin: 24px 0; box-shadow: 0 12px 32px rgba(59, 130, 246, 0.12);">
-  <h5 style="margin: 0 0 16px 0; color: #1d4ed8; display: flex; align-items: center; gap: 10px; font-size: 1.15em;">
-    <span style="font-size: 1.4em;">💡</span>
-    <span>困ったときのやさしい直し方</span>
-  </h5>
-  <p style="margin: 0 0 16px 0; color: #1e40af; line-height: 1.6;">エラーが出ても大丈夫。よくあるつまずきをまとめました。</p>
-  <div style="overflow-x: auto;">
-    <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
-      <thead>
-        <tr style="background: rgba(59, 130, 246, 0.08);">
-          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">こんなとき</th>
-          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">まずはこれを試す</th>
-          <th style="padding: 12px; text-align: left; color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2);">たぶんこうです</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
-          <td style="padding: 12px; vertical-align: top;">`winget` が見つからない（Windows）</td>
-          <td style="padding: 12px; vertical-align: top;">Microsoft Store で「アプリ インストーラー」を入れる。終わったら PowerShell を閉じて、もう一度開く。</td>
-          <td style="padding: 12px; vertical-align: top;">Winget がまだ入っていない</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
-          <td style="padding: 12px; vertical-align: top;">Windows で `The 'msstore' source requires ... Do you agree?` が出る</td>
-          <td style="padding: 12px; vertical-align: top;">規約リンクを確認し、問題なければ `Y` を押して進める。`N` を選ぶとインストールが止まるので注意。</td>
-          <td style="padding: 12px; vertical-align: top;">Winget が Microsoft Store の利用規約への同意を初めて求めている</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
-          <td style="padding: 12px; vertical-align: top;">`gh auth login` が進まない</td>
-          <td style="padding: 12px; vertical-align: top;">開いたブラウザでログインしてから、ターミナルに戻って Enter。うまくいかないときは、もう一度 `gh auth login`。</td>
-          <td style="padding: 12px; vertical-align: top;">ブラウザでのログインがまだ</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
-          <td style="padding: 12px; vertical-align: top;">Claude Code のインストールが途中で止まる／エラーになる</td>
-          <td style="padding: 12px; vertical-align: top;">1分待ってもう一度。直らなければ別のネットワーク（自宅 Wi‑Fi やスマホのテザリング）で試すか、先生（管理者）に相談。</td>
-          <td style="padding: 12px; vertical-align: top;">インターネットが不安定、または学校・会社のネットワークで通信がブロックされている</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
-          <td style="padding: 12px; vertical-align: top;">`npm install -g ...` で「permission denied」と出る</td>
-          <td style="padding: 12px; vertical-align: top;">一度ターミナルを閉じて開き直し、もう一度実行。まだダメなら Node を入れ直す（Mac は Homebrew で入れると直ることが多い）か、先生に手伝ってもらう。</td>
-          <td style="padding: 12px; vertical-align: top;">パソコンが「ここに入れていいよ」と言っていない（書き込む権限がない）</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
-          <td style="padding: 12px; vertical-align: top;">`claude doctor` に「ログインしてください」と出る</td>
-          <td style="padding: 12px; vertical-align: top;">`claude doctor` を打つ → 開いたページでログイン → もう一度 `claude doctor` を打って確認。</td>
-          <td style="padding: 12px; vertical-align: top;">まだ Claude にログインしていない</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
-          <td style="padding: 12px; vertical-align: top;">`pipx install SuperClaude` のあと `SuperClaude` が使えない</td>
-          <td style="padding: 12px; vertical-align: top;">ターミナルを閉じて開き直す。ダメなら `pipx ensurepath` を打って、もう一度ターミナルを開き直す。</td>
-          <td style="padding: 12px; vertical-align: top;">新しいコマンドの「道」がまだ通っていない</td>
-        </tr>
-        <tr style="border-top: 1px solid rgba(148, 163, 184, 0.15); background: rgba(244, 244, 245, 0.3);">
-          <td style="padding: 12px; vertical-align: top;">Claude Code に <strong>sc:</strong> が出ない</td>
-          <td style="padding: 12px; vertical-align: top;">PowerShell を開き直す → <code>pipx ensurepath</code> → もう一度開き直す → <code>claude doctor</code> でログイン確認 → <code>SuperClaude install --force --yes</code> → <code>SuperClaude mcp install-all</code> → Claude Code を再起動</td>
-          <td style="padding: 12px; vertical-align: top;">Claude Code のインストールが一度失敗して連携が未完了、または PATH がまだ反映されていない</td>
-        </tr>
-      </tbody>
-    </table>
+<details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+  <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q5. `winget` が見つからない（Windows）</summary>
+  <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+    <p><strong>原因:</strong> Winget がまだ入っていない</p>
+    <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+    <ol style="margin-left: 20px;">
+      <li>Microsoft Store で「アプリ インストーラー」を入れる</li>
+      <li>PowerShell を閉じて、もう一度開く</li>
+    </ol>
   </div>
-</div>
+</details>
+
+<details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+  <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q6. Windows で `The 'msstore' source requires ... Do you agree?` が出る</summary>
+  <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+    <p><strong>原因:</strong> Winget が Microsoft Store の利用規約への同意を初めて求めている</p>
+    <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+    <ol style="margin-left: 20px;">
+      <li>規約リンクを確認し、問題なければ `Y` を押して進める</li>
+      <li>`N` を選ぶとインストールが止まるので注意</li>
+    </ol>
+  </div>
+</details>
+
+<details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+  <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q7. `gh auth login` が進まない</summary>
+  <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+    <p><strong>原因:</strong> ブラウザでのログインがまだ完了していない</p>
+    <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+    <ol style="margin-left: 20px;">
+      <li>開いたブラウザでログイン</li>
+      <li>ターミナルに戻って Enter を押す</li>
+      <li>うまくいかないときは、もう一度 `gh auth login` を実行</li>
+    </ol>
+  </div>
+</details>
+
+<details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+  <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q8. Claude Code のインストールが途中で止まる／エラーになる</summary>
+  <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+    <p><strong>原因:</strong> インターネットが不安定、または学校・会社のネットワークで通信がブロックされている</p>
+    <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+    <ol style="margin-left: 20px;">
+      <li>1分待ってもう一度実行</li>
+      <li>直らなければ別のネットワーク（自宅 Wi‑Fi やスマホのテザリング）で試す</li>
+      <li>それでもダメなら、先生（管理者）に相談</li>
+    </ol>
+  </div>
+</details>
+
+<details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+  <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q9. `npm install -g ...` で「permission denied」と出る</summary>
+  <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+    <p><strong>原因:</strong> パソコンが「ここに入れていいよ」と言っていない（書き込む権限がない）</p>
+    <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+    <ol style="margin-left: 20px;">
+      <li>ターミナルを閉じて開き直し、もう一度実行</li>
+      <li>まだダメなら Node を入れ直す（Mac は Homebrew で入れると直ることが多い）</li>
+      <li>それでも直らなければ先生に手伝ってもらう</li>
+    </ol>
+  </div>
+</details>
+
+<details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+  <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q10. `claude doctor` に「ログインしてください」と出る</summary>
+  <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+    <p><strong>原因:</strong> まだ Claude にログインしていない</p>
+    <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+    <ol style="margin-left: 20px;">
+      <li>`claude doctor` を実行</li>
+      <li>開いたページでログイン</li>
+      <li>もう一度 `claude doctor` を実行して確認</li>
+    </ol>
+  </div>
+</details>
+
+<details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+  <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q11. `pipx install SuperClaude` のあと `SuperClaude` が使えない</summary>
+  <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+    <p><strong>原因:</strong> 新しいコマンドの「道」がまだ通っていない</p>
+    <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+    <ol style="margin-left: 20px;">
+      <li>ターミナルを閉じて開き直す</li>
+      <li>ダメなら `pipx ensurepath` を実行</li>
+      <li>もう一度ターミナルを開き直す</li>
+    </ol>
+  </div>
+</details>
+
+<details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+  <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q12. Claude Code に sc: が出ない</summary>
+  <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+    <p><strong>原因:</strong> Claude Code のインストールが一度失敗して連携が未完了、または PATH がまだ反映されていない</p>
+    <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+    <ol style="margin-left: 20px;">
+      <li>PowerShell を開き直す</li>
+      <li><code>pipx ensurepath</code> を実行</li>
+      <li>もう一度 PowerShell を開き直す</li>
+      <li><code>claude doctor</code> でログイン確認</li>
+      <li><code>SuperClaude install --force --yes</code> を実行</li>
+      <li><code>SuperClaude mcp install-all</code> を実行</li>
+      <li>Claude Code を再起動</li>
+    </ol>
+  </div>
+</details>
 
       <details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
-        <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q5. インストールが途中で止まってしまいます</summary>
+        <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q13. インストールが途中で止まってしまいます</summary>
         <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
           <p><strong>A:</strong> 以下を確認してください：</p>
           <ol style="margin-left: 20px; margin-top: 8px;">
@@ -1151,7 +1195,7 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
       </details>
 
       <details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
-        <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q6. `command not found` エラーが出ます</summary>
+        <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q14. `command not found` エラーが出ます</summary>
         <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
           <p><strong>A:</strong> ツールのインストール後、PATH が更新されていない可能性があります。</p>
           <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
@@ -1167,7 +1211,7 @@ source ~/.bash_profile</code></pre>
       </details>
 
       <details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
-        <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q7. Claude Code で「Claude Pro アカウントが必要です」と表示されます</summary>
+        <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q15. Claude Code で「Claude Pro アカウントが必要です」と表示されます</summary>
         <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
           <p><strong>A:</strong> Claude Code を使用するには Claude Pro サブスクリプション（$20/月）が必要です。</p>
           <p style="margin-top: 8px;"><strong>サブスクリプション開始方法:</strong></p>
@@ -1211,20 +1255,118 @@ source ~/.bash_profile</code></pre>
   </p>
 </div>
 
-<h4 style="color: #059669; margin: 24px 0 16px 0;">準備：フォルダを作成しよう</h4>
+<div style="background: linear-gradient(135deg, rgba(219, 234, 254, 0.6) 0%, rgba(191, 219, 254, 0.4) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 24px; margin: 24px 0;">
+  <h4 style="color: #1e40af; margin: 0 0 16px 0; font-size: 1.2em;">💡 Cursorとは？</h4>
+  <p style="margin: 0 0 12px 0; color: #1e3a8a; line-height: 1.7; font-size: 1.05em;"><strong>Cursor</strong>は、<strong>「コードを書くためのノートアプリ」</strong>のようなものです。</p>
 
-<p style="margin: 16px 0; color: #4b5563; line-height: 1.7;">まず、プロジェクト用のフォルダを作成します。<strong>1つのフォルダに1つのアプリ</strong>を作ることで、ファイルが整理されます。</p>
+  <div style="background: rgba(255, 255, 255, 0.7); border-radius: 8px; padding: 16px; margin: 12px 0;">
+    <p style="margin: 0 0 8px 0; color: #1e40af; font-weight: 600;">例えるなら...</p>
+    <ul style="margin: 0; padding-left: 20px; color: #1e3a8a; line-height: 1.8;">
+      <li><strong>Word</strong> = 文章を書くアプリ</li>
+      <li><strong>Excel</strong> = 表計算をするアプリ</li>
+      <li><strong>Cursor</strong> = プログラムを書くアプリ</li>
+    </ul>
+  </div>
+
+  <p style="margin: 12px 0 0 0; color: #475569; font-size: 0.95em;">💡 <strong>Cursorの中でClaude Code（AIアシスタント）と会話しながら、プログラムを作っていきます。</strong></p>
+</div>
+
+<h4 style="color: #059669; margin: 24px 0 16px 0;">ステップ1：Cursorを起動しよう</h4>
+
+<p style="margin: 16px 0; color: #4b5563; line-height: 1.7;">まず、Cursorを起動します。</p>
+
+<div style="background: linear-gradient(135deg, rgba(219, 234, 254, 0.6) 0%, rgba(191, 219, 254, 0.4) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0;">
+  <p style="margin: 0 0 12px 0; font-weight: bold; color: #1e40af;">💻 Cursorの起動方法</p>
+  <ul style="color: #1e3a8a; line-height: 1.8; margin: 0 0 16px 0; padding-left: 20px;">
+    <li><strong>macOS:</strong> Launchpadまたはアプリケーションフォルダから「Cursor」をクリック</li>
+    <li><strong>Windows:</strong> スタートメニューから「Cursor」を検索してクリック</li>
+  </ul>
+  <div style="margin-top: 16px; text-align: center;">
+    <img src="images/cursor.jpg" style="width: 100%; max-width: 800px; height: auto; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);" alt="Cursor エディタのメイン画面">
+    <p style="margin: 8px 0 0 0; color: #6b7280; font-size: 0.9em;">Cursorのメイン画面（右側でClaude Codeと会話できます）</p>
+  </div>
+
+  <!-- Cursorエディタの各部分の説明 -->
+  <div style="background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 20px; margin: 20px 0;">
+    <p style="margin: 0 0 16px 0; font-weight: bold; color: #1e40af; font-size: 1.05em;">🔍 Cursorエディタの画面説明</p>
+
+    <div style="margin-bottom: 16px;">
+      <p style="margin: 0 0 8px 0; font-weight: 600; color: #2563eb;">
+        ① ファイル一覧（左サイドバー）
+      </p>
+      <p style="margin: 0; color: #4b5563; line-height: 1.7; padding-left: 20px;">
+        プロジェクト内のファイルやフォルダが表示されます。ここをクリックしてファイルを開いたり、新しいファイルを作成できます。
+      </p>
+    </div>
+
+    <div style="margin-bottom: 16px;">
+      <p style="margin: 0 0 8px 0; font-weight: 600; color: #2563eb;">
+        ② エディタ（中央部分）
+      </p>
+      <p style="margin: 0; color: #4b5563; line-height: 1.7; padding-left: 20px;">
+        コードを書く場所です。HTMLやCSS、JavaScriptなどのコードをここに入力します。ファイルを開くと、この部分にコードが表示されます。
+      </p>
+    </div>
+
+    <div style="margin-bottom: 16px;">
+      <p style="margin: 0 0 8px 0; font-weight: 600; color: #2563eb;">
+        ③ ターミナル（下部）
+      </p>
+      <p style="margin: 0; color: #4b5563; line-height: 1.7; padding-left: 20px;">
+        コマンドを入力する場所です。<code style="background: rgba(59, 130, 246, 0.1); padding: 2px 6px; border-radius: 4px;">claude</code>コマンドを入力してClaude Codeを起動したり、ファイルの操作を行います。
+      </p>
+    </div>
+
+    <div>
+      <p style="margin: 0 0 8px 0; font-weight: 600; color: #2563eb;">
+        ④ チャット画面（右サイドバー）
+      </p>
+      <p style="margin: 0; color: #4b5563; line-height: 1.7; padding-left: 20px;">
+        Claude Codeと会話する場所です。<strong>「Todoアプリを作って」</strong>のように日本語で指示すると、AIが自動的にコードを書いてくれます。プログラミング初心者でも、ここで会話するだけでアプリが作れます！
+      </p>
+    </div>
+  </div>
+</div>
+
+<h4 style="color: #059669; margin: 24px 0 16px 0;">ステップ2：デスクトップにフォルダを作成する</h4>
+
+<div style="background: rgba(254, 243, 199, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0;">
+  <p style="margin: 0 0 12px 0; color: #92400e; font-weight: 600; font-size: 1.05em;">💡 重要：1つのフォルダに1つのアプリが基本</p>
+  <p style="margin: 0; color: #78350f; line-height: 1.7;">アプリごとに専用のフォルダを作ることで、ファイルが整理され、AIが正確にコードを管理できます。<strong>複数のアプリを同じフォルダに入れないようにしましょう。</strong></p>
+</div>
+
+<p style="margin: 16px 0; color: #4b5563; line-height: 1.7;">今回は<strong>デスクトップ</strong>に新しいフォルダを作成します。デスクトップなら見つけやすく、初心者でも迷いません。</p>
 
 <div style="background: linear-gradient(135deg, rgba(220, 252, 231, 0.6) 0%, rgba(187, 247, 208, 0.4) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0;">
-  <p style="margin: 0 0 12px 0; font-weight: bold; color: #065f46;">macOS / Linux の場合：</p>
-  <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 8px 0; overflow-x: auto;"><code>mkdir ~/Desktop/my-first-game
-cd ~/Desktop/my-first-game
-claude</code><button class="code-copy-btn">コピー</button></pre>
+  <p style="margin: 0 0 12px 0; font-weight: bold; color: #065f46;">📁 Cursorでデスクトップにフォルダを作成</p>
+  <ol style="color: #065f46; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li>Cursor上部メニュー → <strong>「File」→「Open Folder」</strong></li>
+    <li><strong>デスクトップ（Desktop）</strong>を選択</li>
+    <li><strong>「New Folder」</strong>ボタンをクリック</li>
+    <li>フォルダ名を <code style="background: rgba(16, 185, 129, 0.2); padding: 2px 6px; border-radius: 4px;">my-first-game</code> に変更</li>
+    <li><strong>「Open」</strong>をクリックしてフォルダを開く</li>
+  </ol>
 
-  <p style="margin: 16px 0 12px 0; font-weight: bold; color: #065f46;">🪟 Windows の場合：</p>
-  <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 8px 0; overflow-x: auto;"><code>mkdir %USERPROFILE%\Desktop\my-first-game
-cd %USERPROFILE%\Desktop\my-first-game
-claude</code><button class="code-copy-btn">コピー</button></pre>
+  <p style="margin: 16px 0 12px 0; font-weight: bold; color: #065f46;">💻 Cursorでターミナルを開く</p>
+  <p style="margin: 0 0 8px 0; color: #047857;">Cursor上部メニュー → <strong>「Terminal」→「New Terminal」</strong></p>
+  <p style="margin: 0; color: #047857; font-size: 0.95em;">または：</p>
+  <ul style="color: #047857; line-height: 1.8; margin: 0 0 16px 0; padding-left: 20px;">
+    <li><strong>Windows:</strong> <code style="background: rgba(16, 185, 129, 0.2); padding: 2px 6px; border-radius: 4px;">Ctrl + `</code> （バッククォート）</li>
+    <li><strong>macOS:</strong> <code style="background: rgba(16, 185, 129, 0.2); padding: 2px 6px; border-radius: 4px;">Control + `</code></li>
+  </ul>
+  <div style="margin-top: 16px; text-align: center;">
+    <img src="https://cdn.sanity.io/images/2hv88549/production/e7193be5129e61392f38b191266ecafa2410bb3d-2560x1440.png?auto=format&w=1200" style="width: 100%; max-width: 800px; height: auto; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);" alt="Cursorのエディタ画面とターミナル">
+    <p style="margin: 8px 0 0 0; color: #6b7280; font-size: 0.9em;">Cursorのエディタ画面（下部にターミナルが表示されます）</p>
+  </div>
+</div>
+
+<h4 style="color: #059669; margin: 24px 0 16px 0;">ステップ3：Claude Codeを起動しよう</h4>
+
+<p style="margin: 16px 0; color: #4b5563; line-height: 1.7;">Cursor内のターミナルで以下のコマンドを入力して、Claude Codeを起動します。</p>
+
+<div style="background: linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0;">
+  <pre style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; margin: 0; overflow-x: auto;"><code>claude</code><button class="code-copy-btn">コピー</button></pre>
+  <p style="margin: 12px 0 0 0; color: #6b21a8; font-size: 0.95em;">💡 Enterを押すと、Claude Codeが起動します！これでAIと会話しながらコーディングできます。</p>
 </div>
 
 <h4 id="例1-3dスターフォックス風シューティングゲーム" style="color: #7c3aed; margin: 32px 0 16px 0;">例1: 3Dスターフォックス風シューティングゲーム</h4>
