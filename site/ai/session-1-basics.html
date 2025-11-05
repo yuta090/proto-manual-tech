@@ -632,39 +632,6 @@
 
 <h3 id="必要なもの" style="color: #1e40af; margin: 32px 0 20px 0;">必要なもの</h3>
 
-<!-- ターミナルについての簡潔な説明 -->
-<div style="background: linear-gradient(135deg, rgba(224, 231, 255, 0.7) 0%, rgba(199, 210, 254, 0.5) 100%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 20px; margin: 20px 0;">
-  <h4 style="margin: 0 0 16px 0; color: #312e81; display: flex; align-items: center; gap: 8px;">
-    <span style="font-size: 1.3em;">💻</span>
-    <span>ターミナル（コマンドライン）について</span>
-  </h4>
-  <p style="margin: 0 0 16px 0; color: #4c1d95; line-height: 1.7;">
-    スクリプトを実行するには、<strong>ターミナル</strong>（コマンドライン）というツールを使います。これは、テキストでコンピューターに命令を出すアプリケーションです。
-  </p>
-
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px;">
-    <!-- Windows PowerShell -->
-    <div style="background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border-radius: 12px; padding: 16px; border: 1px solid rgba(99, 102, 241, 0.2);">
-      <div style="font-weight: bold; color: #312e81; margin-bottom: 10px; font-size: 1.05em;">🪟 Windows: PowerShell</div>
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLAAAAJYCAYAAABP5N6tAAEAAElEQVR4Aey9B3hT1/n/v8mWZXkvvPfem733IBAIhEBCgBAIJGEm..." style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(99, 102, 241, 0.2);" alt="Windows PowerShell">
-      <p style="margin: 0; color: #5b21b6; font-size: 0.9em; line-height: 1.5;">
-        <strong>開き方：</strong><br>
-        Windowsキー → 「PowerShell」と入力 → Enter
-      </p>
-    </div>
-
-    <!-- Mac Terminal -->
-    <div style="background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border-radius: 12px; padding: 16px; border: 1px solid rgba(99, 102, 241, 0.2);">
-      <div style="font-weight: bold; color: #312e81; margin-bottom: 10px; font-size: 1.05em;">🍎 Mac: ターミナル</div>
-      <img src="https://media.idownloadblog.com/wp-content/uploads/2021/12/Terminal-Command-Window-Mac.png" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(99, 102, 241, 0.2);" alt="Mac Terminal">
-      <p style="margin: 0; color: #5b21b6; font-size: 0.9em; line-height: 1.5;">
-        <strong>開き方：</strong><br>
-        Command + Space → 「terminal」と入力 → Enter
-      </p>
-    </div>
-  </div>
-</div>
-
 <!-- 自動セットアップスクリプト - グラスモーフィズム -->
 <div style="background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 20px; padding: 28px; margin: 24px 0; box-shadow: 0 10px 40px rgba(16, 185, 129, 0.12);">
   <h4 id="-自動セットアップスクリプトで一気にインストール推奨" style="margin: 0 0 20px 0; color: #065f46; display: flex; align-items: center; gap: 10px;">
@@ -672,6 +639,12 @@
     <span>自動セットアップスクリプト</span>
   </h4>
   <p style="margin: 0 0 20px 0; color: #047857; font-weight: 500;">このスクリプトを実行するだけで、AI開発に必要なツールが一度にインストールされます：</p>
+  <ul style="margin: 0 0 20px 0; padding-left: 20px; color: #047857; line-height: 1.6; font-size: 0.95em;">
+    <li><strong>Node.js</strong> / <strong>Git</strong> / <strong>GitHub CLI</strong> — コマンドライン操作やリポジトリ管理の基盤となるツール群</li>
+    <li><strong>Claude Code</strong> / <strong>Super Claude</strong> / <strong>Playwright MCP</strong> — Claude と連携した開発支援と自動テストを体験するためのセット</li>
+    <li><strong>Netlify CLI</strong> / <strong>Supabase CLI</strong> / <strong>Resend CLI</strong> — デプロイ、バックエンド、メール送信といったプロダクト運用を支える CLI</li>
+    <li><strong>Cursor IDE</strong> / <strong>Codex CLI</strong> — AI を活かしたコーディングと CLI 操作を補助する開発ツール</li>
+  </ul>
 
   <!-- ツールカードグリッド -->
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
@@ -1002,13 +975,43 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
       <details style="margin-bottom: 16px; padding: 16px; background: rgba(59, 130, 246, 0.05); border-radius: 8px; cursor: pointer;">
         <summary style="font-weight: bold; color: #3b82f6; cursor: pointer;">Q1. Windows に PowerShell は最初から入っていますか？</summary>
         <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(59, 130, 246, 0.2); color: #4b5563;">
-          <p><strong>A:</strong> はい、Windows 10/11 には PowerShell 5.1 が標準でインストールされています。</p>
-          <p style="margin-top: 8px;"><strong>確認方法:</strong></p>
+          <p><strong>A:</strong> はい、Windows 10/11 には PowerShell 5.1 が標準でインストールされています。このマニュアルのスクリプトは PowerShell 5.1 で動作するように作られているため、アップデートは不要です。</p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 16px 0;">
+            <!-- Windows PowerShell -->
+            <div style="background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border-radius: 12px; padding: 16px; border: 1px solid rgba(59, 130, 246, 0.2);">
+              <div style="font-weight: bold; color: #1e40af; margin-bottom: 10px;">🪟 Windows PowerShell</div>
+              <img src="images/powershell-windows.gif" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(59, 130, 246, 0.2);" alt="Windows PowerShell">
+              <p style="margin: 0; color: #4b5563; font-size: 0.9em; line-height: 1.5;">
+                <strong>開き方：</strong><br>
+                Windowsキー → 「PowerShell」と入力 → 右クリック → 「管理者として実行」
+              </p>
+            </div>
+
+            <!-- Mac Terminal -->
+            <div style="background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border-radius: 12px; padding: 16px; border: 1px solid rgba(59, 130, 246, 0.2);">
+              <div style="font-weight: bold; color: #1e40af; margin-bottom: 10px;">🍎 Mac ターミナル</div>
+              <img src="images/terminal-mac.png" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(59, 130, 246, 0.2);" alt="Mac Terminal">
+              <p style="margin: 0; color: #4b5563; font-size: 0.9em; line-height: 1.5;">
+                <strong>開き方：</strong><br>
+                Command + Space → 「terminal」と入力 → Enter
+              </p>
+            </div>
+          </div>
+
+          <p style="margin-top: 12px;"><strong>確認方法:</strong></p>
           <ol style="margin-left: 20px;">
             <li>スタートメニューで「PowerShell」と検索</li>
             <li>「Windows PowerShell」が表示されればOK</li>
           </ol>
           <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 8px; overflow-x: auto;"><code>$PSVersionTable.PSVersion</code></pre>
+
+          <div style="margin-top: 16px; padding: 12px; background: rgba(59, 130, 246, 0.08); border-left: 3px solid #3b82f6; border-radius: 4px;">
+            <p style="margin: 0 0 8px 0; font-weight: 600; color: #1e40af;">💡 PowerShell 7+ へのアップデート（任意）</p>
+            <p style="margin: 0 0 8px 0; font-size: 0.95em;">より新しい PowerShell 7+ を使いたい場合は、以下の方法でインストールできます（オプション）：</p>
+            <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; margin: 8px 0; overflow-x: auto;"><code>winget install Microsoft.PowerShell</code></pre>
+            <p style="margin: 0; font-size: 0.9em; color: #6b7280;">※ ただし、このマニュアルのスクリプトは標準の PowerShell 5.1 で問題なく動作します。</p>
+          </div>
         </div>
       </details>
 
@@ -1102,26 +1105,11 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
       </thead>
       <tbody>
         <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
-          <td style="padding: 12px; vertical-align: top;">Claude のインストールが途中で止まる／エラーになる</td>
-          <td style="padding: 12px; vertical-align: top;">1分待ってもう一度。できなければ、家のWi‑Fiやスマホのテザリングで試す。むずかしければ先生（管理者）に相談。</td>
-          <td style="padding: 12px; vertical-align: top;">インターネットが不安定、または学校・会社のネットで止められている</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
-          <td style="padding: 12px; vertical-align: top;">`npm install -g ...` で「permission denied」と出る</td>
-          <td style="padding: 12px; vertical-align: top;">一度ターミナルを閉じて開き直し、もう一度実行。まだダメなら、Node を入れ直す（MacはHomebrewで入れると直ることが多い）か、先生に手伝ってもらう。</td>
-          <td style="padding: 12px; vertical-align: top;">パソコンが「ここに入れていいよ」と言っていない（許可がない）</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
-          <td style="padding: 12px; vertical-align: top;">`pipx install SuperClaude` のあと `SuperClaude` が使えない</td>
-          <td style="padding: 12px; vertical-align: top;">ターミナルを閉じて開き直す。ダメなら `pipx ensurepath` を打って、もう一度ターミナルを開き直す。</td>
-          <td style="padding: 12px; vertical-align: top;">新しいコマンドの「道」がまだ通っていない</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
           <td style="padding: 12px; vertical-align: top;">`winget` が見つからない（Windows）</td>
           <td style="padding: 12px; vertical-align: top;">Microsoft Store で「アプリ インストーラー」を入れる。終わったら PowerShell を閉じて、もう一度開く。</td>
           <td style="padding: 12px; vertical-align: top;">Winget がまだ入っていない</td>
         </tr>
-        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
           <td style="padding: 12px; vertical-align: top;">Windows で `The 'msstore' source requires ... Do you agree?` が出る</td>
           <td style="padding: 12px; vertical-align: top;">規約リンクを確認し、問題なければ `Y` を押して進める。`N` を選ぶとインストールが止まるので注意。</td>
           <td style="padding: 12px; vertical-align: top;">Winget が Microsoft Store の利用規約への同意を初めて求めている</td>
@@ -1131,12 +1119,27 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
           <td style="padding: 12px; vertical-align: top;">開いたブラウザでログインしてから、ターミナルに戻って Enter。うまくいかないときは、もう一度 `gh auth login`。</td>
           <td style="padding: 12px; vertical-align: top;">ブラウザでのログインがまだ</td>
         </tr>
-        <tr>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
+          <td style="padding: 12px; vertical-align: top;">Claude Code のインストールが途中で止まる／エラーになる</td>
+          <td style="padding: 12px; vertical-align: top;">1分待ってもう一度。直らなければ別のネットワーク（自宅 Wi‑Fi やスマホのテザリング）で試すか、先生（管理者）に相談。</td>
+          <td style="padding: 12px; vertical-align: top;">インターネットが不安定、または学校・会社のネットワークで通信がブロックされている</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
+          <td style="padding: 12px; vertical-align: top;">`npm install -g ...` で「permission denied」と出る</td>
+          <td style="padding: 12px; vertical-align: top;">一度ターミナルを閉じて開き直し、もう一度実行。まだダメなら Node を入れ直す（Mac は Homebrew で入れると直ることが多い）か、先生に手伝ってもらう。</td>
+          <td style="padding: 12px; vertical-align: top;">パソコンが「ここに入れていいよ」と言っていない（書き込む権限がない）</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25); background: rgba(244, 244, 245, 0.3);">
           <td style="padding: 12px; vertical-align: top;">`claude doctor` に「ログインしてください」と出る</td>
           <td style="padding: 12px; vertical-align: top;">`claude doctor` を打つ → 開いたページでログイン → もう一度 `claude doctor` を打って確認。</td>
           <td style="padding: 12px; vertical-align: top;">まだ Claude にログインしていない</td>
         </tr>
-        <tr style="border-top: 1px solid rgba(148, 163, 184, 0.15);">
+        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.25);">
+          <td style="padding: 12px; vertical-align: top;">`pipx install SuperClaude` のあと `SuperClaude` が使えない</td>
+          <td style="padding: 12px; vertical-align: top;">ターミナルを閉じて開き直す。ダメなら `pipx ensurepath` を打って、もう一度ターミナルを開き直す。</td>
+          <td style="padding: 12px; vertical-align: top;">新しいコマンドの「道」がまだ通っていない</td>
+        </tr>
+        <tr style="border-top: 1px solid rgba(148, 163, 184, 0.15); background: rgba(244, 244, 245, 0.3);">
           <td style="padding: 12px; vertical-align: top;">Claude Code に <strong>sc:</strong> が出ない</td>
           <td style="padding: 12px; vertical-align: top;">PowerShell を開き直す → <code>pipx ensurepath</code> → もう一度開き直す → <code>claude doctor</code> でログイン確認 → <code>SuperClaude install --force --yes</code> → <code>SuperClaude mcp install-all</code> → Claude Code を再起動</td>
           <td style="padding: 12px; vertical-align: top;">Claude Code のインストールが一度失敗して連携が未完了、または PATH がまだ反映されていない</td>
