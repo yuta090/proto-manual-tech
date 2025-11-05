@@ -36,6 +36,7 @@
 | `npm install -g ...` で Permission denied と表示される | npm のグローバルインストール先への書き込み権限が不足している | まず `npm config get prefix` を確認し、`$HOME/.npm-global` などユーザー権限の場所を指定するか、macOS の場合は `sudo` を付けずに Homebrew で `node` を入れ直すと権限設定が整うことが多いです。 |
 | `pipx install SuperClaude` の後に `SuperClaude` コマンドが見つからない | `pipx ensurepath` がまだ反映されていない、またはシェルを再起動していない | ターミナルを一度閉じて開き直すか、`source ~/.bash_profile` などシェル設定を再読み込みしてください。それでもだめなら `pipx ensurepath` を再実行してみましょう。 |
 | `winget` コマンドが存在しない（Windows） | Windows Update が最新でなく、Winget が入っていない | Microsoft Store で「アプリ インストーラー」をインストールすると Winget が利用できるようになります。インストール後は PowerShell を再起動してください。 |
+| Windows でスクリプト実行時に `The 'msstore' source requires ... Do you agree? [Y] Yes  [N] No:` が表示される | `winget` が `msstore` ソースを初めて利用する際の利用規約同意確認 | 規約内容を確認し問題なければ `Y` を入力すると処理が続行されます。`N` を選ぶと `msstore` ソースは無効化されるため、その場合は手動インストールなど別の手順を検討してください。 |
 | `gh auth login` が途中で止まってしまう | ブラウザ上の認証が完了していない、またはターミナルに戻って Enter を押していない | ブラウザ側で GitHub へのログインを完了したあと、ターミナルに戻って Enter を押してください。ウィンドウが閉じてしまった場合は `gh auth login` をもう一度実行すればやり直せます。 |
 | `claude doctor` で「ログインしてください」と出る | Claude Code のブラウザ認証がまだ済んでいない | `claude doctor` を実行するとブラウザが開きます。Claude Pro でログインし、画面の指示に沿って認証を完了したら、ターミナルに戻って再度 `claude doctor` を試してください。 |
 

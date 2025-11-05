@@ -414,6 +414,7 @@ function Install-NodeJS {
     }
 
     Write-Info "Node.js をインストール中..."
+    Write-Info "msstore の同意確認が出たら Y を入力してください"
     winget install OpenJS.NodeJS --silent --accept-package-agreements --accept-source-agreements
 
     # パスをリフレッシュ
