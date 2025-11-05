@@ -718,15 +718,43 @@ function Install-Cursor {
         return
     }
 
-    Write-Warning-Custom "Cursor IDE は Windows 版の自動インストールに対応していません"
+    Write-Info "Cursor IDE をインストール中..."
+    Write-Info "msstore の同意確認が出たら Y を入力してください"
+
+    try {
+        winget install Cursor.Cursor --silent --accept-package-agreements --accept-source-agreements | Out-Null
+    } catch {
+        Write-Warning-Custom "winget でのインストールに失敗しました: $_"
+    }
+
+    # インストール後に再チェック
+    $cursorInstalled = $false
+    foreach ($path in $cursorPaths) {
+        if (Test-Path $path) {
+            $cursorInstalled = $true
+            break
+        }
+    }
+
+    if ($cursorInstalled) {
+        Write-Success "Cursor IDE インストール完了"
+        Update-State "cursor" "installed" $true
+        return
+    }
+
+    Write-Warning-Custom "自動インストールを確認できませんでした"
     Write-Info "手動でインストールする場合: https://cursor.sh/download からダウンロードしてください"
 
-    $response = Read-Host "手動でインストールしますか? (y/N)"
+    $response = Read-Host "ブラウザでダウンロードページを開きますか? (y/N)"
     if ($response -match '^[Yy]$') {
         Start-Process "https://cursor.sh/download"
         Write-Info "ブラウザでダウンロードページを開きました"
-        Read-Host "インストール完了後 Enter を押してください"
+    }
+
+    $manualConfirm = Read-Host "手動インストールが完了したら 'y' を入力してください (スキップする場合は Enter)"
+    if ($manualConfirm -match '^[Yy]$') {
         Update-State "cursor" "installed" $true
+        Write-Success "Cursor IDE を手動インストール済みとして記録しました"
     } else {
         Write-Info "Cursor IDE のインストールをスキップしました"
     }
