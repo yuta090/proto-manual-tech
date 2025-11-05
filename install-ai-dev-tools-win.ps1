@@ -802,6 +802,13 @@ function Install-Codex {
 function Main {
     Show-Banner
 
+    Write-ColorOutput "これからセットアップする主なツール (概要)" Cyan
+    Write-Host "  - Node.js / Git / GitHub CLI: CLI やリポジトリ操作の基盤" -ForegroundColor White
+    Write-Host "  - Claude Code / Super Claude / Playwright MCP: Claude 連携と自動テスト拡張" -ForegroundColor White
+    Write-Host "  - Netlify CLI / Supabase CLI / Resend CLI: デプロイ・バックエンド・メール検証" -ForegroundColor White
+    Write-Host "  - Cursor IDE / Codex CLI: AI 補助の開発エディタと CLI" -ForegroundColor White
+    Write-Host ""
+
     Write-Info "AI開発環境のセットアップを開始します..."
     Write-Host ""
     Start-Sleep -Seconds 1

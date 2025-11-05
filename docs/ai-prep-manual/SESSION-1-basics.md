@@ -20,11 +20,16 @@
 - `00-1-install-guide.md` - 自動インストールスクリプトの使用方法
 
 **自動インストールされるツール**:
-- Node.js, Git, GitHub CLI
-- Netlify CLI, Claude Code
-- Supabase CLI, Resend CLI
-- Super Claude (MCP Servers), Playwright MCP
-- Cursor IDE
+- Node.js: 主要な CLI や開発ツールが動く JavaScript 実行環境
+- Git: ソースコードを管理するためのバージョン管理ツール
+- GitHub CLI: ターミナルから GitHub 認証・操作を行う公式 CLI
+- Netlify CLI: ハンズオンで使う Web アプリをデプロイするためのツール
+- Claude Code: Claude と対話しながらコーディングするための公式 CLI
+- Supabase CLI: データベース/認証のバックエンドを手元で管理する CLI
+- Resend CLI: メール送信サービス Resend への接続確認に使う CLI
+- Super Claude (MCP Servers): Claude との連携機能を拡張する MCP サーバー群
+- Playwright MCP: ブラウザ操作用 MCP サーバー（自動 E2E テスト体験で使用）
+- Cursor IDE: AI コーディングに最適化されたエディタ
 
 **重要**: Claude Pro（$20/月）の契約が必須です。
 
