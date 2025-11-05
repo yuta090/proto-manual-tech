@@ -847,34 +847,6 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
         <li><strong>スクリプトファイルをダブルクリックした</strong> → 管理者権限にならないため推奨しません</li>
       </ul>
     </div>
-
-    <div style="background: rgba(224, 231, 255, 0.4); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 12px; padding: 20px; margin-top: 16px;">
-      <p style="margin: 0 0 12px 0; font-weight: bold; color: #4338ca;">ステップ3: PowerShell 7へのアップグレード（任意・推奨）</p>
-
-      <div style="background: rgba(59, 130, 246, 0.1); border: 2px solid #3b82f6; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
-        <p style="margin: 0 0 8px 0; font-weight: bold; color: #1e40af; font-size: 1.05em;">✅ PowerShell 5.1でも動作します</p>
-        <p style="margin: 0; color: #1e3a8a; font-size: 0.95em;">このスクリプトは<strong>ASCIIテキストマーカー</strong>（[OK]、[ERROR]など）を使用しており、Windows標準のPowerShell 5.1でも正常に動作します。ただし、<strong>より快適な開発環境</strong>のために、PowerShell 7へのアップグレードを推奨します。</p>
-      </div>
-
-      <ol style="margin: 0 0 16px 0; padding-left: 20px; color: #4f46e5; line-height: 2;">
-        <li><a href="https://github.com/PowerShell/PowerShell/releases/latest" target="_blank" style="color: #4f46e5; text-decoration: underline; font-weight: bold;">PowerShell 7の最新版をダウンロード</a>（GitHubページが開きます）</li>
-        <li>ページ下部の「Assets」から <strong>PowerShell-7.x.x-win-x64.msi</strong> をクリックしてダウンロード</li>
-        <li>ダウンロードした <strong>.msi</strong> ファイルを実行してインストール</li>
-        <li><strong>現在開いているPowerShellをすべて閉じる</strong></li>
-        <li>スタートメニューから<strong>「PowerShell 7」</strong>を右クリック → <strong>「管理者として実行」</strong></li>
-        <li>再度ステップ2のコマンドを実行</li>
-      </ol>
-
-      <div style="background: rgba(168, 85, 247, 0.1); border-left: 3px solid #a855f7; padding: 12px; margin-top: 12px; border-radius: 4px;">
-        <p style="margin: 0 0 6px 0; font-weight: bold; color: #6b21a8; font-size: 0.95em;">💡 PowerShell 7にアップグレードするメリット</p>
-        <ul style="margin: 0; padding-left: 20px; color: #6b21a8; font-size: 0.9em; line-height: 1.6;">
-          <li><strong>より高速で安定</strong>したスクリプト実行</li>
-          <li><strong>最新のPowerShell機能</strong>とモダンなコマンドレットが利用可能</li>
-          <li>従来のPowerShell 5.1と<strong>共存可能</strong>（両方インストールされていても問題なし）</li>
-          <li>クロスプラットフォーム対応（将来的にMac/Linuxでも同じスクリプトが使える）</li>
-        </ul>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -993,8 +965,14 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
           <div style="margin-top: 16px; padding: 12px; background: rgba(59, 130, 246, 0.08); border-left: 3px solid #3b82f6; border-radius: 4px;">
             <p style="margin: 0 0 8px 0; font-weight: 600; color: #1e40af;">💡 PowerShell 7+ へのアップデート（任意）</p>
             <p style="margin: 0 0 8px 0; font-size: 0.95em;">より新しい PowerShell 7+ を使いたい場合は、以下の方法でインストールできます（オプション）：</p>
+
+            <p style="margin: 8px 0; font-size: 0.95em;"><strong>方法1: wingetコマンド</strong></p>
             <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; margin: 8px 0; overflow-x: auto;"><code>winget install Microsoft.PowerShell</code></pre>
-            <p style="margin: 0; font-size: 0.9em; color: #6b7280;">※ ただし、このマニュアルのスクリプトは標準の PowerShell 5.1 で問題なく動作します。</p>
+
+            <p style="margin: 8px 0; font-size: 0.95em;"><strong>方法2: 手動ダウンロード</strong></p>
+            <p style="margin: 0 0 8px 0; font-size: 0.95em;"><a href="https://github.com/PowerShell/PowerShell/releases/latest" target="_blank" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">PowerShell 7の最新版をダウンロード</a>（GitHubページから <strong>PowerShell-7.x.x-win-x64.msi</strong> をダウンロード）</p>
+
+            <p style="margin: 8px 0 0 0; font-size: 0.9em; color: #6b7280;">※ ただし、このマニュアルのスクリプトは標準の PowerShell 5.1 で問題なく動作します。</p>
           </div>
         </div>
       </details>
