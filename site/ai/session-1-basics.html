@@ -638,13 +638,17 @@
     <span style="font-size: 1.5em;"></span>
     <span>自動セットアップスクリプト</span>
   </h4>
-  <p style="margin: 0 0 20px 0; color: #047857; font-weight: 500;">このスクリプトを実行するだけで、AI開発に必要なツールが一度にインストールされます：</p>
-  <ul style="margin: 0 0 20px 0; padding-left: 20px; color: #047857; line-height: 1.6; font-size: 0.95em;">
-    <li><strong>Node.js</strong> / <strong>Git</strong> / <strong>GitHub CLI</strong> — コマンドライン操作やリポジトリ管理の基盤となるツール群</li>
-    <li><strong>Claude Code</strong> / <strong>Super Claude</strong> / <strong>Playwright MCP</strong> — Claude と連携した開発支援と自動テストを体験するためのセット</li>
-    <li><strong>Netlify CLI</strong> / <strong>Supabase CLI</strong> / <strong>Resend CLI</strong> — デプロイ、バックエンド、メール送信といったプロダクト運用を支える CLI</li>
-    <li><strong>Cursor IDE</strong> / <strong>Codex CLI</strong> — AI を活かしたコーディングと CLI 操作を補助する開発ツール</li>
-  </ul>
+  <p style="margin: 0 0 20px 0; color: #047857; font-weight: 500; font-size: 1.05em;">このスクリプト1つで、AI開発に必要なツールをまとめてインストールできます。</p>
+
+  <div style="background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin-bottom: 20px;">
+    <p style="margin: 0 0 16px 0; color: #065f46; font-weight: 600; font-size: 1.05em;">💡 何ができるようになる？</p>
+    <ul style="margin: 0; padding-left: 20px; color: #047857; line-height: 1.9; font-size: 0.98em;">
+      <li><strong>AIと会話しながらコードを書ける</strong>（Claude Code、Cursor）</li>
+      <li><strong>作ったアプリをインターネットに公開できる</strong>（GitHub、Netlify）</li>
+      <li><strong>ユーザー登録やデータ保存ができる</strong>（Supabase）</li>
+      <li><strong>自動でテストやチェックができる</strong>（Playwright MCP）</li>
+    </ul>
+  </div>
 
   <!-- ツールカードグリッド -->
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
@@ -685,7 +689,7 @@
     </div>
 
     <div style="background: linear-gradient(135deg, rgba(209, 250, 229, 0.6) 0%, rgba(167, 243, 208, 0.4) 100%); backdrop-filter: blur(10px); padding: 14px; border-radius: 12px; border: 1px solid rgba(5, 150, 105, 0.3);">
-      <div style="font-size: 1.8em; margin-bottom: 6px;">️</div>
+      <div style="font-size: 1.8em; margin-bottom: 6px;"></div>
       <div style="font-weight: bold; color: #064e3b; margin-bottom: 4px;">Supabase CLI</div>
       <div style="font-size: 0.85em; color: #059669;">BaaS管理</div>
     </div>
@@ -819,6 +823,9 @@ chmod +x install-ai-dev-tools-mac.sh
         <li>メニューから<strong>「管理者として実行」</strong>を選択
           <div style="background: rgba(59, 130, 246, 0.1); border-left: 3px solid #3b82f6; padding: 8px 12px; margin-top: 8px; border-radius: 4px;">
             <p style="margin: 0; font-size: 0.9em; color: #1e40af;">💡 ウィンドウのタイトルバーに「管理者: Windows PowerShell」と表示されていればOK！</p>
+          </div>
+          <div style="margin-top: 12px;">
+            <img src="images/powershell-windows.gif" style="width: 100%; max-width: 500px; height: auto; border-radius: 8px; border: 1px solid rgba(99, 102, 241, 0.3);" alt="Windows PowerShell 管理者として実行">
           </div>
         </li>
         <li>青い画面（PowerShell）が開いたら、以下のコマンドを<strong>3行まとめて</strong>コピー&amp;ペーストして<strong>Enter</strong>を押す：</li>
@@ -976,30 +983,7 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
         <summary style="font-weight: bold; color: #3b82f6; cursor: pointer;">Q1. Windows に PowerShell は最初から入っていますか？</summary>
         <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(59, 130, 246, 0.2); color: #4b5563;">
           <p><strong>A:</strong> はい、Windows 10/11 には PowerShell 5.1 が標準でインストールされています。このマニュアルのスクリプトは PowerShell 5.1 で動作するように作られているため、アップデートは不要です。</p>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 16px 0;">
-            <!-- Windows PowerShell -->
-            <div style="background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border-radius: 12px; padding: 16px; border: 1px solid rgba(59, 130, 246, 0.2);">
-              <div style="font-weight: bold; color: #1e40af; margin-bottom: 10px;">🪟 Windows PowerShell</div>
-              <img src="images/powershell-windows.gif" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(59, 130, 246, 0.2);" alt="Windows PowerShell">
-              <p style="margin: 0; color: #4b5563; font-size: 0.9em; line-height: 1.5;">
-                <strong>開き方：</strong><br>
-                Windowsキー → 「PowerShell」と入力 → 右クリック → 「管理者として実行」
-              </p>
-            </div>
-
-            <!-- Mac Terminal -->
-            <div style="background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border-radius: 12px; padding: 16px; border: 1px solid rgba(59, 130, 246, 0.2);">
-              <div style="font-weight: bold; color: #1e40af; margin-bottom: 10px;">🍎 Mac ターミナル</div>
-              <img src="images/terminal-mac.png" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(59, 130, 246, 0.2);" alt="Mac Terminal">
-              <p style="margin: 0; color: #4b5563; font-size: 0.9em; line-height: 1.5;">
-                <strong>開き方：</strong><br>
-                Command + Space → 「terminal」と入力 → Enter
-              </p>
-            </div>
-          </div>
-
-          <p style="margin-top: 12px;"><strong>確認方法:</strong></p>
+          <p style="margin-top: 8px;"><strong>確認方法:</strong></p>
           <ol style="margin-left: 20px;">
             <li>スタートメニューで「PowerShell」と検索</li>
             <li>「Windows PowerShell」が表示されればOK</li>
