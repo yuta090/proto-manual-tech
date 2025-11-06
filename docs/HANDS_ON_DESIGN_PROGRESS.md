@@ -154,8 +154,8 @@
 - ✅ プラットフォーム別コマンド更新
 
 **作成ファイル**:
-- ✅ `scripts/install-ai-dev-tools-mac.sh` (macOS Bash スクリプト)
-- ✅ `scripts/install-ai-dev-tools-win.ps1` (Windows PowerShell スクリプト)
+- ✅ `site/ai/scripts/install-ai-dev-tools-mac.sh` (macOS Bash スクリプト)
+- ✅ `site/ai/scripts/install-ai-dev-tools-win.ps1` (Windows PowerShell スクリプト)
 
 ---
 

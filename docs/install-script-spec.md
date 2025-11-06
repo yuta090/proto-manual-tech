@@ -43,8 +43,8 @@ AI開発に必要な以下のツールを自動でインストールし、セッ
 ```
 ┌─────────────────────────────────────────┐
 │         User Execution                   │
-│  ./install-ai-dev-tools-mac.sh          │
-│  .\install-ai-dev-tools-win.ps1         │
+│  ./site/ai/scripts/install-ai-dev-tools-mac.sh    │
+│  .\site\ai\scripts\install-ai-dev-tools-win.ps1   │
 └──────────────┬──────────────────────────┘
                │
                ▼
