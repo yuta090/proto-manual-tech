@@ -1200,13 +1200,31 @@ source ~/.bash_profile</code></pre>
           </ol>
         </div>
       </details>
-    </div>
 
-    <div style="text-align: center; padding: 24px; background: rgba(59, 130, 246, 0.1); border-radius: 12px;">
-      <p style="color: #1e40af; font-weight: bold; margin-bottom: 12px;">さらに詳しいFAQは</p>
-      <a href="../FAQ.html" style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: transform 0.2s;">
-        完全版FAQを見る（30問以上）→
-      </a>
+      <details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+        <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q16. Git のコミットで「Author identity unknown」と表示されます</summary>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+          <p><strong>A:</strong> Git のユーザー名／メールがまだ設定されていません。</p>
+          <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+          <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 8px; overflow-x: auto;"><code>git config --global user.name "あなたの名前"
+git config --global user.email "your.email@example.com"</code></pre>
+          <p style="margin-top: 12px;">設定後にもう一度コミットを作成するとエラーは解消します。</p>
+        </div>
+      </details>
+
+      <details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+        <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q17. Playwright のブラウザダウンロードが失敗します</summary>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
+          <p><strong>A:</strong> ネットワークやディスク容量の問題が考えられます。</p>
+          <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
+          <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 8px; overflow-x: auto;"><code># 再試行
+npx playwright install
+
+# 特定のブラウザのみインストール
+npx playwright install chromium</code></pre>
+          <p style="margin-top: 12px;">ディスク残量（目安: 2GB以上）とネットワーク接続を確認したうえで再実行してください。</p>
+        </div>
+      </details>
     </div>
   </div>
 

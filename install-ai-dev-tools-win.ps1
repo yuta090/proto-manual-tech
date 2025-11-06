@@ -487,6 +487,75 @@ function Install-Git {
     }
 }
 
+function Install-GitHubCLIFromMsi {
+    Write-Info "winget が利用できないため、MSI パッケージで GitHub CLI をセットアップします..."
+
+    # TLS 1.2 を強制
+    try {
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    } catch {
+        Write-Warning-Custom "TLS 設定の更新に失敗しました: $($_.Exception.Message)"
+    }
+
+    $archSuffix = switch ([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture) {
+        "X64" { "amd64" }
+        "Arm64" { "arm64" }
+        "X86" { "386" }
+        Default { "amd64" }
+    }
+
+    $tempFile = $null
+
+    try {
+        $headers = @{ "User-Agent" = "proto-manual-tech-installer" }
+        $release = Invoke-RestMethod -Uri "https://api.github.com/repos/cli/cli/releases/latest" -Headers $headers -UseBasicParsing
+
+        if (-not $release.assets) {
+            Write-Error-Custom "GitHub CLI のリリース情報を取得できませんでした"
+            return $false
+        }
+
+        $asset = $release.assets | Where-Object { $_.name -like "gh_*_windows_${archSuffix}.msi" } | Select-Object -First 1
+
+        if (-not $asset) {
+            Write-Error-Custom "対応するアーキテクチャ用の GitHub CLI MSI が見つかりませんでした (${archSuffix})"
+            return $false
+        }
+
+        $tempFile = Join-Path ([System.IO.Path]::GetTempPath()) $asset.name
+
+        Write-Info "GitHub CLI MSI (${archSuffix}) をダウンロード中..."
+        Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $tempFile -UseBasicParsing
+
+        Write-Info "GitHub CLI MSI をサイレントインストール中..."
+        $arguments = "/i `"$tempFile`" /qn /norestart"
+        $process = Start-Process msiexec.exe -ArgumentList $arguments -Wait -PassThru
+
+        if ($process.ExitCode -ne 0) {
+            Write-Error-Custom "MSI インストーラがエラーコード $($process.ExitCode) を返しました"
+            return $false
+        }
+
+        # パスをリフレッシュ
+        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+        if (Test-Command gh) {
+            Write-Success "GitHub CLI MSI インストール完了"
+            return $true
+        }
+
+        Write-Error-Custom "MSI インストール後も GitHub CLI が見つかりません"
+        return $false
+    } catch {
+        Write-Error-Custom "GitHub CLI の MSI インストールに失敗しました: $($_.Exception.Message)"
+        return $false
+    } finally {
+        if ($tempFile -and (Test-Path $tempFile)) {
+            Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
+        }
+    }
+}
+
 function Install-GitHubCLI {
     Show-Section 3 "GitHub CLI のインストール"
 
@@ -496,16 +565,32 @@ function Install-GitHubCLI {
     }
 
     if (-not (Test-Command gh)) {
-        Write-Info "GitHub CLI をインストール中..."
-        winget install GitHub.cli --silent --accept-package-agreements --accept-source-agreements
+        $installed = $false
 
-        # パスをリフレッシュ
-        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+        if (Test-Command winget) {
+            Write-Info "winget で GitHub CLI をインストール中..."
+            try {
+                winget install GitHub.cli --silent --accept-package-agreements --accept-source-agreements | Out-Null
+            } catch {
+                Write-Warning-Custom "winget でのインストールに失敗しました: $($_.Exception.Message)"
+            }
 
-        if (Test-Command gh) {
+            # パスをリフレッシュ
+            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+            $installed = Test-Command gh
+        } else {
+            Write-Warning-Custom "winget コマンドが見つかりません。MSI でのインストールに切り替えます"
+        }
+
+        if (-not $installed) {
+            Write-Info "MSI パッケージで GitHub CLI をインストールします..."
+            $installed = Install-GitHubCLIFromMsi
+        }
+
+        if ($installed) {
             Write-Success "GitHub CLI インストール完了"
         } else {
-            Write-Error-Custom "GitHub CLI のインストールに失敗しました"
+            Write-Error-Custom "GitHub CLI のインストールに失敗しました。App Installer (winget) の更新やネットワーク設定を確認してください"
             exit 1
         }
     } else {

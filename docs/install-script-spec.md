@@ -530,7 +530,16 @@ function Install-GitHubCLI {
         Write-Info "GitHub CLI は既にインストールされています (スキップ)"
     } else {
         Write-Section "GitHub CLI のインストール"
-        winget install GitHub.cli --silent
+
+        if (Get-Command gh -ErrorAction SilentlyContinue) {
+            Write-Info "GitHub CLI は既にインストールされています"
+        } elseif (Get-Command winget -ErrorAction SilentlyContinue) {
+            Write-Info "winget で GitHub CLI をインストール中..."
+            winget install GitHub.cli --silent --accept-package-agreements --accept-source-agreements
+        } else {
+            Write-Warn "winget が利用できないため、MSI パッケージをダウンロードしてインストール"
+            Install-GitHubCLIFromMsi
+        }
 
         # パスのリフレッシュ
         $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
@@ -587,6 +596,8 @@ function Install-GitHubCLI {
     }
 }
 ```
+
+補助関数 `Install-GitHubCLIFromMsi` では、`winget` が利用できない環境向けに GitHub API から最新の MSI パッケージを取得し、サイレントモードでインストールします。ダウンロードした一時ファイルは処理完了後に削除し、MSI 終了コードを検証します。
 
 #### 4. Netlify CLI (認証あり)
 

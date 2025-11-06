@@ -516,8 +516,14 @@ install_github_cli() {
     fi
 
     if ! check_command gh; then
-        print_info "GitHub CLI をインストール中..."
-        npm install -g @github/gh &
+        if ! check_command brew; then
+            print_error "Homebrew がインストールされていないため、GitHub CLI をインストールできません"
+            print_info "先に Homebrew のインストールを完了してください"
+            exit 1
+        fi
+
+        print_info "Homebrew 経由で GitHub CLI をインストール中..."
+        brew install gh &
         spinner $!
         wait $!
 
