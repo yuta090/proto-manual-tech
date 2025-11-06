@@ -167,6 +167,22 @@ function Test-Winget {
     }
 }
 
+function Ensure-NpmShim {
+    try {
+        $npmCmd = Get-Command npm.cmd -ErrorAction Stop
+        Set-Alias -Name npm -Value $npmCmd.Source -Scope Global -Force
+    } catch {
+        # npm.cmd が未インストールの場合は無視
+    }
+
+    try {
+        $npxCmd = Get-Command npx.cmd -ErrorAction Stop
+        Set-Alias -Name npx -Value $npxCmd.Source -Scope Global -Force
+    } catch {
+        # npx.cmd が未インストールの場合は無視
+    }
+}
+
 # ============================================================================
 # アカウント登録ガイド関数
 # ============================================================================
@@ -402,6 +418,7 @@ function Install-NodeJS {
     if (Get-State "nodejs" "installed") {
         $version = & node --version 2>$null
         Write-Success "Node.js $version は既にインストール済みです (スキップ)"
+        Ensure-NpmShim
         return
     }
 
@@ -410,6 +427,7 @@ function Install-NodeJS {
         Write-Success "Node.js $version が既にインストールされています"
         Update-State "nodejs" "installed" $true
         Update-State "nodejs" "version" $version
+        Ensure-NpmShim
         return
     }
 
@@ -425,6 +443,7 @@ function Install-NodeJS {
         Write-Success "Node.js $version インストール完了"
         Update-State "nodejs" "installed" $true
         Update-State "nodejs" "version" $version
+        Ensure-NpmShim
     } else {
         Write-Error-Custom "Node.js のインストールに失敗しました"
         exit 1
@@ -654,7 +673,7 @@ function Install-ClaudeCode {
             Update-State "claude_code" "installed" $true
         } else {
             Write-Info "Claude Code をインストール中..."
-            & npm install -g claude-code
+            & npm.cmd install -g claude-code
 
             # パスをリフレッシュ
             $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
@@ -856,7 +875,7 @@ function Install-Codex {
             Update-State "codex" "installed" $true
         } else {
             Write-Info "Codex CLI をインストール中..."
-            & npm install -g @openai/codex
+            & npm.cmd install -g @openai/codex
 
             # パスをリフレッシュ
             $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")

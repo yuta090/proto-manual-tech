@@ -136,6 +136,22 @@ function Update-InstallState {
     }
 }
 
+function Ensure-NpmShim {
+    try {
+        $npmCmd = Get-Command npm.cmd -ErrorAction Stop
+        Set-Alias -Name npm -Value $npmCmd.Source -Scope Global -Force
+    } catch {
+        # npm.cmd が未インストールの場合は無視
+    }
+
+    try {
+        $npxCmd = Get-Command npx.cmd -ErrorAction Stop
+        Set-Alias -Name npx -Value $npxCmd.Source -Scope Global -Force
+    } catch {
+        # npx.cmd が未インストールの場合は無視
+    }
+}
+
 ################################################################################
 # インストール関数
 ################################################################################
@@ -193,6 +209,7 @@ function Install-Winget {
 function Install-Node {
     if (Get-InstallState -Tool "node" -Key "installed") {
         Write-Info "Node.js は既にインストールされています (スキップ)"
+        Ensure-NpmShim
         return
     }
 
@@ -201,6 +218,7 @@ function Install-Node {
     if (Get-Command node -ErrorAction SilentlyContinue) {
         Write-Info "Node.js は既にインストールされています"
         Update-InstallState -Tool "node" -Key "installed" -Value $true
+        Ensure-NpmShim
         return
     }
 
@@ -214,6 +232,7 @@ function Install-Node {
         $nodeVersion = node --version
         Write-Success "Node.js インストール完了: $nodeVersion"
         Update-InstallState -Tool "node" -Key "installed" -Value $true
+        Ensure-NpmShim
     } else {
         Write-Err "Node.js のインストールに失敗しました"
         exit 1
@@ -409,7 +428,7 @@ function Install-NetlifyCLI {
             Write-Info "Netlify CLI は既にインストールされています"
             Update-InstallState -Tool "netlify_cli" -Key "installed" -Value $true
         } else {
-            npm install -g netlify-cli
+            & npm.cmd install -g netlify-cli
             Update-InstallState -Tool "netlify_cli" -Key "installed" -Value $true
             Write-Success "Netlify CLI インストール完了"
         }
@@ -516,7 +535,7 @@ function Install-SupabaseCLI {
             Write-Info "Supabase CLI は既にインストールされています"
             Update-InstallState -Tool "supabase_cli" -Key "installed" -Value $true
         } else {
-            npm install -g supabase
+            & npm.cmd install -g supabase
             Update-InstallState -Tool "supabase_cli" -Key "installed" -Value $true
             Write-Success "Supabase CLI インストール完了"
         }
@@ -543,10 +562,10 @@ function Install-SupabaseCLI {
         Write-Info "Supabase CLI の認証を開始します..."
 
         try {
-            npx supabase login
+            & npx.cmd supabase login
 
             # 認証確認
-            $null = npx supabase projects list 2>&1
+            $null = & npx.cmd supabase projects list 2>&1
             if ($LASTEXITCODE -eq 0) {
                 Update-InstallState -Tool "supabase_cli" -Key "authenticated" -Value $true
                 Write-Success "Supabase CLI 認証完了"

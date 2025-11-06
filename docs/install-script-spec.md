@@ -669,7 +669,7 @@ function Install-NetlifyCLI {
             Write-Info "Netlify CLI は既にインストールされています"
             Update-InstallState -Tool "netlify_cli" -Key "installed" -Value $true
         } else {
-            npm install -g netlify-cli
+            & npm.cmd install -g netlify-cli
             Update-InstallState -Tool "netlify_cli" -Key "installed" -Value $true
             Write-Success "Netlify CLI インストール完了"
         }
@@ -704,6 +704,8 @@ function Install-NetlifyCLI {
     }
 }
 ```
+
+> **補足:** PowerShell では `Set-StrictMode -Version Latest` を有効化しているため、`npm.ps1` が `$MyInvocation.Statement` 参照で失敗します。スクリプトでは `.cmd` ラッパー (`npm.cmd` / `npx.cmd`) を直接呼び出し、Node.js インストール後に `Ensure-NpmShim` で `npm` / `npx` エイリアスを `*.cmd` に差し替えて回避しています。
 
 #### 5. Claude Code (認証あり)
 
@@ -869,9 +871,9 @@ function Install-SupabaseCLI {
     Write-Host "認証が完了したら、このターミナルに戻ってください" -ForegroundColor Cyan
     Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
 
-    npx supabase login
+    & npx.cmd supabase login
 
-    if (npx supabase projects list 2>$null) {
+    if (& npx.cmd supabase projects list 2>$null) {
         Write-Success "Supabase CLI 認証成功！"
         Update-State supabase_cli authenticated $true
     } else {
