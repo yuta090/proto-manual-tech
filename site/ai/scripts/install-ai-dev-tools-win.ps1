@@ -1,25 +1,25 @@
-# AIŠJ”­ŠÂ‹«©“®ƒZƒbƒgƒAƒbƒvƒXƒNƒŠƒvƒg (Windows)
+# AIé–‹ç™ºç’°å¢ƒè‡ªå‹•ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã‚¹ã‚¯ãƒªãƒ—ãƒˆ (Windows)
 #
-# –Ú“I: 0Íu©“®ƒZƒbƒgƒAƒbƒv‚ÅŠJ”­ŠÂ‹«‚ğ®‚¦‚év‚Åg—p‚·‚é
-#      ‘Sƒc[ƒ‹‚Ì©“®ƒCƒ“ƒXƒg[ƒ‹E”FØEƒAƒJƒEƒ“ƒgì¬‘£i
+# ç›®çš„: 0ç« ã€Œè‡ªå‹•ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã§é–‹ç™ºç’°å¢ƒã‚’æ•´ãˆã‚‹ã€ã§ä½¿ç”¨ã™ã‚‹
+#      å…¨ãƒ„ãƒ¼ãƒ«ã®è‡ªå‹•ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ»èªè¨¼ãƒ»ã‚¢ã‚«ã‚¦ãƒ³ãƒˆä½œæˆä¿ƒé€²
 #
-# Às•û–@ (PowerShellŠÇ—ÒŒ ŒÀ):
+# å®Ÿè¡Œæ–¹æ³• (PowerShellç®¡ç†è€…æ¨©é™):
 #   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 #   .\install-ai-dev-tools-win.ps1
 #
-# ‘Î‰OS: Windows 10 / 11
+# å¯¾å¿œOS: Windows 10 / 11
 
 #Requires -Version 5.1
 
 ################################################################################
-# ƒGƒ‰[ƒnƒ“ƒhƒŠƒ“ƒOİ’è
+# ã‚¨ãƒ©ãƒ¼ãƒãƒ³ãƒ‰ãƒªãƒ³ã‚°è¨­å®š
 ################################################################################
 
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 ################################################################################
-# ƒJƒ‰[’è‹`
+# ã‚«ãƒ©ãƒ¼å®šç¾©
 ################################################################################
 
 function Write-Section {
@@ -50,7 +50,7 @@ function Write-Warn {
 }
 
 ################################################################################
-# ó‘ÔŠÇ—
+# çŠ¶æ…‹ç®¡ç†
 ################################################################################
 
 $StateFile = ".install_progress.json"
@@ -87,7 +87,7 @@ function Initialize-State {
         }
 
         $state | ConvertTo-Json -Depth 10 | Set-Content $StateFile -Encoding UTF8
-        Write-Success "ó‘Ôƒtƒ@ƒCƒ‹‚ğì¬‚µ‚Ü‚µ‚½: $StateFile"
+        Write-Success "çŠ¶æ…‹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã—ã¾ã—ãŸ: $StateFile"
     }
 }
 
@@ -132,141 +132,160 @@ function Update-InstallState {
 
         $state | ConvertTo-Json -Depth 10 | Set-Content $StateFile -Encoding UTF8
     } catch {
-        Write-Err "ó‘Ô‚ÌXV‚É¸”s‚µ‚Ü‚µ‚½: $_"
+        Write-Err "çŠ¶æ…‹ã®æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸ: $_"
+    }
+}
+
+function Ensure-NpmShim {
+    try {
+        $npmCmd = Get-Command npm.cmd -ErrorAction Stop
+        Set-Alias -Name npm -Value $npmCmd.Source -Scope Global -Force
+    } catch {
+        # npm.cmd ãŒæœªã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã®å ´åˆã¯ç„¡è¦–
+    }
+
+    try {
+        $npxCmd = Get-Command npx.cmd -ErrorAction Stop
+        Set-Alias -Name npx -Value $npxCmd.Source -Scope Global -Force
+    } catch {
+        # npx.cmd ãŒæœªã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã®å ´åˆã¯ç„¡è¦–
     }
 }
 
 ################################################################################
-# ƒCƒ“ƒXƒg[ƒ‹ŠÖ”
+# ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«é–¢æ•°
 ################################################################################
 
 function Install-Winget {
     if (Get-Command winget -ErrorAction SilentlyContinue) {
-        Write-Info "winget ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚· (ƒXƒLƒbƒv)"
+        Write-Info "winget ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™ (ã‚¹ã‚­ãƒƒãƒ—)"
         return
     }
 
-    Write-Section "winget ‚ÌƒCƒ“ƒXƒg[ƒ‹"
+    Write-Section "winget ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«"
 
-    Write-Info "winget ‚Í’Êí Windows 10/11 ‚ÉƒvƒŠƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·"
-    Write-Info "Microsoft Store ‚©‚çuƒAƒvƒŠ ƒCƒ“ƒXƒg[ƒ‰[v‚ğƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚­‚¾‚³‚¢"
+    Write-Info "winget ã¯é€šå¸¸ Windows 10/11 ã«ãƒ—ãƒªã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™"
+    Write-Info "Microsoft Store ã‹ã‚‰ã€Œã‚¢ãƒ—ãƒª ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ©ãƒ¼ã€ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ãã ã•ã„"
 
     Start-Process "ms-windows-store://pdp/?ProductId=9NBLGGH4NNS1"
 
-    $confirm = Read-Host "winget ‚ÌƒCƒ“ƒXƒg[ƒ‹‚ªŠ®—¹‚µ‚½‚ç Enter ƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢"
+    $confirm = Read-Host "winget ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãŒå®Œäº†ã—ãŸã‚‰ Enter ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ãã ã•ã„"
 }
 
 function Install-Node {
     if (Get-InstallState -Tool "node" -Key "installed") {
-        Write-Info "Node.js ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚· (ƒXƒLƒbƒv)"
+        Write-Info "Node.js ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™ (ã‚¹ã‚­ãƒƒãƒ—)"
+        Ensure-NpmShim
         return
     }
 
-    Write-Section "Node.js ‚ÌƒCƒ“ƒXƒg[ƒ‹"
+    Write-Section "Node.js ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«"
 
     if (Get-Command node -ErrorAction SilentlyContinue) {
-        Write-Info "Node.js ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·"
+        Write-Info "Node.js ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™"
         Update-InstallState -Tool "node" -Key "installed" -Value $true
+        Ensure-NpmShim
         return
     }
 
     winget install OpenJS.NodeJS --silent
 
-    # PATH ‚ÌXV
+    # PATH ã®æ›´æ–°
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
-    # Šm”F
+    # ç¢ºèª
     if (Get-Command node -ErrorAction SilentlyContinue) {
         $nodeVersion = node --version
-        Write-Success "Node.js ƒCƒ“ƒXƒg[ƒ‹Š®—¹: $nodeVersion"
+        Write-Success "Node.js ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Œäº†: $nodeVersion"
         Update-InstallState -Tool "node" -Key "installed" -Value $true
+        Ensure-NpmShim
     } else {
-        Write-Err "Node.js ‚ÌƒCƒ“ƒXƒg[ƒ‹‚É¸”s‚µ‚Ü‚µ‚½"
+        Write-Err "Node.js ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã«å¤±æ•—ã—ã¾ã—ãŸ"
         exit 1
     }
 }
 
 function Install-Git {
     if (Get-InstallState -Tool "git" -Key "installed") {
-        Write-Info "Git ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚· (ƒXƒLƒbƒv)"
+        Write-Info "Git ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™ (ã‚¹ã‚­ãƒƒãƒ—)"
         return
     }
 
-    Write-Section "Git ‚ÌƒCƒ“ƒXƒg[ƒ‹"
+    Write-Section "Git ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«"
 
     if (Get-Command git -ErrorAction SilentlyContinue) {
-        Write-Info "Git ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·"
+        Write-Info "Git ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™"
         Update-InstallState -Tool "git" -Key "installed" -Value $true
         return
     }
 
     winget install Git.Git --silent
 
-    # PATH ‚ÌXV
+    # PATH ã®æ›´æ–°
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
-    # Šm”F
+    # ç¢ºèª
     if (Get-Command git -ErrorAction SilentlyContinue) {
         $gitVersion = git --version
-        Write-Success "Git ƒCƒ“ƒXƒg[ƒ‹Š®—¹: $gitVersion"
+        Write-Success "Git ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Œäº†: $gitVersion"
         Update-InstallState -Tool "git" -Key "installed" -Value $true
     } else {
-        Write-Err "Git ‚ÌƒCƒ“ƒXƒg[ƒ‹‚É¸”s‚µ‚Ü‚µ‚½"
+        Write-Err "Git ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã«å¤±æ•—ã—ã¾ã—ãŸ"
         exit 1
     }
 }
 
 function Install-GitHubCLI {
     if ((Get-InstallState -Tool "github_cli" -Key "installed") -and (Get-InstallState -Tool "github_cli" -Key "authenticated")) {
-        Write-Info "GitHub CLI ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹E”FØÏ‚İ‚Å‚· (ƒXƒLƒbƒv)"
+        Write-Info "GitHub CLI ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ»èªè¨¼æ¸ˆã¿ã§ã™ (ã‚¹ã‚­ãƒƒãƒ—)"
         return
     }
 
-    Write-Section "GitHub CLI ‚ÌƒCƒ“ƒXƒg[ƒ‹"
+    Write-Section "GitHub CLI ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«"
 
-    # ƒCƒ“ƒXƒg[ƒ‹Šm”F
+    # ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ç¢ºèª
     if (-not (Get-InstallState -Tool "github_cli" -Key "installed")) {
         if (Get-Command gh -ErrorAction SilentlyContinue) {
-            Write-Info "GitHub CLI ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·"
+            Write-Info "GitHub CLI ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™"
             Update-InstallState -Tool "github_cli" -Key "installed" -Value $true
         } else {
-            Write-Info "GitHub CLI ‚ğƒCƒ“ƒXƒg[ƒ‹’†..."
+            Write-Info "GitHub CLI ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ä¸­..."
             npm install -g @github/gh
 
-            # PATH ‚ÌXV
+            # PATH ã®æ›´æ–°
             $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
             Update-InstallState -Tool "github_cli" -Key "installed" -Value $true
-            Write-Success "GitHub CLI ƒCƒ“ƒXƒg[ƒ‹Š®—¹"
+            Write-Success "GitHub CLI ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Œäº†"
         }
     }
 
-    # ƒAƒJƒEƒ“ƒgì¬‘£i‚Æ”FØ
+    # ã‚¢ã‚«ã‚¦ãƒ³ãƒˆä½œæˆä¿ƒé€²ã¨èªè¨¼
     if (-not (Get-InstallState -Tool "github_cli" -Key "authenticated")) {
         Write-Host "============================================================" -ForegroundColor Yellow
-        Write-Host "GitHub ƒAƒJƒEƒ“ƒg‚ğ‚¨‚¿‚Å‚·‚©H" -ForegroundColor Cyan
+        Write-Host "GitHub ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ãŠæŒã¡ã§ã™ã‹ï¼Ÿ" -ForegroundColor Cyan
         Write-Host "============================================================" -ForegroundColor Yellow
 
-        $hasAccount = Read-Host "GitHub ƒAƒJƒEƒ“ƒg‚ğ‚¨‚¿‚Å‚·‚©H (y/n)"
+        $hasAccount = Read-Host "GitHub ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ãŠæŒã¡ã§ã™ã‹ï¼Ÿ (y/n)"
 
         if ($hasAccount -ne "y") {
-            Write-Warn "GitHub ƒAƒJƒEƒ“ƒg‚ª•K—v‚Å‚·Bƒuƒ‰ƒEƒU‚ÅƒTƒCƒ“ƒAƒbƒvƒy[ƒW‚ğŠJ‚«‚Ü‚·..."
-            Write-Host "„§: uSign up with Googlevƒ{ƒ^ƒ“‚Å Google ƒAƒJƒEƒ“ƒg‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢" -ForegroundColor Cyan
+            Write-Warn "GitHub ã‚¢ã‚«ã‚¦ãƒ³ãƒˆãŒå¿…è¦ã§ã™ã€‚ãƒ–ãƒ©ã‚¦ã‚¶ã§ã‚µã‚¤ãƒ³ã‚¢ãƒƒãƒ—ãƒšãƒ¼ã‚¸ã‚’é–‹ãã¾ã™..."
+            Write-Host "æ¨å¥¨: ã€ŒSign up with Googleã€ãƒœã‚¿ãƒ³ã§ Google ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ä½¿ç”¨ã—ã¦ãã ã•ã„" -ForegroundColor Cyan
 
             Start-Process "https://github.com/signup"
 
-            $confirm = Read-Host "`nƒAƒJƒEƒ“ƒgì¬‚ªŠ®—¹‚µ‚½‚ç Enter ƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢"
+            $confirm = Read-Host "`nã‚¢ã‚«ã‚¦ãƒ³ãƒˆä½œæˆãŒå®Œäº†ã—ãŸã‚‰ Enter ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ãã ã•ã„"
         }
 
-        # ”FØ
-        Write-Info "GitHub CLI ‚Ì”FØ‚ğŠJn‚µ‚Ü‚·..."
+        # èªè¨¼
+        Write-Info "GitHub CLI ã®èªè¨¼ã‚’é–‹å§‹ã—ã¾ã™..."
 
         try {
             gh auth login
             Update-InstallState -Tool "github_cli" -Key "authenticated" -Value $true
-            Write-Success "GitHub CLI ”FØŠ®—¹"
+            Write-Success "GitHub CLI èªè¨¼å®Œäº†"
         } catch {
-            Write-Err "GitHub CLI ‚Ì”FØ‚É¸”s‚µ‚Ü‚µ‚½"
+            Write-Err "GitHub CLI ã®èªè¨¼ã«å¤±æ•—ã—ã¾ã—ãŸ"
             exit 1
         }
     }
@@ -274,51 +293,51 @@ function Install-GitHubCLI {
 
 function Install-NetlifyCLI {
     if ((Get-InstallState -Tool "netlify_cli" -Key "installed") -and (Get-InstallState -Tool "netlify_cli" -Key "authenticated")) {
-        Write-Info "Netlify CLI ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹E”FØÏ‚İ‚Å‚· (ƒXƒLƒbƒv)"
+        Write-Info "Netlify CLI ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ»èªè¨¼æ¸ˆã¿ã§ã™ (ã‚¹ã‚­ãƒƒãƒ—)"
         return
     }
 
-    Write-Section "Netlify CLI ‚ÌƒCƒ“ƒXƒg[ƒ‹"
+    Write-Section "Netlify CLI ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«"
 
-    # ƒCƒ“ƒXƒg[ƒ‹Šm”F
+    # ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ç¢ºèª
     if (-not (Get-InstallState -Tool "netlify_cli" -Key "installed")) {
         if (Get-Command netlify -ErrorAction SilentlyContinue) {
-            Write-Info "Netlify CLI ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·"
+            Write-Info "Netlify CLI ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™"
             Update-InstallState -Tool "netlify_cli" -Key "installed" -Value $true
         } else {
-            npm install -g netlify-cli
+            & npm.cmd install -g netlify-cli
             Update-InstallState -Tool "netlify_cli" -Key "installed" -Value $true
-            Write-Success "Netlify CLI ƒCƒ“ƒXƒg[ƒ‹Š®—¹"
+            Write-Success "Netlify CLI ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Œäº†"
         }
     }
 
-    # ƒAƒJƒEƒ“ƒgì¬‘£i‚Æ”FØ
+    # ã‚¢ã‚«ã‚¦ãƒ³ãƒˆä½œæˆä¿ƒé€²ã¨èªè¨¼
     if (-not (Get-InstallState -Tool "netlify_cli" -Key "authenticated")) {
         Write-Host "============================================================" -ForegroundColor Yellow
-        Write-Host "Netlify ‚Í©“®ƒfƒvƒƒC‚Ég—p‚µ‚Ü‚·" -ForegroundColor Cyan
-        Write-Host "CLIŒo—R‚ÅGitHub˜AŒg‚ğİ’è‚µ‚Ü‚·" -ForegroundColor Cyan
+        Write-Host "Netlify ã¯è‡ªå‹•ãƒ‡ãƒ—ãƒ­ã‚¤ã«ä½¿ç”¨ã—ã¾ã™" -ForegroundColor Cyan
+        Write-Host "CLIçµŒç”±ã§GitHubé€£æºã‚’è¨­å®šã—ã¾ã™" -ForegroundColor Cyan
         Write-Host "============================================================" -ForegroundColor Yellow
 
-        $hasAccount = Read-Host "Netlify ƒAƒJƒEƒ“ƒg‚ğ‚¨‚¿‚Å‚·‚©H (y/n)"
+        $hasAccount = Read-Host "Netlify ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ãŠæŒã¡ã§ã™ã‹ï¼Ÿ (y/n)"
 
         if ($hasAccount -ne "y") {
-            Write-Warn "Netlify ƒAƒJƒEƒ“ƒg‚ª•K—v‚Å‚·Bƒuƒ‰ƒEƒU‚ÅƒTƒCƒ“ƒAƒbƒvƒy[ƒW‚ğŠJ‚«‚Ü‚·..."
-            Write-Host "„§: uSign up with GitHubvƒ{ƒ^ƒ“‚Å GitHub ƒAƒJƒEƒ“ƒg‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢" -ForegroundColor Cyan
+            Write-Warn "Netlify ã‚¢ã‚«ã‚¦ãƒ³ãƒˆãŒå¿…è¦ã§ã™ã€‚ãƒ–ãƒ©ã‚¦ã‚¶ã§ã‚µã‚¤ãƒ³ã‚¢ãƒƒãƒ—ãƒšãƒ¼ã‚¸ã‚’é–‹ãã¾ã™..."
+            Write-Host "æ¨å¥¨: ã€ŒSign up with GitHubã€ãƒœã‚¿ãƒ³ã§ GitHub ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ä½¿ç”¨ã—ã¦ãã ã•ã„" -ForegroundColor Cyan
 
             Start-Process "https://app.netlify.com/signup"
 
-            $confirm = Read-Host "`nƒAƒJƒEƒ“ƒgì¬‚ªŠ®—¹‚µ‚½‚ç Enter ƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢"
+            $confirm = Read-Host "`nã‚¢ã‚«ã‚¦ãƒ³ãƒˆä½œæˆãŒå®Œäº†ã—ãŸã‚‰ Enter ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ãã ã•ã„"
         }
 
-        # ”FØ
-        Write-Info "Netlify CLI ‚Ì”FØ‚ğŠJn‚µ‚Ü‚·..."
+        # èªè¨¼
+        Write-Info "Netlify CLI ã®èªè¨¼ã‚’é–‹å§‹ã—ã¾ã™..."
 
         try {
             netlify login
             Update-InstallState -Tool "netlify_cli" -Key "authenticated" -Value $true
-            Write-Success "Netlify CLI ”FØŠ®—¹"
+            Write-Success "Netlify CLI èªè¨¼å®Œäº†"
         } catch {
-            Write-Err "Netlify CLI ‚Ì”FØ‚É¸”s‚µ‚Ü‚µ‚½"
+            Write-Err "Netlify CLI ã®èªè¨¼ã«å¤±æ•—ã—ã¾ã—ãŸ"
             exit 1
         }
     }
@@ -326,113 +345,113 @@ function Install-NetlifyCLI {
 
 function Install-ClaudeCode {
     if ((Get-InstallState -Tool "claude_code" -Key "installed") -and (Get-InstallState -Tool "claude_code" -Key "authenticated")) {
-        Write-Info "Claude Code ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹E”FØÏ‚İ‚Å‚· (ƒXƒLƒbƒv)"
+        Write-Info "Claude Code ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ»èªè¨¼æ¸ˆã¿ã§ã™ (ã‚¹ã‚­ãƒƒãƒ—)"
         return
     }
 
-    Write-Section "Claude Code ‚ÌƒCƒ“ƒXƒg[ƒ‹"
+    Write-Section "Claude Code ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«"
 
-    # ƒCƒ“ƒXƒg[ƒ‹Šm”F
+    # ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ç¢ºèª
     if (-not (Get-InstallState -Tool "claude_code" -Key "installed")) {
         if (Get-Command claude -ErrorAction SilentlyContinue) {
-            Write-Info "Claude Code ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·"
+            Write-Info "Claude Code ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™"
             Update-InstallState -Tool "claude_code" -Key "installed" -Value $true
         } else {
-            Write-Info "Claude Code ‚ğƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·..."
-            Write-Host "Claude Pro ƒAƒJƒEƒ“ƒg‚ª•K—v‚Å‚·" -ForegroundColor Cyan
+            Write-Info "Claude Code ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™..."
+            Write-Host "Claude Pro ã‚¢ã‚«ã‚¦ãƒ³ãƒˆãŒå¿…è¦ã§ã™" -ForegroundColor Cyan
 
             try {
-                # npmŒo—R‚ÅƒCƒ“ƒXƒg[ƒ‹
-                npm install -g claude-code
+                # npmçµŒç”±ã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+                & npm.cmd install -g claude-code
 
                 if ($LASTEXITCODE -eq 0) {
                     Update-InstallState -Tool "claude_code" -Key "installed" -Value $true
-                    Write-Success "Claude Code ƒCƒ“ƒXƒg[ƒ‹Š®—¹"
+                    Write-Success "Claude Code ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Œäº†"
                 } else {
-                    Write-Err "Claude Code ‚ÌƒCƒ“ƒXƒg[ƒ‹‚É¸”s‚µ‚Ü‚µ‚½"
-                    Write-Warn "è“®‚ÅƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚­‚¾‚³‚¢: npm install -g claude-code"
+                    Write-Err "Claude Code ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã«å¤±æ•—ã—ã¾ã—ãŸ"
+                    Write-Warn "æ‰‹å‹•ã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ãã ã•ã„: & npm.cmd install -g claude-code"
                     exit 1
                 }
             } catch {
-                Write-Err "Claude Code ‚ÌƒCƒ“ƒXƒg[ƒ‹‚É¸”s‚µ‚Ü‚µ‚½: $_"
-                Write-Warn "è“®‚ÅƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚­‚¾‚³‚¢: npm install -g claude-code"
+                Write-Err "Claude Code ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã«å¤±æ•—ã—ã¾ã—ãŸ: $_"
+                Write-Warn "æ‰‹å‹•ã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ãã ã•ã„: & npm.cmd install -g claude-code"
                 exit 1
             }
         }
     }
 
-    # ”FØŠm”FiƒCƒ“ƒXƒg[ƒ‹‚É©“®‚Å”FØƒvƒƒZƒX‚ªÀs‚³‚ê‚éj
+    # èªè¨¼ç¢ºèªï¼ˆã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«æ™‚ã«è‡ªå‹•ã§èªè¨¼ãƒ—ãƒ­ã‚»ã‚¹ãŒå®Ÿè¡Œã•ã‚Œã‚‹ï¼‰
     if (-not (Get-InstallState -Tool "claude_code" -Key "authenticated")) {
-        # claude doctor ƒRƒ}ƒ“ƒh‚Å”FØŠm”F
+        # claude doctor ã‚³ãƒãƒ³ãƒ‰ã§èªè¨¼ç¢ºèª
         try {
             $null = claude doctor 2>&1
             if ($LASTEXITCODE -eq 0) {
                 Update-InstallState -Tool "claude_code" -Key "authenticated" -Value $true
-                Write-Success "Claude Code ”FØŠ®—¹"
+                Write-Success "Claude Code èªè¨¼å®Œäº†"
             } else {
-                Write-Warn "Claude Code ‚Ì”FØ‚ğŠ®—¹‚µ‚Ä‚­‚¾‚³‚¢"
-                Write-Host "  ƒRƒ}ƒ“ƒh: claude doctor" -ForegroundColor Cyan
+                Write-Warn "Claude Code ã®èªè¨¼ã‚’å®Œäº†ã—ã¦ãã ã•ã„"
+                Write-Host "  ã‚³ãƒãƒ³ãƒ‰: claude doctor" -ForegroundColor Cyan
             }
         } catch {
-            Write-Warn "Claude Code ‚Ì”FØŠm”F‚ğƒXƒLƒbƒv‚µ‚Ü‚µ‚½"
+            Write-Warn "Claude Code ã®èªè¨¼ç¢ºèªã‚’ã‚¹ã‚­ãƒƒãƒ—ã—ã¾ã—ãŸ"
         }
     }
 }
 
 function Install-SupabaseCLI {
     if ((Get-InstallState -Tool "supabase_cli" -Key "installed") -and (Get-InstallState -Tool "supabase_cli" -Key "authenticated")) {
-        Write-Info "Supabase CLI ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹E”FØÏ‚İ‚Å‚· (ƒXƒLƒbƒv)"
+        Write-Info "Supabase CLI ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ»èªè¨¼æ¸ˆã¿ã§ã™ (ã‚¹ã‚­ãƒƒãƒ—)"
         return
     }
 
-    Write-Section "Supabase CLI ‚ÌƒCƒ“ƒXƒg[ƒ‹"
+    Write-Section "Supabase CLI ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«"
 
-    # ƒCƒ“ƒXƒg[ƒ‹Šm”F
+    # ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ç¢ºèª
     if (-not (Get-InstallState -Tool "supabase_cli" -Key "installed")) {
         if (Get-Command supabase -ErrorAction SilentlyContinue) {
-            Write-Info "Supabase CLI ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·"
+            Write-Info "Supabase CLI ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™"
             Update-InstallState -Tool "supabase_cli" -Key "installed" -Value $true
         } else {
-            npm install -g supabase
+            & npm.cmd install -g supabase
             Update-InstallState -Tool "supabase_cli" -Key "installed" -Value $true
-            Write-Success "Supabase CLI ƒCƒ“ƒXƒg[ƒ‹Š®—¹"
+            Write-Success "Supabase CLI ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Œäº†"
         }
     }
 
-    # ƒAƒJƒEƒ“ƒgì¬‘£i‚Æ”FØ
+    # ã‚¢ã‚«ã‚¦ãƒ³ãƒˆä½œæˆä¿ƒé€²ã¨èªè¨¼
     if (-not (Get-InstallState -Tool "supabase_cli" -Key "authenticated")) {
         Write-Host "============================================================" -ForegroundColor Yellow
-        Write-Host "Supabase ƒAƒJƒEƒ“ƒg‚ğ‚¨‚¿‚Å‚·‚©H" -ForegroundColor Cyan
+        Write-Host "Supabase ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ãŠæŒã¡ã§ã™ã‹ï¼Ÿ" -ForegroundColor Cyan
         Write-Host "============================================================" -ForegroundColor Yellow
 
-        $hasAccount = Read-Host "Supabase ƒAƒJƒEƒ“ƒg‚ğ‚¨‚¿‚Å‚·‚©H (y/n)"
+        $hasAccount = Read-Host "Supabase ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ãŠæŒã¡ã§ã™ã‹ï¼Ÿ (y/n)"
 
         if ($hasAccount -ne "y") {
-            Write-Warn "Supabase ƒAƒJƒEƒ“ƒg‚ª•K—v‚Å‚·Bƒuƒ‰ƒEƒU‚ÅƒTƒCƒ“ƒAƒbƒvƒy[ƒW‚ğŠJ‚«‚Ü‚·..."
-            Write-Host "„§: uContinue with GitHubvƒ{ƒ^ƒ“‚Å GitHub ƒAƒJƒEƒ“ƒg‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢" -ForegroundColor Cyan
+            Write-Warn "Supabase ã‚¢ã‚«ã‚¦ãƒ³ãƒˆãŒå¿…è¦ã§ã™ã€‚ãƒ–ãƒ©ã‚¦ã‚¶ã§ã‚µã‚¤ãƒ³ã‚¢ãƒƒãƒ—ãƒšãƒ¼ã‚¸ã‚’é–‹ãã¾ã™..."
+            Write-Host "æ¨å¥¨: ã€ŒContinue with GitHubã€ãƒœã‚¿ãƒ³ã§ GitHub ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ä½¿ç”¨ã—ã¦ãã ã•ã„" -ForegroundColor Cyan
 
             Start-Process "https://supabase.com/dashboard/sign-up"
 
-            $confirm = Read-Host "`nƒAƒJƒEƒ“ƒgì¬‚ªŠ®—¹‚µ‚½‚ç Enter ƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢"
+            $confirm = Read-Host "`nã‚¢ã‚«ã‚¦ãƒ³ãƒˆä½œæˆãŒå®Œäº†ã—ãŸã‚‰ Enter ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ãã ã•ã„"
         }
 
-        # ”FØ
-        Write-Info "Supabase CLI ‚Ì”FØ‚ğŠJn‚µ‚Ü‚·..."
+        # èªè¨¼
+        Write-Info "Supabase CLI ã®èªè¨¼ã‚’é–‹å§‹ã—ã¾ã™..."
 
         try {
             supabase login
 
-            # ”FØŠm”F
+            # èªè¨¼ç¢ºèª
             $null = supabase projects list 2>&1
             if ($LASTEXITCODE -eq 0) {
                 Update-InstallState -Tool "supabase_cli" -Key "authenticated" -Value $true
-                Write-Success "Supabase CLI ”FØŠ®—¹"
+                Write-Success "Supabase CLI èªè¨¼å®Œäº†"
             } else {
-                Write-Err "Supabase CLI ‚Ì”FØŠm”F‚É¸”s‚µ‚Ü‚µ‚½"
+                Write-Err "Supabase CLI ã®èªè¨¼ç¢ºèªã«å¤±æ•—ã—ã¾ã—ãŸ"
                 exit 1
             }
         } catch {
-            Write-Err "Supabase CLI ‚Ì”FØ‚É¸”s‚µ‚Ü‚µ‚½"
+            Write-Err "Supabase CLI ã®èªè¨¼ã«å¤±æ•—ã—ã¾ã—ãŸ"
             exit 1
         }
     }
@@ -440,109 +459,109 @@ function Install-SupabaseCLI {
 
 function Install-SuperClaude {
     if ((Get-InstallState -Tool "super_claude" -Key "installed") -and (Get-InstallState -Tool "super_claude" -Key "mcp_servers_installed")) {
-        Write-Info "Super Claude ‚Æ MCP Servers ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹Ï‚İ‚Å‚· (ƒXƒLƒbƒv)"
+        Write-Info "Super Claude ã¨ MCP Servers ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«æ¸ˆã¿ã§ã™ (ã‚¹ã‚­ãƒƒãƒ—)"
         return
     }
 
-    Write-Section "Super Claude ‚ÌƒCƒ“ƒXƒg[ƒ‹"
+    Write-Section "Super Claude ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«"
 
-    # Super Claude ƒCƒ“ƒXƒg[ƒ‹
+    # Super Claude ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
     if (-not (Get-InstallState -Tool "super_claude" -Key "installed")) {
-        # npm Œo—R‚Å Super Claude ‚ğƒCƒ“ƒXƒg[ƒ‹
-        Write-Info "Super Claude ‚ğƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚¢‚Ü‚·..."
+        # npm çµŒç”±ã§ Super Claude ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+        Write-Info "Super Claude ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ã„ã¾ã™..."
         npm install -g @bifrost_inc/superclaude
 
-        # Claude Code ‚Ö‚Ì“‡iƒJƒXƒ^ƒ€ƒRƒ}ƒ“ƒh sc: ‚Ì“o˜^‚È‚Çj
-        Write-Info "Claude Code ‚É SuperClaude ‚ğ“‡‚µ‚Ä‚¢‚Ü‚·..."
+        # Claude Code ã¸ã®çµ±åˆï¼ˆã‚«ã‚¹ã‚¿ãƒ ã‚³ãƒãƒ³ãƒ‰ sc: ã®ç™»éŒ²ãªã©ï¼‰
+        Write-Info "Claude Code ã« SuperClaude ã‚’çµ±åˆã—ã¦ã„ã¾ã™..."
         try {
             $integrationResult = superclaude install 2>&1
             if ($LASTEXITCODE -eq 0) {
-                Write-Success "SuperClaude ‚Ì Claude Code “‡Š®—¹"
+                Write-Success "SuperClaude ã® Claude Code çµ±åˆå®Œäº†"
             } else {
-                Write-Warn "SuperClaude ‚Ì“‡ˆ—‚ÅŒx‚ª”­¶‚µ‚Ü‚µ‚½"
-                Write-Host "  Œã‚Åè“®Às‚µ‚Ä‚­‚¾‚³‚¢: superclaude install" -ForegroundColor Yellow
+                Write-Warn "SuperClaude ã®çµ±åˆå‡¦ç†ã§è­¦å‘ŠãŒç™ºç”Ÿã—ã¾ã—ãŸ"
+                Write-Host "  å¾Œã§æ‰‹å‹•å®Ÿè¡Œã—ã¦ãã ã•ã„: superclaude install" -ForegroundColor Yellow
             }
         } catch {
-            Write-Warn "SuperClaude ‚Ì“‡ˆ—‚É¸”s‚µ‚Ü‚µ‚½"
-            Write-Host "  Œã‚Åè“®Às‚µ‚Ä‚­‚¾‚³‚¢: superclaude install" -ForegroundColor Yellow
-            Write-Host "  “‡Œã‚Í /sc: ƒRƒ}ƒ“ƒh‚ª Claude Code ‚Åg—p‚Å‚«‚Ü‚·" -ForegroundColor Cyan
+            Write-Warn "SuperClaude ã®çµ±åˆå‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸ"
+            Write-Host "  å¾Œã§æ‰‹å‹•å®Ÿè¡Œã—ã¦ãã ã•ã„: superclaude install" -ForegroundColor Yellow
+            Write-Host "  çµ±åˆå¾Œã¯ /sc: ã‚³ãƒãƒ³ãƒ‰ãŒ Claude Code ã§ä½¿ç”¨ã§ãã¾ã™" -ForegroundColor Cyan
         }
 
         Update-InstallState -Tool "super_claude" -Key "installed" -Value $true
-        Write-Success "Super Claude ƒCƒ“ƒXƒg[ƒ‹Š®—¹"
+        Write-Success "Super Claude ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Œäº†"
     }
 
-    # MCP Servers ‚Í superclaude install ƒRƒ}ƒ“ƒh‚Å©“®ƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚é
+    # MCP Servers ã¯ superclaude install ã‚³ãƒãƒ³ãƒ‰ã§è‡ªå‹•ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã‚‹
     Update-InstallState -Tool "super_claude" -Key "mcp_servers_installed" -Value $true
 }
 
 function Install-PlaywrightBrowsers {
     if (Get-InstallState -Tool "playwright_mcp" -Key "installed") {
-        Write-Info "Playwright ƒuƒ‰ƒEƒU‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚· (ƒXƒLƒbƒv)"
+        Write-Info "Playwright ãƒ–ãƒ©ã‚¦ã‚¶ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™ (ã‚¹ã‚­ãƒƒãƒ—)"
         return
     }
 
-    Write-Section "Playwright ƒuƒ‰ƒEƒU‚ÌƒCƒ“ƒXƒg[ƒ‹"
+    Write-Section "Playwright ãƒ–ãƒ©ã‚¦ã‚¶ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«"
     Write-Host "============================================================" -ForegroundColor Yellow
-    Write-Host "Playwright ƒuƒ‰ƒEƒU (Chromium, Firefox, WebKit) ‚ğƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·" -ForegroundColor Cyan
+    Write-Host "Playwright ãƒ–ãƒ©ã‚¦ã‚¶ (Chromium, Firefox, WebKit) ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™" -ForegroundColor Cyan
     Write-Host "============================================================" -ForegroundColor Yellow
 
-    # Playwright ƒuƒ‰ƒEƒU‚ÌƒCƒ“ƒXƒg[ƒ‹
-    Write-Info "Playwright ƒuƒ‰ƒEƒU‚ğƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚¢‚Ü‚·..."
+    # Playwright ãƒ–ãƒ©ã‚¦ã‚¶ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+    Write-Info "Playwright ãƒ–ãƒ©ã‚¦ã‚¶ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ã„ã¾ã™..."
     npx playwright install
 
     Update-InstallState -Tool "playwright_mcp" -Key "installed" -Value $true
-    Write-Success "Playwright ƒuƒ‰ƒEƒUƒCƒ“ƒXƒg[ƒ‹Š®—¹"
+    Write-Success "Playwright ãƒ–ãƒ©ã‚¦ã‚¶ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Œäº†"
 }
 
 function Install-CursorIDE {
     if (Get-InstallState -Tool "cursor_ide" -Key "installed") {
-        Write-Info "Cursor IDE ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚· (ƒXƒLƒbƒv)"
+        Write-Info "Cursor IDE ã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™ (ã‚¹ã‚­ãƒƒãƒ—)"
         return
     }
 
-    Write-Section "Cursor IDE ‚ÌƒCƒ“ƒXƒg[ƒ‹"
+    Write-Section "Cursor IDE ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«"
 
-    Write-Host "Cursor IDE ‚Íè“®‚ÅƒCƒ“ƒXƒg[ƒ‹‚·‚é•K—v‚ª‚ ‚è‚Ü‚·" -ForegroundColor Yellow
-    Write-Host "ƒuƒ‰ƒEƒU‚Åƒ_ƒEƒ“ƒ[ƒhƒy[ƒW‚ğŠJ‚«‚Ü‚·..." -ForegroundColor Cyan
+    Write-Host "Cursor IDE ã¯æ‰‹å‹•ã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™" -ForegroundColor Yellow
+    Write-Host "ãƒ–ãƒ©ã‚¦ã‚¶ã§ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒšãƒ¼ã‚¸ã‚’é–‹ãã¾ã™..." -ForegroundColor Cyan
 
     Start-Process "https://cursor.sh"
 
-    $confirm = Read-Host "`nCursor IDE ‚ÌƒCƒ“ƒXƒg[ƒ‹‚ªŠ®—¹‚µ‚½‚ç Enter ƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢"
+    $confirm = Read-Host "`nCursor IDE ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãŒå®Œäº†ã—ãŸã‚‰ Enter ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ãã ã•ã„"
 
     Update-InstallState -Tool "cursor_ide" -Key "installed" -Value $true
-    Write-Success "Cursor IDE ƒCƒ“ƒXƒg[ƒ‹Šm”FŠ®—¹"
+    Write-Success "Cursor IDE ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ç¢ºèªå®Œäº†"
 }
 
 ################################################################################
-# ƒƒCƒ“Àsƒtƒ[
+# ãƒ¡ã‚¤ãƒ³å®Ÿè¡Œãƒ•ãƒ­ãƒ¼
 ################################################################################
 
 function Main {
-    Write-Section "AIŠJ”­ŠÂ‹«©“®ƒZƒbƒgƒAƒbƒv (Windows)"
-    Write-Host "‚±‚ÌƒXƒNƒŠƒvƒg‚ÍˆÈ‰º‚Ìƒc[ƒ‹‚ğƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·:" -ForegroundColor Cyan
-    Write-Host "  1. winget (ƒpƒbƒP[ƒWƒ}ƒl[ƒWƒƒ[)" -ForegroundColor Cyan
-    Write-Host "  2. Node.js (JavaScriptÀsŠÂ‹«)" -ForegroundColor Cyan
-    Write-Host "  3. Git (ƒo[ƒWƒ‡ƒ“ŠÇ—)" -ForegroundColor Cyan
-    Write-Host "  4. GitHub CLI (GitHub‘€ì)" -ForegroundColor Cyan
-    Write-Host "  5. Netlify CLI (ƒfƒvƒƒC)" -ForegroundColor Cyan
-    Write-Host "  6. Claude Code (AIŠJ”­ƒc[ƒ‹)" -ForegroundColor Cyan
-    Write-Host "  7. Supabase CLI (ƒf[ƒ^ƒx[ƒX)" -ForegroundColor Cyan
-    Write-Host "  8. Super Claude + MCP Servers (Šg’£‹@”\)" -ForegroundColor Cyan
-    Write-Host "  9. Playwright ƒuƒ‰ƒEƒU (E2EƒeƒXƒg)" -ForegroundColor Cyan
-    Write-Host " 10. Cursor IDE (“‡ŠJ”­ŠÂ‹«)" -ForegroundColor Cyan
+    Write-Section "AIé–‹ç™ºç’°å¢ƒè‡ªå‹•ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ— (Windows)"
+    Write-Host "ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã¯ä»¥ä¸‹ã®ãƒ„ãƒ¼ãƒ«ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™:" -ForegroundColor Cyan
+    Write-Host "  1. winget (ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼)" -ForegroundColor Cyan
+    Write-Host "  2. Node.js (JavaScriptå®Ÿè¡Œç’°å¢ƒ)" -ForegroundColor Cyan
+    Write-Host "  3. Git (ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç®¡ç†)" -ForegroundColor Cyan
+    Write-Host "  4. GitHub CLI (GitHubæ“ä½œ)" -ForegroundColor Cyan
+    Write-Host "  5. Netlify CLI (ãƒ‡ãƒ—ãƒ­ã‚¤)" -ForegroundColor Cyan
+    Write-Host "  6. Claude Code (AIé–‹ç™ºãƒ„ãƒ¼ãƒ«)" -ForegroundColor Cyan
+    Write-Host "  7. Supabase CLI (ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹)" -ForegroundColor Cyan
+    Write-Host "  8. Super Claude + MCP Servers (æ‹¡å¼µæ©Ÿèƒ½)" -ForegroundColor Cyan
+    Write-Host "  9. Playwright ãƒ–ãƒ©ã‚¦ã‚¶ (E2Eãƒ†ã‚¹ãƒˆ)" -ForegroundColor Cyan
+    Write-Host " 10. Cursor IDE (çµ±åˆé–‹ç™ºç’°å¢ƒ)" -ForegroundColor Cyan
     Write-Host ""
 
-    $confirm = Read-Host "ƒCƒ“ƒXƒg[ƒ‹‚ğŠJn‚µ‚Ü‚·‚©H (y/n)"
+    $confirm = Read-Host "ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã‚’é–‹å§‹ã—ã¾ã™ã‹ï¼Ÿ (y/n)"
     if ($confirm -ne "y") {
-        Write-Warn "ƒCƒ“ƒXƒg[ƒ‹‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½"
+        Write-Warn "ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã—ãŸ"
         exit 0
     }
 
-    # ó‘Ôƒtƒ@ƒCƒ‹‰Šú‰»
+    # çŠ¶æ…‹ãƒ•ã‚¡ã‚¤ãƒ«åˆæœŸåŒ–
     Initialize-State
 
-    # ƒCƒ“ƒXƒg[ƒ‹Às
+    # ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Ÿè¡Œ
     Install-Winget
     Install-Node
     Install-Git
@@ -554,18 +573,18 @@ function Main {
     Install-PlaywrightBrowsers
     Install-CursorIDE
 
-    # Š®—¹ƒƒbƒZ[ƒW
-    Write-Section "ƒZƒbƒgƒAƒbƒvŠ®—¹I"
-    Write-Success "‚·‚×‚Ä‚Ìƒc[ƒ‹‚ÌƒCƒ“ƒXƒg[ƒ‹‚ªŠ®—¹‚µ‚Ü‚µ‚½I"
+    # å®Œäº†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+    Write-Section "ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—å®Œäº†ï¼"
+    Write-Success "ã™ã¹ã¦ã®ãƒ„ãƒ¼ãƒ«ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãŒå®Œäº†ã—ã¾ã—ãŸï¼"
     Write-Host ""
-    Write-Host "Ÿ‚ÌƒXƒeƒbƒv:" -ForegroundColor Cyan
-    Write-Host "  1. PowerShell ‚ğÄ‹N“®‚µ‚Ä‚­‚¾‚³‚¢" -ForegroundColor Cyan
-    Write-Host "  2. Cursor IDE ‚ğ‹N“®‚µ‚Ä‚­‚¾‚³‚¢" -ForegroundColor Cyan
-    Write-Host "  3. ƒ}ƒjƒ…ƒAƒ‹‚Ì1Í‚©‚çŠwK‚ğŠJn‚Å‚«‚Ü‚·" -ForegroundColor Cyan
+    Write-Host "æ¬¡ã®ã‚¹ãƒ†ãƒƒãƒ—:" -ForegroundColor Cyan
+    Write-Host "  1. PowerShell ã‚’å†èµ·å‹•ã—ã¦ãã ã•ã„" -ForegroundColor Cyan
+    Write-Host "  2. Cursor IDE ã‚’èµ·å‹•ã—ã¦ãã ã•ã„" -ForegroundColor Cyan
+    Write-Host "  3. ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ã®1ç« ã‹ã‚‰å­¦ç¿’ã‚’é–‹å§‹ã§ãã¾ã™" -ForegroundColor Cyan
     Write-Host ""
-    Write-Host "ó‘Ôƒtƒ@ƒCƒ‹: $StateFile" -ForegroundColor Yellow
-    Write-Host "  (‚±‚Ìƒtƒ@ƒCƒ‹‚ğíœ‚·‚é‚ÆAÄƒCƒ“ƒXƒg[ƒ‹‚ª•K—v‚É‚È‚è‚Ü‚·)" -ForegroundColor Yellow
+    Write-Host "çŠ¶æ…‹ãƒ•ã‚¡ã‚¤ãƒ«: $StateFile" -ForegroundColor Yellow
+    Write-Host "  (ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‰Šé™¤ã™ã‚‹ã¨ã€å†ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãŒå¿…è¦ã«ãªã‚Šã¾ã™)" -ForegroundColor Yellow
 }
 
-# ƒXƒNƒŠƒvƒgÀs
+# ã‚¹ã‚¯ãƒªãƒ—ãƒˆå®Ÿè¡Œ
 Main
