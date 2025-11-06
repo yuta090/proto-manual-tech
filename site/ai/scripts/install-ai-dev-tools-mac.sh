@@ -531,41 +531,48 @@ install_github_cli() {
         print_success "GitHub CLI は既にインストールされています"
     fi
 
-    # GitHub認証とSSH鍵の自動設定
+    # GitHub認証とSSH鍵の自動設定（完全自動化版）
     echo ""
     print_warning "${LOCK} GitHub 認証が必要です"
     echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-    echo -e "${WHITE}GitHub CLI が以下を自動で行います:${RESET}\n"
+    echo -e "${WHITE}${BOLD}📋 これから行うこと:${RESET}\n"
+    echo -e "  ${GREEN}1️⃣${RESET}  ブラウザが自動で開きます"
+    echo -e "  ${GREEN}2️⃣${RESET}  ${YELLOW}8桁のコード${RESET}が画面に表示されます ${DIM}(例: ABCD-1234)${RESET}"
+    echo -e "  ${GREEN}3️⃣${RESET}  ブラウザでそのコードを入力してください"
+    echo -e "  ${GREEN}4️⃣${RESET}  ${YELLOW}「Authorize」${RESET}${DIM}(承認する)${RESET} ボタンをクリック"
+    echo -e "  ${GREEN}5️⃣${RESET}  認証完了！\n"
+    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+    echo ""
+    echo -e "${WHITE}GitHub CLI が以下を自動で行います:${RESET}"
     echo -e "  ${GREEN}✓${RESET} SSH鍵の自動生成"
     echo -e "  ${GREEN}✓${RESET} GitHubへの鍵登録"
-    echo -e "  ${GREEN}✓${RESET} Git認証情報の設定\n"
-    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-
-    echo ""
-    print_info "以下のコマンドを実行します: gh auth login"
-    echo -e "${YELLOW}手順:${RESET}"
-    echo -e "  ${YELLOW}1.${RESET} ${GREEN}GitHub.com${RESET} を選択"
-    echo -e "  ${YELLOW}2.${RESET} ${GREEN}HTTPS${RESET} を選択"
-    echo -e "  ${YELLOW}3.${RESET} ${GREEN}Login with a web browser${RESET} を選択"
-    echo -e "  ${YELLOW}4.${RESET} 表示されるコードをコピー"
-    echo -e "  ${YELLOW}5.${RESET} ブラウザで GitHub にログインして認証"
+    echo -e "  ${GREEN}✓${RESET} Git認証情報の設定"
     echo ""
 
     echo -ne "${CYAN}GitHub 認証を開始しますか? (y/N): ${RESET}"
     read -r response
 
     if [[ "$response" =~ ^[Yy]$ ]]; then
-        gh auth login
+        echo ""
+        print_info "${YELLOW}⏳ 3秒後にブラウザが開きます...${RESET}"
+        sleep 3
+
+        # 完全自動化された認証（英語プロンプトなし）
+        gh auth login --web --git-protocol https --hostname github.com
 
         if gh auth status &> /dev/null; then
-            print_success "GitHub 認証完了！SSH鍵も自動で設定されました"
+            echo ""
+            print_success "✅ GitHub 認証完了！SSH鍵も自動で設定されました"
             update_state git ssh_key True
         else
-            print_error "GitHub 認証に失敗しました"
+            echo ""
+            print_error "❌ GitHub 認証に失敗しました"
+            echo -e "${CYAN}💡 ヒント: ブラウザでコードを正しく入力しましたか？${RESET}"
+            echo -e "${CYAN}もう一度試す場合は、このスクリプトを再実行してください${RESET}"
             exit 1
         fi
     else
-        print_info "後で 'gh auth login' コマンドを実行して認証してください"
+        print_info "後で 'gh auth login --web' コマンドを実行して認証してください"
     fi
 }
 

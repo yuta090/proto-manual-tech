@@ -260,11 +260,26 @@ function Install-GitHubCLI {
         }
     }
 
-    # アカウント作成促進と認証
+    # アカウント作成促進と認証（完全自動化版）
     if (-not (Get-InstallState -Tool "github_cli" -Key "authenticated")) {
-        Write-Host "============================================================" -ForegroundColor Yellow
-        Write-Host "GitHub アカウントをお持ちですか？" -ForegroundColor Cyan
-        Write-Host "============================================================" -ForegroundColor Yellow
+        Write-Host ""
+        Write-Warn "[LOCK] GitHub 認証が必要です"
+        Write-Host "============================================================" -ForegroundColor Cyan
+        Write-Host "[INFO] これから行うこと:" -ForegroundColor White
+        Write-Host ""
+        Write-Host "  [>>>] 1 ブラウザが自動で開きます" -ForegroundColor Green
+        Write-Host "  [>>>] 2 8桁のコード が画面に表示されます (例: ABCD-1234)" -ForegroundColor Green
+        Write-Host "  [>>>] 3 ブラウザでそのコードを入力してください" -ForegroundColor Green
+        Write-Host "  [>>>] 4 「Authorize」(承認する) ボタンをクリック" -ForegroundColor Green
+        Write-Host "  [>>>] 5 認証完了！" -ForegroundColor Green
+        Write-Host ""
+        Write-Host "============================================================" -ForegroundColor Cyan
+        Write-Host ""
+        Write-Host "GitHub CLI が以下を自動で行います:" -ForegroundColor White
+        Write-Host "  [OK] SSH鍵の自動生成" -ForegroundColor Green
+        Write-Host "  [OK] GitHubへの鍵登録" -ForegroundColor Green
+        Write-Host "  [OK] Git認証情報の設定" -ForegroundColor Green
+        Write-Host ""
 
         $hasAccount = Read-Host "GitHub アカウントをお持ちですか？ (y/n)"
 
@@ -277,16 +292,39 @@ function Install-GitHubCLI {
             $confirm = Read-Host "`nアカウント作成が完了したら Enter キーを押してください"
         }
 
-        # 認証
-        Write-Info "GitHub CLI の認証を開始します..."
+        # 認証開始の確認
+        $response = Read-Host "`nGitHub 認証を開始しますか? (y/N)"
 
-        try {
-            gh auth login
-            Update-InstallState -Tool "github_cli" -Key "authenticated" -Value $true
-            Write-Success "GitHub CLI 認証完了"
-        } catch {
-            Write-Err "GitHub CLI の認証に失敗しました"
-            exit 1
+        if ($response -eq "y" -or $response -eq "Y") {
+            Write-Host ""
+            Write-Info "[WARN] 3秒後にブラウザが開きます..."
+            Start-Sleep -Seconds 3
+
+            # 完全自動化された認証（英語プロンプトなし）
+            try {
+                gh auth login --web --git-protocol https --hostname github.com
+
+                # 認証確認
+                $authStatus = gh auth status 2>&1
+                if ($LASTEXITCODE -eq 0) {
+                    Write-Host ""
+                    Write-Success "[OK] GitHub 認証完了！SSH鍵も自動で設定されました"
+                    Update-InstallState -Tool "github_cli" -Key "authenticated" -Value $true
+                } else {
+                    Write-Host ""
+                    Write-Err "[ERROR] GitHub 認証に失敗しました"
+                    Write-Host "[INFO] ヒント: ブラウザでコードを正しく入力しましたか？" -ForegroundColor Cyan
+                    Write-Host "[INFO] もう一度試す場合は、このスクリプトを再実行してください" -ForegroundColor Cyan
+                    exit 1
+                }
+            } catch {
+                Write-Host ""
+                Write-Err "[ERROR] GitHub 認証に失敗しました"
+                Write-Host "[INFO] ヒント: ブラウザでコードを正しく入力しましたか？" -ForegroundColor Cyan
+                exit 1
+            }
+        } else {
+            Write-Info "後で 'gh auth login --web' コマンドを実行して認証してください"
         }
     }
 }

@@ -1073,16 +1073,87 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
   </div>
 </details>
 
-<details style="margin-bottom: 16px; padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
-  <summary style="font-weight: bold; color: #dc2626; cursor: pointer;">Q7. `gh auth login` が進まない</summary>
-  <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 68, 68, 0.2); color: #4b5563;">
-    <p><strong>原因:</strong> ブラウザでのログインがまだ完了していない</p>
-    <p style="margin-top: 8px;"><strong>解決方法:</strong></p>
-    <ol style="margin-left: 20px;">
-      <li>開いたブラウザでログイン</li>
-      <li>ターミナルに戻って Enter を押す</li>
-      <li>うまくいかないときは、もう一度 `gh auth login` を実行</li>
-    </ol>
+<details style="margin-bottom: 16px; padding: 16px; background: rgba(34, 197, 94, 0.05); border-radius: 8px;">
+  <summary style="font-weight: bold; color: #16a34a; cursor: pointer;">💡 Q7. GitHub CLI 認証の手順を詳しく知りたい（完全図解）</summary>
+  <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(34, 197, 94, 0.2); color: #4b5563;">
+    <p style="margin-bottom: 16px;"><strong>✨ 最新のスクリプトでは完全自動化されています！</strong></p>
+
+    <div style="background: linear-gradient(135deg, rgba(219, 234, 254, 0.8) 0%, rgba(191, 219, 254, 0.6) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 20px; margin: 16px 0;">
+      <p style="margin: 0 0 12px 0; font-weight: bold; color: #1e40af; font-size: 1.1em;">🎯 英語プロンプトは一切表示されません！</p>
+      <p style="margin: 0 0 8px 0; color: #1e3a8a;">スクリプトが自動で <code style="background: rgba(59, 130, 246, 0.2); padding: 2px 6px; border-radius: 4px;">--web --git-protocol https</code> オプションを使用するため、複雑な質問に答える必要はありません。</p>
+    </div>
+
+    <div style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 2px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 24px; margin: 20px 0;">
+      <p style="margin: 0 0 16px 0; font-weight: bold; color: #166534; font-size: 1.2em; text-align: center;">📋 認証の流れ（5ステップ）</p>
+
+      <!-- ステップ1 -->
+      <div style="background: linear-gradient(135deg, rgba(254, 243, 199, 0.8) 0%, rgba(253, 230, 138, 0.6) 100%); border-left: 4px solid #eab308; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+        <p style="margin: 0 0 8px 0; font-weight: bold; color: #854d0e;">1️⃣ ターミナルに8桁のコードが表示されます</p>
+        <div style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-family: monospace;">
+First copy your one-time code: <span style="color: #fbbf24; font-weight: bold;">ABCD-1234</span>
+        </div>
+        <p style="margin: 8px 0 0 0; color: #78350f; font-size: 0.95em;">💡 このコードは<strong>自動でコピー</strong>されます（手動でコピーも可能）</p>
+      </div>
+
+      <!-- ステップ2 -->
+      <div style="background: linear-gradient(135deg, rgba(219, 234, 254, 0.8) 0%, rgba(191, 219, 254, 0.6) 100%); border-left: 4px solid #3b82f6; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+        <p style="margin: 0 0 8px 0; font-weight: bold; color: #1e40af;">2️⃣ ブラウザが自動で開きます</p>
+        <p style="margin: 0; color: #1e3a8a; font-size: 0.95em;">GitHub の認証ページ（https://github.com/login/device）が表示されます</p>
+      </div>
+
+      <!-- ステップ3 -->
+      <div style="background: linear-gradient(135deg, rgba(240, 253, 244, 0.8) 0%, rgba(220, 252, 231, 0.6) 100%); border-left: 4px solid #22c55e; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+        <p style="margin: 0 0 8px 0; font-weight: bold; color: #15803d;">3️⃣ コードを入力欄に貼り付けます</p>
+        <div style="background: rgba(255, 255, 255, 0.9); padding: 12px; border-radius: 6px; margin: 8px 0; border: 2px dashed #22c55e;">
+          <p style="margin: 0 0 4px 0; font-size: 0.9em; color: #166534;">入力欄:</p>
+          <div style="background: white; border: 2px solid #3b82f6; padding: 8px; border-radius: 4px; font-family: monospace; color: #1e293b; text-align: center;">
+            ABCD-1234
+          </div>
+        </div>
+        <p style="margin: 8px 0 0 0; color: #166534; font-size: 0.95em;">💡 <strong>Ctrl+V</strong>（Windows）または <strong>Cmd+V</strong>（Mac）で貼り付け</p>
+      </div>
+
+      <!-- ステップ4 -->
+      <div style="background: linear-gradient(135deg, rgba(243, 232, 255, 0.8) 0%, rgba(233, 213, 255, 0.6) 100%); border-left: 4px solid #a855f7; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+        <p style="margin: 0 0 8px 0; font-weight: bold; color: #6b21a8;">4️⃣ GitHubでログインして「Authorize」をクリック</p>
+        <p style="margin: 0 0 8px 0; color: #581c87; font-size: 0.95em;">既にログイン済みの場合は、すぐに承認画面が表示されます</p>
+        <div style="background: rgba(255, 255, 255, 0.9); padding: 12px; border-radius: 6px; margin: 8px 0; text-align: center;">
+          <div style="background: #22c55e; color: white; padding: 12px 24px; border-radius: 6px; display: inline-block; font-weight: bold;">
+            ✓ Authorize GitHub CLI
+          </div>
+        </div>
+        <p style="margin: 8px 0 0 0; color: #6b21a8; font-size: 0.95em;">⚠️ 「Authorize」= 「承認する」という意味です</p>
+      </div>
+
+      <!-- ステップ5 -->
+      <div style="background: linear-gradient(135deg, rgba(209, 250, 229, 0.8) 0%, rgba(167, 243, 208, 0.6) 100%); border-left: 4px solid #10b981; padding: 16px; border-radius: 8px;">
+        <p style="margin: 0 0 8px 0; font-weight: bold; color: #065f46;">5️⃣ 認証完了！</p>
+        <div style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; margin: 8px 0; font-family: monospace;">
+<span style="color: #10b981;">✓</span> Authentication complete.
+<span style="color: #10b981;">✓</span> Logged in as <span style="color: #3b82f6;">your-username</span>
+        </div>
+        <p style="margin: 8px 0 0 0; color: #065f46; font-size: 0.95em;">✨ ターミナルに戻ると自動的に次のステップに進みます</p>
+      </div>
+    </div>
+
+    <div style="background: rgba(251, 191, 36, 0.1); border-left: 4px solid #f59e0b; padding: 16px; margin-top: 20px; border-radius: 8px;">
+      <p style="margin: 0 0 8px 0; font-weight: bold; color: #92400e;">⚠️ よくあるトラブル</p>
+      <ul style="margin: 8px 0 0 20px; color: #78350f;">
+        <li style="margin-bottom: 8px;"><strong>ブラウザが開かない場合:</strong> 手動で https://github.com/login/device にアクセスしてコードを入力</li>
+        <li style="margin-bottom: 8px;"><strong>コードの有効期限切れ:</strong> スクリプトを再実行して新しいコードを取得</li>
+        <li><strong>「Invalid code」エラー:</strong> コードを正確に入力したか確認（ハイフンも含む）</li>
+      </ul>
+    </div>
+
+    <div style="background: linear-gradient(135deg, rgba(219, 234, 254, 0.6) 0%, rgba(191, 219, 254, 0.4) 100%); border: 2px solid rgba(59, 130, 246, 0.4); padding: 16px; margin-top: 20px; border-radius: 8px;">
+      <p style="margin: 0 0 8px 0; font-weight: bold; color: #1e40af;">💡 認証後に自動で設定されること</p>
+      <ul style="margin: 8px 0 0 20px; color: #1e3a8a;">
+        <li style="margin-bottom: 6px;">✓ SSH鍵の自動生成</li>
+        <li style="margin-bottom: 6px;">✓ GitHubアカウントへのSSH鍵登録</li>
+        <li>✓ Git認証情報の自動設定</li>
+      </ul>
+      <p style="margin: 12px 0 0 0; color: #3b82f6; font-weight: bold;">これで GitHub へのpush/pull が自動でできるようになります！</p>
+    </div>
   </div>
 </details>
 
