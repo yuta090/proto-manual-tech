@@ -206,9 +206,9 @@ function Run-Diagnostics {
     }
 
     # claude-code確認
-    Write-Host "[診断] claude-code パッケージ: " -NoNewline
+    Write-Host "[診断] @anthropic-ai/claude-code パッケージ: " -NoNewline
     try {
-        $claudePackage = npm list -g claude-code --depth=0 2>$null | Select-String "claude-code"
+        $claudePackage = npm list -g @anthropic-ai/claude-code --depth=0 2>$null | Select-String "@anthropic-ai/claude-code"
         if ($claudePackage) {
             Write-Host "インストール済み" -ForegroundColor Green
         } else {
@@ -246,7 +246,7 @@ function Run-Diagnostics {
                     Write-Host "  [WARN] PATHが正しく設定されていない可能性があります" -ForegroundColor Yellow
                 } else {
                     Write-Host "  [ERROR] claude.cmd が見つかりません" -ForegroundColor Red
-                    Write-Host "  [INFO] 再インストールが必要かもしれません: npm install -g claude-code" -ForegroundColor Yellow
+                    Write-Host "  [INFO] 再インストールが必要かもしれません: npm install -g @anthropic-ai/claude-code" -ForegroundColor Yellow
                 }
             }
         } catch {
@@ -310,7 +310,7 @@ function Run-Diagnostics {
     Write-Host "問題がある場合:" -ForegroundColor Yellow
     Write-Host "  1. PowerShell を再起動してください" -ForegroundColor White
     Write-Host "  2. それでも解決しない場合は、以下を試してください:" -ForegroundColor White
-    Write-Host "     npm install -g claude-code" -ForegroundColor Cyan
+    Write-Host "     npm install -g @anthropic-ai/claude-code" -ForegroundColor Cyan
     Write-Host "  3. 手動でPATHを更新:" -ForegroundColor White
     Write-Host "     `$env:Path = `"`$env:APPDATA\npm;`$env:Path`"" -ForegroundColor Cyan
 }
@@ -602,7 +602,7 @@ function Install-ClaudeCode {
 
             try {
                 # npm経由でインストール
-                & npm.cmd install -g claude-code
+                npm install -g @anthropic-ai/claude-code
 
                 if ($LASTEXITCODE -eq 0) {
                     Update-InstallState -Tool "claude_code" -Key "installed" -Value $true
@@ -612,12 +612,12 @@ function Install-ClaudeCode {
                     Update-NpmGlobalPath
                 } else {
                     Write-Err "Claude Code のインストールに失敗しました"
-                    Write-Warn "手動でインストールしてください: & npm.cmd install -g claude-code"
+                    Write-Warn "手動でインストールしてください: npm install -g @anthropic-ai/claude-code"
                     exit 1
                 }
             } catch {
                 Write-Err "Claude Code のインストールに失敗しました: $_"
-                Write-Warn "手動でインストールしてください: & npm.cmd install -g claude-code"
+                Write-Warn "手動でインストールしてください: npm install -g @anthropic-ai/claude-code"
                 exit 1
             }
         }

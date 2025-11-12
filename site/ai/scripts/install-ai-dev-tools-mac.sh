@@ -592,16 +592,16 @@ install_claude_code() {
     if [[ "$(get_state claude_code installed)" == "True" ]]; then
         print_success "Claude Code は既にインストール済みです (スキップ)"
     else
-        if check_command claude-code; then
+        if check_command claude; then
             print_success "Claude Code が既にインストールされています"
             update_state claude_code installed True
         else
             print_info "Claude Code をインストール中..."
-            npm install -g claude-code &
+            npm install -g @anthropic-ai/claude-code &
             spinner $!
             wait $!
 
-            if check_command claude-code; then
+            if check_command claude; then
                 print_success "Claude Code インストール完了"
                 update_state claude_code installed True
             else
@@ -631,21 +631,21 @@ install_claude_code() {
             echo -e "${WHITE}${BOLD}Claude Code セットアップ開始${RESET}"
             echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
 
-            # claude-code を直接実行（対話型）
-            claude-code
+            # claude を直接実行（対話型）
+            claude
 
             echo ""
             echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 
             # 認証確認
-            if claude-code --version &> /dev/null; then
+            if claude --version &> /dev/null; then
                 print_success "認証成功！"
                 update_state claude_code authenticated True
             else
-                print_warning "認証をスキップしました。後で 'claude-code' コマンドを実行して認証してください"
+                print_warning "認証をスキップしました。後で 'claude' コマンドを実行して認証してください"
             fi
         else
-            print_info "後で 'claude-code' コマンドを実行して認証してください"
+            print_info "後で 'claude' コマンドを実行して認証してください"
         fi
     else
         print_success "Claude Code は既に認証済みです"
@@ -937,15 +937,15 @@ EOF
     fi
     echo ""
 
-    # claude-code チェック
+    # claude チェック
     echo -e "${CYAN}${BOLD}[診断] Claude Code:${RESET}"
-    if command -v claude-code &> /dev/null; then
+    if command -v claude &> /dev/null; then
         print_success "使用可能"
-        CLAUDE_PATH=$(which claude-code)
+        CLAUDE_PATH=$(which claude)
         print_info "  場所: ${CLAUDE_PATH}"
     else
-        print_error "claude-code コマンドが見つかりません"
-        print_info "  → npm でインストールしてください: npm install -g claude-code"
+        print_error "claude コマンドが見つかりません"
+        print_info "  → npm でインストールしてください: npm install -g @anthropic-ai/claude-code"
         print_info "  → シェルを再起動してから再度確認してください"
     fi
     echo ""
@@ -1147,7 +1147,7 @@ EOF
     print_success "全てのツールのインストールが完了しました"
     echo ""
     print_info "次のステップ:"
-    echo -e "  ${YELLOW}•${RESET} Claude Code: ${GREEN}claude-code${RESET} コマンドで起動"
+    echo -e "  ${YELLOW}•${RESET} Claude Code: ${GREEN}claude${RESET} コマンドで起動"
     echo -e "  ${YELLOW}•${RESET} Super Claude: ${GREEN}superclaude --help${RESET} でコマンド確認"
     echo -e "  ${YELLOW}•${RESET} Cursor IDE: アプリケーションフォルダから起動"
     echo -e "  ${YELLOW}•${RESET} Codex CLI: ${GREEN}codex${RESET} コマンドで起動"
