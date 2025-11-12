@@ -152,6 +152,17 @@ function Ensure-NpmShim {
     }
 }
 
+function Update-NpmGlobalPath {
+    # npmのグローバルパスを現在のセッションに追加
+    $npmGlobalPath = "$env:APPDATA\npm"
+    if (Test-Path $npmGlobalPath) {
+        if ($env:Path -notlike "*$npmGlobalPath*") {
+            $env:Path = "$npmGlobalPath;$env:Path"
+            Write-Info "npmグローバルパスを追加しました: $npmGlobalPath"
+        }
+    }
+}
+
 ################################################################################
 # インストール関数
 ################################################################################
@@ -357,11 +368,17 @@ function Install-NetlifyCLI {
             & npm.cmd install -g netlify-cli
             Update-InstallState -Tool "netlify_cli" -Key "installed" -Value $true
             Write-Success "Netlify CLI インストール完了"
+
+            # npmグローバルパスを現在のセッションに追加
+            Update-NpmGlobalPath
         }
     }
 
     # アカウント作成促進と認証
     if (-not (Get-InstallState -Tool "netlify_cli" -Key "authenticated")) {
+        # npmグローバルパスが反映されているか確認
+        Update-NpmGlobalPath
+
         # まず現在の認証状態を確認
         Write-Info "既存の認証状態を確認中..."
         $null = netlify status 2>&1
@@ -438,6 +455,9 @@ function Install-ClaudeCode {
                 if ($LASTEXITCODE -eq 0) {
                     Update-InstallState -Tool "claude_code" -Key "installed" -Value $true
                     Write-Success "Claude Code インストール完了"
+
+                    # npmグローバルパスを現在のセッションに追加
+                    Update-NpmGlobalPath
                 } else {
                     Write-Err "Claude Code のインストールに失敗しました"
                     Write-Warn "手動でインストールしてください: & npm.cmd install -g claude-code"
@@ -453,6 +473,9 @@ function Install-ClaudeCode {
 
     # 認証確認（インストール時に自動で認証プロセスが実行される）
     if (-not (Get-InstallState -Tool "claude_code" -Key "authenticated")) {
+        # npmグローバルパスが反映されているか確認
+        Update-NpmGlobalPath
+
         # claude doctor コマンドで認証確認
         try {
             $null = claude doctor 2>&1
@@ -486,6 +509,9 @@ function Install-SupabaseCLI {
             & npm.cmd install -g supabase
             Update-InstallState -Tool "supabase_cli" -Key "installed" -Value $true
             Write-Success "Supabase CLI インストール完了"
+
+            # npmグローバルパスを現在のセッションに追加
+            Update-NpmGlobalPath
         }
     }
 
@@ -494,6 +520,9 @@ function Install-SupabaseCLI {
         Write-Host "============================================================" -ForegroundColor Yellow
         Write-Host "Supabase 認証の確認" -ForegroundColor Cyan
         Write-Host "============================================================" -ForegroundColor Yellow
+
+        # npmグローバルパスが反映されているか確認
+        Update-NpmGlobalPath
 
         # まず現在の認証状態を確認
         Write-Info "既存の認証状態を確認中..."
@@ -555,6 +584,9 @@ function Install-SuperClaude {
         # npm 経由で Super Claude をインストール
         Write-Info "Super Claude をインストールしています..."
         npm install -g @bifrost_inc/superclaude
+
+        # npmグローバルパスを現在のセッションに追加
+        Update-NpmGlobalPath
 
         # Claude Code への統合（カスタムコマンド sc: の登録など）
         Write-Info "Claude Code に SuperClaude を統合しています..."
@@ -662,10 +694,19 @@ function Main {
     Write-Section "セットアップ完了！"
     Write-Success "すべてのツールのインストールが完了しました！"
     Write-Host ""
+    Write-Host "============================================================" -ForegroundColor Yellow
+    Write-Host "[WARN] 重要: PowerShell を必ず再起動してください！" -ForegroundColor Red
+    Write-Host "============================================================" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "理由: インストールしたコマンド（claude, gh, netlify など）は" -ForegroundColor White
+    Write-Host "      PowerShell を再起動しないと使用できません。" -ForegroundColor White
+    Write-Host ""
     Write-Host "次のステップ:" -ForegroundColor Cyan
-    Write-Host "  1. PowerShell を再起動してください" -ForegroundColor Cyan
-    Write-Host "  2. Cursor IDE を起動してください" -ForegroundColor Cyan
-    Write-Host "  3. マニュアルの1章から学習を開始できます" -ForegroundColor Cyan
+    Write-Host "  1. このウィンドウを閉じる" -ForegroundColor Yellow
+    Write-Host "  2. 新しい PowerShell ウィンドウを開く" -ForegroundColor Yellow
+    Write-Host "  3. 'claude doctor' コマンドで動作確認" -ForegroundColor Yellow
+    Write-Host "  4. Cursor IDE を起動" -ForegroundColor Cyan
+    Write-Host "  5. マニュアルの1章から学習開始" -ForegroundColor Cyan
     Write-Host ""
     Write-Host "状態ファイル: $StateFile" -ForegroundColor Yellow
     Write-Host "  (このファイルを削除すると、再インストールが必要になります)" -ForegroundColor Yellow
