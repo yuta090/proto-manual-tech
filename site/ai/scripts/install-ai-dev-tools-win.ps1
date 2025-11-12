@@ -7,9 +7,16 @@
 #   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 #   .\install-ai-dev-tools-win.ps1
 #
+# 診断モード:
+#   .\install-ai-dev-tools-win.ps1 -Diagnose
+#
 # 対応OS: Windows 10 / 11
 
 #Requires -Version 5.1
+
+param(
+    [switch]$Diagnose
+)
 
 ################################################################################
 # エラーハンドリング設定
@@ -161,6 +168,151 @@ function Update-NpmGlobalPath {
             Write-Info "npmグローバルパスを追加しました: $npmGlobalPath"
         }
     }
+}
+
+################################################################################
+# 診断関数
+################################################################################
+
+function Run-Diagnostics {
+    Write-Section "AI開発環境 診断モード"
+    Write-Info "インストール状態を確認します..."
+    Write-Host ""
+
+    # Node.js/npm確認
+    Write-Host "[診断] Node.js: " -NoNewline
+    if (Get-Command node -ErrorAction SilentlyContinue) {
+        $nodeVer = node --version
+        Write-Host "$nodeVer" -ForegroundColor Green
+    } else {
+        Write-Host "見つかりません" -ForegroundColor Red
+    }
+
+    Write-Host "[診断] npm: " -NoNewline
+    if (Get-Command npm -ErrorAction SilentlyContinue) {
+        $npmVer = npm --version
+        Write-Host "$npmVer" -ForegroundColor Green
+    } else {
+        Write-Host "見つかりません" -ForegroundColor Red
+    }
+
+    # npmグローバルパス確認
+    Write-Host "[診断] npm グローバルパス: " -NoNewline
+    try {
+        $npmPrefix = npm config get prefix 2>$null
+        Write-Host "$npmPrefix" -ForegroundColor Cyan
+    } catch {
+        Write-Host "取得失敗" -ForegroundColor Red
+    }
+
+    # claude-code確認
+    Write-Host "[診断] claude-code パッケージ: " -NoNewline
+    try {
+        $claudePackage = npm list -g claude-code --depth=0 2>$null | Select-String "claude-code"
+        if ($claudePackage) {
+            Write-Host "インストール済み" -ForegroundColor Green
+        } else {
+            Write-Host "見つかりません" -ForegroundColor Red
+        }
+    } catch {
+        Write-Host "確認失敗" -ForegroundColor Red
+    }
+
+    # claudeコマンド確認
+    Write-Host "[診断] claude コマンド: " -NoNewline
+    if (Get-Command claude -ErrorAction SilentlyContinue) {
+        Write-Host "使用可能" -ForegroundColor Green
+
+        # バージョン確認
+        try {
+            $claudeVersion = claude --version 2>$null
+            if ($claudeVersion) {
+                Write-Host "  バージョン: $claudeVersion" -ForegroundColor Cyan
+            }
+        } catch {
+            # バージョン取得失敗は無視
+        }
+    } else {
+        Write-Host "見つかりません" -ForegroundColor Red
+        Write-Host ""
+        Write-Host "  [INFO] claude.cmd の場所を確認中..." -ForegroundColor Yellow
+
+        try {
+            $npmPrefix = npm config get prefix 2>$null
+            if ($npmPrefix) {
+                $claudeCmd = Get-ChildItem "$npmPrefix" -Filter "claude.cmd" -ErrorAction SilentlyContinue
+                if ($claudeCmd) {
+                    Write-Host "  [OK] ファイルは存在: $($claudeCmd.FullName)" -ForegroundColor Green
+                    Write-Host "  [WARN] PATHが正しく設定されていない可能性があります" -ForegroundColor Yellow
+                } else {
+                    Write-Host "  [ERROR] claude.cmd が見つかりません" -ForegroundColor Red
+                    Write-Host "  [INFO] 再インストールが必要かもしれません: npm install -g claude-code" -ForegroundColor Yellow
+                }
+            }
+        } catch {
+            Write-Host "  [ERROR] 確認中にエラーが発生しました" -ForegroundColor Red
+        }
+    }
+
+    # その他のCLI確認
+    Write-Host "[診断] Git: " -NoNewline
+    if (Get-Command git -ErrorAction SilentlyContinue) {
+        $gitVer = git --version
+        Write-Host "$gitVer" -ForegroundColor Green
+    } else {
+        Write-Host "見つかりません" -ForegroundColor Red
+    }
+
+    Write-Host "[診断] GitHub CLI (gh): " -NoNewline
+    if (Get-Command gh -ErrorAction SilentlyContinue) {
+        $ghVer = gh --version | Select-Object -First 1
+        Write-Host "$ghVer" -ForegroundColor Green
+    } else {
+        Write-Host "見つかりません" -ForegroundColor Red
+    }
+
+    Write-Host "[診断] Netlify CLI: " -NoNewline
+    if (Get-Command netlify -ErrorAction SilentlyContinue) {
+        $netlifyVer = netlify --version 2>$null
+        Write-Host "$netlifyVer" -ForegroundColor Green
+    } else {
+        Write-Host "見つかりません" -ForegroundColor Red
+    }
+
+    Write-Host "[診断] Supabase CLI: " -NoNewline
+    if (Get-Command supabase -ErrorAction SilentlyContinue) {
+        $supabaseVer = supabase --version 2>$null
+        Write-Host "$supabaseVer" -ForegroundColor Green
+    } else {
+        Write-Host "見つかりません" -ForegroundColor Red
+    }
+
+    # PATHにnpmが含まれているか確認
+    Write-Host ""
+    Write-Host "[診断] PATH に npm グローバルパスが含まれているか: " -NoNewline
+    $npmInPath = $env:Path -split ';' | Where-Object { $_ -like "*npm*" }
+    if ($npmInPath) {
+        Write-Host "はい" -ForegroundColor Green
+        foreach ($path in $npmInPath) {
+            Write-Host "  - $path" -ForegroundColor Cyan
+        }
+    } else {
+        Write-Host "いいえ" -ForegroundColor Red
+        Write-Host "  [WARN] npmグローバルパスがPATHに含まれていません" -ForegroundColor Yellow
+        Write-Host "  [INFO] PowerShellを再起動してください" -ForegroundColor Cyan
+    }
+
+    Write-Host ""
+    Write-Host "============================================================" -ForegroundColor Cyan
+    Write-Host "診断完了" -ForegroundColor White
+    Write-Host "============================================================" -ForegroundColor Cyan
+    Write-Host ""
+    Write-Host "問題がある場合:" -ForegroundColor Yellow
+    Write-Host "  1. PowerShell を再起動してください" -ForegroundColor White
+    Write-Host "  2. それでも解決しない場合は、以下を試してください:" -ForegroundColor White
+    Write-Host "     npm install -g claude-code" -ForegroundColor Cyan
+    Write-Host "  3. 手動でPATHを更新:" -ForegroundColor White
+    Write-Host "     `$env:Path = `"`$env:APPDATA\npm;`$env:Path`"" -ForegroundColor Cyan
 }
 
 ################################################################################
@@ -691,79 +843,7 @@ function Main {
     Install-CursorIDE
 
     # インストール状態の診断
-    Write-Section "インストール診断"
-    Write-Info "コマンドの動作確認を行います..."
-    Write-Host ""
-
-    # Node.js/npm確認
-    Write-Host "[診断] Node.js: " -NoNewline
-    if (Get-Command node -ErrorAction SilentlyContinue) {
-        $nodeVer = node --version
-        Write-Host "$nodeVer" -ForegroundColor Green
-    } else {
-        Write-Host "見つかりません" -ForegroundColor Red
-    }
-
-    Write-Host "[診断] npm: " -NoNewline
-    if (Get-Command npm -ErrorAction SilentlyContinue) {
-        $npmVer = npm --version
-        Write-Host "$npmVer" -ForegroundColor Green
-    } else {
-        Write-Host "見つかりません" -ForegroundColor Red
-    }
-
-    # npmグローバルパス確認
-    Write-Host "[診断] npm グローバルパス: " -NoNewline
-    try {
-        $npmPrefix = npm config get prefix 2>$null
-        Write-Host "$npmPrefix" -ForegroundColor Cyan
-    } catch {
-        Write-Host "取得失敗" -ForegroundColor Red
-    }
-
-    # claude-code確認
-    Write-Host "[診断] claude-code パッケージ: " -NoNewline
-    try {
-        $claudePackage = npm list -g claude-code --depth=0 2>$null | Select-String "claude-code"
-        if ($claudePackage) {
-            Write-Host "インストール済み" -ForegroundColor Green
-        } else {
-            Write-Host "見つかりません" -ForegroundColor Red
-        }
-    } catch {
-        Write-Host "確認失敗" -ForegroundColor Red
-    }
-
-    # claudeコマンド確認
-    Write-Host "[診断] claude コマンド: " -NoNewline
-    if (Get-Command claude -ErrorAction SilentlyContinue) {
-        Write-Host "使用可能" -ForegroundColor Green
-    } else {
-        Write-Host "見つかりません" -ForegroundColor Red
-        Write-Host ""
-        Write-Host "  [INFO] claude.cmd の場所を確認中..." -ForegroundColor Yellow
-        $claudeCmd = Get-ChildItem "$env:APPDATA\npm" -Filter "claude.cmd" -ErrorAction SilentlyContinue
-        if ($claudeCmd) {
-            Write-Host "  [OK] ファイルは存在: $($claudeCmd.FullName)" -ForegroundColor Green
-            Write-Host "  [WARN] PATHが正しく設定されていない可能性があります" -ForegroundColor Yellow
-        } else {
-            Write-Host "  [ERROR] claude.cmd が見つかりません" -ForegroundColor Red
-        }
-    }
-
-    # PATHにnpmが含まれているか確認
-    Write-Host "[診断] PATH に npm グローバルパスが含まれているか: " -NoNewline
-    $npmInPath = $env:Path -split ';' | Where-Object { $_ -like "*npm*" }
-    if ($npmInPath) {
-        Write-Host "はい" -ForegroundColor Green
-        foreach ($path in $npmInPath) {
-            Write-Host "  - $path" -ForegroundColor Cyan
-        }
-    } else {
-        Write-Host "いいえ" -ForegroundColor Red
-    }
-
-    Write-Host ""
+    Run-Diagnostics
 
     # 完了メッセージ
     Write-Section "セットアップ完了！"
@@ -802,4 +882,10 @@ function Main {
 }
 
 # スクリプト実行
-Main
+if ($Diagnose) {
+    # 診断モード
+    Run-Diagnostics
+} else {
+    # 通常のインストールモード
+    Main
+}
