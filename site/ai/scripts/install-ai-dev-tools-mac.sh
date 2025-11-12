@@ -6,6 +6,10 @@
 # Node.js, Git, Claude Code, Super Claude, Cursor IDE, Codex CLI を
 # 順次インストールし、認証が必要な箇所では対話的に待機します。
 # 中断しても再実行で続きから再開できます。
+#
+# 診断モード:
+#   ./install-ai-dev-tools-mac.sh -d
+#   ./install-ai-dev-tools-mac.sh --diagnose
 # ============================================================================
 
 set -e  # エラーで停止
@@ -510,11 +514,6 @@ install_git() {
 install_github_cli() {
     print_section 3 "GitHub CLI のインストール"
 
-    if [[ "$(get_state git ssh_key)" == "True" ]]; then
-        print_success "GitHub 認証は既に完了しています (スキップ)"
-        return 0
-    fi
-
     if ! check_command gh; then
         print_info "GitHub CLI をインストール中..."
         npm install -g @github/gh &
@@ -529,6 +528,17 @@ install_github_cli() {
         fi
     else
         print_success "GitHub CLI は既にインストールされています"
+    fi
+
+    # 認証状態を確認
+    print_info "認証状態を確認中..."
+    if gh auth status &> /dev/null; then
+        print_success "GitHub CLI は既に認証済みです"
+        update_state git ssh_key True
+        return 0
+    elif [[ "$(get_state git ssh_key)" == "True" ]]; then
+        print_success "GitHub 認証は既に完了しています (スキップ)"
+        return 0
     fi
 
     # GitHub認証とSSH鍵の自動設定（完全自動化版）
@@ -796,8 +806,14 @@ install_supabase() {
         fi
     fi
 
-    # 認証チェック
-    if [[ "$(get_state supabase authenticated)" != "True" ]]; then
+    # 認証チェック - まず実際の認証状態を確認
+    print_info "認証状態を確認中..."
+    if supabase projects list &> /dev/null; then
+        print_success "Supabase CLI は既に認証済みです"
+        update_state supabase authenticated True
+    elif [[ "$(get_state supabase authenticated)" == "True" ]]; then
+        print_success "Supabase CLI は既に認証済みです"
+    else
         echo ""
         print_warning "${LOCK} Supabase CLI の認証"
         echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
@@ -821,8 +837,6 @@ install_supabase() {
         else
             print_info "後で 'supabase login' コマンドを実行して認証してください"
         fi
-    else
-        print_success "Supabase CLI は既に認証済みです"
     fi
 }
 
@@ -851,8 +865,14 @@ install_netlify() {
         fi
     fi
 
-    # 認証チェック
-    if [[ "$(get_state netlify authenticated)" != "True" ]]; then
+    # 認証チェック - まず実際の認証状態を確認
+    print_info "認証状態を確認中..."
+    if netlify status &> /dev/null; then
+        print_success "Netlify CLI は既に認証済みです"
+        update_state netlify authenticated True
+    elif [[ "$(get_state netlify authenticated)" == "True" ]]; then
+        print_success "Netlify CLI は既に認証済みです"
+    else
         echo ""
         print_warning "${LOCK} Netlify CLI の認証"
         echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
@@ -876,9 +896,179 @@ install_netlify() {
         else
             print_info "後で 'netlify login' コマンドを実行して認証してください"
         fi
-    else
-        print_success "Netlify CLI は既に認証済みです"
     fi
+}
+
+# ============================================================================
+# 診断モード
+# ============================================================================
+
+diagnose_mode() {
+    echo -e "${BLUE}${BOLD}"
+    cat << "EOF"
+    ╔═══════════════════════════════════════════════════════════╗
+    ║                                                           ║
+    ║          🔍  AI開発環境 診断モード  🔍                    ║
+    ║                                                           ║
+    ╚═══════════════════════════════════════════════════════════╝
+EOF
+    echo -e "${RESET}\n"
+
+    print_info "インストール状態を診断しています...\n"
+
+    # Node.js チェック
+    echo -e "${CYAN}${BOLD}[診断] Node.js:${RESET}"
+    if command -v node &> /dev/null; then
+        NODE_VERSION=$(node --version)
+        print_success "インストール済み - バージョン: ${NODE_VERSION}"
+    else
+        print_error "Node.js が見つかりません"
+        print_info "  → Homebrew でインストールしてください: brew install node"
+    fi
+    echo ""
+
+    # npm チェック
+    echo -e "${CYAN}${BOLD}[診断] npm:${RESET}"
+    if command -v npm &> /dev/null; then
+        NPM_VERSION=$(npm --version)
+        print_success "インストール済み - バージョン: ${NPM_VERSION}"
+    else
+        print_error "npm が見つかりません"
+    fi
+    echo ""
+
+    # claude-code チェック
+    echo -e "${CYAN}${BOLD}[診断] Claude Code:${RESET}"
+    if command -v claude-code &> /dev/null; then
+        print_success "使用可能"
+        CLAUDE_PATH=$(which claude-code)
+        print_info "  場所: ${CLAUDE_PATH}"
+    else
+        print_error "claude-code コマンドが見つかりません"
+        print_info "  → npm でインストールしてください: npm install -g claude-code"
+        print_info "  → シェルを再起動してから再度確認してください"
+    fi
+    echo ""
+
+    # Git チェック
+    echo -e "${CYAN}${BOLD}[診断] Git:${RESET}"
+    if command -v git &> /dev/null; then
+        GIT_VERSION=$(git --version)
+        print_success "${GIT_VERSION}"
+    else
+        print_error "Git が見つかりません"
+    fi
+    echo ""
+
+    # GitHub CLI チェック
+    echo -e "${CYAN}${BOLD}[診断] GitHub CLI (gh):${RESET}"
+    if command -v gh &> /dev/null; then
+        GH_VERSION=$(gh --version | head -n 1)
+        print_success "${GH_VERSION}"
+
+        # 認証状態チェック
+        if gh auth status &> /dev/null; then
+            print_success "  認証: 済み"
+        else
+            print_warning "  認証: 未完了"
+            print_info "  → 'gh auth login' で認証してください"
+        fi
+    else
+        print_error "GitHub CLI が見つかりません"
+        print_info "  → npm でインストールしてください: npm install -g @github/gh"
+    fi
+    echo ""
+
+    # Netlify CLI チェック
+    echo -e "${CYAN}${BOLD}[診断] Netlify CLI:${RESET}"
+    if command -v netlify &> /dev/null; then
+        NETLIFY_VERSION=$(netlify --version)
+        print_success "インストール済み - ${NETLIFY_VERSION}"
+
+        # 認証状態チェック
+        if netlify status &> /dev/null; then
+            print_success "  認証: 済み"
+        else
+            print_warning "  認証: 未完了"
+            print_info "  → 'netlify login' で認証してください"
+        fi
+    else
+        print_error "Netlify CLI が見つかりません"
+        print_info "  → npm でインストールしてください: npm install -g netlify-cli"
+    fi
+    echo ""
+
+    # Supabase CLI チェック
+    echo -e "${CYAN}${BOLD}[診断] Supabase CLI:${RESET}"
+    if command -v supabase &> /dev/null; then
+        SUPABASE_VERSION=$(supabase --version)
+        print_success "インストール済み - ${SUPABASE_VERSION}"
+
+        # 認証状態チェック（エラーを抑制）
+        if supabase projects list &> /dev/null; then
+            print_success "  認証: 済み"
+        else
+            print_warning "  認証: 未完了"
+            print_info "  → 'supabase login' で認証してください"
+        fi
+    else
+        print_error "Supabase CLI が見つかりません"
+        print_info "  → npm でインストールしてください: npm install -g supabase"
+    fi
+    echo ""
+
+    # Cursor IDE チェック
+    echo -e "${CYAN}${BOLD}[診断] Cursor IDE:${RESET}"
+    if [ -d "/Applications/Cursor.app" ]; then
+        print_success "インストール済み"
+        print_info "  場所: /Applications/Cursor.app"
+    else
+        print_warning "Cursor IDE が見つかりません"
+        print_info "  → https://cursor.sh からインストールしてください"
+    fi
+    echo ""
+
+    # Codex CLI チェック
+    echo -e "${CYAN}${BOLD}[診断] Codex CLI:${RESET}"
+    if command -v codex &> /dev/null; then
+        print_success "インストール済み"
+        CODEX_PATH=$(which codex)
+        print_info "  場所: ${CODEX_PATH}"
+    else
+        print_warning "Codex CLI が見つかりません"
+        print_info "  → npm でインストールしてください: npm install -g @codexlang/cli"
+    fi
+    echo ""
+
+    # PATH チェック
+    echo -e "${CYAN}${BOLD}[診断] PATH 設定:${RESET}"
+    NPM_PREFIX=$(npm config get prefix 2>/dev/null || echo "")
+    if [ -n "$NPM_PREFIX" ]; then
+        print_info "npm グローバルプレフィックス: ${NPM_PREFIX}"
+        if echo "$PATH" | grep -q "$NPM_PREFIX/bin"; then
+            print_success "npm グローバルパスが PATH に含まれています"
+        else
+            print_warning "npm グローバルパスが PATH に含まれていません"
+            print_info "  → シェル設定ファイル (~/.zshrc または ~/.bash_profile) に以下を追加:"
+            print_info "     export PATH=\"${NPM_PREFIX}/bin:\$PATH\""
+        fi
+    fi
+    echo ""
+
+    # 総合診断結果
+    echo -e "${BLUE}${BOLD}"
+    cat << "EOF"
+    ╔═══════════════════════════════════════════════════════════╗
+    ║                  診断完了                                 ║
+    ╚═══════════════════════════════════════════════════════════╝
+EOF
+    echo -e "${RESET}\n"
+
+    print_info "問題が見つかった場合:"
+    echo -e "  ${YELLOW}•${RESET} ${RED}エラー${RESET} が表示された項目: 未インストールまたは設定が必要"
+    echo -e "  ${YELLOW}•${RESET} ${YELLOW}警告${RESET} が表示された項目: インストール済みだが追加設定が必要"
+    echo -e "  ${YELLOW}•${RESET} シェルを再起動してから再度診断を実行してください"
+    echo ""
 }
 
 # ============================================================================
@@ -970,4 +1160,10 @@ EOF
 }
 
 # スクリプト実行
-main
+if [[ "$1" == "-d" || "$1" == "--diagnose" || "$1" == "diagnose" ]]; then
+    # 診断モード
+    diagnose_mode
+else
+    # 通常のインストールモード
+    main
+fi
