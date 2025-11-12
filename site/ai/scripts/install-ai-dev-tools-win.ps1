@@ -262,69 +262,80 @@ function Install-GitHubCLI {
 
     # アカウント作成促進と認証（完全自動化版）
     if (-not (Get-InstallState -Tool "github_cli" -Key "authenticated")) {
-        Write-Host ""
-        Write-Warn "[LOCK] GitHub 認証が必要です"
-        Write-Host "============================================================" -ForegroundColor Cyan
-        Write-Host "[INFO] これから行うこと:" -ForegroundColor White
-        Write-Host ""
-        Write-Host "  [>>>] 1 ブラウザが自動で開きます" -ForegroundColor Green
-        Write-Host "  [>>>] 2 8桁のコード が画面に表示されます (例: ABCD-1234)" -ForegroundColor Green
-        Write-Host "  [>>>] 3 ブラウザでそのコードを入力してください" -ForegroundColor Green
-        Write-Host "  [>>>] 4 「Authorize」(承認する) ボタンをクリック" -ForegroundColor Green
-        Write-Host "  [>>>] 5 認証完了！" -ForegroundColor Green
-        Write-Host ""
-        Write-Host "============================================================" -ForegroundColor Cyan
-        Write-Host ""
-        Write-Host "GitHub CLI が以下を自動で行います:" -ForegroundColor White
-        Write-Host "  [OK] SSH鍵の自動生成" -ForegroundColor Green
-        Write-Host "  [OK] GitHubへの鍵登録" -ForegroundColor Green
-        Write-Host "  [OK] Git認証情報の設定" -ForegroundColor Green
-        Write-Host ""
+        # まず現在の認証状態を確認
+        Write-Info "既存の認証状態を確認中..."
+        $null = gh auth status 2>&1
+        $alreadyAuthenticated = ($LASTEXITCODE -eq 0)
 
-        $hasAccount = Read-Host "GitHub アカウントをお持ちですか？ (y/n)"
-
-        if ($hasAccount -ne "y") {
-            Write-Warn "GitHub アカウントが必要です。ブラウザでサインアップページを開きます..."
-            Write-Host "推奨: 「Sign up with Google」ボタンで Google アカウントを使用してください" -ForegroundColor Cyan
-
-            Start-Process "https://github.com/signup"
-
-            $confirm = Read-Host "`nアカウント作成が完了したら Enter キーを押してください"
-        }
-
-        # 認証開始の確認
-        $response = Read-Host "`nGitHub 認証を開始しますか? (y/N)"
-
-        if ($response -eq "y" -or $response -eq "Y") {
+        if ($alreadyAuthenticated) {
+            Write-Success "GitHub CLI は既に認証済みです"
+            Update-InstallState -Tool "github_cli" -Key "authenticated" -Value $true
+        } else {
+            # 認証が必要な場合
             Write-Host ""
-            Write-Info "[WARN] 3秒後にブラウザが開きます..."
-            Start-Sleep -Seconds 3
+            Write-Warn "[LOCK] GitHub 認証が必要です"
+            Write-Host "============================================================" -ForegroundColor Cyan
+            Write-Host "[INFO] これから行うこと:" -ForegroundColor White
+            Write-Host ""
+            Write-Host "  [>>>] 1 ブラウザが自動で開きます" -ForegroundColor Green
+            Write-Host "  [>>>] 2 8桁のコード が画面に表示されます (例: ABCD-1234)" -ForegroundColor Green
+            Write-Host "  [>>>] 3 ブラウザでそのコードを入力してください" -ForegroundColor Green
+            Write-Host "  [>>>] 4 「Authorize」(承認する) ボタンをクリック" -ForegroundColor Green
+            Write-Host "  [>>>] 5 認証完了！" -ForegroundColor Green
+            Write-Host ""
+            Write-Host "============================================================" -ForegroundColor Cyan
+            Write-Host ""
+            Write-Host "GitHub CLI が以下を自動で行います:" -ForegroundColor White
+            Write-Host "  [OK] SSH鍵の自動生成" -ForegroundColor Green
+            Write-Host "  [OK] GitHubへの鍵登録" -ForegroundColor Green
+            Write-Host "  [OK] Git認証情報の設定" -ForegroundColor Green
+            Write-Host ""
 
-            # 完全自動化された認証（英語プロンプトなし）
-            try {
-                gh auth login --web --git-protocol https --hostname github.com
+            $hasAccount = Read-Host "GitHub アカウントをお持ちですか？ (y/n)"
 
-                # 認証確認
-                $authStatus = gh auth status 2>&1
-                if ($LASTEXITCODE -eq 0) {
-                    Write-Host ""
-                    Write-Success "[OK] GitHub 認証完了！SSH鍵も自動で設定されました"
-                    Update-InstallState -Tool "github_cli" -Key "authenticated" -Value $true
-                } else {
+            if ($hasAccount -ne "y") {
+                Write-Warn "GitHub アカウントが必要です。ブラウザでサインアップページを開きます..."
+                Write-Host "推奨: 「Sign up with Google」ボタンで Google アカウントを使用してください" -ForegroundColor Cyan
+
+                Start-Process "https://github.com/signup"
+
+                $confirm = Read-Host "`nアカウント作成が完了したら Enter キーを押してください"
+            }
+
+            # 認証開始の確認
+            $response = Read-Host "`nGitHub 認証を開始しますか? (y/N)"
+
+            if ($response -eq "y" -or $response -eq "Y") {
+                Write-Host ""
+                Write-Info "[WARN] 3秒後にブラウザが開きます..."
+                Start-Sleep -Seconds 3
+
+                # 完全自動化された認証（英語プロンプトなし）
+                try {
+                    gh auth login --web --git-protocol https --hostname github.com
+
+                    # 認証確認
+                    $authStatus = gh auth status 2>&1
+                    if ($LASTEXITCODE -eq 0) {
+                        Write-Host ""
+                        Write-Success "[OK] GitHub 認証完了！SSH鍵も自動で設定されました"
+                        Update-InstallState -Tool "github_cli" -Key "authenticated" -Value $true
+                    } else {
+                        Write-Host ""
+                        Write-Err "[ERROR] GitHub 認証に失敗しました"
+                        Write-Host "[INFO] ヒント: ブラウザでコードを正しく入力しましたか？" -ForegroundColor Cyan
+                        Write-Host "[INFO] もう一度試す場合は、このスクリプトを再実行してください" -ForegroundColor Cyan
+                        exit 1
+                    }
+                } catch {
                     Write-Host ""
                     Write-Err "[ERROR] GitHub 認証に失敗しました"
                     Write-Host "[INFO] ヒント: ブラウザでコードを正しく入力しましたか？" -ForegroundColor Cyan
-                    Write-Host "[INFO] もう一度試す場合は、このスクリプトを再実行してください" -ForegroundColor Cyan
                     exit 1
                 }
-            } catch {
-                Write-Host ""
-                Write-Err "[ERROR] GitHub 認証に失敗しました"
-                Write-Host "[INFO] ヒント: ブラウザでコードを正しく入力しましたか？" -ForegroundColor Cyan
-                exit 1
+            } else {
+                Write-Info "後で 'gh auth login --web' コマンドを実行して認証してください"
             }
-        } else {
-            Write-Info "後で 'gh auth login --web' コマンドを実行して認証してください"
         }
     }
 }
@@ -351,32 +362,54 @@ function Install-NetlifyCLI {
 
     # アカウント作成促進と認証
     if (-not (Get-InstallState -Tool "netlify_cli" -Key "authenticated")) {
-        Write-Host "============================================================" -ForegroundColor Yellow
-        Write-Host "Netlify は自動デプロイに使用します" -ForegroundColor Cyan
-        Write-Host "CLI経由でGitHub連携を設定します" -ForegroundColor Cyan
-        Write-Host "============================================================" -ForegroundColor Yellow
+        # まず現在の認証状態を確認
+        Write-Info "既存の認証状態を確認中..."
+        $null = netlify status 2>&1
+        $alreadyAuthenticated = ($LASTEXITCODE -eq 0)
 
-        $hasAccount = Read-Host "Netlify アカウントをお持ちですか？ (y/n)"
-
-        if ($hasAccount -ne "y") {
-            Write-Warn "Netlify アカウントが必要です。ブラウザでサインアップページを開きます..."
-            Write-Host "推奨: 「Sign up with GitHub」ボタンで GitHub アカウントを使用してください" -ForegroundColor Cyan
-
-            Start-Process "https://app.netlify.com/signup"
-
-            $confirm = Read-Host "`nアカウント作成が完了したら Enter キーを押してください"
-        }
-
-        # 認証
-        Write-Info "Netlify CLI の認証を開始します..."
-
-        try {
-            netlify login
+        if ($alreadyAuthenticated) {
+            Write-Success "Netlify CLI は既に認証済みです"
             Update-InstallState -Tool "netlify_cli" -Key "authenticated" -Value $true
-            Write-Success "Netlify CLI 認証完了"
-        } catch {
-            Write-Err "Netlify CLI の認証に失敗しました"
-            exit 1
+        } else {
+            # 認証が必要な場合
+            Write-Host "============================================================" -ForegroundColor Yellow
+            Write-Host "Netlify は自動デプロイに使用します" -ForegroundColor Cyan
+            Write-Host "CLI経由でGitHub連携を設定します" -ForegroundColor Cyan
+            Write-Host "============================================================" -ForegroundColor Yellow
+
+            $hasAccount = Read-Host "Netlify アカウントをお持ちですか？ (y/n)"
+
+            if ($hasAccount -ne "y") {
+                Write-Warn "Netlify アカウントが必要です。ブラウザでサインアップページを開きます..."
+                Write-Host "推奨: 「Sign up with GitHub」ボタンで GitHub アカウントを使用してください" -ForegroundColor Cyan
+
+                Start-Process "https://app.netlify.com/signup"
+
+                $confirm = Read-Host "`nアカウント作成が完了したら Enter キーを押してください"
+            }
+
+            # 認証開始
+            Write-Info "Netlify CLI の認証を開始します..."
+            Write-Host "ブラウザが開くので、指示に従って認証を完了してください" -ForegroundColor Cyan
+
+            try {
+                netlify login
+
+                # 認証確認
+                $null = netlify status 2>&1
+                if ($LASTEXITCODE -eq 0) {
+                    Update-InstallState -Tool "netlify_cli" -Key "authenticated" -Value $true
+                    Write-Success "Netlify CLI 認証完了"
+                } else {
+                    Write-Err "Netlify CLI の認証確認に失敗しました"
+                    Write-Host "ヒント: ブラウザで認証を完了しましたか？" -ForegroundColor Yellow
+                    exit 1
+                }
+            } catch {
+                Write-Err "Netlify CLI の認証に失敗しました"
+                Write-Host "ヒント: 'netlify login' コマンドを手動で実行して認証してください" -ForegroundColor Yellow
+                exit 1
+            }
         }
     }
 }
@@ -459,38 +492,52 @@ function Install-SupabaseCLI {
     # アカウント作成促進と認証
     if (-not (Get-InstallState -Tool "supabase_cli" -Key "authenticated")) {
         Write-Host "============================================================" -ForegroundColor Yellow
-        Write-Host "Supabase アカウントをお持ちですか？" -ForegroundColor Cyan
+        Write-Host "Supabase 認証の確認" -ForegroundColor Cyan
         Write-Host "============================================================" -ForegroundColor Yellow
 
-        $hasAccount = Read-Host "Supabase アカウントをお持ちですか？ (y/n)"
+        # まず現在の認証状態を確認
+        Write-Info "既存の認証状態を確認中..."
+        $null = supabase projects list 2>&1
+        $alreadyAuthenticated = ($LASTEXITCODE -eq 0)
 
-        if ($hasAccount -ne "y") {
-            Write-Warn "Supabase アカウントが必要です。ブラウザでサインアップページを開きます..."
-            Write-Host "推奨: 「Continue with GitHub」ボタンで GitHub アカウントを使用してください" -ForegroundColor Cyan
+        if ($alreadyAuthenticated) {
+            Write-Success "Supabase CLI は既に認証済みです"
+            Update-InstallState -Tool "supabase_cli" -Key "authenticated" -Value $true
+        } else {
+            # 認証が必要な場合
+            $hasAccount = Read-Host "`nSupabase アカウントをお持ちですか？ (y/n)"
 
-            Start-Process "https://supabase.com/dashboard/sign-up"
+            if ($hasAccount -ne "y") {
+                Write-Warn "Supabase アカウントが必要です。ブラウザでサインアップページを開きます..."
+                Write-Host "推奨: 「Continue with GitHub」ボタンで GitHub アカウントを使用してください" -ForegroundColor Cyan
 
-            $confirm = Read-Host "`nアカウント作成が完了したら Enter キーを押してください"
-        }
+                Start-Process "https://supabase.com/dashboard/sign-up"
 
-        # 認証
-        Write-Info "Supabase CLI の認証を開始します..."
+                $confirm = Read-Host "`nアカウント作成が完了したら Enter キーを押してください"
+            }
 
-        try {
-            supabase login
+            # 認証開始
+            Write-Info "Supabase CLI の認証を開始します..."
+            Write-Host "ブラウザが開くので、指示に従って認証を完了してください" -ForegroundColor Cyan
 
-            # 認証確認
-            $null = supabase projects list 2>&1
-            if ($LASTEXITCODE -eq 0) {
-                Update-InstallState -Tool "supabase_cli" -Key "authenticated" -Value $true
-                Write-Success "Supabase CLI 認証完了"
-            } else {
-                Write-Err "Supabase CLI の認証確認に失敗しました"
+            try {
+                supabase login
+
+                # 認証確認
+                $null = supabase projects list 2>&1
+                if ($LASTEXITCODE -eq 0) {
+                    Update-InstallState -Tool "supabase_cli" -Key "authenticated" -Value $true
+                    Write-Success "Supabase CLI 認証完了"
+                } else {
+                    Write-Err "Supabase CLI の認証確認に失敗しました"
+                    Write-Host "ヒント: ブラウザで認証を完了しましたか？" -ForegroundColor Yellow
+                    exit 1
+                }
+            } catch {
+                Write-Err "Supabase CLI の認証に失敗しました"
+                Write-Host "ヒント: 'supabase login' コマンドを手動で実行して認証してください" -ForegroundColor Yellow
                 exit 1
             }
-        } catch {
-            Write-Err "Supabase CLI の認証に失敗しました"
-            exit 1
         }
     }
 }
