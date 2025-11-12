@@ -812,13 +812,13 @@ function Main {
     Write-Host "  1. winget (パッケージマネージャー)" -ForegroundColor Cyan
     Write-Host "  2. Node.js (JavaScript実行環境)" -ForegroundColor Cyan
     Write-Host "  3. Git (バージョン管理)" -ForegroundColor Cyan
-    Write-Host "  4. GitHub CLI (GitHub操作)" -ForegroundColor Cyan
-    Write-Host "  5. Netlify CLI (デプロイ)" -ForegroundColor Cyan
-    Write-Host "  6. Claude Code (AI開発ツール)" -ForegroundColor Cyan
-    Write-Host "  7. Supabase CLI (データベース)" -ForegroundColor Cyan
-    Write-Host "  8. Super Claude + MCP Servers (拡張機能)" -ForegroundColor Cyan
-    Write-Host "  9. Playwright ブラウザ (E2Eテスト)" -ForegroundColor Cyan
-    Write-Host " 10. Cursor IDE (統合開発環境)" -ForegroundColor Cyan
+    Write-Host "  4. GitHub CLI (GitHub操作を簡単に)" -ForegroundColor Cyan
+    Write-Host "  5. Cursor IDE (AI統合開発環境)" -ForegroundColor Cyan
+    Write-Host "  6. Claude Code (ターミナルでAI対話)" -ForegroundColor Cyan
+    Write-Host "  7. Super Claude + MCP Servers (AI機能拡張)" -ForegroundColor Cyan
+    Write-Host "  8. Netlify CLI (Webサイトを一瞬でデプロイ)" -ForegroundColor Cyan
+    Write-Host "  9. Supabase CLI (データベース管理)" -ForegroundColor Cyan
+    Write-Host " 10. Playwright ブラウザ (自動テスト)" -ForegroundColor Cyan
     Write-Host ""
 
     $confirm = Read-Host "インストールを開始しますか？ (y/n)"
@@ -835,12 +835,12 @@ function Main {
     Install-Node
     Install-Git
     Install-GitHubCLI
-    Install-NetlifyCLI
-    Install-ClaudeCode
-    Install-SupabaseCLI
-    Install-SuperClaude
-    Install-PlaywrightBrowsers
     Install-CursorIDE
+    Install-ClaudeCode
+    Install-SuperClaude
+    Install-NetlifyCLI
+    Install-SupabaseCLI
+    Install-PlaywrightBrowsers
 
     # インストール状態の診断
     Run-Diagnostics

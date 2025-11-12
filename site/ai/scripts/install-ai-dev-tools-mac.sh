@@ -1111,13 +1111,13 @@ main() {
     install_github_cli
     sleep 0.5
 
+    install_cursor
+    sleep 0.5
+
     install_claude_code
     sleep 0.5
 
     install_super_claude
-    sleep 0.5
-
-    install_cursor
     sleep 0.5
 
     # Codex CLI インストール前に ChatGPT Plus/Pro 登録を促す
