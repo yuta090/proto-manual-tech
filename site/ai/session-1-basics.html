@@ -951,6 +951,57 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
     <div style="background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
       <h3 style="color: #1e40af; margin-bottom: 16px;">💡 セットアップ全般</h3>
 
+      <details style="margin-bottom: 16px; padding: 16px; background: rgba(16, 185, 129, 0.08); border-radius: 8px; border-left: 4px solid #10b981; cursor: pointer;">
+        <summary style="font-weight: bold; color: #059669; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 1.2em;">🔍</span>
+          <span>Q0. セットアップ後に「claude」コマンドが使えないのですが？</span>
+        </summary>
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(16, 185, 129, 0.2); color: #374151;">
+          <p style="margin-bottom: 16px;"><strong>A:</strong> まず、<strong style="color: #059669;">診断モード</strong>を実行して原因を特定しましょう！</p>
+
+          <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%); padding: 20px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin-bottom: 20px;">
+            <p style="margin: 0 0 12px 0; font-weight: bold; color: #047857; font-size: 1.1em;">診断モードの実行方法：</p>
+            <pre style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2); overflow-x: auto; margin: 0;"><code style="color: #047857; font-family: 'Courier New', monospace; font-size: 0.95em;">.\install-ai-dev-tools-win.ps1 -Diagnose</code></pre>
+            <p style="margin: 12px 0 0 0; font-size: 0.9em; color: #6b7280;">または</p>
+            <pre style="background: rgba(255, 255, 255, 0.9); padding: 16px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2); overflow-x: auto; margin: 8px 0 0 0;"><code style="color: #047857; font-family: 'Courier New', monospace; font-size: 0.95em;">.\install-ai-dev-tools-win.ps1 --diagnose</code></pre>
+          </div>
+
+          <div style="background: rgba(251, 191, 36, 0.1); padding: 16px; border-radius: 8px; border-left: 4px solid #f59e0b; margin-bottom: 16px;">
+            <p style="margin: 0 0 8px 0; font-weight: bold; color: #d97706;">⚠️ 診断結果で確認すること：</p>
+            <ul style="margin: 0; padding-left: 24px; color: #92400e; line-height: 1.8;">
+              <li><code style="background: rgba(255, 255, 255, 0.8); padding: 2px 6px; border-radius: 4px;">[診断] claude コマンド:</code> → 「使用可能」か「見つかりません」か</li>
+              <li><code style="background: rgba(255, 255, 255, 0.8); padding: 2px 6px; border-radius: 4px;">[診断] claude.cmd の場所:</code> → ファイルが存在するか</li>
+              <li><code style="background: rgba(255, 255, 255, 0.8); padding: 2px 6px; border-radius: 4px;">[診断] PATH に npm グローバルパス:</code> → 「はい」か「いいえ」か</li>
+            </ul>
+          </div>
+
+          <p style="margin-bottom: 12px; font-weight: bold; color: #059669;">よくある原因と解決方法：</p>
+
+          <div style="background: rgba(255, 255, 255, 0.8); padding: 16px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(16, 185, 129, 0.2);">
+            <p style="margin: 0 0 8px 0; font-weight: bold; color: #047857;">1️⃣ PowerShell を再起動していない</p>
+            <p style="margin: 0 0 8px 0; color: #6b7280;">→ <strong style="color: #059669;">新しい PowerShell ウィンドウを開く</strong>（最も多い原因）</p>
+            <p style="margin: 0; font-size: 0.9em; color: #9ca3af;">理由: npmでインストールしたコマンドは、新しいセッションで初めて有効になります</p>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.8); padding: 16px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(16, 185, 129, 0.2);">
+            <p style="margin: 0 0 8px 0; font-weight: bold; color: #047857;">2️⃣ PATHが正しく設定されていない</p>
+            <p style="margin: 0 0 8px 0; color: #6b7280;">→ 以下のコマンドで手動で PATH を更新：</p>
+            <pre style="background: rgba(31, 41, 55, 0.95); padding: 12px; border-radius: 6px; margin: 8px 0 0 0; overflow-x: auto;"><code style="color: #10b981; font-family: 'Courier New', monospace; font-size: 0.9em;">$env:Path = "$env:APPDATA\npm;$env:Path"</code></pre>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.8); padding: 16px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2);">
+            <p style="margin: 0 0 8px 0; font-weight: bold; color: #047857;">3️⃣ claude-code が正しくインストールされていない</p>
+            <p style="margin: 0 0 8px 0; color: #6b7280;">→ 再インストールを試してください：</p>
+            <pre style="background: rgba(31, 41, 55, 0.95); padding: 12px; border-radius: 6px; margin: 8px 0 0 0; overflow-x: auto;"><code style="color: #10b981; font-family: 'Courier New', monospace; font-size: 0.9em;">npm install -g claude-code</code></pre>
+          </div>
+
+          <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%); padding: 16px; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.3); margin-top: 16px;">
+            <p style="margin: 0; font-weight: bold; color: #1e40af;">💡 診断モードは何度でも実行できます</p>
+            <p style="margin: 8px 0 0 0; color: #4b5563; font-size: 0.95em;">問題を修正した後、もう一度診断モードを実行して確認しましょう！</p>
+          </div>
+        </div>
+      </details>
+
       <details style="margin-bottom: 16px; padding: 16px; background: rgba(59, 130, 246, 0.05); border-radius: 8px; cursor: pointer;">
         <summary style="font-weight: bold; color: #3b82f6; cursor: pointer;">Q1. Windows に PowerShell は最初から入っていますか？</summary>
         <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(59, 130, 246, 0.2); color: #4b5563;">
