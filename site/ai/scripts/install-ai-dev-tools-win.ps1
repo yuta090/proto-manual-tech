@@ -690,21 +690,110 @@ function Main {
     Install-PlaywrightBrowsers
     Install-CursorIDE
 
+    # インストール状態の診断
+    Write-Section "インストール診断"
+    Write-Info "コマンドの動作確認を行います..."
+    Write-Host ""
+
+    # Node.js/npm確認
+    Write-Host "[診断] Node.js: " -NoNewline
+    if (Get-Command node -ErrorAction SilentlyContinue) {
+        $nodeVer = node --version
+        Write-Host "$nodeVer" -ForegroundColor Green
+    } else {
+        Write-Host "見つかりません" -ForegroundColor Red
+    }
+
+    Write-Host "[診断] npm: " -NoNewline
+    if (Get-Command npm -ErrorAction SilentlyContinue) {
+        $npmVer = npm --version
+        Write-Host "$npmVer" -ForegroundColor Green
+    } else {
+        Write-Host "見つかりません" -ForegroundColor Red
+    }
+
+    # npmグローバルパス確認
+    Write-Host "[診断] npm グローバルパス: " -NoNewline
+    try {
+        $npmPrefix = npm config get prefix 2>$null
+        Write-Host "$npmPrefix" -ForegroundColor Cyan
+    } catch {
+        Write-Host "取得失敗" -ForegroundColor Red
+    }
+
+    # claude-code確認
+    Write-Host "[診断] claude-code パッケージ: " -NoNewline
+    try {
+        $claudePackage = npm list -g claude-code --depth=0 2>$null | Select-String "claude-code"
+        if ($claudePackage) {
+            Write-Host "インストール済み" -ForegroundColor Green
+        } else {
+            Write-Host "見つかりません" -ForegroundColor Red
+        }
+    } catch {
+        Write-Host "確認失敗" -ForegroundColor Red
+    }
+
+    # claudeコマンド確認
+    Write-Host "[診断] claude コマンド: " -NoNewline
+    if (Get-Command claude -ErrorAction SilentlyContinue) {
+        Write-Host "使用可能" -ForegroundColor Green
+    } else {
+        Write-Host "見つかりません" -ForegroundColor Red
+        Write-Host ""
+        Write-Host "  [INFO] claude.cmd の場所を確認中..." -ForegroundColor Yellow
+        $claudeCmd = Get-ChildItem "$env:APPDATA\npm" -Filter "claude.cmd" -ErrorAction SilentlyContinue
+        if ($claudeCmd) {
+            Write-Host "  [OK] ファイルは存在: $($claudeCmd.FullName)" -ForegroundColor Green
+            Write-Host "  [WARN] PATHが正しく設定されていない可能性があります" -ForegroundColor Yellow
+        } else {
+            Write-Host "  [ERROR] claude.cmd が見つかりません" -ForegroundColor Red
+        }
+    }
+
+    # PATHにnpmが含まれているか確認
+    Write-Host "[診断] PATH に npm グローバルパスが含まれているか: " -NoNewline
+    $npmInPath = $env:Path -split ';' | Where-Object { $_ -like "*npm*" }
+    if ($npmInPath) {
+        Write-Host "はい" -ForegroundColor Green
+        foreach ($path in $npmInPath) {
+            Write-Host "  - $path" -ForegroundColor Cyan
+        }
+    } else {
+        Write-Host "いいえ" -ForegroundColor Red
+    }
+
+    Write-Host ""
+
     # 完了メッセージ
     Write-Section "セットアップ完了！"
     Write-Success "すべてのツールのインストールが完了しました！"
     Write-Host ""
     Write-Host "============================================================" -ForegroundColor Yellow
-    Write-Host "[WARN] 重要: PowerShell を必ず再起動してください！" -ForegroundColor Red
+    Write-Host "[WARN] 重要: 確実に動作させるため PowerShell を再起動してください！" -ForegroundColor Red
     Write-Host "============================================================" -ForegroundColor Yellow
     Write-Host ""
-    Write-Host "理由: インストールしたコマンド（claude, gh, netlify など）は" -ForegroundColor White
-    Write-Host "      PowerShell を再起動しないと使用できません。" -ForegroundColor White
+    Write-Host "理由: Node.js や npm でインストールしたコマンドは、" -ForegroundColor White
+    Write-Host "      新しい PowerShell ウィンドウで最も確実に動作します。" -ForegroundColor White
+    Write-Host ""
+    Write-Host "注意:" -ForegroundColor Yellow
+    Write-Host "  - Windows の再起動は不要です" -ForegroundColor Cyan
+    Write-Host "  - このウィンドウでも動作する可能性はありますが、" -ForegroundColor Cyan
+    Write-Host "    新しいウィンドウを開くことを強く推奨します" -ForegroundColor Cyan
     Write-Host ""
     Write-Host "次のステップ:" -ForegroundColor Cyan
     Write-Host "  1. このウィンドウを閉じる" -ForegroundColor Yellow
     Write-Host "  2. 新しい PowerShell ウィンドウを開く" -ForegroundColor Yellow
     Write-Host "  3. 'claude doctor' コマンドで動作確認" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "もし 'claude' コマンドが見つからない場合:" -ForegroundColor Yellow
+    Write-Host "  以下のコマンドで診断してください:" -ForegroundColor White
+    Write-Host "    node --version" -ForegroundColor Cyan
+    Write-Host "    npm --version" -ForegroundColor Cyan
+    Write-Host "    npm config get prefix" -ForegroundColor Cyan
+    Write-Host "    npm list -g --depth=0" -ForegroundColor Cyan
+    Write-Host "    `$env:Path -split ';' | Select-String npm" -ForegroundColor Cyan
+    Write-Host ""
     Write-Host "  4. Cursor IDE を起動" -ForegroundColor Cyan
     Write-Host "  5. マニュアルの1章から学習開始" -ForegroundColor Cyan
     Write-Host ""
